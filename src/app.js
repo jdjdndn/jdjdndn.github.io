@@ -5,6 +5,15 @@ import { tabs, friendLinks } from './data.js';
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
+/** 防抖：延迟执行，连续触发时重新计时 */
+const debounce = (fn, ms = 150) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+};
+
 const showToast = (msg = '已复制') => {
   const t = $('#toast');
   t.textContent = msg;
@@ -17,14 +26,18 @@ const copyText = async (text) => {
     await navigator.clipboard.writeText(text);
     showToast();
   } catch {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.cssText = 'position:fixed;left:-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast();
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast();
+    } catch {
+      showToast('复制失败，请长按手动复制');
+    }
   }
 };
 
@@ -52,6 +65,34 @@ const searchClear = $('#search-clear');
 const searchCount = $('#search-count');
 const headerStats = $('#header-stats');
 
+// ========== SVG 图标 ==========
+const ICONS = {
+  all: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+  meituan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>',
+  taobaoshangou: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+  ecommerce: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>',
+  xiecheng_travel: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg>',
+  tongcheng_travel: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>',
+  feizhu_travel: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+  didi_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-6.06A1 1 0 0012.38 4H5.62a1 1 0 00-.92.63L2 11l-2 .85A1 1 0 00-.84 12.85V16h3"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>',
+  huaxiaozhu_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+  life: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+};
+
+// Tab 显示名（去除 emoji 前缀，安全替代正则剥离）
+const TAB_NAMES = {
+  all: '全部',
+  meituan: '美团',
+  taobaoshangou: '淘宝闪购',
+  ecommerce: '电商',
+  xiecheng_travel: '携程旅行',
+  tongcheng_travel: '同程旅行',
+  feizhu_travel: '飞猪出行',
+  didi_ride: '滴滴出行',
+  huaxiaozhu_ride: '花小猪出行',
+  life: '电影票 · 快递',
+};
+
 // ========== 统计 ==========
 const tabCounts = tabs.map((t) =>
   t.sections.reduce((sum, s) => sum + s.items.length, 0),
@@ -63,57 +104,50 @@ const renderStats = () => {
   headerStats.innerHTML = `
     <span>📦 已收录 <strong>${totalCount}</strong> 个优惠</span>
     <span>🔄 数据持续更新中</span>
+    <button class="hide-expired-toggle" id="hide-expired" aria-pressed="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+      隐藏已过期
+    </button>
   `;
 };
 
 // ========== 渲染：Tab 导航 ==========
 const renderTabNav = () => {
-  const allBtn = `<button class="tab-btn" data-tab="all">📋 全部<span class="badge">${totalCount}</span></button>`;
+  const allIcon = ICONS.all || '';
+  const allBtn = `<button class="tab-btn" data-tab="all" role="tab" aria-selected="false">${allIcon} 全部<span class="badge">${totalCount}</span></button>`;
   const tabBtns = tabs
     .map(
       (t, i) =>
-        `<button class="tab-btn" data-tab="${t.id}">${t.label}<span class="badge">${tabCounts[i]}</span></button>`,
+        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''} ${TAB_NAMES[t.id] || t.label}<span class="badge">${tabCounts[i]}</span></button>`,
     )
     .join('');
   tabNav.innerHTML = allBtn + tabBtns;
 };
 
-// 通过 offsetTop 检测换行行号，仅最后一行不拉伸
+// Tab 行对齐：仅最后一行不拉伸，保持自然宽度
 let alignLock = false;
 const alignTabRows = () => {
   if (alignLock) return;
   const btns = Array.from(tabNav.querySelectorAll('.tab-btn'));
   if (!btns.length) return;
-
   alignLock = true;
-
-  // 先清除行内样式，让浏览器自然排布以确定换行位置
   btns.forEach(b => { b.style.flex = ''; });
-
-  // 按 offsetTop 分组，得到每行的按钮索引
   const rows = [];
-  btns.forEach((b, i) => {
+  btns.forEach((b) => {
     const top = b.offsetTop;
     const last = rows[rows.length - 1];
     if (last && Math.abs(last.top - top) < 2) {
-      last.indices.push(i);
+      last.indices.push(b);
     } else {
-      rows.push({ top, indices: [i] });
+      rows.push({ top, indices: [b] });
     }
   });
-
-  // 仅当多行时才处理
   if (rows.length > 1) {
-    const lastRow = rows[rows.length - 1];
-    const lastSet = new Set(lastRow.indices);
-
-    // 非末排拉伸铺满，末排保持自然宽度
-    btns.forEach((b, i) => {
-      b.style.flex = lastSet.has(i) ? '0 1 auto' : '1 1 auto';
+    const lastSet = new Set(rows[rows.length - 1].indices);
+    btns.forEach((b) => {
+      b.style.flex = lastSet.has(b) ? '0 1 auto' : '1 1 auto';
     });
   }
-
-  // 下一帧解锁，防止 ResizeObserver 重入
   requestAnimationFrame(() => { alignLock = false; });
 };
 
@@ -135,7 +169,7 @@ const renderCodeCard = (item) => {
     </div>
     <div class="card-code">${item.code}</div>
     <div class="card-actions">
-      <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}">📋 复制口令</button>
+      <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}" ${expired ? 'disabled' : ''}>📋 复制口令</button>
     </div>
   </div>
   `;
@@ -155,7 +189,7 @@ const renderLinkCard = (item) => {
     </div>
     <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${item.link}</a>
     <div class="card-actions">
-      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener">🔗 前往活动</a>
+      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>🔗 前往活动</a>
       <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">📱 二维码</button>
     </div>
   </div>
@@ -213,11 +247,39 @@ let activeTab = tabs[0].id;
 
 const switchTab = (tabId) => {
   activeTab = tabId;
+  // 更新 URL hash
+  if (tabId !== 'all') {
+    history.replaceState(null, '', `#${tabId}`);
+  } else {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+  // 更新按钮状态和 ARIA
   $$('.tab-btn').forEach((btn) => {
-    btn.classList.toggle('active', btn.dataset.tab === tabId);
+    const isActive = btn.dataset.tab === tabId;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-selected', isActive);
   });
   renderTabContent(tabId);
 };
+
+// ========== 过期筛选 ==========
+let hideExpired = false;
+
+const toggleHideExpired = () => {
+  hideExpired = !hideExpired;
+  const btn = $('#hide-expired');
+  if (btn) {
+    btn.classList.toggle('active', hideExpired);
+    btn.setAttribute('aria-pressed', hideExpired);
+  }
+  // 重新渲染当前 tab
+  renderTabContent(activeTab);
+  if (searchQuery) handleSearch();
+};
+
+// 覆盖渲染函数，加入过期筛选逻辑
+const origRenderCodeCard = renderCodeCard;
+const origRenderLinkCard = renderLinkCard;
 
 // ========== 事件委托 ==========
 tabNav.addEventListener('click', (e) => {
@@ -228,6 +290,7 @@ tabNav.addEventListener('click', (e) => {
 tabContent.addEventListener('click', (e) => {
   const copyBtn = e.target.closest('.btn-copy');
   if (copyBtn) {
+    if (copyBtn.disabled) return;
     const text = copyBtn.dataset.copy
       .replace(/&quot;/g, '"')
       .replace(/&amp;/g, '&')
@@ -235,15 +298,13 @@ tabContent.addEventListener('click', (e) => {
       .replace(/&gt;/g, '>');
     copyText(text);
     // 按钮反馈
+    copyBtn.classList.add('success');
     const orig = copyBtn.textContent;
     copyBtn.textContent = '✓ 已复制';
-    copyBtn.style.background = 'var(--success-light)';
-    copyBtn.style.color = 'var(--success)';
     setTimeout(() => {
       copyBtn.textContent = orig;
-      copyBtn.style.background = '';
-      copyBtn.style.color = '';
-    }, 1200);
+      copyBtn.classList.remove('success');
+    }, 1500);
     return;
   }
 
@@ -263,6 +324,7 @@ const searchCoupons = (query) => {
   tabs.forEach((tab) => {
     tab.sections.forEach((sec) => {
       sec.items.forEach((item) => {
+        if (hideExpired && isExpired(item.deadline)) return;
         const matchName = item.name.toLowerCase().includes(q);
         const matchCode = item.code && item.code.toLowerCase().includes(q);
         const matchSection = sec.title.toLowerCase().includes(q);
@@ -278,10 +340,10 @@ const searchCoupons = (query) => {
 const renderSearchResults = (results) => {
   if (!results.length) {
     tabContent.innerHTML = `
-      <div style="text-align:center;padding:48px 16px;color:var(--muted);">
-        <div style="font-size:48px;margin-bottom:12px;">🔍</div>
-        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">未找到匹配的优惠</div>
-        <div style="font-size:13px;">换个关键词试试？</div>
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-title">未找到匹配的优惠</div>
+        <div class="empty-state-hint">换个关键词试试？</div>
       </div>
     `;
     return;
@@ -327,11 +389,20 @@ const handleSearch = () => {
   renderSearchResults(results);
 };
 
-searchInput.addEventListener('input', handleSearch);
+const debouncedSearch = debounce(handleSearch, 150);
+
+searchInput.addEventListener('input', debouncedSearch);
 searchClear.addEventListener('click', () => {
   searchInput.value = '';
   handleSearch();
   searchInput.focus();
+});
+
+// 过期筛选按钮
+headerStats.addEventListener('click', (e) => {
+  if (e.target.closest('.hide-expired-toggle')) {
+    toggleHideExpired();
+  }
 });
 
 // ========== 二维码弹窗 ==========
@@ -344,6 +415,7 @@ const showQrModal = (url, name) => {
   qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(url)}`;
   qrName.textContent = name;
   qrOverlay.classList.remove('hidden');
+  qrClose.focus();
 };
 
 const hideQrModal = () => {
@@ -361,12 +433,36 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ========== 键盘快捷键 ==========
+document.addEventListener('keydown', (e) => {
+  // "/" 聚焦搜索框（排除已在输入框中的情况）
+  if (e.key === '/' && document.activeElement !== searchInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    e.preventDefault();
+    searchInput.focus();
+  }
+});
+
+// ========== URL hash 同步 ==========
+const handleHashChange = () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && tabs.some((t) => t.id === hash)) {
+    switchTab(hash);
+  }
+};
+window.addEventListener('hashchange', handleHashChange);
+
 // ========== 初始化 ==========
 renderStats();
 renderTabNav();
+
+// 支持 URL hash 直接定位
+const initialHash = window.location.hash.slice(1);
+if (initialHash && tabs.some((t) => t.id === initialHash)) {
+  activeTab = initialHash;
+}
 switchTab(activeTab);
+
 renderFriendLinks();
-// ResizeObserver 在每次布局完成后精确触发，替代不可靠的手动定时
 new ResizeObserver(alignTabRows).observe(tabNav);
 
 // ========== Footer 吸底宽度同步 + 收起 ==========
@@ -385,5 +481,6 @@ window.addEventListener('resize', syncFooter);
 
 // Footer 收起/展开
 footerToggle.addEventListener('click', () => {
-  footer.classList.toggle('collapsed');
+  const collapsed = footer.classList.toggle('collapsed');
+  footerToggle.setAttribute('aria-expanded', !collapsed);
 });
