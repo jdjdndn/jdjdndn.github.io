@@ -1,5 +1,6 @@
 // ========== 数据（来自 data.js） ==========
 import { tabs, friendLinks } from './data.js';
+import QRCode from 'qrcode';
 
 // ========== 工具函数 ==========
 const $ = (sel) => document.querySelector(sel);
@@ -411,8 +412,12 @@ const qrImg = $('#qr-img');
 const qrName = $('#qr-name');
 const qrClose = $('#qr-close');
 
-const showQrModal = (url, name) => {
-  qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(url)}`;
+// ========== 焦点陷阱 ==========
+let lastFocusedElement = null;
+
+const showQrModal = async (url, name) => {
+  lastFocusedElement = document.activeElement;
+  qrImg.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
   qrName.textContent = name;
   qrOverlay.classList.remove('hidden');
   qrClose.focus();
@@ -421,15 +426,41 @@ const showQrModal = (url, name) => {
 const hideQrModal = () => {
   qrOverlay.classList.add('hidden');
   qrImg.src = '';
+  if (lastFocusedElement) {
+    lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }
 };
+
+const qrModal = qrOverlay.querySelector('.qr-modal');
+const getFocusableEls = () =>
+  qrModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
 
 qrClose.addEventListener('click', hideQrModal);
 qrOverlay.addEventListener('click', (e) => {
   if (e.target === qrOverlay) hideQrModal();
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !qrOverlay.classList.contains('hidden')) {
+  if (qrOverlay.classList.contains('hidden')) return;
+
+  if (e.key === 'Escape') {
     hideQrModal();
+    return;
+  }
+
+  // 焦点陷阱：Tab 循环
+  if (e.key === 'Tab') {
+    const focusable = Array.from(getFocusableEls());
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 });
 

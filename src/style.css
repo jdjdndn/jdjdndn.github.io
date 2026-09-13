@@ -42,7 +42,7 @@ body {
 #app {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 24px 16px 160px;
 }
 
 /* ========== Header ========== */
@@ -123,16 +123,16 @@ body {
 }
 .search-clear {
   position: absolute;
-  right: 10px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   min-height: unset;
   border: none;
-  background: #f3f4f6;
+  background: transparent;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   cursor: pointer;
   display: none;
@@ -141,7 +141,7 @@ body {
   transition: all var(--transition);
 }
 .search-clear.visible { display: flex; }
-.search-clear:hover { background: #e5e7eb; color: var(--text); }
+.search-clear:hover { background: #f3f4f6; color: var(--text); }
 .search-count {
   text-align: center;
   font-size: 12px;
@@ -428,11 +428,11 @@ body {
 }
 .qr-title { font-size: 15px; font-weight: 700; }
 .qr-close {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   min-height: unset;
   border: none;
-  background: #f3f4f6;
+  background: transparent;
   border-radius: 50%;
   font-size: 14px;
   color: var(--muted);
@@ -442,7 +442,7 @@ body {
   justify-content: center;
   transition: all var(--transition);
 }
-.qr-close:hover { background: #e5e7eb; color: var(--text); }
+.qr-close:hover { background: #f3f4f6; color: var(--text); }
 .qr-body {
   padding: 24px 18px;
   text-align: center;
@@ -641,7 +641,7 @@ input {
 
 /* ========== 响应式：桌面端 ========== */
 @media (min-width: 1024px) {
-  #app { padding: 32px 32px 80px; }
+  #app { padding: 32px 32px 160px; }
   .header h1 { font-size: 32px; }
   .header p { font-size: 14px; }
   .tab-nav { gap: 8px; padding-bottom: 20px; }
@@ -653,13 +653,13 @@ input {
 
 /* ========== 响应式：iPad ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
-  #app { padding: 24px 24px 80px; }
+  #app { padding: 24px 24px 160px; }
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 }
 
 /* ========== 响应式：手机端 ========== */
 @media (max-width: 480px) {
-  #app { padding: 16px 12px 60px; }
+  #app { padding: 16px 12px 120px; }
   .header { margin-bottom: 14px; }
   .header h1 { font-size: 20px; }
   .header p { font-size: 12px; }
