@@ -28,24 +28,54 @@ const copyText = async (text) => {
   }
 };
 
+// ========== 过期判断 ==========
+const isExpired = (deadline) => {
+  if (!deadline) return false;
+  const d = new Date(deadline);
+  return d < new Date();
+};
+
+const isExpiringSoon = (deadline) => {
+  if (!deadline) return false;
+  const d = new Date(deadline);
+  const now = new Date();
+  const diff = d - now;
+  return diff > 0 && diff < 7 * 24 * 60 * 60 * 1000;
+};
+
 // ========== DOM 引用 ==========
 const tabNav = $('#tab-nav');
 const tabContent = $('#tab-content');
 const friendLinksEl = $('#friend-links');
+const searchInput = $('#search-input');
+const searchClear = $('#search-clear');
+const searchCount = $('#search-count');
+const headerStats = $('#header-stats');
 
 // ========== 统计 ==========
 const tabCounts = tabs.map((t) =>
   t.sections.reduce((sum, s) => sum + s.items.length, 0),
 );
+const totalCount = tabCounts.reduce((a, b) => a + b, 0);
+
+// 渲染头部统计
+const renderStats = () => {
+  headerStats.innerHTML = `
+    <span>📦 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    <span>🔄 数据持续更新中</span>
+  `;
+};
 
 // ========== 渲染：Tab 导航 ==========
 const renderTabNav = () => {
-  tabNav.innerHTML = tabs
+  const allBtn = `<button class="tab-btn" data-tab="all">📋 全部<span class="badge">${totalCount}</span></button>`;
+  const tabBtns = tabs
     .map(
       (t, i) =>
         `<button class="tab-btn" data-tab="${t.id}">${t.label}<span class="badge">${tabCounts[i]}</span></button>`,
     )
     .join('');
+  tabNav.innerHTML = allBtn + tabBtns;
 };
 
 // 通过 offsetTop 检测换行行号，仅最后一行不拉伸
@@ -90,13 +120,19 @@ const alignTabRows = () => {
 // ========== 渲染：卡片 ==========
 const renderCodeCard = (item) => {
   const isMiniApp = item.code.startsWith('mp://');
+  const expired = isExpired(item.deadline);
+  const expiringSoon = isExpiringSoon(item.deadline);
+  const expiredClass = expired ? ' expired' : '';
+  const expiringClass = expiringSoon ? ' expiring-soon' : '';
+  const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
   return `
-  <div class="activity-card">
+  <div class="activity-card${expiredClass}${expiringClass}">
     <div class="card-head">
       <span class="card-name">${item.name}</span>
+      ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
       ${item.deadline ? `<span class="card-deadline">截止 ${item.deadline}</span>` : ''}
+      ${expiredTag}
     </div>
-    ${isMiniApp ? '<span class="miniapp-tag">📱 小程序</span>' : ''}
     <div class="card-code">${item.code}</div>
     <div class="card-actions">
       <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}">📋 复制口令</button>
@@ -105,10 +141,17 @@ const renderCodeCard = (item) => {
   `;
 };
 
-const renderLinkCard = (item) => `
-  <div class="activity-card">
+const renderLinkCard = (item) => {
+  const expired = isExpired(item.deadline);
+  const expiringSoon = isExpiringSoon(item.deadline);
+  const expiredClass = expired ? ' expired' : '';
+  const expiringClass = expiringSoon ? ' expiring-soon' : '';
+  const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
+  return `
+  <div class="activity-card${expiredClass}${expiringClass}">
     <div class="card-head">
       <span class="card-name">${item.name}</span>
+      ${expiredTag}
     </div>
     <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${item.link}</a>
     <div class="card-actions">
@@ -116,10 +159,31 @@ const renderLinkCard = (item) => `
       <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">📱 二维码</button>
     </div>
   </div>
-`;
+  `;
+};
 
 // ========== 渲染：Tab 内容 ==========
 const renderTabContent = (tabId) => {
+  if (tabId === 'all') {
+    // 全部 Tab：展示所有平台的优惠，按平台分组
+    tabContent.innerHTML = tabs
+      .map(
+        (tab) => `
+      <div class="sub-section">
+        <div class="sub-section-title">${tab.label}（${tabCounts[tabs.indexOf(tab)]}）</div>
+        <div class="card-grid">
+          ${tab.sections
+            .flatMap((sec) => sec.items)
+            .map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item)))
+            .join('')}
+        </div>
+      </div>
+    `,
+      )
+      .join('');
+    return;
+  }
+
   const tab = tabs.find((t) => t.id === tabId);
   if (!tab) return;
 
@@ -170,6 +234,16 @@ tabContent.addEventListener('click', (e) => {
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>');
     copyText(text);
+    // 按钮反馈
+    const orig = copyBtn.textContent;
+    copyBtn.textContent = '✓ 已复制';
+    copyBtn.style.background = 'var(--success-light)';
+    copyBtn.style.color = 'var(--success)';
+    setTimeout(() => {
+      copyBtn.textContent = orig;
+      copyBtn.style.background = '';
+      copyBtn.style.color = '';
+    }, 1200);
     return;
   }
 
@@ -177,6 +251,87 @@ tabContent.addEventListener('click', (e) => {
   if (qrBtn) {
     showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
   }
+});
+
+// ========== 搜索 ==========
+let searchQuery = '';
+
+const searchCoupons = (query) => {
+  if (!query.trim()) return null;
+  const q = query.toLowerCase();
+  const results = [];
+  tabs.forEach((tab) => {
+    tab.sections.forEach((sec) => {
+      sec.items.forEach((item) => {
+        const matchName = item.name.toLowerCase().includes(q);
+        const matchCode = item.code && item.code.toLowerCase().includes(q);
+        const matchSection = sec.title.toLowerCase().includes(q);
+        if (matchName || matchCode || matchSection) {
+          results.push({ ...item, tabLabel: tab.label, tabId: tab.id, sectionTitle: sec.title });
+        }
+      });
+    });
+  });
+  return results;
+};
+
+const renderSearchResults = (results) => {
+  if (!results.length) {
+    tabContent.innerHTML = `
+      <div style="text-align:center;padding:48px 16px;color:var(--muted);">
+        <div style="font-size:48px;margin-bottom:12px;">🔍</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">未找到匹配的优惠</div>
+        <div style="font-size:13px;">换个关键词试试？</div>
+      </div>
+    `;
+    return;
+  }
+
+  // 按 tab 分组
+  const grouped = {};
+  results.forEach((item) => {
+    const key = item.tabId;
+    if (!grouped[key]) grouped[key] = { label: item.tabLabel, items: [] };
+    grouped[key].items.push(item);
+  });
+
+  tabContent.innerHTML = Object.values(grouped)
+    .map(
+      (group) => `
+    <div class="sub-section">
+      <div class="sub-section-title">${group.label} · ${group.sectionTitle || ''}（${group.items.length}）</div>
+      <div class="card-grid">
+        ${group.items.map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item))).join('')}
+      </div>
+    </div>
+  `,
+    )
+    .join('');
+};
+
+const handleSearch = () => {
+  const query = searchInput.value.trim();
+  searchQuery = query;
+
+  if (!query) {
+    searchClear.classList.remove('visible');
+    searchCount.classList.remove('visible');
+    renderTabContent(activeTab);
+    return;
+  }
+
+  searchClear.classList.add('visible');
+  const results = searchCoupons(query);
+  searchCount.textContent = `找到 ${results.length} 个匹配结果`;
+  searchCount.classList.add('visible');
+  renderSearchResults(results);
+};
+
+searchInput.addEventListener('input', handleSearch);
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  handleSearch();
+  searchInput.focus();
 });
 
 // ========== 二维码弹窗 ==========
@@ -207,14 +362,17 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ========== 初始化 ==========
+renderStats();
 renderTabNav();
 switchTab(activeTab);
 renderFriendLinks();
 // ResizeObserver 在每次布局完成后精确触发，替代不可靠的手动定时
 new ResizeObserver(alignTabRows).observe(tabNav);
 
-// ========== Footer 吸底宽度同步 ==========
+// ========== Footer 吸底宽度同步 + 收起 ==========
 const appEl = $('#app');
+const footer = $('#footer');
+const footerToggle = $('#footer-toggle');
 const footerInner = document.querySelector('.footer-inner');
 const syncFooter = () => {
   const style = getComputedStyle(appEl);
@@ -224,3 +382,8 @@ const syncFooter = () => {
 };
 syncFooter();
 window.addEventListener('resize', syncFooter);
+
+// Footer 收起/展开
+footerToggle.addEventListener('click', () => {
+  footer.classList.toggle('collapsed');
+});

@@ -1,18 +1,24 @@
 /* ========== 基础变量 ========== */
 :root {
-  --bg: #f0f2f5;
+  --bg: #f5f3f0;
   --card: #ffffff;
   --text: #1a1a2e;
   --muted: #6b7280;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --border: #e5e7eb;
+  --primary: #FF6B35;
+  --primary-hover: #E55A2B;
+  --primary-light: #FFF4ED;
+  --accent: #004E89;
+  --accent-light: #EBF5FF;
+  --border: #e8e5e1;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 6px 24px rgba(255, 107, 53, 0.12);
   --radius: 12px;
   --radius-sm: 8px;
   --transition: 0.2s ease;
+  --danger: #DC2626;
+  --danger-light: #FEF2F2;
+  --success: #16a34a;
+  --success-light: #f0fdf4;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,6 +45,73 @@ body {
 }
 .header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
 .header p { color: var(--muted); font-size: 13px; }
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.header-stats span { display: flex; align-items: center; gap: 4px; }
+
+/* ========== 搜索栏 ========== */
+.search-bar {
+  position: relative;
+  max-width: 480px;
+  margin: 16px auto 0;
+}
+.search-input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  font-size: 14px;
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  transition: all var(--transition);
+}
+.search-input::placeholder { color: #aaa; }
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.search-clear.visible { display: flex; }
+.search-clear:hover { background: #e5e7eb; color: var(--text); }
+.search-count {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  display: none;
+}
+.search-count.visible { display: block; }
 
 /* ========== Tab 导航 ========== */
 .tab-nav {
@@ -177,23 +250,20 @@ body {
   color: #4b5563;
   word-break: break-all;
   line-height: 1.5;
-  max-height: 60px;
-  overflow: hidden;
-  position: relative;
   flex: 0 0 auto;
 }
-.card-code.expanded { max-height: none; }
 
 /* 小程序标签 */
 .miniapp-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: #16a34a;
-  background: #f0fdf4;
-  padding: 2px 8px;
-  border-radius: 8px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 1px 6px;
+  border-radius: 6px;
   flex: 0 0 auto;
+  vertical-align: middle;
 }
 
 /* 链接区域 */
@@ -233,17 +303,17 @@ body {
   background: var(--primary-light);
   color: var(--primary);
 }
-.btn-copy:hover { background: #dbeafe; }
+.btn-copy:hover { background: #FFE8DD; }
 .btn-go {
   background: var(--primary);
   color: #fff;
 }
 .btn-go:hover { background: var(--primary-hover); }
 .btn-qr {
-  background: #f0fdf4;
-  color: #16a34a;
+  background: var(--accent-light);
+  color: var(--accent);
 }
-.btn-qr:hover { background: #dcfce7; }
+.btn-qr:hover { background: #D6ECFF; }
 
 /* ========== Toast ========== */
 .toast {
@@ -341,18 +411,44 @@ body {
   background: var(--bg);
   border-top: 2px solid var(--border);
   z-index: 100;
-  padding: 12px 0 14px;
+  transition: padding var(--transition);
 }
+.footer.collapsed { padding: 0; }
 .footer-inner {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 16px;
 }
-.footer h2 {
+.footer-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+  background: none;
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 10px;
-  text-align: center;
+  color: var(--text);
+  cursor: pointer;
+  border: none;
+  transition: color var(--transition);
+}
+.footer-toggle:hover { color: var(--primary); }
+.footer-arrow {
+  font-size: 10px;
+  transition: transform 0.25s ease;
+}
+.footer.collapsed .footer-arrow { transform: rotate(180deg); }
+.footer-body {
+  overflow: hidden;
+  max-height: 200px;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+  opacity: 1;
+}
+.footer.collapsed .footer-body {
+  max-height: 0;
+  opacity: 0;
 }
 .friend-links {
   display: flex;
@@ -436,9 +532,30 @@ input {
 
 .hidden { display: none; }
 
+/* ========== 过期状态 ========== */
+.activity-card.expired {
+  opacity: 0.55;
+}
+.activity-card.expired .card-name { text-decoration: line-through; }
+.expired-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--danger);
+  padding: 1px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.expiring-soon .card-deadline {
+  color: var(--danger);
+  font-weight: 600;
+}
+
 /* ========== 响应式：桌面端 ========== */
-@media (min-width: 768px) {
-  #app { padding: 32px 32px 160px; }
+@media (min-width: 1024px) {
+  #app { padding: 32px 32px 80px; }
   .header h1 { font-size: 32px; }
   .header p { font-size: 14px; }
   .tab-nav { gap: 8px; padding-bottom: 20px; }
@@ -448,12 +565,21 @@ input {
   .friend-link { padding: 8px 16px; font-size: 13px; }
 }
 
+/* ========== 响应式：iPad ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #app { padding: 24px 24px 80px; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
 /* ========== 响应式：手机端 ========== */
 @media (max-width: 480px) {
-  #app { padding: 16px 12px 140px; }
+  #app { padding: 16px 12px 60px; }
   .header { margin-bottom: 14px; }
   .header h1 { font-size: 20px; }
   .header p { font-size: 12px; }
+  .header-stats { gap: 10px; font-size: 11px; }
+  .search-bar { margin: 12px auto 0; }
+  .search-input { font-size: 13px; padding: 9px 14px 9px 36px; }
   .tab-nav { padding: 2px 0 12px; gap: 5px; }
   .tab-btn { padding: 7px 14px; font-size: 13px; border-radius: 16px; }
 
@@ -470,8 +596,6 @@ input {
   .friend-links { gap: 6px; }
   .friend-link { padding: 5px 10px; font-size: 11px; }
 
-  .footer { padding: 10px 0 12px; }
-  .footer-inner { padding: 0 12px; }
-  .footer h2 { font-size: 13px; margin-bottom: 8px; }
+  .footer-toggle { font-size: 13px; padding: 8px 0; }
   .footer-note { font-size: 10px; }
 }

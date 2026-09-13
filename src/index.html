@@ -9,9 +9,18 @@
   <body>
     <div id="app">
       <header class="header">
-        <h1>🎉 优惠活动聚合</h1>
+        <h1>🔥 优惠活动聚合</h1>
         <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
+        <div class="header-stats" id="header-stats"></div>
       </header>
+
+      <!-- 搜索栏 -->
+      <div class="search-bar">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="搜索优惠名称、口令码..." />
+        <button class="search-clear" id="search-clear">✕</button>
+      </div>
+      <div class="search-count" id="search-count"></div>
 
       <!-- Tab 导航 -->
       <nav id="tab-nav" class="tab-nav"></nav>
@@ -20,12 +29,17 @@
       <main id="tab-content" class="tab-content"></main>
     </div>
 
-    <!-- 友情链接（fixed 吸底，放在 #app 外以便全宽居中） -->
-    <footer class="footer">
+    <!-- 友情链接（fixed 吸底，可收起） -->
+    <footer class="footer" id="footer">
       <div class="footer-inner">
-        <h2>🔗 友情链接</h2>
-        <div id="friend-links" class="friend-links"></div>
-        <p class="footer-note">省钱大作战，我们一起冲！🚀</p>
+        <button class="footer-toggle" id="footer-toggle">
+          <span>🔗 友情链接</span>
+          <span class="footer-arrow" id="footer-arrow">▲</span>
+        </button>
+        <div class="footer-body" id="footer-body">
+          <div id="friend-links" class="friend-links"></div>
+          <p class="footer-note">省钱大作战，我们一起冲！🚀</p>
+        </div>
       </div>
     </footer>
 
