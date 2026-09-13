@@ -3,7 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>优惠活动聚合</title>
+
+    <!-- SEO 基础 -->
+    <title>优惠活动聚合 — 外卖·出行·购物·酒旅·电影票·快递 一站式优惠券中心</title>
+    <meta name="description" content="聚合美团外卖红包、滴滴出行券、淘宝京东优惠券、电影票折扣、快递寄件折扣等全网热门优惠活动。一键复制口令码，省钱省到家！" />
+    <meta name="keywords" content="优惠券,红包,外卖红包,美团优惠,淘宝优惠,京东优惠,出行券,电影票优惠,快递折扣,口令码,省钱,优惠活动聚合" />
+    <meta name="author" content="jdjdndn" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://jdjdndn.github.io/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jdjdndn.github.io/" />
+    <meta property="og:title" content="优惠活动聚合 — 全网热门优惠一站全聚合" />
+    <meta property="og:description" content="聚合美团外卖红包、出行券、淘宝京东优惠券、电影票折扣、快递寄件折扣等全网热门优惠活动。一键复制口令码，轻松省钱！" />
+    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="优惠活动聚合" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="优惠活动聚合 — 全网热门优惠一站全聚合" />
+    <meta name="twitter:description" content="聚合美团外卖红包、出行券、淘宝京东优惠券、电影票折扣等全网热门优惠活动。" />
+    <meta name="twitter:image" content="https://jdjdndn.github.io/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎫</text></svg>" />
+
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "优惠活动聚合",
+      "url": "https://jdjdndn.github.io/",
+      "description": "聚合全网热门优惠活动，外卖红包、出行券、购物折扣、电影票、快递优惠一站全聚合。",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jdjdndn.github.io/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "热门优惠活动",
+      "description": "全网热门优惠活动聚合列表",
+      "url": "https://jdjdndn.github.io/",
+      "numberOfItems": 6,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "美团外卖红包", "description": "美团外卖每日红包口令码" },
+        { "@type": "ListItem", "position": 2, "name": "滴滴出行券", "description": "出行打车优惠券" },
+        { "@type": "ListItem", "position": 3, "name": "淘宝天猫优惠", "description": "淘宝天猫购物优惠券" },
+        { "@type": "ListItem", "position": 4, "name": "京东优惠券", "description": "京东购物优惠活动" },
+        { "@type": "ListItem", "position": 5, "name": "电影票折扣", "description": "电影票特惠活动" },
+        { "@type": "ListItem", "position": 6, "name": "快递寄件优惠", "description": "快递寄件折扣优惠" }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -62,6 +122,13 @@
     </div>
 
     <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
+
+    <noscript>
+      <div style="text-align:center;padding:2rem;color:#333;">
+        <h2>请启用 JavaScript</h2>
+        <p>本站需要 JavaScript 才能正常显示优惠活动内容。</p>
+      </div>
+    </noscript>
 
     <script type="module" src="./app.js"></script>
   </body>

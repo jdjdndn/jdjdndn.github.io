@@ -1,0 +1,5 @@
+# 优惠活动聚合 - robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://jdjdndn.github.io/sitemap.xml
