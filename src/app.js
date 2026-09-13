@@ -82,21 +82,7 @@ const ICONS = {
   huaxiaozhu_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
   dinner: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>',
   life: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-};
-
-// Tab 显示名（去除 emoji 前缀，安全替代正则剥离）
-const TAB_NAMES = {
-  all: '全部',
-  meituan: '美团',
-  taobaoshangou: '淘宝闪购',
-  ecommerce: '电商',
-  xiecheng_travel: '携程旅行',
-  tongcheng_travel: '同程旅行',
-  feizhu_travel: '飞猪出行',
-  didi_ride: '滴滴出行',
-  huaxiaozhu_ride: '花小猪出行',
-  dinner: '连锁餐饮',
-  life: '电影票 · 快递',
+  huiyuan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
 };
 
 // ========== 统计 ==========
@@ -124,7 +110,7 @@ const renderTabNav = () => {
   const tabBtns = tabs
     .map(
       (t, i) =>
-        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''} ${TAB_NAMES[t.id] || t.label}<span class="badge">${tabCounts[i]}</span></button>`,
+        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''} ${t.name || t.label}<span class="badge">${tabCounts[i]}</span></button>`,
     )
     .join('');
   tabNav.innerHTML = allBtn + tabBtns;

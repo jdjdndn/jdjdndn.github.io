@@ -14,6 +14,8 @@
     <meta name="application-name" content="优惠活动聚合" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="canonical" href="https://jdjdndn.github.io/" />
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms-full.txt" title="完整优惠数据（供 AI 阅读）" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -35,7 +37,13 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="优惠聚合" />
 
     <!-- JSON-LD 结构化数据 -->
     <script type="application/ld+json">
@@ -43,14 +51,123 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "优惠活动聚合",
+      "alternateName": ["优惠券聚合", "红包聚合", "省钱优惠中心"],
       "url": "https://jdjdndn.github.io/",
-      "description": "聚合全网热门优惠活动，外卖红包、出行券、购物折扣、电影票、快递优惠一站全聚合。",
+      "description": "聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、肯德基/瑞幸等连锁餐饮优惠、电影票折扣、快递寄件折扣，全网热门优惠一站全聚合。收录超过150个优惠活动，覆盖外卖、出行、购物、酒旅、餐饮、生活六大场景。",
       "dateModified": "__BUILD_DATE__",
+      "inLanguage": "zh-CN",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://jdjdndn.github.io/?q={search_term_string}",
         "query-input": "required name=search_term_string"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "优惠活动分类",
+        "numberOfItems": 10,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "美团外卖红包",
+            "description": "美团外卖天天领红包、吃喝玩乐福利、大牌饮品券、超市便利店专场等"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "淘宝闪购优惠",
+            "description": "闪购天天领红包、消费日专享、品牌日福利、夜宵专享、领最高18元红包"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "京东优惠活动",
+            "description": "京东秒杀、自营热卖、实时热销、京喜秒杀、热门清单榜"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "携程旅行优惠",
+            "description": "携程酒店预订、门票、美食、机票、火车票、签证、租车、跟团游"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "同程旅行优惠",
+            "description": "同程酒店、国际酒店、门票、民宿、机票、火车票、打车券"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "飞猪出行优惠",
+            "description": "飞猪酒店特惠、机票活动、特价门票、政府文旅补贴、88会员优惠"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "name": "滴滴出行优惠",
+            "description": "网约车8折打车券、代驾立减券、酒店抵扣券、南航机票立减券"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "name": "连锁餐饮优惠",
+            "description": "肯德基、瑞幸咖啡、库迪咖啡、奈雪的茶、星巴克、必胜客、喜茶、汉堡王等大牌餐券"
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "name": "电影票优惠",
+            "description": "电影票在线预订，最低19.9元"
+          },
+          {
+            "@type": "ListItem",
+            "position": 10,
+            "name": "快递寄件优惠",
+            "description": "寄件享4折起优惠，低至5元寄快递"
+          }
+        ]
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "什么是优惠活动聚合？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "优惠活动聚合是一个一站式优惠券中心，聚合了美团外卖红包、淘宝闪购、京东优惠、携程同程飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠活动。用户只需复制口令码或点击链接即可领取优惠。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何使用优惠口令码？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在本站点击"复制口令"按钮，复制口令码后打开对应的App（如美团、淘宝等），口令会自动识别并跳转到优惠领取页面。部分活动也可以直接点击"前往活动"链接跳转。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "本站收录了哪些平台的优惠？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本站收录了美团外卖、淘宝闪购、京东、拼多多、携程旅行、同程旅行、飞猪出行、滴滴出行、花小猪出行等主流平台的优惠活动，以及肯德基、瑞幸咖啡、星巴克、必胜客等连锁餐饮品牌的优惠券。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "优惠活动会过期吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "部分优惠活动有截止日期，过期后将无法使用。本站会显示每个活动的截止时间，支持一键隐藏已过期活动。数据持续更新中，请关注最新优惠。"
+          }
+        }
+      ]
     }
     </script>
 
@@ -126,12 +243,31 @@
     <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
 
     <noscript>
-      <div style="text-align:center;padding:2rem;color:#333;">
-        <h2>请启用 JavaScript</h2>
-        <p>本站需要 JavaScript 才能正常显示优惠活动内容。</p>
+      <div style="text-align:center;padding:2rem;color:#333;max-width:800px;margin:0 auto;">
+        <h2>优惠活动聚合 — 一站式优惠券中心</h2>
+        <p>本站聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠。</p>
+        <p>本站需要 JavaScript 才能正常显示完整优惠内容。请启用 JavaScript 后访问。</p>
+        <p>完整优惠列表请查看 <a href="./llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="./llms.txt">llms.txt</a>。</p>
+        <h3>主要分类</h3>
+        <ul style="text-align:left;max-width:400px;margin:0 auto;">
+          <li>美团外卖红包、酒旅出行、健康买药、美妆个护</li>
+          <li>淘宝闪购天天领红包、消费日专享、品牌日福利</li>
+          <li>京东秒杀、自营热卖、福利积分</li>
+          <li>携程/同程/飞猪酒店旅行优惠</li>
+          <li>滴滴出行、花小猪出行打车券</li>
+          <li>肯德基、瑞幸、星巴克等连锁餐饮优惠</li>
+          <li>电影票在线预订、快递寄件折扣</li>
+        </ul>
       </div>
     </noscript>
 
     <script type="module" src="./app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

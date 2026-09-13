@@ -726,9 +726,9 @@ body.dark-mode [data-highlight] mark {
   .footer-body { max-height: 140px; }
 
   /* 移动端默认收起，节省屏幕空间 */
-  .footer { border-top-color: transparent; }
-  .footer .footer-body { max-height: 0; opacity: 0; }
-  .footer .footer-arrow { transform: rotate(180deg); }
+  .footer.collapsed { border-top-color: transparent; }
+  .footer.collapsed .footer-body { max-height: 0; opacity: 0; }
+  .footer.collapsed .footer-arrow { transform: rotate(180deg); }
   body:not(.footer-collapsed) #app { padding-bottom: 120px; }
 }
 

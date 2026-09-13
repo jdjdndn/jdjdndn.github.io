@@ -19,9 +19,6 @@ export const friendLinks = [
   { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y' },
   { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5' },
   { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9' },
-  { name: '影视会员', url: 'https://wcbblll.99kami.com' },
-  { name: '音乐会员', url: 'https://wcbblll.im01.cn' },
-  { name: '福来流量站', url: 'http://35568.qcxmt.cn' },
   {name:"优惠券",url:"https://kzurl18.cn/tHj1ww"}
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/' },
   // { name: '京东·淘宝·拼多多', url: 'https://github.com/jdjdndn/jd_tb_pxx' },
@@ -35,6 +32,7 @@ export const tabs = [
   {
     id: 'meituan',
     label: '🍜 美团',
+    name: '美团',
     sections: [
       {
         title: '外卖美食',
@@ -60,6 +58,7 @@ export const tabs = [
           { name: '低价购票畅快启程', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰i8MzZiODg3MWQ💰', deadline: '2028.3.31' },
           { name: '景点门票超值精选', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰l9MTk3YjRjMTE💰', deadline: '2026.12.31' },
           { name: '暑期出游季', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰mcY2U0OGJjZDM💰', deadline: '2026.12.31' },
+          { name: '119元起全国酒店任你住', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰44ZmQyMDgxM2Y💰', deadline: '2026.12.31' },
         ],
       },
       {
@@ -87,7 +86,7 @@ export const tabs = [
       {
         title: '母婴·生活·数码',
         items: [
-          { name: '伊利奶粉专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰8tYWE4ZTMxZjE💰', deadline: '2026.9.4' },
+          { name: '伊利奶粉专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰wyZDU1MTY5MmE💰', deadline: '2026.12.31' },
           { name: '母婴专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰9jMGQ2NTkzNWM💰', deadline: '2026.12.31' },
           { name: '美团生活服务专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰kxNTI5OTBhMmI💰', deadline: '2026.12.31' },
           { name: '无忧保洁专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰luMjY3MjU4OTg💰', deadline: '2026.12.31' },
@@ -115,6 +114,7 @@ export const tabs = [
   {
     id: "taobaoshangou",
     label: '淘宝闪购',
+    name: '淘宝闪购',
     sections: [
       {
         title: "淘宝闪购",
@@ -148,6 +148,7 @@ export const tabs = [
   {
     id: 'ecommerce',
     label: '🛒 电商',
+    name: '电商',
     sections: [
       {
         title: '京东',
@@ -200,6 +201,7 @@ export const tabs = [
   {
     id:'xiecheng_travel',
     label: '🏨 携程旅行',
+    name: '携程旅行',
     sections: [
       {
         title: '携程旅行',
@@ -229,6 +231,7 @@ export const tabs = [
   {
     id:'tongcheng_travel',
     label: '🏨 同程旅行',
+    name: '同程旅行',
     sections: [
       {
         title: '同程旅行',
@@ -250,6 +253,7 @@ export const tabs = [
   {
     id: 'feizhu_travel',
     label: '🏨 飞猪出行',
+    name: '飞猪出行',
     sections: [
       {
         title: '飞猪出行',
@@ -281,6 +285,7 @@ export const tabs = [
   {
     id:'didi_ride',
     label: '🚗 滴滴出行',
+    name: '滴滴出行',
     sections: [
       {
         title: '滴滴出行',
@@ -299,6 +304,7 @@ export const tabs = [
   {
     id:'huaxiaozhu_ride',
     label: '🚗 花小猪出行',
+    name: '花小猪出行',
     sections: [
       {
         title: '花小猪出行',
@@ -314,6 +320,7 @@ export const tabs = [
   {
     id: 'dinner',
     label: '🎯 连锁餐饮',
+    name: '连锁餐饮',
     sections: [
       {
         title: '连锁餐饮',
@@ -340,12 +347,29 @@ export const tabs = [
   {
     id: 'life',
     label: '🎯 电影票 · 快递',
+    name: '电影票 · 快递',
     sections: [
       {
         title: '电影票 · 快递',
         items: [
           { name: '电影票在线预订，最低19.9元', link: 'https://kurl04.cn/txh9iy' },
           { name: '寄件享4折起优惠，低至5元寄快递', link: 'https://kurl06.cn/txh9El' },
+          {name:"优惠券",link:"https://kzurl18.cn/tHj1ww"}
+        ],
+      },
+    ],
+  },
+  {
+    id: 'huiyuan',
+    label: '💎 会员',
+    name: '会员',
+    sections: [
+      {
+        title: '会员',
+        items: [
+          { name: '影视会员', link: 'https://wcbblll.99kami.com' },
+          { name: '音乐会员', link: 'https://wcbblll.im01.cn' },
+          { name: '福来流量站', link: 'http://35568.qcxmt.cn' },
         ],
       },
     ],

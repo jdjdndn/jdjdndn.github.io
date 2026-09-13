@@ -1,5 +1,32 @@
 # 优惠活动聚合 - robots.txt
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# AI 爬虫
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
 
 Sitemap: https://jdjdndn.github.io/sitemap.xml
