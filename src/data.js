@@ -22,6 +22,7 @@ export const friendLinks = [
   { name: '影视会员', url: 'https://wcbblll.99kami.com' },
   { name: '音乐会员', url: 'https://wcbblll.im01.cn' },
   { name: '福来流量站', url: 'http://35568.qcxmt.cn' },
+  {name:"优惠券",url:"https://kzurl18.cn/tHj1ww"}
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/' },
   // { name: '京东·淘宝·拼多多', url: 'https://github.com/jdjdndn/jd_tb_pxx' },
   // { name: '美团优惠聚合', url: 'https://github.com/jdjdndn/meituan_youhuiquan' },
