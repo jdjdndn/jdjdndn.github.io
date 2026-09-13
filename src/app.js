@@ -19,7 +19,7 @@ const showToast = (msg = '已复制') => {
   const t = $('#toast');
   t.textContent = msg;
   t.classList.remove('hidden');
-  setTimeout(() => t.classList.add('hidden'), 1500);
+  setTimeout(() => t.classList.add('hidden'), 2500);
 };
 
 const copyText = async (text) => {
@@ -68,6 +68,9 @@ const headerStats = $('#header-stats');
 
 // ========== SVG 图标 ==========
 const ICONS = {
+  stats_total: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+  stats_update: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
+  empty_search: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
   all: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
   meituan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>',
   taobaoshangou: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
@@ -103,8 +106,8 @@ const totalCount = tabCounts.reduce((a, b) => a + b, 0);
 // 渲染头部统计
 const renderStats = () => {
   headerStats.innerHTML = `
-    <span>📦 已收录 <strong>${totalCount}</strong> 个优惠</span>
-    <span>🔄 数据持续更新中</span>
+    <span>${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    <span>${ICONS.stats_update} 数据持续更新中</span>
     <button class="hide-expired-toggle" id="hide-expired" aria-pressed="false">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
       隐藏已过期
@@ -156,6 +159,7 @@ const alignTabRows = () => {
 const renderCodeCard = (item) => {
   const isMiniApp = item.code.startsWith('mp://');
   const expired = isExpired(item.deadline);
+  if (hideExpired && expired) return '';
   const expiringSoon = isExpiringSoon(item.deadline);
   const expiredClass = expired ? ' expired' : '';
   const expiringClass = expiringSoon ? ' expiring-soon' : '';
@@ -170,7 +174,7 @@ const renderCodeCard = (item) => {
     </div>
     <div class="card-code">${item.code}</div>
     <div class="card-actions">
-      <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}" ${expired ? 'disabled' : ''}>📋 复制口令</button>
+      <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}" ${expired ? 'disabled' : ''}>复制口令</button>
     </div>
   </div>
   `;
@@ -178,20 +182,23 @@ const renderCodeCard = (item) => {
 
 const renderLinkCard = (item) => {
   const expired = isExpired(item.deadline);
+  if (hideExpired && expired) return '';
   const expiringSoon = isExpiringSoon(item.deadline);
   const expiredClass = expired ? ' expired' : '';
   const expiringClass = expiringSoon ? ' expiring-soon' : '';
   const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
+  let host = '';
+  try { host = new URL(item.link).hostname.replace('www.', ''); } catch { host = item.link; }
   return `
   <div class="activity-card${expiredClass}${expiringClass}">
     <div class="card-head">
       <span class="card-name">${item.name}</span>
       ${expiredTag}
     </div>
-    <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${item.link}</a>
+    <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${host || '前往活动'}</a>
     <div class="card-actions">
-      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>🔗 前往活动</a>
-      <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">📱 二维码</button>
+      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>前往活动</a>
+      <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">二维码</button>
     </div>
   </div>
   `;
@@ -264,10 +271,11 @@ const switchTab = (tabId) => {
 };
 
 // ========== 过期筛选 ==========
-let hideExpired = false;
+let hideExpired = localStorage.getItem('hideExpired') === 'true';
 
 const toggleHideExpired = () => {
   hideExpired = !hideExpired;
+  localStorage.setItem('hideExpired', hideExpired);
   const btn = $('#hide-expired');
   if (btn) {
     btn.classList.toggle('active', hideExpired);
@@ -278,14 +286,24 @@ const toggleHideExpired = () => {
   if (searchQuery) handleSearch();
 };
 
-// 覆盖渲染函数，加入过期筛选逻辑
-const origRenderCodeCard = renderCodeCard;
-const origRenderLinkCard = renderLinkCard;
-
 // ========== 事件委托 ==========
 tabNav.addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn');
   if (btn) switchTab(btn.dataset.tab);
+});
+
+// Tab 键盘导航（左右箭头）
+tabNav.addEventListener('keydown', (e) => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const btns = Array.from(tabNav.querySelectorAll('.tab-btn'));
+  const idx = btns.indexOf(document.activeElement);
+  if (idx === -1) return;
+  e.preventDefault();
+  const next = e.key === 'ArrowRight'
+    ? (idx + 1) % btns.length
+    : (idx - 1 + btns.length) % btns.length;
+  btns[next].focus();
+  switchTab(btns[next].dataset.tab);
 });
 
 tabContent.addEventListener('click', (e) => {
@@ -342,7 +360,7 @@ const renderSearchResults = (results) => {
   if (!results.length) {
     tabContent.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-icon">${ICONS.empty_search}</div>
         <div class="empty-state-title">未找到匹配的优惠</div>
         <div class="empty-state-hint">换个关键词试试？</div>
       </div>
@@ -350,11 +368,11 @@ const renderSearchResults = (results) => {
     return;
   }
 
-  // 按 tab 分组
+  // 按 tab + section 分组
   const grouped = {};
   results.forEach((item) => {
-    const key = item.tabId;
-    if (!grouped[key]) grouped[key] = { label: item.tabLabel, items: [] };
+    const key = `${item.tabId}__${item.sectionTitle || ''}`;
+    if (!grouped[key]) grouped[key] = { label: item.tabLabel, sectionTitle: item.sectionTitle || '', items: [] };
     grouped[key].items.push(item);
   });
 
@@ -362,7 +380,7 @@ const renderSearchResults = (results) => {
     .map(
       (group) => `
     <div class="sub-section">
-      <div class="sub-section-title">${group.label} · ${group.sectionTitle || ''}（${group.items.length}）</div>
+      <div class="sub-section-title">${group.label}${group.sectionTitle ? ' · ' + group.sectionTitle : ''}（${group.items.length}）</div>
       <div class="card-grid">
         ${group.items.map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item))).join('')}
       </div>
@@ -417,10 +435,19 @@ let lastFocusedElement = null;
 
 const showQrModal = async (url, name) => {
   lastFocusedElement = document.activeElement;
-  qrImg.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
+  const qrLoading = $('#qr-loading');
+  qrLoading.classList.remove('hidden');
+  qrImg.classList.add('hidden');
   qrName.textContent = name;
   qrOverlay.classList.remove('hidden');
   qrClose.focus();
+  try {
+    qrImg.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
+    qrLoading.classList.add('hidden');
+    qrImg.classList.remove('hidden');
+  } catch {
+    qrLoading.innerHTML = '<span style="color:var(--danger)">生成失败，请重试</span>';
+  }
 };
 
 const hideQrModal = () => {
@@ -484,6 +511,14 @@ window.addEventListener('hashchange', handleHashChange);
 
 // ========== 初始化 ==========
 renderStats();
+// 同步 localStorage 中的过期筛选状态到 UI
+if (hideExpired) {
+  const hideBtn = $('#hide-expired');
+  if (hideBtn) {
+    hideBtn.classList.add('active');
+    hideBtn.setAttribute('aria-pressed', 'true');
+  }
+}
 renderTabNav();
 
 // 支持 URL hash 直接定位
@@ -506,6 +541,8 @@ const syncFooter = () => {
   footerInner.style.maxWidth = style.maxWidth;
   footerInner.style.marginLeft = style.marginLeft;
   footerInner.style.marginRight = style.marginRight;
+  // 动态同步 footer 高度到 app padding-bottom
+  appEl.style.paddingBottom = `${footer.offsetHeight + 20}px`;
 };
 syncFooter();
 window.addEventListener('resize', syncFooter);
@@ -514,4 +551,5 @@ window.addEventListener('resize', syncFooter);
 footerToggle.addEventListener('click', () => {
   const collapsed = footer.classList.toggle('collapsed');
   footerToggle.setAttribute('aria-expanded', !collapsed);
+  requestAnimationFrame(syncFooter);
 });
