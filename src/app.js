@@ -48,19 +48,62 @@ const renderTabNav = () => {
     .join('');
 };
 
+// 通过 offsetTop 检测换行行号，仅最后一行不拉伸
+let alignLock = false;
+const alignTabRows = () => {
+  if (alignLock) return;
+  const btns = Array.from(tabNav.querySelectorAll('.tab-btn'));
+  if (!btns.length) return;
+
+  alignLock = true;
+
+  // 先清除行内样式，让浏览器自然排布以确定换行位置
+  btns.forEach(b => { b.style.flex = ''; });
+
+  // 按 offsetTop 分组，得到每行的按钮索引
+  const rows = [];
+  btns.forEach((b, i) => {
+    const top = b.offsetTop;
+    const last = rows[rows.length - 1];
+    if (last && Math.abs(last.top - top) < 2) {
+      last.indices.push(i);
+    } else {
+      rows.push({ top, indices: [i] });
+    }
+  });
+
+  // 仅当多行时才处理
+  if (rows.length > 1) {
+    const lastRow = rows[rows.length - 1];
+    const lastSet = new Set(lastRow.indices);
+
+    // 非末排拉伸铺满，末排保持自然宽度
+    btns.forEach((b, i) => {
+      b.style.flex = lastSet.has(i) ? '0 1 auto' : '1 1 auto';
+    });
+  }
+
+  // 下一帧解锁，防止 ResizeObserver 重入
+  requestAnimationFrame(() => { alignLock = false; });
+};
+
 // ========== 渲染：卡片 ==========
-const renderCodeCard = (item) => `
+const renderCodeCard = (item) => {
+  const isMiniApp = item.code.startsWith('mp://');
+  return `
   <div class="activity-card">
     <div class="card-head">
       <span class="card-name">${item.name}</span>
       ${item.deadline ? `<span class="card-deadline">截止 ${item.deadline}</span>` : ''}
     </div>
+    ${isMiniApp ? '<span class="miniapp-tag">📱 小程序</span>' : ''}
     <div class="card-code">${item.code}</div>
     <div class="card-actions">
       <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}">📋 复制口令</button>
     </div>
   </div>
-`;
+  `;
+};
 
 const renderLinkCard = (item) => `
   <div class="activity-card">
@@ -167,3 +210,17 @@ document.addEventListener('keydown', (e) => {
 renderTabNav();
 switchTab(activeTab);
 renderFriendLinks();
+// ResizeObserver 在每次布局完成后精确触发，替代不可靠的手动定时
+new ResizeObserver(alignTabRows).observe(tabNav);
+
+// ========== Footer 吸底宽度同步 ==========
+const appEl = $('#app');
+const footerInner = document.querySelector('.footer-inner');
+const syncFooter = () => {
+  const style = getComputedStyle(appEl);
+  footerInner.style.maxWidth = style.maxWidth;
+  footerInner.style.marginLeft = style.marginLeft;
+  footerInner.style.marginRight = style.marginRight;
+};
+syncFooter();
+window.addEventListener('resize', syncFooter);

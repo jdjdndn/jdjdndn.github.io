@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>优惠活动聚合</title>
-    <script type="module" crossorigin src="./assets/main-DMpBBAg2.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/style-CZHMfpG_.js">
-    <link rel="stylesheet" crossorigin href="./assets/style-ETHBzkor.css">
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div id="app">
@@ -15,23 +13,21 @@
         <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
       </header>
 
-      <nav class="page-nav">
-        <a href="./index.html" class="active">活动首页</a>
-      </nav>
-
       <!-- Tab 导航 -->
       <nav id="tab-nav" class="tab-nav"></nav>
 
       <!-- Tab 内容 -->
       <main id="tab-content" class="tab-content"></main>
+    </div>
 
-      <!-- 友情链接 -->
-      <footer class="footer">
+    <!-- 友情链接（fixed 吸底，放在 #app 外以便全宽居中） -->
+    <footer class="footer">
+      <div class="footer-inner">
         <h2>🔗 友情链接</h2>
         <div id="friend-links" class="friend-links"></div>
         <p class="footer-note">省钱大作战，我们一起冲！🚀</p>
-      </footer>
-    </div>
+      </div>
+    </footer>
 
     <!-- 二维码弹窗 -->
     <div id="qr-overlay" class="qr-overlay hidden">
@@ -50,5 +46,6 @@
 
     <div id="toast" class="toast hidden">已复制</div>
 
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
