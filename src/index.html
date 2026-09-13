@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- SEO 基础 -->
     <title>优惠活动聚合 — 外卖·出行·购物·酒旅·电影票·快递 一站式优惠券中心</title>
@@ -21,6 +21,7 @@
     <meta property="og:title" content="优惠活动聚合 — 全网热门优惠一站全聚合" />
     <meta property="og:description" content="聚合美团外卖红包、出行券、淘宝京东优惠券、电影票折扣、快递寄件折扣等全网热门优惠活动。一键复制口令码，轻松省钱！" />
     <meta property="og:image" content="https://jdjdndn.github.io/og-image.svg" />
+    <meta property="og:image:alt" content="优惠活动聚合 — 外卖·出行·购物·酒旅·电影票·快递一站式优惠券中心" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="zh_CN" />
@@ -34,6 +35,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
 
     <!-- JSON-LD 结构化数据 -->
     <script type="application/ld+json">
@@ -43,30 +45,12 @@
       "name": "优惠活动聚合",
       "url": "https://jdjdndn.github.io/",
       "description": "聚合全网热门优惠活动，外卖红包、出行券、购物折扣、电影票、快递优惠一站全聚合。",
-      "dateModified": "2026-09-13",
+      "dateModified": "__BUILD_DATE__",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://jdjdndn.github.io/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "热门优惠活动",
-      "description": "全网热门优惠活动聚合列表",
-      "url": "https://jdjdndn.github.io/",
-      "numberOfItems": 6,
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "美团外卖红包", "description": "美团外卖每日红包口令码" },
-        { "@type": "ListItem", "position": 2, "name": "滴滴出行券", "description": "出行打车优惠券" },
-        { "@type": "ListItem", "position": 3, "name": "淘宝天猫优惠", "description": "淘宝天猫购物优惠券" },
-        { "@type": "ListItem", "position": 4, "name": "京东优惠券", "description": "京东购物优惠活动" },
-        { "@type": "ListItem", "position": 5, "name": "电影票折扣", "description": "电影票特惠活动" },
-        { "@type": "ListItem", "position": 6, "name": "快递寄件优惠", "description": "快递寄件折扣优惠" }
-      ]
     }
     </script>
 
@@ -81,6 +65,12 @@
           优惠活动聚合
         </h1>
         <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
+        <div class="header-controls">
+          <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <span id="dark-toggle-text">暗色</span>
+          </button>
+        </div>
         <div class="header-stats" id="header-stats"></div>
       </header>
 
@@ -102,13 +92,14 @@
     <!-- 友情链接（fixed 吸底，可收起） -->
     <footer class="footer" id="footer">
       <div class="footer-inner">
-        <button class="footer-toggle" id="footer-toggle" aria-expanded="true" aria-controls="footer-body">
+        <button class="footer-toggle" id="footer-toggle" aria-expanded="false" aria-controls="footer-body">
           <span>友情链接</span>
           <span class="footer-arrow" id="footer-arrow">▲</span>
         </button>
         <div class="footer-body" id="footer-body">
           <div id="friend-links" class="friend-links"></div>
           <p class="footer-note">省钱大作战，我们一起冲！</p>
+          <p class="footer-contact">有问题或建议联系我，微信号：wcbblll</p>
         </div>
       </div>
     </footer>

@@ -26,8 +26,10 @@
   --code-bg: #f8f9ff;
   --code-border: #d0d5ff;
   --toast-bg: #1f2937;
-  --card-hover-border: #d0d5dd;
   --primary-light-hover: #FFE8DD;
+
+  /* iOS Safari 安全区域 */
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,7 +53,11 @@ body {
 #app {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 160px;
+  padding: 24px 16px calc(160px + env(safe-area-inset-bottom));
+  transition: padding-bottom 0.3s ease;
+}
+body.footer-collapsed #app {
+  padding-bottom: 20px;
 }
 
 /* ========== Header ========== */
@@ -61,6 +67,11 @@ body {
 }
 .header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
 .header p { color: var(--muted); font-size: 13px; }
+.header-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
 .header-stats {
   display: flex;
   justify-content: center;
@@ -74,7 +85,7 @@ body {
 
 /* 过期筛选开关 */
 .hide-expired-toggle {
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
@@ -166,6 +177,7 @@ body {
   flex-wrap: wrap;
   gap: 6px;
   padding: 4px 0 16px;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -384,7 +396,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.btn-qr:hover { background: color-mix(in srgb, var(--accent) 15%, white); }
+.btn-qr:hover { background: #e6f0ff; background: color-mix(in srgb, var(--accent) 15%, white); }
 
 /* ========== Toast ========== */
 .toast {
@@ -403,6 +415,7 @@ body {
   pointer-events: none;
 }
 .toast.hidden { opacity: 0; transform: translateX(-50%) translateY(10px); }
+body.footer-collapsed .toast { bottom: 40px; }
 
 /* ========== 二维码弹窗 ========== */
 .qr-overlay {
@@ -499,7 +512,9 @@ body {
   background: var(--bg);
   border-top: 2px solid var(--border);
   z-index: 100;
+  overflow: hidden;
   transition: padding var(--transition);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .footer.collapsed { padding: 0; }
 .footer-inner {
@@ -569,61 +584,14 @@ body {
   font-size: 11px;
   color: var(--muted);
 }
-
-/* ========== 管理页共享样式 ========== */
-.toolbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 18px;
-}
-button {
-  cursor: pointer;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: inherit;
-}
-button:disabled { cursor: not-allowed; opacity: 0.5; }
-.btn-base {
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: background 0.2s, transform 0.15s;
-}
-.btn-base:active { transform: translateY(1px); }
-.primary { background: var(--primary); color: white; }
-.primary:hover { background: var(--primary-hover); }
-.secondary { background: var(--border); color: var(--text); }
-.secondary:hover { background: color-mix(in srgb, var(--text) 20%, var(--border)); }
-
-.form-card {
-  margin-bottom: 22px;
-}
-.form-card h2 {
-  margin: 0 0 14px;
-  font-size: 18px;
-}
-label {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 13px;
+.footer-contact {
+  text-align: center;
+  font-size: 11px;
   color: var(--muted);
-}
-input {
-  display: block;
-  width: 100%;
-  margin-top: 6px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 14px;
-  background: #fff;
-}
-.form-actions {
-  display: flex;
-  gap: 10px;
   margin-top: 6px;
 }
+
+button:disabled { cursor: not-allowed; opacity: 0.5; }
 
 /* ========== Toast 动画 ========== */
 @keyframes toastIn {
@@ -633,6 +601,24 @@ input {
 .toast.show { animation: toastIn 0.2s ease-out; }
 
 .hidden { display: none; }
+
+/* ========== 搜索高亮 ========== */
+[data-highlight] mark {
+  background: #fef08a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+@media (prefers-color-scheme: dark) {
+  [data-highlight] mark {
+    background: #854d0e;
+    color: #fef08a;
+  }
+}
+body.dark-mode [data-highlight] mark {
+  background: #854d0e;
+  color: #fef08a;
+}
 
 /* ========== 过期状态 ========== */
 .activity-card.expired {
@@ -678,7 +664,7 @@ input {
 
 /* ========== 响应式：桌面端 ========== */
 @media (min-width: 1024px) {
-  #app { padding: 32px 32px 160px; }
+  #app { padding: 32px 32px calc(160px + env(safe-area-inset-bottom)); }
   .header h1 { font-size: 32px; line-height: 1.2; }
   .header p { font-size: 14px; }
   .tab-nav { gap: 8px; padding-bottom: 20px; }
@@ -690,18 +676,17 @@ input {
 
 /* ========== 响应式：iPad ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
-  #app { padding: 24px 24px 160px; }
+  #app { padding: 24px 24px calc(160px + env(safe-area-inset-bottom)); }
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 }
 
 /* ========== 响应式：手机端 ========== */
 @media (max-width: 480px) {
-  #app { padding: 16px 12px 120px; }
+  #app { padding: 16px 12px calc(120px + env(safe-area-inset-bottom)); }
   .header { margin-bottom: 14px; }
   .header h1 { font-size: 20px; line-height: 1.3; }
   .header p { font-size: 12px; }
   .header-stats { gap: 10px; font-size: 11px; flex-wrap: wrap; justify-content: center; }
-  .hide-expired-toggle { display: inline-flex; }
   .search-bar { margin: 12px auto 0; }
   .search-input { font-size: 13px; padding: 9px 40px 9px 36px; }
   .tab-nav {
@@ -736,8 +721,15 @@ input {
   .friend-links { gap: 6px; }
   .friend-link { padding: 5px 10px; font-size: 11px; }
 
-  .footer-toggle { font-size: 13px; padding: 8px 0; }
+  .footer-toggle { font-size: 13px; padding: 6px 0; }
   .footer-note { font-size: 10px; }
+  .footer-body { max-height: 140px; }
+
+  /* 移动端默认收起，节省屏幕空间 */
+  .footer { border-top-color: transparent; }
+  .footer .footer-body { max-height: 0; opacity: 0; }
+  .footer .footer-arrow { transform: rotate(180deg); }
+  body:not(.footer-collapsed) #app { padding-bottom: 120px; }
 }
 
 /* ========== Skip Link ========== */
@@ -778,7 +770,6 @@ input {
     --code-bg: #141428;
     --code-border: #2d2d55;
     --toast-bg: #e2e8f0;
-    --card-hover-border: #3d3d5c;
     --primary-light-hover: #3d1f0e;
   }
   body { background: var(--bg); color: var(--text); }
@@ -789,10 +780,94 @@ input {
   .header-stats span strong { color: var(--text); }
 }
 
+/* ========== 手动暗色模式 ========== */
+body.dark-mode {
+  --bg: #0f0f23;
+  --card: #1a1a2e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --primary-light: #2d1b0e;
+  --accent-light: #0c1929;
+  --border: #2d2d44;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 6px 24px rgba(255, 107, 53, 0.2);
+  --danger-light: #2d0f0f;
+  --success-light: #0f2d1a;
+  --placeholder: #64748b;
+  --hover-bg: #252540;
+  --code-bg: #141428;
+  --code-border: #2d2d55;
+  --toast-bg: #e2e8f0;
+  --primary-light-hover: #3d1f0e;
+}
+body.dark-mode { background: var(--bg); color: var(--text); }
+body.dark-mode .card-code { color: #c4c9e0; }
+body.dark-mode .toast { color: #0f0f23; }
+body.dark-mode .search-clear:hover,
+body.dark-mode .qr-close:hover { background: var(--hover-bg); color: var(--text); }
+body.dark-mode .header-stats span strong { color: var(--text); }
+body.dark-mode .btn-secondary { background: var(--border); color: var(--text); }
+body.dark-mode .btn-secondary:hover { background: color-mix(in srgb, var(--text) 20%, var(--border)); }
+
+/* ========== 暗色模式切换按钮 ========== */
+.dark-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dark-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ========== 分享按钮 ========== */
+.btn-share {
+  background: var(--success-light);
+  color: var(--success);
+  padding: 8px 12px;
+  min-height: 40px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-share:hover { filter: brightness(0.9); }
+body.dark-mode .btn-share:hover { filter: brightness(1.2); }
+
 /* ========== 减少动画偏好 ========== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== iOS Safari 兼容性修复 ========== */
+@supports (-webkit-touch-callout: none) {
+  /* 仅在 iOS Safari 上应用 */
+  .qr-overlay {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  /* 修复 iOS Safari 100vh 问题 */
+  .footer {
+    position: -webkit-fixed;
+    position: fixed;
+    bottom: 0;
+    bottom: var(--safe-area-inset-bottom);
   }
 }

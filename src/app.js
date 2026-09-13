@@ -80,6 +80,7 @@ const ICONS = {
   feizhu_travel: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
   didi_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-6.06A1 1 0 0012.38 4H5.62a1 1 0 00-.92.63L2 11l-2 .85A1 1 0 00-.84 12.85V16h3"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>',
   huaxiaozhu_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+  dinner: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>',
   life: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
 };
 
@@ -94,6 +95,7 @@ const TAB_NAMES = {
   feizhu_travel: '飞猪出行',
   didi_ride: '滴滴出行',
   huaxiaozhu_ride: '花小猪出行',
+  dinner: '连锁餐饮',
   life: '电影票 · 快递',
 };
 
@@ -156,7 +158,7 @@ const alignTabRows = () => {
 };
 
 // ========== 渲染：卡片 ==========
-const renderCodeCard = (item) => {
+const renderCodeCard = (item, query) => {
   const isMiniApp = item.code.startsWith('mp://');
   const expired = isExpired(item.deadline);
   if (hideExpired && expired) return '';
@@ -167,20 +169,21 @@ const renderCodeCard = (item) => {
   return `
   <div class="activity-card${expiredClass}${expiringClass}">
     <div class="card-head">
-      <span class="card-name">${item.name}</span>
+      <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
       ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
       ${item.deadline ? `<span class="card-deadline">截止 ${item.deadline}</span>` : ''}
       ${expiredTag}
     </div>
-    <div class="card-code">${item.code}</div>
+    <div class="card-code"${query ? ' data-highlight' : ''}>${item.code}</div>
     <div class="card-actions">
       <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}" ${expired ? 'disabled' : ''}>复制口令</button>
+      <button class="btn-share" data-share-name="${item.name.replace(/"/g, '&quot;')}" data-share-text="${item.code.replace(/"/g, '&quot;')}">分享</button>
     </div>
   </div>
   `;
 };
 
-const renderLinkCard = (item) => {
+const renderLinkCard = (item, query) => {
   const expired = isExpired(item.deadline);
   if (hideExpired && expired) return '';
   const expiringSoon = isExpiringSoon(item.deadline);
@@ -192,13 +195,14 @@ const renderLinkCard = (item) => {
   return `
   <div class="activity-card${expiredClass}${expiringClass}">
     <div class="card-head">
-      <span class="card-name">${item.name}</span>
+      <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
       ${expiredTag}
     </div>
     <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${host || '前往活动'}</a>
     <div class="card-actions">
       <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>前往活动</a>
       <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">二维码</button>
+      <button class="btn-share" data-share-name="${item.name.replace(/"/g, '&quot;')}" data-share-url="${item.link}">分享</button>
     </div>
   </div>
   `;
@@ -272,6 +276,7 @@ const switchTab = (tabId) => {
 
 // ========== 过期筛选 ==========
 let hideExpired = localStorage.getItem('hideExpired') === 'true';
+let footerCollapsed = localStorage.getItem('footerCollapsed') === 'true';
 
 const toggleHideExpired = () => {
   hideExpired = !hideExpired;
@@ -330,6 +335,12 @@ tabContent.addEventListener('click', (e) => {
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
     showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
+    return;
+  }
+
+  const shareBtn = e.target.closest('.btn-share');
+  if (shareBtn) {
+    shareItem(shareBtn.dataset.shareName, shareBtn.dataset.shareUrl, shareBtn.dataset.shareText || '');
   }
 });
 
@@ -382,7 +393,7 @@ const renderSearchResults = (results) => {
     <div class="sub-section">
       <div class="sub-section-title">${group.label}${group.sectionTitle ? ' · ' + group.sectionTitle : ''}（${group.items.length}）</div>
       <div class="card-grid">
-        ${group.items.map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item))).join('')}
+        ${group.items.map((item) => (item.code ? renderCodeCard(item, searchQuery) : renderLinkCard(item, searchQuery))).join('')}
       </div>
     </div>
   `,
@@ -436,6 +447,7 @@ let lastFocusedElement = null;
 const showQrModal = async (url, name) => {
   lastFocusedElement = document.activeElement;
   const qrLoading = $('#qr-loading');
+  qrLoading.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>生成中…</span>';
   qrLoading.classList.remove('hidden');
   qrImg.classList.add('hidden');
   qrName.textContent = name;
@@ -509,7 +521,46 @@ const handleHashChange = () => {
 };
 window.addEventListener('hashchange', handleHashChange);
 
+// ========== 暗色模式 ==========
+const initDarkMode = () => {
+  const saved = localStorage.getItem('darkMode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved === 'true' || (!saved && prefersDark)) {
+    document.body.classList.add('dark-mode');
+  }
+  updateDarkToggleText();
+};
+
+const updateDarkToggleText = () => {
+  const textEl = $('#dark-toggle-text');
+  if (textEl) textEl.textContent = document.body.classList.contains('dark-mode') ? '亮色' : '暗色';
+};
+
+const toggleDarkMode = () => {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  updateDarkToggleText();
+};
+
+// ========== 分享 ==========
+const shareItem = async (name, url, text) => {
+  const shareData = text
+    ? { title: name, text }
+    : { title: name, url };
+  if (navigator.share) {
+    try { await navigator.share(shareData); return; } catch {}
+  }
+  const copyContent = text || url;
+  try {
+    await navigator.clipboard.writeText(copyContent);
+    showToast(text ? '口令已复制' : '链接已复制');
+  } catch {
+    showToast('复制失败，请手动复制');
+  }
+};
+
 // ========== 初始化 ==========
+initDarkMode();
 renderStats();
 // 同步 localStorage 中的过期筛选状态到 UI
 if (hideExpired) {
@@ -541,15 +592,25 @@ const syncFooter = () => {
   footerInner.style.maxWidth = style.maxWidth;
   footerInner.style.marginLeft = style.marginLeft;
   footerInner.style.marginRight = style.marginRight;
-  // 动态同步 footer 高度到 app padding-bottom
-  appEl.style.paddingBottom = `${footer.offsetHeight + 20}px`;
 };
 syncFooter();
 window.addEventListener('resize', syncFooter);
+
+// Footer 初始化收起状态
+if (footerCollapsed) {
+  footer.classList.add('collapsed');
+  footerToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.add('footer-collapsed');
+}
 
 // Footer 收起/展开
 footerToggle.addEventListener('click', () => {
   const collapsed = footer.classList.toggle('collapsed');
   footerToggle.setAttribute('aria-expanded', !collapsed);
-  requestAnimationFrame(syncFooter);
+  document.body.classList.toggle('footer-collapsed', collapsed);
+  localStorage.setItem('footerCollapsed', collapsed);
 });
+
+// 暗色模式切换
+const darkToggle = $('#dark-toggle');
+if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);

@@ -3,6 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: 'src',
+  publicDir: '../public',
   base: './',
   build: {
     outDir: '../dist',
@@ -15,11 +16,14 @@ export default defineConfig({
   },
   server: {
     open: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
+  },
+  plugins: [
+    {
+      name: 'inject-build-date',
+      transformIndexHtml(html) {
+        const today = new Date().toISOString().slice(0, 10);
+        return html.replace('__BUILD_DATE__', today);
       },
     },
-  },
+  ],
 });

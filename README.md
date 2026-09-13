@@ -1,80 +1,73 @@
-# 优惠券展示站点骨架
+# 优惠活动聚合
 
-这是一个可用于 GitHub Pages 的静态站点骨架，同时支持本地 Node.js 增删改查。
+一个用于 GitHub Pages 的静态优惠券聚合站点，收录美团、淘宝、京东、拼多多、携程、滴滴等平台的热门优惠活动。
 
 ## 功能
 
-- 展示优惠券列表
-- 支持新增、编辑、删除、跳转外部链接
-- 本地开发时通过 Node.js + JSON 文件持久化
-- 构建后可直接部署到 GitHub Pages
+- 分类 Tab 导航，支持全部/美团/淘宝闪购/电商/旅行/出行/餐饮/电影票·快递
+- 一键复制口令码，支持小程序口令（`mp://`）
+- 链接类优惠支持二维码扫码访问
+- 搜索优惠名称、口令码、分类
+- 过期优惠自动标记，支持一键隐藏
+- 暗色模式（手动切换 / 跟随系统）
+- 分享按钮（Web Share API / 剪贴板兜底）
+- 移动端适配，底部友情链接可收起
+- 暗色模式、可访问性增强、键盘快捷键（`/` 聚焦搜索）
 
 ## 技术栈
 
-- 前端：原生 HTML / CSS / JS
+- 前端：原生 HTML / CSS / JS（ES Modules）
 - 构建：Vite
-- 后端：Node.js + Express
-- 数据存储：`data/coupons.json`
+- 二维码：qrcode（本地生成）
 
 ## 目录结构
 
 ```
-├── data/
-│   └── coupons.json        # 优惠券数据
-├── public/                 # 前端源码
-│   ├── index.html
-│   ├── app.js
-│   └── style.css
-├── docs/                   # 构建产物（GitHub Pages 可从该目录部署）
-├── server.js               # 本地 Node API 服务
+├── src/                   # 前端源码
+│   ├── index.html         # 页面入口
+│   ├── app.js             # 交互逻辑
+│   ├── data.js            # 优惠数据（修改此文件更新内容）
+│   └── style.css          # 样式
+├── dist/                  # 构建产物（GitHub Pages 部署目录）
 ├── vite.config.js
 └── package.json
 ```
 
 ## 快速开始
 
-### 1. 安装依赖
+### 安装依赖
 
 ```bash
 npm install
 ```
 
-### 2. 启动本地开发
+### 本地开发
 
 ```bash
 npm run dev
 ```
 
-默认会同时启动：
+Vite 开发服务器启动后，浏览器自动打开 `http://localhost:5173`。
 
-- Node API 服务：`http://localhost:3000`
-- Vite 前端开发服务：`http://localhost:5173`
-
-Vite 已配置代理，`/api/*` 请求会自动转发到 Node 服务。
-
-### 3. 仅启动 Node 服务
-
-```bash
-npm start
-```
-
-### 4. 构建静态站点
+### 构建
 
 ```bash
 npm run build
 ```
 
-构建产物会输出到 `docs/` 目录。
+构建产物输出到 `dist/` 目录。
+
+### 预览构建产物
+
+```bash
+npm run preview
+```
 
 ## GitHub Pages 部署
 
-推荐在 GitHub 仓库设置中：
-
-- **Source**: Deploy from a branch
-- **Branch**: `main`
-- **Folder**: `/ docs`
-
-然后执行：
+1. 在 GitHub 仓库设置中：**Settings → Pages → Source** 选择 `Deploy from a branch`
+2. **Branch** 选择 `main`，**Folder** 选择 `/ dist`
+3. 执行构建并推送：
 
 ```bash
 npm run build
@@ -85,19 +78,23 @@ git push
 
 ## 数据说明
 
-- 本地开发时，所有增删改查操作都会写入 `data/coupons.json`
-- 部署到 GitHub Pages 后为纯静态站点，不包含 Node 服务
-- 如果需要线上持久化，可替换为 localStorage / GitHub API / 其他后端服务
+所有优惠数据在 `src/data.js` 中管理，修改此文件即可更新页面内容，无需改动 `app.js`。
 
-## API 接口
+### 数据结构
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/coupons` | 获取全部优惠券 |
-| GET | `/api/coupons/:id` | 获取单个优惠券 |
-| POST | `/api/coupons` | 新增优惠券 |
-| PUT | `/api/coupons/:id` | 更新优惠券 |
-| DELETE | `/api/coupons/:id` | 删除优惠券 |
+```js
+// tabs: 每个 tab 包含 id / label / sections[]
+//   sections[]: 每个分区包含 title / items[]
+//     items[]: 每个活动包含 name，以及以下二选一：
+//       - code（口令码，用户点击复制；mp:// 开头为小程序口令）
+//       - link（链接，用户点击跳转）
+//     可选字段：deadline（截止日期，格式 YYYY.MM.DD）
+
+// friendLinks: 友情链接数组
+export const friendLinks = [
+  { name: '站点名', url: 'https://...' },
+];
+```
 
 ## License
 
