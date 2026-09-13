@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "title": "新人专享 8 折",
+    "code": "NEW20",
+    "expireAt": "2025-12-31",
+    "link": "https://example.com/promo/new"
+  },
+  {
+    "id": "2",
+    "title": "满 200 减 50",
+    "code": "SAVE50",
+    "expireAt": "2025-09-30",
+    "link": "https://example.com/promo/save50"
+  },
+  {
+    "id": "1789259652614",
+    "title": "我是一个",
+    "code": "T10",
+    "expireAt": "2025-10-01",
+    "link": "https://example.com/t10"
+  },
+  {
+    "id": "1789259928439",
+    "title": "FSA",
+    "code": "hjdd",
+    "expireAt": "2026-09-13",
+    "link": "https://www.baidu.com"
+  }
+]
