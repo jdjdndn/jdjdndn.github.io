@@ -723,13 +723,13 @@ body.dark-mode [data-highlight] mark {
 
   .footer-toggle { font-size: 13px; padding: 6px 0; }
   .footer-note { font-size: 10px; }
-  .footer-body { max-height: 140px; }
+  .footer-body { max-height: none; }
 
   /* 移动端默认收起，节省屏幕空间 */
   .footer.collapsed { border-top-color: transparent; }
   .footer.collapsed .footer-body { max-height: 0; opacity: 0; }
   .footer.collapsed .footer-arrow { transform: rotate(180deg); }
-  body:not(.footer-collapsed) #app { padding-bottom: 120px; }
+  body:not(.footer-collapsed) #app { padding-bottom: 180px; }
 }
 
 /* ========== Skip Link ========== */
