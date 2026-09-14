@@ -1,6 +1,6 @@
 // ========== 数据（来自 data.js） ==========
-import { tabs, friendLinks } from './data.js';
 import QRCode from 'qrcode';
+import { friendLinks, tabs } from './data.js';
 
 // ========== 工具函数 ==========
 const $ = (sel) => document.querySelector(sel);
@@ -145,7 +145,7 @@ const alignTabRows = () => {
 
 // ========== 渲染：卡片 ==========
 const renderCodeCard = (item, query) => {
-  const isMiniApp = item.code.startsWith('mp://');
+  const isMiniApp = item.code.startsWith('mp://')|| item.code.startsWith('weixin://');
   const expired = isExpired(item.deadline);
   if (hideExpired && expired) return '';
   const expiringSoon = isExpiringSoon(item.deadline);

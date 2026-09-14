@@ -19,7 +19,9 @@ export const friendLinks = [
   { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y' },
   { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5' },
   { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9' },
-  {name:"优惠券",url:"https://kzurl18.cn/tHj1ww"}
+  {name:"优惠券",url:"https://kzurl18.cn/tHj1ww"},
+  {name:"号卡",url:"https://ym.ksjhaoka.com/?s=cZv1sZtw718503"},
+  {name:"花店",url:"https://wxmpurl.cn/AOPNUIe3tHa"},
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/' },
   // { name: '京东·淘宝·拼多多', url: 'https://github.com/jdjdndn/jd_tb_pxx' },
   // { name: '美团优惠聚合', url: 'https://github.com/jdjdndn/meituan_youhuiquan' },
@@ -352,7 +354,8 @@ export const tabs = [
       {
         title: '电影票 · 快递',
         items: [
-          { name: '电影票在线预订，最低19.9元', link: 'https://kurl04.cn/txh9iy' },
+          { name: '电影票在线预订1', link: 'https://kurl04.cn/txh9iy' },
+          { name: '电影票在线预订2', code: 'weixin://dl/business/?t=f6MDcoTPZpe' },
           { name: '寄件享4折起优惠，低至5元寄快递', link: 'https://kurl06.cn/txh9El' },
           {name:"优惠券",link:"https://kzurl18.cn/tHj1ww"}
         ],
