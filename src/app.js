@@ -236,7 +236,11 @@ const renderTabContent = (tabId) => {
 // ========== 渲染：友情链接 ==========
 const renderFriendLinks = () => {
   friendLinksEl.innerHTML = friendLinks
-    .map((f) => `<a class="friend-link" href="${f.url}" target="_blank" rel="noopener">${f.name}</a>`)
+    .map((f) => {
+      const description = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
+      const category = f.category ? ` data-category="${f.category}"` : '';
+      return `<a class="friend-link" href="${f.url}" target="_blank" rel="noopener sponsored"${description}${category}>${f.name}</a>`;
+    })
     .join('');
 };
 

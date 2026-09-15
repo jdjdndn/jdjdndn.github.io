@@ -575,6 +575,8 @@ body.footer-collapsed .toast { bottom: 40px; }
   justify-content: center;
   gap: 3px;
   margin-bottom: 8px;
+  list-style: none;
+  padding: 0;
 }
 .friend-link {
   display: inline-block;
@@ -594,6 +596,35 @@ body.footer-collapsed .toast { bottom: 40px; }
   border-color: var(--primary);
   color: var(--primary);
   box-shadow: var(--shadow);
+}
+.friend-link[rel*="sponsored"]::after {
+  content: "荐";
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 0 4px;
+  border-radius: 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.friend-link[data-category]::before {
+  content: attr(data-category);
+  display: none;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--hover-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+@media (min-width: 768px) {
+  .friend-link[data-category]::before {
+    display: inline-block;
+  }
 }
 .footer-note {
   text-align: center;
