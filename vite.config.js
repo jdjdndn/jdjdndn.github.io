@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
+import compression from 'vite-plugin-compression';
 
 // ========== 预渲染：从 data.js 提取优惠数据生成静态 HTML ==========
 function extractBracketBlock(src, startIdx) {
@@ -108,6 +109,7 @@ export default defineConfig({
   build: {
     outDir: '../dist',
     emptyOutDir: true,
+    cssCodeSplit: false,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
@@ -180,5 +182,7 @@ export default defineConfig({
         writeFileSync(resolve(__dirname, 'dist/sitemap.xml'), sitemap, 'utf-8');
       },
     },
+    compression({ algorithm: 'gzip' }),
+    compression({ algorithm: 'brotliCompress' }),
   ],
 });

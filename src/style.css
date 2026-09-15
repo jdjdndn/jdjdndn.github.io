@@ -206,6 +206,9 @@ body.footer-collapsed #app {
   border: 1.5px solid var(--border);
   transition: all var(--transition);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
 .tab-btn.active {
@@ -216,16 +219,16 @@ body.footer-collapsed #app {
 .tab-btn .tab-icon {
   width: 14px;
   height: 14px;
-  vertical-align: -2px;
-  margin-right: 2px;
+  flex-shrink: 0;
 }
 .tab-btn .badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255,255,255,0.25);
   font-size: 11px;
   padding: 1px 6px;
   border-radius: 8px;
-  margin-left: 4px;
   font-weight: 500;
 }
 .tab-btn:not(.active) .badge {
@@ -586,11 +589,6 @@ body.footer-collapsed .toast { bottom: 40px; }
   text-align: center;
   transition: all var(--transition);
   white-space: nowrap;
-  max-width: 4.8em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: middle;
 }
 .friend-link:hover {
   border-color: var(--primary);
@@ -736,7 +734,6 @@ body.dark-mode [data-highlight] mark {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    vertical-align: middle;
   }
 
   .sub-section-title { font-size: 14px; }
@@ -750,7 +747,15 @@ body.dark-mode [data-highlight] mark {
   .card-code { font-size: 11px; max-height: 48px; }
 
   .friend-links { gap: 3px; }
-  .friend-link { padding: 5px 10px; font-size: 11px; }
+  .friend-link {
+    padding: 5px 10px;
+    font-size: 11px;
+    max-width: 4.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    }
 
   .footer-toggle { font-size: 13px; padding: 6px 0; }
   .footer-note { font-size: 10px; }
