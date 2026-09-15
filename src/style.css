@@ -37,6 +37,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+  /* 确保刘海屏/异形屏圆角区域也被背景色覆盖 */
+  background: var(--bg);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: var(--text);
@@ -56,7 +61,7 @@ body {
 #app {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px calc(16px + var(--safe-area-inset-left)) calc(160px + var(--safe-area-inset-bottom)) calc(16px + var(--safe-area-inset-right));
+  padding: 24px calc(16px + var(--safe-area-inset-right)) calc(160px + var(--safe-area-inset-bottom)) calc(16px + var(--safe-area-inset-left));
   transition: padding-bottom 0.3s ease;
 }
 body.footer-collapsed #app {
@@ -569,7 +574,7 @@ body.footer-collapsed .toast { bottom: 40px; }
   margin-bottom: 8px;
 }
 .friend-link {
-  display: block;
+  display: inline-block;
   text-decoration: none;
   padding: 6px 10px;
   background: var(--card);
@@ -580,6 +585,12 @@ body.footer-collapsed .toast { bottom: 40px; }
   color: var(--text);
   text-align: center;
   transition: all var(--transition);
+  white-space: nowrap;
+  max-width: 4.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 .friend-link:hover {
   border-color: var(--primary);
@@ -671,7 +682,7 @@ body.dark-mode [data-highlight] mark {
 
 /* ========== 响应式：桌面端 ========== */
 @media (min-width: 1024px) {
-  #app { padding: 32px calc(32px + var(--safe-area-inset-left)) calc(160px + var(--safe-area-inset-bottom)) calc(32px + var(--safe-area-inset-right)); }
+  #app { padding: 32px calc(32px + var(--safe-area-inset-right)) calc(160px + var(--safe-area-inset-bottom)) calc(32px + var(--safe-area-inset-left)); }
   .header h1 { font-size: 32px; line-height: 1.2; }
   .header p { font-size: 14px; }
   .tab-nav { gap: 8px; padding-bottom: 20px; }
@@ -683,13 +694,13 @@ body.dark-mode [data-highlight] mark {
 
 /* ========== 响应式：iPad ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
-  #app { padding: 24px calc(24px + var(--safe-area-inset-left)) calc(160px + var(--safe-area-inset-bottom)) calc(24px + var(--safe-area-inset-right)); }
+  #app { padding: 24px calc(24px + var(--safe-area-inset-right)) calc(160px + var(--safe-area-inset-bottom)) calc(24px + var(--safe-area-inset-left)); }
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 }
 
 /* ========== 响应式：手机端 ========== */
 @media (max-width: 480px) {
-  #app { padding: 16px calc(12px + var(--safe-area-inset-left)) calc(120px + var(--safe-area-inset-bottom)) calc(12px + var(--safe-area-inset-right)); }
+  #app { padding: 16px calc(12px + var(--safe-area-inset-right)) calc(120px + var(--safe-area-inset-bottom)) calc(12px + var(--safe-area-inset-left)); }
   .header { margin-bottom: 14px; }
   .header h1 { font-size: 20px; line-height: 1.3; }
   .header p { font-size: 12px; }
@@ -738,7 +749,7 @@ body.dark-mode [data-highlight] mark {
   .card-name { font-size: 13px; }
   .card-code { font-size: 11px; max-height: 48px; }
 
-  .friend-links { gap: 6px; }
+  .friend-links { gap: 3px; }
   .friend-link { padding: 5px 10px; font-size: 11px; }
 
   .footer-toggle { font-size: 13px; padding: 6px 0; }
@@ -892,7 +903,21 @@ body.dark-mode .btn-share:hover { filter: brightness(1.2); }
   .footer {
     position: -webkit-fixed;
     position: fixed;
+    position: fixed;
     bottom: 0;
     bottom: var(--safe-area-inset-bottom);
   }
 }
+
+/* ========== 预渲染静态内容（SEO/爬虫用，SPA 启动后自动替换） ========== */
+.prerender section { margin-bottom: 24px; }
+.prerender h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+.prerender h3 { font-size: 14px; font-weight: 600; margin: 12px 0 8px; color: var(--text); }
+.prerender ul { list-style: none; padding: 0; }
+.prerender li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+}
+.prerender li small { color: var(--muted); font-size: 12px; }

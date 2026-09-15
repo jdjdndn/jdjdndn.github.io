@@ -201,15 +201,15 @@ const renderTabContent = (tabId) => {
     tabContent.innerHTML = tabs
       .map(
         (tab) => `
-      <div class="sub-section">
-        <div class="sub-section-title">${tab.label}（${tabCounts[tabs.indexOf(tab)]}）</div>
+      <section class="sub-section" aria-labelledby="section-${tab.id}">
+        <h2 class="sub-section-title" id="section-${tab.id}">${tab.label}（${tabCounts[tabs.indexOf(tab)]}）</h2>
         <div class="card-grid">
           ${tab.sections
             .flatMap((sec) => sec.items)
             .map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item)))
             .join('')}
         </div>
-      </div>
+      </section>
     `,
       )
       .join('');
@@ -221,13 +221,13 @@ const renderTabContent = (tabId) => {
 
   tabContent.innerHTML = tab.sections
     .map(
-      (sec) => `
-    <div class="sub-section">
-      <div class="sub-section-title">${sec.title}（${sec.items.length}）</div>
+      (sec, i) => `
+    <section class="sub-section" aria-labelledby="section-${tab.id}-${i}">
+      <h2 class="sub-section-title" id="section-${tab.id}-${i}">${sec.title}（${sec.items.length}）</h2>
       <div class="card-grid">
         ${sec.items.map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item))).join('')}
       </div>
-    </div>
+    </section>
   `,
     )
     .join('');

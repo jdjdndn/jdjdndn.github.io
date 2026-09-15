@@ -3,9 +3,13 @@ User-agent: *
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Disallow: /sw.js
 
-# AI 爬虫
+# AI 爬虫（GEO 优化）
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: ClaudeBot
@@ -27,6 +31,15 @@ User-agent: PerplexityBot
 Allow: /
 
 User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Diffbot
 Allow: /
 
 Sitemap: https://jdjdndn.github.io/sitemap.xml
