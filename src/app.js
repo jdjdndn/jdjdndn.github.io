@@ -566,7 +566,12 @@ if (initialHash && tabs.some((t) => t.id === initialHash)) {
 switchTab(activeTab);
 
 renderFriendLinks();
-new ResizeObserver(alignTabRows).observe(tabNav);
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(alignTabRows).observe(tabNav);
+} else {
+  window.addEventListener('resize', debounce(alignTabRows, 200));
+  alignTabRows();
+}
 
 // ========== Footer 吸底宽度同步 + 收起 ==========
 const appEl = $('#app');
