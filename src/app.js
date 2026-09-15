@@ -106,11 +106,11 @@ const renderStats = () => {
 // ========== 渲染：Tab 导航 ==========
 const renderTabNav = () => {
   const allIcon = ICONS.all || '';
-  const allBtn = `<button class="tab-btn" data-tab="all" role="tab" aria-selected="false">${allIcon} 全部<span class="badge">${totalCount}</span></button>`;
+  const allBtn = `<button class="tab-btn" data-tab="all" role="tab" aria-selected="false">${allIcon}<span class="tab-name">全部</span><span class="badge">${totalCount}</span></button>`;
   const tabBtns = tabs
     .map(
       (t, i) =>
-        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''} ${t.name || t.label}<span class="badge">${tabCounts[i]}</span></button>`,
+        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''}<span class="tab-name">${t.name || t.label}</span><span class="badge">${tabCounts[i]}</span></button>`,
     )
     .join('');
   tabNav.innerHTML = allBtn + tabBtns;
@@ -257,6 +257,11 @@ const switchTab = (tabId) => {
     btn.classList.toggle('active', isActive);
     btn.setAttribute('aria-selected', isActive);
   });
+  // H5 端自动将当前 tab 滚入可视区域
+  const activeBtn = tabNav.querySelector('.tab-btn.active');
+  if (activeBtn) {
+    activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  }
   renderTabContent(tabId);
 };
 
