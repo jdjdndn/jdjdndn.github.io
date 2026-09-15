@@ -573,7 +573,7 @@ body.footer-collapsed .toast { bottom: 40px; }
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 3px;
   margin-bottom: 8px;
 }
 .friend-link {

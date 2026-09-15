@@ -15,12 +15,16 @@
 
 // ========== 友情链接 ==========
 export const friendLinks = [
-  { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u' },
-  { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y' },
-  { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5' },
-  { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9' },
+  // { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u' },
+  // { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y' },
+  // { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5' },
+  // { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9' },
   {name:"优惠券",url:"https://kzurl18.cn/tHj1ww"},
-  {name:"号卡",url:"https://ym.ksjhaoka.com/?s=cZv1sZtw718503"},
+  {name:"号卡1",url:"https://ym.ksjhaoka.com/?s=cZv1sZtw718503"},
+  {name:"号卡2",url:"https://m.172.org.cn/ProductEn/Index/59bc0abc9a7d31f5"},
+  {name:"号卡3",url:"https://www.haokaxinyao.com/#/pages/sales_index/my_store?mall_id=A3uqdWKQRcA9Gpw0Ae2M5Q%3D%3D"},
+  {name:"号卡4",url:"https://haoka.kakatx.com/web/#/pages/index/nationwide?token=MjY2NzIxfDE3ODk0NzE0OTcxMzdoYW9rYTY2Ng&viewRole=user"},
+  {name:"随身wifi",url:"https://h5.feilimao.cn/#/index/9cd45bdffaa18d79/1"},
   {name:"花店",url:"https://wxmpurl.cn/AOPNUIe3tHa"},
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/' },
   // { name: '京东·淘宝·拼多多', url: 'https://github.com/jdjdndn/jd_tb_pxx' },

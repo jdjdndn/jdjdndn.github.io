@@ -245,6 +245,7 @@ let activeTab = tabs[0].id;
 
 const switchTab = (tabId) => {
   activeTab = tabId;
+  localStorage.setItem('activeTab', tabId);
   // 更新 URL hash
   if (tabId !== 'all') {
     history.replaceState(null, '', `#${tabId}`);
@@ -563,10 +564,15 @@ if (hideExpired) {
 }
 renderTabNav();
 
-// 支持 URL hash 直接定位
+// 支持 URL hash 直接定位，无 hash 时从 localStorage 恢复
 const initialHash = window.location.hash.slice(1);
 if (initialHash && tabs.some((t) => t.id === initialHash)) {
   activeTab = initialHash;
+} else {
+  const saved = localStorage.getItem('activeTab');
+  if (saved && (saved === 'all' || tabs.some((t) => t.id === saved))) {
+    activeTab = saved;
+  }
 }
 switchTab(activeTab);
 
