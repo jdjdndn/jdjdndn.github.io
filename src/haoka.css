@@ -1,0 +1,571 @@
+/* ========== 号卡专区页面样式 ========== */
+
+/* ---------- 返回链接 ---------- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+.back-link:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+/* ---------- Hero 区域 ---------- */
+.haoka-hero {
+  position: relative;
+  text-align: center;
+  padding: 40px 20px 36px;
+  margin: -24px calc(-16px + var(--safe-area-inset-right)) 24px calc(-16px + var(--safe-area-inset-left));
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8F5E 50%, #FFB088 100%);
+  overflow: hidden;
+}
+.haoka-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.haoka-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: -30px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.haoka-hero > * {
+  position: relative;
+  z-index: 1;
+}
+.haoka-hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.haoka-hero-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: #fff;
+}
+.haoka-hero h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.haoka-hero p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 16px;
+}
+.haoka-hero-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.haoka-hero-controls {
+  position: absolute;
+  top: calc(var(--safe-area-inset-top) + 16px);
+  right: 20px;
+  z-index: 2;
+}
+.haoka-hero-controls .dark-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.haoka-hero-controls .dark-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+/* ---------- 信任徽章条 ---------- */
+.trust-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.trust-item svg {
+  flex-shrink: 0;
+  color: var(--success);
+}
+
+/* ---------- 号卡卡片网格 ---------- */
+.haoka-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* ---------- 号卡卡片 ---------- */
+.haoka-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.haoka-card:hover {
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.12);
+  border-color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.haoka-card-top {
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), #FF8F5E);
+  flex-shrink: 0;
+}
+
+.haoka-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.haoka-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.haoka-card-platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--primary-light);
+  flex-shrink: 0;
+}
+.haoka-card-platform-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--primary);
+}
+.haoka-card-info {
+  flex: 1;
+  min-width: 0;
+}
+.haoka-card-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+
+/* 徽章 */
+.haoka-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+.haoka-badge-hot { color: #fff; background: #FF4D4F; }
+.haoka-badge-new { color: #fff; background: #52C41A; }
+.haoka-badge-four { color: #fff; background: #1677FF; }
+.haoka-badge-rec { color: #fff; background: #FA8C16; }
+
+.haoka-card-price {
+  display: flex;
+  align-items: baseline;
+  flex-shrink: 0;
+}
+.haoka-price-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.haoka-card-platform {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--hover-bg);
+  padding: 3px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.haoka-card-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.haoka-card-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.haoka-visited {
+  color: var(--success) !important;
+  background: rgba(34, 197, 94, 0.08) !important;
+}
+.haoka-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+.haoka-tag svg {
+  width: 12px;
+  height: 12px;
+}
+
+.haoka-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+.haoka-card-actions .btn-go {
+  flex: 1;
+  padding: 12px 0;
+  min-height: 46px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #FF6B35, #FF8F5E);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.25);
+}
+.haoka-card-actions .btn-go:hover {
+  background: linear-gradient(135deg, #E55A2B, #FF6B35);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.35);
+  transform: translateY(-1px);
+}
+.haoka-card-actions .btn-qr {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 12px 16px;
+  min-height: 46px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.haoka-card-actions .btn-qr:hover {
+  background: color-mix(in srgb, var(--accent) 12%, white);
+}
+
+/* ---------- SEO/GEO 内容区 ---------- */
+.seo-section {
+  margin-top: 40px;
+  padding: 0 4px;
+}
+.seo-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.seo-section-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* FAQ 折叠 */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.faq-item:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+.faq-question:hover {
+  color: var(--primary);
+}
+.faq-question svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+.faq-item[open] .faq-question svg {
+  transform: rotate(180deg);
+}
+.faq-answer {
+  padding: 0 16px 14px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* 使用指南 */
+.guide-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.guide-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.guide-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.guide-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.guide-content p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- 跨页面推荐 ---------- */
+.cross-link-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+.cross-link-banner a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.cross-link-banner a:hover { opacity: 0.8; }
+
+/* ---------- 响应式 ---------- */
+@media (min-width: 640px) {
+  .haoka-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .guide-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .haoka-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .haoka-hero {
+    padding: 56px 32px 48px;
+    margin: -32px calc(-32px + var(--safe-area-inset-right)) 32px calc(-32px + var(--safe-area-inset-left));
+  }
+  .haoka-hero h1 { font-size: 32px; }
+  .haoka-hero p { font-size: 15px; }
+  .agent-hook {
+    padding: 48px 40px;
+    margin-top: 48px;
+  }
+  .agent-hook-title {
+    font-size: 24px;
+  }
+  .seo-section-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .haoka-grid {
+    gap: 12px;
+  }
+  .haoka-hero {
+    padding: 32px 16px 28px;
+  }
+  .haoka-hero h1 { font-size: 20px; }
+  .haoka-hero-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+  .haoka-hero-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+  .haoka-hero-stats {
+    font-size: 12px;
+    padding: 6px 16px;
+  }
+  .trust-bar {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .trust-item { font-size: 11px; }
+  .haoka-card-body {
+    padding: 16px;
+  }
+  .haoka-card-name {
+    font-size: 15px;
+  }
+  .haoka-card-actions .btn-go,
+  .haoka-card-actions .btn-qr {
+    font-size: 13px;
+    padding: 10px 0;
+    min-height: 42px;
+  }
+  .agent-hook {
+    padding: 24px 16px;
+    margin-top: 32px;
+    border-radius: 16px;
+  }
+  .agent-hook-title {
+    font-size: 18px;
+  }
+  .agent-register-btn {
+    padding: 12px 16px;
+  }
+  .agent-register-name {
+    font-size: 13px;
+  }
+  .benefit-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  .seo-section {
+    margin-top: 32px;
+  }
+  .seo-section-title {
+    font-size: 16px;
+  }
+}

@@ -14,7 +14,13 @@
     <meta name="application-name" content="优惠活动聚合" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="color-scheme" content="light dark" />
+    <!-- TODO: 替换为你的 Google Search Console 验证码 -->
+    <!-- <meta name="google-site-verification" content="YOUR_GOOGLE_CODE" /> -->
+    <!-- TODO: 替换为你的百度站长验证码 -->
+    <!-- <meta name="baidu-site-verification" content="YOUR_BAIDU_CODE" /> -->
     <link rel="canonical" href="https://jdjdndn.github.io/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/" />
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms-full.txt" title="完整优惠数据（供 AI 阅读）" />
 
@@ -51,17 +57,25 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://jdjdndn.github.io/#website",
       "name": "优惠活动聚合",
       "alternateName": ["优惠券聚合", "红包聚合", "省钱优惠中心"],
       "url": "https://jdjdndn.github.io/",
       "description": "聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、肯德基/瑞幸等连锁餐饮优惠、电影票折扣、快递寄件折扣，全网热门优惠一站全聚合。收录超过150个优惠活动，覆盖外卖、出行、购物、酒旅、餐饮、生活六大场景。",
+      "datePublished": "2025-01-01",
       "dateModified": "__BUILD_DATE__",
       "inLanguage": "zh-CN",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://jdjdndn.github.io/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": "https://jdjdndn.github.io/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        {
+          "@type": "ReadAction",
+          "target": "https://jdjdndn.github.io/"
+        }
+      ],
       "mainEntity": {
         "@type": "ItemList",
         "name": "优惠活动分类",
@@ -135,13 +149,19 @@
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".faq-question", ".faq-answer"]
+      },
+      "datePublished": "2025-01-01",
+      "dateModified": "2025-07-18",
       "mainEntity": [
         {
           "@type": "Question",
           "name": "什么是优惠活动聚合？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "优惠活动聚合是一个一站式优惠券中心，聚合了美团外卖红包、淘宝闪购、京东优惠、携程同程飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠活动。用户只需复制口令码或点击链接即可领取优惠。"
+            "text": "优惠活动聚合是一个一站式优惠券导航站，收录超过150个优惠活动，覆盖美团外卖、淘宝闪购、京东、拼多多、携程/同程/飞猪酒店旅行、滴滴出行、肯德基/瑞幸等连锁餐饮、电影票、快递寄件六大场景。复制口令码或点击链接即可跳转领取，每天更新。"
           }
         },
         {
@@ -149,7 +169,7 @@
           "name": "如何使用优惠口令码？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "在本站点击'复制口令'按钮，复制口令码后打开对应的App（如美团、淘宝等），口令会自动识别并跳转到优惠领取页面。部分活动也可以直接点击'前往活动'链接跳转。"
+            "text": "两步即可领取：1) 在本站点击'复制口令'按钮复制口令码；2) 打开对应App（美团/淘宝/京东等），口令自动识别并跳转到领取页面。部分活动支持直接点击'前往活动'链接跳转，无需复制口令。整个过程约10秒完成。"
           }
         },
         {
@@ -165,7 +185,7 @@
           "name": "优惠活动会过期吗？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "部分优惠活动有截止日期，过期后将无法使用。本站会显示每个活动的截止时间，支持一键隐藏已过期活动。数据持续更新中，请关注最新优惠。"
+            "text": "部分优惠有截止日期（如美团外卖节截止2027.12.31、淘宝闪购天天领红包截止2032.4.14），过期后无法使用。本站每个活动都标注了截止时间，支持一键隐藏已过期活动。站长持续更新中，建议收藏本站。"
           }
         },
         {
@@ -211,7 +231,9 @@
       "url": "https://jdjdndn.github.io/",
       "logo": "https://jdjdndn.github.io/icons/icon-192.png",
       "description": "一站式优惠券中心，聚合美团外卖、淘宝闪购、京东、携程同程飞猪、滴滴出行、连锁餐饮等全网热门优惠活动",
-      "sameAs": [],
+      "sameAs": [
+        "https://github.com/jdjdndn"
+      ],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
@@ -323,57 +345,10 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "友情链接是什么？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "友情链接是本站精心筛选的优质优惠平台和服务推荐，包括号卡办理、随身WiFi、鲜花预订等实用服务。这些链接经过严格审核，旨在为用户提供更多省钱选择和便捷服务。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "友情链接安全吗？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "本站推荐的友情链接均经过严格筛选和审核，确保平台正规可靠。号卡办理类链接均为运营商官方或授权平台，用户可放心使用。如有任何问题，可随时联系站长。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "如何通过友情链接办理号卡？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "在本站底部友情链接区域，点击对应的号卡办理链接（如号卡1、号卡2等），即可跳转到相应平台。选择心仪的套餐，按照页面提示完成办理即可。所有号卡均支持全国配送。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "随身WiFi是什么？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "随身WiFi是一种便携式上网设备，可以将4G/5G信号转换为WiFi信号，供多台设备同时上网。适合出差、旅行、户外等场景使用。本站推荐的飞利猫随身WiFi，信号稳定、资费实惠。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "友情链接会定期更新吗？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "是的，本站会定期审核和更新友情链接，确保推荐的平台和服务持续优质可靠。如有新的优质平台推荐，欢迎联系站长。"
-          }
-        }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
       "@type": "HowTo",
       "name": "如何使用优惠活动聚合领取优惠",
       "description": "通过本站领取美团、淘宝、京东等平台优惠的简单步骤",
+      "totalTime": "PT1M",
       "step": [
         {
           "@type": "HowToStep",
@@ -441,6 +416,7 @@
         </button>
         <div class="footer-body" id="footer-body">
           <nav id="friend-links" class="friend-links" aria-label="友情链接导航"></nav>
+          <p class="footer-disclaimer" style="font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4;">本站为优惠信息聚合平台，非美团/淘宝/京东等官方平台。优惠信息仅供参考，以各平台实际页面为准。</p>
           <p class="footer-note">省钱大作战，我们一起冲！</p>
           <p class="footer-contact">有问题或建议联系我，微信号：wcbblll</p>
         </div>

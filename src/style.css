@@ -517,6 +517,67 @@ body.footer-collapsed .toast { bottom: 40px; }
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.qr-share {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.qr-share-copy,
+.qr-share-native {
+  flex: 1;
+  padding: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--text);
+  transition: all 0.2s;
+}
+.qr-share-copy:hover { border-color: var(--primary); color: var(--primary); }
+.qr-share-native { background: var(--primary); color: #fff; border-color: var(--primary); }
+.qr-share-native:hover { opacity: 0.9; }
+.qr-share-download {
+  flex: 1;
+  padding: 10px 0;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.qr-share-download:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ========== 回到顶部 ========== */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s;
+  z-index: 90;
+}
+.back-to-top:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+
+/* ========== 已访问标记 ========== */
+.haoka-visited { opacity: 0.6; }
+.wifi-visited { opacity: 0.6; }
 
 /* ========== Footer 友情链接 ========== */
 .footer {
@@ -621,6 +682,18 @@ body.footer-collapsed .toast { bottom: 40px; }
   margin-right: 4px;
   vertical-align: middle;
 }
+/* 号卡专区入口链接 */
+.friend-link-highlight {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+.friend-link-highlight:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
 @media (min-width: 768px) {
   .friend-link[data-category]::before {
     display: inline-block;
@@ -639,6 +712,101 @@ body.footer-collapsed .toast { bottom: 40px; }
 }
 
 button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+/* ========== 代理招募（haoka/wifi 共享） ========== */
+.agent-hook {
+  margin-top: 40px;
+  padding: 36px 24px;
+  background: var(--card);
+  border: 2px dashed var(--primary);
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.agent-hook::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.agent-hook::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: -30px;
+  width: 100px;
+  height: 100px;
+  background: var(--accent-light);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.agent-hook > * {
+  position: relative;
+  z-index: 1;
+}
+.agent-hook-icon { margin-bottom: 12px; }
+.agent-hook-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.agent-hook-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.agent-hook-benefits {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.benefit-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 5px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 107, 53, 0.2);
+}
+.agent-register-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.agent-register-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
+}
+.agent-register-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.25);
+}
+.agent-register-name { font-size: 14px; }
 
 /* ========== Toast 动画 ========== */
 @keyframes toastIn {

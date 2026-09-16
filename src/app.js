@@ -235,7 +235,9 @@ const renderTabContent = (tabId) => {
 
 // ========== 渲染：友情链接 ==========
 const renderFriendLinks = () => {
-  friendLinksEl.innerHTML = friendLinks
+  const haokaEntry = `<a class="friend-link friend-link-highlight" href="./haoka.html">号卡专区</a>`;
+  const wifiEntry = `<a class="friend-link friend-link-highlight" href="./wifi.html">随身WiFi</a>`;
+  friendLinksEl.innerHTML = haokaEntry + wifiEntry + friendLinks
     .map((f) => {
       const description = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
       const category = f.category ? ` data-category="${f.category}"` : '';
