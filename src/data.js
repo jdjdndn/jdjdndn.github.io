@@ -20,7 +20,7 @@ export const friendLinks = [
   // { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发优惠', category: '电商平台' },
   // { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器优惠', category: '云服务' },
   {name:"优惠券",url:"https://kzurl18.cn/tHj1ww", description:"全网热门优惠券聚合，涵盖外卖、购物、出行等多场景优惠", category:"优惠券平台"},
-  {name:"号卡1",url:"https://ym.ksjhaoka.com/?s=cZv1sZtw718503", description:"手机号卡优惠办理，流量套餐超值选择，支持全国配送", category:"号卡办理"},
+  {name:"号卡1",url:"https://ym.ksjhaoka.com/?s=loshqy1H719207", description:"手机号卡优惠办理，流量套餐超值选择，支持全国配送", category:"号卡办理"},
   {name:"号卡2",url:"https://m.172.org.cn/ProductEn/Index/59bc0abc9a7d31f5", description:"172号卡官方商城，正规运营商号卡办理，安全可靠", category:"号卡办理"},
   {name:"号卡3",url:"https://www.haokaxinyao.com/#/pages/sales_index/my_store?mall_id=A3uqdWKQRcA9Gpw0Ae2M5Q%3D%3D", description:"好卡新耀号卡平台，高性价比流量卡，多种套餐可选", category:"号卡办理"},
   {name:"号卡4",url:"https://haoka.kakatx.com/web/#/pages/index/nationwide?token=MjY2NzIxfDE3ODk0NzE0OTcxMzdoYW9rYTY2Ng&viewRole=user", description:"全国号卡办理中心，多种套餐可选，运营商正规授权", category:"号卡办理"},
