@@ -96,10 +96,18 @@ const tabCounts = tabs.map((t) =>
 );
 const totalCount = tabCounts.reduce((a, b) => a + b, 0);
 
+// 统计过期优惠数量
+const expiredCount = tabs.reduce((count, tab) => {
+  return count + tab.sections.reduce((sectionCount, section) => {
+    return sectionCount + section.items.filter(item => isExpired(item.deadline)).length;
+  }, 0);
+}, 0);
+
 // 渲染头部统计
 const renderStats = () => {
   headerStats.innerHTML = `
     <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_total} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
     <span class="stat-badge">${ICONS.stats_update} 数据持续更新中</span>
   `;
 };

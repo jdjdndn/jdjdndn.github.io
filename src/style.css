@@ -215,6 +215,14 @@ body.no-has.footer-collapsed #app {
   font-weight: 800;
   font-size: 13px;
 }
+.hero-stats .stat-badge.expired-count {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+.hero-stats .stat-badge.expired-count strong {
+  color: #dc2626;
+}
 
 /* 过期筛选开关 */
 .hide-expired-toggle {
@@ -1206,6 +1214,8 @@ body.dark-mode .toast { color: #0f0f23; }
 body.dark-mode .search-clear:hover,
 body.dark-mode .qr-close:hover { background: var(--hover-bg); color: var(--text); }
 body.dark-mode .hero-stats .stat-badge { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.12); }
+body.dark-mode .hero-stats .stat-badge.expired-count { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; }
+body.dark-mode .hero-stats .stat-badge.expired-count strong { color: #f87171; }
 body.dark-mode .btn-secondary { background: var(--border); color: var(--text); }
 body.dark-mode .btn-secondary:hover { background: #3a3a52; background: color-mix(in srgb, var(--text) 20%, var(--border)); }
 body.dark-mode .hero {
