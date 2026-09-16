@@ -263,5 +263,12 @@ initDarkMode();
 renderCards();
 renderAgentHook();
 
+// 动态更新"最近更新"时间
+const updateEl = $('#wifi-update-time');
+if (updateEl) {
+  const now = new Date();
+  updateEl.textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
+}
+
 const darkToggle = $('#dark-toggle');
 if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);

@@ -375,21 +375,21 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <a href="#tab-content" class="skip-link">跳到主要内容</a>
     <div id="app">
-      <header class="header">
-        <h1>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -4px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          优惠活动聚合
-        </h1>
-        <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
-        <div class="header-controls">
+      <header class="hero" aria-label="优惠活动聚合">
+        <div class="hero-nav">
+          <span class="hero-logo">🏷️ 优惠聚合</span>
           <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
             <span id="dark-toggle-text">暗色</span>
           </button>
         </div>
-        <div class="header-stats" id="header-stats"></div>
+        <div class="hero-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h1>优惠活动聚合</h1>
+        <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
+        <div class="hero-stats" id="header-stats"></div>
       </header>
 
       <!-- 搜索栏 -->
@@ -400,6 +400,14 @@
       </div>
       <div class="search-count" id="search-count" aria-live="polite"></div>
 
+      <!-- 过期筛选 -->
+      <div class="filter-bar" id="filter-bar">
+        <button class="hide-expired-toggle" id="hide-expired" aria-pressed="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          隐藏已过期
+        </button>
+      </div>
+
       <!-- Tab 导航 -->
       <nav id="tab-nav" class="tab-nav" role="tablist" aria-label="优惠分类"></nav>
 
@@ -408,7 +416,7 @@
     </div>
 
     <!-- 友情链接（fixed 吸底，可收起） -->
-    <footer class="footer" id="footer">
+    <footer class="footer friend-links-box" id="footer">
       <div class="footer-inner">
         <button class="footer-toggle" id="footer-toggle" aria-expanded="false" aria-controls="footer-body">
           <span>友情链接</span>
@@ -416,9 +424,9 @@
         </button>
         <div class="footer-body" id="footer-body">
           <nav id="friend-links" class="friend-links" aria-label="友情链接导航"></nav>
-          <p class="footer-disclaimer" style="font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4;">本站为优惠信息聚合平台，非美团/淘宝/京东等官方平台。优惠信息仅供参考，以各平台实际页面为准。</p>
-          <p class="footer-note">省钱大作战，我们一起冲！</p>
-          <p class="footer-contact">有问题或建议联系我，微信号：wcbblll</p>
+          <p class="footer-disclaimer" style="font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4;">本站为优惠信息聚合平台，非美团/淘宝/京东等官方平台。优惠信息仅供参考，以各平台实际页面为准。有问题或建议联系我，微信号：wcbblll</p>
+          <!-- <p class="footer-note">省钱大作战，我们一起冲！</p> -->
+          <!-- <p class="footer-contact"></p> -->
         </div>
       </div>
     </footer>

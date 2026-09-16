@@ -2,6 +2,11 @@
 import QRCode from 'qrcode';
 import { friendLinks, tabs } from './data.js';
 
+// ========== :has() 兼容性降级 ==========
+if (document.body && !CSS.supports('selector(:has(*))')) {
+  document.body.classList.add('no-has');
+}
+
 // ========== 工具函数 ==========
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -94,12 +99,8 @@ const totalCount = tabCounts.reduce((a, b) => a + b, 0);
 // 渲染头部统计
 const renderStats = () => {
   headerStats.innerHTML = `
-    <span>${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
-    <span>${ICONS.stats_update} 数据持续更新中</span>
-    <button class="hide-expired-toggle" id="hide-expired" aria-pressed="false">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-      隐藏已过期
-    </button>
+    <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    <span class="stat-badge">${ICONS.stats_update} 数据持续更新中</span>
   `;
 };
 
@@ -427,7 +428,8 @@ searchClear.addEventListener('click', () => {
 });
 
 // 过期筛选按钮
-headerStats.addEventListener('click', (e) => {
+const filterBar = $('#filter-bar');
+filterBar.addEventListener('click', (e) => {
   if (e.target.closest('.hide-expired-toggle')) {
     toggleHideExpired();
   }

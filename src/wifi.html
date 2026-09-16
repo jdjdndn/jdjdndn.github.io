@@ -75,21 +75,21 @@
             "@type": "ListItem",
             "position": 2,
             "name": "超能犇随身WiFi充电宝款",
-            "url": "http://h5.lianhengkj.com/",
+            "url": "https://h5.lianhengkj.com/",
             "description": "充电宝款随身WiFi，三网切换，便携充电二合一"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "超能犇CPE无线移动宽带",
-            "url": "http://h5.lianhengkj.com/",
+            "url": "https://h5.lianhengkj.com/",
             "description": "免插卡CPE无线宽带，内置电信联通卡，8天线WiFi穿墙王"
           },
           {
             "@type": "ListItem",
             "position": 4,
             "name": "超能犇5G-CPE无线移动宽带",
-            "url": "http://h5.lianhengkj.com/",
+            "url": "https://h5.lianhengkj.com/",
             "description": "5G CPE无线移动宽带，带网口高速上网"
           },
           {
@@ -222,28 +222,41 @@
     <link rel="stylesheet" href="./wifi.css" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">跳到主要内容</a>
     <div id="app">
+
       <!-- Hero 区域 -->
       <section class="wifi-hero" aria-label="随身WiFi专区介绍">
-        <div class="wifi-hero-controls">
-          <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <span id="dark-toggle-text">暗色</span>
-          </button>
+        <!-- 顶部导航栏 -->
+        <div class="wifi-hero-nav">
+          <a href="./" class="back-link" aria-label="返回首页">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            返回首页
+          </a>
+          <div class="wifi-hero-controls">
+            <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+              <span id="dark-toggle-text">暗色</span>
+            </button>
+          </div>
         </div>
-        <a href="./" class="back-link" aria-label="返回首页" style="color:rgba(255,255,255,0.7);margin-bottom:8px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          返回首页
-        </a>
         <div class="wifi-hero-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
         </div>
         <h1>随身WiFi专区</h1>
         <p>便携上网 · 出差旅行必备 · 多设备共享</p>
         <div class="wifi-hero-stats">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-          已收录 <strong id="wifi-count">5</strong> 个随身WiFi平台 · 已服务 <strong>10万+</strong> 用户 · 最近更新：2025年7月
+          <span class="stat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            已收录 <strong id="wifi-count">5</strong> 个平台
+          </span>
+          <span class="stat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            已服务 <strong>10万+</strong> 用户
+          </span>
+          <span class="stat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            更新：<span id="wifi-update-time">2025年7月</span>
+          </span>
         </div>
       </section>
 
