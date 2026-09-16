@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import compression from 'vite-plugin-compression';
 
 // ========== 预渲染：从 data.js 提取优惠数据生成静态 HTML ==========
@@ -102,6 +102,22 @@ function buildPrerenderHTML(tabs) {
   return html;
 }
 
+// ========== 自动发现着陆页 ==========
+function discoverLandingPages() {
+  const landingDir = resolve(__dirname, 'src');
+  const entries = {};
+  try {
+    for (const file of readdirSync(landingDir)) {
+      // 着陆页命名: xxx-yyy.html（包含短横线的非主页面）
+      if (file.endsWith('.html') && file.includes('-') && !file.startsWith('llms')) {
+        const name = file.replace('.html', '');
+        entries[name] = resolve(landingDir, file);
+      }
+    }
+  } catch {}
+  return entries;
+}
+
 export default defineConfig({
   root: 'src',
   publicDir: '../public',
@@ -115,6 +131,7 @@ export default defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         haoka: resolve(__dirname, 'src/haoka.html'),
         wifi: resolve(__dirname, 'src/wifi.html'),
+        ...discoverLandingPages(),
       },
     },
   },
@@ -160,6 +177,15 @@ export default defineConfig({
       name: 'generate-sitemap',
       writeBundle() {
         const today = new Date().toISOString().slice(0, 10);
+        const landingPages = discoverLandingPages();
+        const landingUrls = Object.keys(landingPages).map((name) => `
+  <url>
+    <loc>https://jdjdndn.github.io/${name}.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('');
+
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -191,7 +217,7 @@ export default defineConfig({
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
+  </url>${landingUrls}
 </urlset>`;
         writeFileSync(resolve(__dirname, 'dist/sitemap.xml'), sitemap, 'utf-8');
       },

@@ -1,6 +1,7 @@
 // ========== 数据（来自 data.js） ==========
 import QRCode from 'qrcode';
 import { friendLinks, tabs } from './data.js';
+import { track } from './analytics.js';
 
 // ========== :has() 兼容性降级 ==========
 if (document.body && !CSS.supports('selector(:has(*))')) {
@@ -260,6 +261,7 @@ let activeTab = tabs[0].id;
 
 const switchTab = (tabId) => {
   activeTab = tabId;
+  track('tab_switch', { tab: tabId });
   localStorage.setItem('activeTab', tabId);
   // 更新 URL hash
   if (tabId !== 'all') {
@@ -327,6 +329,8 @@ tabContent.addEventListener('click', (e) => {
       .replace(/&amp;/g, '&')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>');
+    const cardName = copyBtn.closest('.activity-card')?.querySelector('.card-name')?.textContent || '';
+    track('copy_code', { name: cardName });
     copyText(text);
     // 按钮反馈
     copyBtn.classList.add('success');
@@ -341,12 +345,14 @@ tabContent.addEventListener('click', (e) => {
 
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
+    track('qr_generate', { name: qrBtn.dataset.name });
     showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
     return;
   }
 
   const shareBtn = e.target.closest('.btn-share');
   if (shareBtn) {
+    track('share', { name: shareBtn.dataset.shareName });
     shareItem(shareBtn.dataset.shareName, shareBtn.dataset.shareUrl, shareBtn.dataset.shareText || '');
   }
 });
@@ -413,6 +419,7 @@ const handleSearch = () => {
   searchQuery = query;
 
   if (!query) {
+    track('search_clear');
     searchClear.classList.remove('visible');
     searchCount.classList.remove('visible');
     renderTabContent(activeTab);
@@ -421,6 +428,7 @@ const handleSearch = () => {
 
   searchClear.classList.add('visible');
   const results = searchCoupons(query);
+  track('search', { query, results_count: results.length });
   searchCount.textContent = `找到 ${results.length} 个匹配结果`;
   searchCount.classList.add('visible');
   renderSearchResults(results);
@@ -546,25 +554,132 @@ const updateDarkToggleText = () => {
 
 const toggleDarkMode = () => {
   document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  const isDark = document.body.classList.contains('dark-mode');
+  track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light' });
+  localStorage.setItem('darkMode', isDark);
   updateDarkToggleText();
 };
 
 // ========== 分享 ==========
+// 创建分享面板 DOM（仅创建一次）
+const createSharePanel = () => {
+  if ($('#share-panel')) return;
+  const panel = document.createElement('div');
+  panel.id = 'share-panel';
+  panel.className = 'share-panel hidden';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', '分享');
+  panel.innerHTML = `
+    <div class="share-panel-mask"></div>
+    <div class="share-panel-body">
+      <div class="share-panel-header">
+        <span class="share-panel-title">分享给朋友</span>
+        <button class="share-panel-close" aria-label="关闭">✕</button>
+      </div>
+      <div class="share-panel-content">
+        <p class="share-panel-name" id="share-panel-name"></p>
+        <div class="share-panel-options">
+          <button class="share-option" data-action="copy-link">
+            <span class="share-option-icon">🔗</span>
+            <span class="share-option-label">复制链接</span>
+          </button>
+          <button class="share-option" data-action="copy-text">
+            <span class="share-option-icon">📋</span>
+            <span class="share-option-label">复制口令</span>
+          </button>
+          <button class="share-option" data-action="wechat">
+            <span class="share-option-icon">💬</span>
+            <span class="share-option-label">微信</span>
+          </button>
+          <button class="share-option" data-action="weibo">
+            <span class="share-option-icon">📢</span>
+            <span class="share-option-label">微博</span>
+          </button>
+          <button class="share-option" data-action="qq">
+            <span class="share-option-icon">🐧</span>
+            <span class="share-option-label">QQ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  // 关闭面板
+  const closePanel = () => panel.classList.add('hidden');
+  panel.querySelector('.share-panel-close').addEventListener('click', closePanel);
+  panel.querySelector('.share-panel-mask').addEventListener('click', closePanel);
+  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+  // 处理分享选项
+  panel.querySelector('.share-panel-options').addEventListener('click', async (e) => {
+    const option = e.target.closest('.share-option');
+    if (!option) return;
+    const action = option.dataset.action;
+    const shareUrl = panel.dataset.shareUrl || window.location.href;
+    const shareName = panel.dataset.shareName || '';
+    const shareText = panel.dataset.shareText || '';
+
+    if (action === 'copy-link') {
+      await robustCopy(shareUrl, '链接已复制');
+    } else if (action === 'copy-text') {
+      const content = shareText || shareUrl;
+      await robustCopy(content, shareText ? '口令已复制' : '链接已复制');
+    } else if (action === 'wechat') {
+      // 微信：复制内容，引导用户去微信粘贴
+      const content = shareText || `${shareName} ${shareUrl}`;
+      await robustCopy(content, '已复制，打开微信粘贴发送');
+    } else if (action === 'weibo') {
+      const wbUrl = `https://service.weibo.com/share/share.php?title=${encodeURIComponent(shareName)}&url=${encodeURIComponent(shareUrl)}`;
+      window.open(wbUrl, '_blank', 'noopener,width=600,height=500');
+    } else if (action === 'qq') {
+      const qqUrl = `https://connect.qq.com/widget/shareqq/index.html?title=${encodeURIComponent(shareName)}&url=${encodeURIComponent(shareUrl)}`;
+      window.open(qqUrl, '_blank', 'noopener,width=600,height=500');
+    }
+    closePanel();
+  });
+};
+
+/** 剪贴板写入（含降级） */
+const robustCopy = async (text, successMsg) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast(successMsg);
+  } catch {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(successMsg);
+    } catch {
+      showToast('复制失败，请长按手动复制');
+    }
+  }
+};
+
+createSharePanel();
+
 const shareItem = async (name, url, text) => {
-  const shareData = text
-    ? { title: name, text }
-    : { title: name, url };
+  // 移动端：优先用原生分享
   if (navigator.share) {
+    const shareData = text
+      ? { title: name, text }
+      : { title: name, url };
     try { await navigator.share(shareData); return; } catch {}
   }
-  const copyContent = text || url;
-  try {
-    await navigator.clipboard.writeText(copyContent);
-    showToast(text ? '口令已复制' : '链接已复制');
-  } catch {
-    showToast('复制失败，请手动复制');
-  }
+  // 桌面端 / 原生分享失败：弹出分享面板
+  const panel = $('#share-panel');
+  panel.dataset.shareName = name || '';
+  panel.dataset.shareUrl = url || window.location.href;
+  panel.dataset.shareText = text || '';
+  $('#share-panel-name').textContent = name || '';
+  panel.classList.remove('hidden');
+  panel.querySelector('.share-panel-close').focus();
 };
 
 // ========== 初始化 ==========

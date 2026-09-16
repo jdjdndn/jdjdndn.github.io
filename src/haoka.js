@@ -1,6 +1,7 @@
 // ========== 号卡专区页面逻辑 ==========
 import QRCode from 'qrcode';
 import { haokaLinks, haokaProxyLinks } from './haoka-data.js';
+import { track } from './analytics.js';
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -140,6 +141,7 @@ const hideQrModal = () => {
 document.addEventListener('click', (e) => {
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
+    track('haoka_qr', { name: qrBtn.dataset.name });
     showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
     return;
   }
@@ -149,6 +151,7 @@ document.addEventListener('click', (e) => {
     if (card) {
       const nameEl = card.querySelector('.haoka-card-name');
       const name = nameEl?.childNodes?.[0]?.textContent?.trim() || nameEl?.textContent?.trim();
+      track('haoka_click', { name: name || '' });
       if (name) trackClick(name);
       markVisited(goBtn.href);
     }
@@ -226,7 +229,9 @@ const updateDarkToggleText = () => {
 
 const toggleDarkMode = () => {
   document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  const isDark = document.body.classList.contains('dark-mode');
+  track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light', page: 'haoka' });
+  localStorage.setItem('darkMode', isDark);
   updateDarkToggleText();
 };
 
@@ -280,3 +285,28 @@ if (updateEl) {
 
 const darkToggle = $('#dark-toggle');
 if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);
+
+// ========== 充话费微信按钮 ==========
+const rechargeBtn = $('#recharge-wechat');
+if (rechargeBtn) {
+  rechargeBtn.addEventListener('click', async () => {
+    const wechatId = rechargeBtn.dataset.wechat;
+    try {
+      await navigator.clipboard.writeText(wechatId);
+      showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+    } catch {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = wechatId;
+        ta.style.cssText = 'position:fixed;left:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+      } catch {
+        showToast('复制失败，请手动搜索微信号：wcbblll');
+      }
+    }
+  });
+}

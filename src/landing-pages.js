@@ -1,0 +1,106 @@
+// ============================================================
+//  SEO 着陆页配置
+//  每个平台生成一个独立着陆页，用于长尾关键词 SEO
+//  修改此文件即可增删着陆页，无需改动插件代码
+// ============================================================
+
+export const landingPages = [
+  {
+    slug: 'meituan-waimai',
+    title: '美团外卖红包 — 每天领取外卖优惠券 | 2026最新',
+    description: '美团外卖天天领红包，外卖美食优惠券合集。新客最高减20元，老客天天领，大牌饮品券、超市便利店专场、零食水果优惠，复制口令码打开美团App立即领取。',
+    keywords: '美团外卖红包,美团优惠券,外卖红包,美团外卖天天领红包,外卖优惠',
+    heroTitle: '🍜 美团外卖红包',
+    heroDesc: '天天领红包，新客最高减20元',
+    tabId: 'meituan',
+    sectionFilter: '外卖美食',
+    relatedPages: [
+      { label: '更多美团优惠', url: './index.html#meituan' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'meituan-jiuLv',
+    title: '美团酒店旅行优惠 — 酒店3折起·出行券包 | 优惠活动聚合',
+    description: '美团酒店旅行优惠券合集：全国爆款酒店3折起、大额出行券包、低价购票、景点门票超值精选。复制口令码打开美团App领取酒店旅行优惠。',
+    keywords: '美团酒店优惠,美团旅行券,酒店优惠券,出行券包,景点门票优惠',
+    heroTitle: '🏨 美团酒店旅行',
+    heroDesc: '酒店3折起，出行大额券包',
+    tabId: 'meituan',
+    sectionFilter: '酒旅出行',
+    relatedPages: [
+      { label: '更多美团优惠', url: './index.html#meituan' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'taobao-shangou',
+    title: '淘宝闪购优惠券 — 天天领红包·消费日专享 | 2026最新',
+    description: '淘宝闪购优惠券合集：天天领红包、消费日城市大额红包、新客专享最高20元、品牌日福利、夜宵免单、果蔬日日鲜、零售会场一键领。',
+    keywords: '淘宝闪购优惠,淘宝红包,淘宝优惠券,消费日红包,淘宝天天领红包',
+    heroTitle: '🛒 淘宝闪购',
+    heroDesc: '天天领红包，新客最高20元',
+    tabId: 'taobaoshangou',
+    sectionFilter: null,
+    relatedPages: [
+      { label: '电商优惠', url: './index.html#ecommerce' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'jingdong-pdd',
+    title: '京东·淘宝·拼多多优惠券 — 电商红包秒杀 | 优惠活动聚合',
+    description: '京东淘宝拼多多电商优惠券合集：京东秒杀、自营热卖、百亿补贴；淘宝领券中心、超级满减；拼多多福利券、地区购物补贴。一站聚合全网电商优惠。',
+    keywords: '京东优惠券,淘宝优惠,拼多多红包,电商优惠,百亿补贴,京东秒杀',
+    heroTitle: '🛒 电商优惠',
+    heroDesc: '京东·淘宝·拼多多一站聚合',
+    tabId: 'ecommerce',
+    sectionFilter: null,
+    relatedPages: [
+      { label: '淘宝闪购', url: './index.html#taobaoshangou' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'chengxie',
+    title: '携程旅行优惠 — 酒店·机票·门票·签证 | 2026最新',
+    description: '携程旅行优惠合集：酒店预订、特价机票、景点门票、美食优惠、签证办理、租车服务、跟团游。复制链接打开携程App享受旅行优惠。',
+    keywords: '携程优惠,携程酒店优惠,携程机票,携程旅行券,旅游优惠',
+    heroTitle: '🏨 携程旅行',
+    heroDesc: '酒店·机票·门票一站式优惠',
+    tabId: 'xiecheng_travel',
+    sectionFilter: null,
+    relatedPages: [
+      { label: '同程旅行', url: './index.html#tongcheng_travel' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'didi',
+    title: '滴滴出行优惠券 — 打车红包·代驾立减 | 2026最新',
+    description: '滴滴出行优惠券合集：打车红包天天领、8折打车券、代驾立减券、酒店抵扣券、南航机票立减券。花小猪新客老客最高100元券包。',
+    keywords: '滴滴优惠券,滴滴打车红包,出行优惠,打车优惠,代驾优惠',
+    heroTitle: '🚗 滴滴出行',
+    heroDesc: '打车红包天天领',
+    tabId: 'didi_ride',
+    sectionFilter: null,
+    relatedPages: [
+      { label: '花小猪', url: './index.html#huaxiaozhu_ride' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+  {
+    slug: 'liansuocanyin',
+    title: '连锁餐饮优惠 — 肯德基·瑞幸·星巴克·必胜客 | 优惠活动聚合',
+    description: '连锁餐饮优惠合集：肯德基、瑞幸咖啡、库迪咖啡、奈雪的茶、星巴克、必胜客、百果园、喜茶、汉堡王、华莱士等大牌餐券优惠。',
+    keywords: '连锁餐饮优惠,肯德基优惠,瑞幸咖啡优惠,星巴克优惠,必胜客优惠,餐饮红包',
+    heroTitle: '☕ 连锁餐饮',
+    heroDesc: '大牌餐券，低至5折',
+    tabId: 'dinner',
+    sectionFilter: null,
+    relatedPages: [
+      { label: '美团外卖', url: './index.html#meituan' },
+      { label: '号卡办理', url: './haoka.html' },
+    ],
+  },
+];

@@ -1,0 +1,105 @@
+name: 检查过期活动
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # 每周一上午9点(UTC)
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check-expired:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 检查过期活动
+        id: check
+        run: |
+          set +e
+          OUTPUT=$(node scripts/check-expired.cjs --json)
+          echo "$OUTPUT" > /tmp/expired-report.json
+
+          EXPIRED=$(echo "$OUTPUT" | jq '.expiredCount')
+          EXPIRING=$(echo "$OUTPUT" | jq '.expiringSoonCount')
+
+          echo "expired=$EXPIRED" >> "$GITHUB_OUTPUT"
+          echo "expiring=$EXPIRING" >> "$GITHUB_OUTPUT"
+
+          # 输出摘要
+          {
+            echo "## 过期检测报告"
+            echo ""
+            echo "| 类型 | 数量 |"
+            echo "|------|------|"
+            echo "| 已过期 | $EXPIRED |"
+            echo "| 即将过期 | $EXPIRING |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 创建 Issue 提醒
+        if: steps.check.outputs.expired != '0' || steps.check.outputs.expiring != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('/tmp/expired-report.json', 'utf-8'));
+
+            let body = '## 📋 优惠活动过期检测报告\n\n';
+            body += `**检测时间**: ${new Date().toISOString().slice(0, 10)}\n\n`;
+
+            if (report.expiredCount > 0) {
+              body += `### 🔴 已过期 (${report.expiredCount})\n\n`;
+              body += '| 分类 | 活动名称 | 截止日期 | 过期天数 |\n';
+              body += '|------|---------|---------|--------|\n';
+              for (const item of report.expired) {
+                body += `| ${item.tab} | ${item.name} | ${item.deadline} | ${Math.abs(item.daysLeft)}天 |\n`;
+              }
+              body += '\n';
+            }
+
+            if (report.expiringSoonCount > 0) {
+              body += `### 🟡 即将过期 (${report.expiringSoonCount})\n\n`;
+              body += '| 分类 | 活动名称 | 截止日期 | 剩余天数 |\n';
+              body += '|------|---------|---------|--------|\n';
+              for (const item of report.expiringSoon) {
+                body += `| ${item.tab} | ${item.name} | ${item.deadline} | ${item.daysLeft}天 |\n`;
+              }
+              body += '\n';
+            }
+
+            body += '---\n*由自动化脚本生成，请及时更新过期活动*';
+
+            // 检查是否已有未关闭的相同 Issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: '过期提醒',
+              per_page: 1,
+            });
+
+            if (issues.data.length > 0) {
+              // 更新已有 Issue
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body,
+              });
+              core.info(`已更新 Issue #${issues.data[0].number}`);
+            } else {
+              // 创建新 Issue
+              const newIssue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `📋 优惠过期提醒 (${report.expiredCount}过期 / ${report.expiringSoonCount}即将过期)`,
+                body,
+                labels: ['过期提醒'],
+              });
+              core.info(`已创建 Issue #${newIssue.data.number}`);
+            }

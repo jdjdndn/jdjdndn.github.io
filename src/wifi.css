@@ -117,6 +117,7 @@
   flex-wrap: wrap;
   gap: 8px;
   max-width: 100%;
+  min-height: 32px;
 }
 .wifi-hero-stats .stat-badge {
   display: inline-flex;

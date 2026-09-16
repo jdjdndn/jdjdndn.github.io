@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/gen-og-image.cjs && vite build",
-    "preview": "vite preview"
+    "build": "node scripts/gen-og-image.cjs && node scripts/gen-landing-pages.cjs && vite build",
+    "preview": "vite preview",
+    "check-expired": "node scripts/check-expired.cjs"
   },
   "dependencies": {
     "qrcode": "^1.5.4"

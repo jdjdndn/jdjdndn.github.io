@@ -1,6 +1,7 @@
 // ========== 随身WiFi 专区页面逻辑 ==========
 import QRCode from 'qrcode';
 import { wifiLinks, wifiProxyLinks } from './wifi-data.js';
+import { track } from './analytics.js';
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -133,6 +134,7 @@ const hideQrModal = () => {
 document.addEventListener('click', (e) => {
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
+    track('wifi_qr', { name: qrBtn.dataset.name });
     showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
     return;
   }
@@ -143,6 +145,7 @@ document.addEventListener('click', (e) => {
       const nameEl = card.querySelector('.wifi-card-name');
       const name = nameEl?.childNodes?.[0]?.textContent?.trim() || nameEl?.textContent?.trim();
       if (name) trackClick(name);
+      track('wifi_click', { name: name || '' });
       markVisited(goBtn.href);
     }
   }
@@ -219,7 +222,9 @@ const updateDarkToggleText = () => {
 
 const toggleDarkMode = () => {
   document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  const isDark = document.body.classList.contains('dark-mode');
+  track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light', page: 'wifi' });
+  localStorage.setItem('darkMode', isDark);
   updateDarkToggleText();
 };
 
