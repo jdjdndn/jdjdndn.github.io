@@ -194,8 +194,23 @@
       </a>
     </nav>
 
+    <!-- 友情链接（fixed 吸底，可收起） -->
+    <footer class="footer friend-links-box" id="footer">
+      <div class="footer-inner">
+        <button class="footer-toggle" id="footer-toggle" aria-expanded="false" aria-controls="footer-body">
+          <span>友情链接</span>
+          <span class="footer-arrow" id="footer-arrow">▲</span>
+        </button>
+        <div class="footer-body" id="footer-body">
+          <nav id="friend-links" class="friend-links" aria-label="友情链接导航"></nav>
+          <p class="footer-disclaimer" style="font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4;">本站为优惠信息聚合平台，非美团/淘宝/京东等官方平台。优惠信息仅供参考，以各平台实际页面为准。有问题或建议联系我，微信号：wcbblll</p>
+        </div>
+      </div>
+    </footer>
+
     <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
 
     <script type="module" src="./wangpan.js"></script>
+    <script type="module" src="./footer.js"></script>
   </body>
 </html>
