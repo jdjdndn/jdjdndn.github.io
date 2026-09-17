@@ -4,5 +4,5 @@ docs/
 *.log
 data/evolve.log
 api-docs/
-api-data/
+/api-data/
 src/jutuike-data.js
