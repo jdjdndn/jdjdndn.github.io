@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "fetch-api": "node api-data/fetch-data.mjs",
+    "fetch-api:all": "node api-data/fetch-data.mjs && node api-data/update-jingxuan.mjs",
+    "update-jingxuan": "node api-data/update-jingxuan.mjs",
+    "update-jingxuan:login": "node api-data/update-jingxuan.mjs --login",
     "build": "node scripts/gen-og-image.cjs && node scripts/gen-landing-pages.cjs && vite build",
     "preview": "vite preview",
     "check-expired": "node scripts/check-expired.cjs",
@@ -16,6 +19,7 @@
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
+    "playwright": "^1.63.0",
     "vite": "^5.2.0",
     "vite-plugin-compression": "^0.5.1"
   }
