@@ -512,7 +512,7 @@
   .wangpan-hero-wave { height: 20px; }
   .wangpan-card-actions .btn-go,
   .wangpan-card-actions .btn-qr {
-    padding: 8px 0;
+    padding: 8px 4px;
     font-size: 12px;
     gap: 4px;
   }
