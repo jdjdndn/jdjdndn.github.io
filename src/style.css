@@ -878,7 +878,7 @@ body.footer-collapsed .toast { bottom: 40px; }
 /* ========== 回到顶部 ========== */
 .back-to-top {
   position: fixed;
-  bottom: 24px;
+  bottom: 80px;
   right: 24px;
   width: 44px;
   height: 44px;
@@ -892,7 +892,7 @@ body.footer-collapsed .toast { bottom: 40px; }
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: all 0.3s;
-  z-index: 90;
+  z-index: 999;
 }
 .back-to-top:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
 
@@ -1302,7 +1302,7 @@ body.dark-mode [data-highlight] mark {
   .tab-btn .tab-icon { display: none; }
   .tab-btn .tab-name {
     display: inline-block;
-    max-width: 3em;
+    max-width: 4em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

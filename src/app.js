@@ -1161,3 +1161,15 @@ if (typeof IntersectionObserver !== 'undefined') {
     tabNav.classList.toggle('is-stuck', !entry.isIntersecting);
   }).observe(sentinel);
 }
+
+// ========== 回到顶部按钮 ==========
+const backToTop = $('#back-to-top');
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('hidden', window.scrollY < 300);
+  }, { passive: true });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
