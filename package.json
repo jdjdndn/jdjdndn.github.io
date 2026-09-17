@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "vite",
     "fetch-api": "node api-data/fetch-data.mjs",
-    "gen-jutuike": "node scripts/gen-jutuike-data.cjs",
-    "huodong_build": "node api-data/fetch-data.mjs && node scripts/gen-jutuike-data.cjs && node scripts/gen-og-image.cjs && node scripts/gen-landing-pages.cjs && vite build",
     "build": "node scripts/gen-og-image.cjs && node scripts/gen-landing-pages.cjs && vite build",
     "preview": "vite preview",
-    "check-expired": "node scripts/check-expired.cjs"
+    "check-expired": "node scripts/check-expired.cjs",
+    "seo": "node scripts/seo-audit.cjs",
+    "seo:fix": "node scripts/seo-audit.cjs --fix"
   },
   "dependencies": {
     "qrcode": "^1.5.4"

@@ -71,6 +71,7 @@ function generateHTML(page) {
     <meta name="theme-color" content="#FF6B35" />
     <link rel="canonical" href="https://jdjdndn.github.io/${page.slug}.html" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/${page.slug}.html" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/${page.slug}.html" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -78,7 +79,16 @@ function generateHTML(page) {
     <meta property="og:title" content="${page.title}" />
     <meta property="og:description" content="${page.description}" />
     <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+    <meta property="og:image:alt" content="${page.heroTitle}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="优惠活动聚合" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${page.title}" />
+    <meta name="twitter:description" content="${page.description}" />
 
     <!-- JSON-LD 结构化数据 -->
     <script type="application/ld+json">
@@ -87,19 +97,25 @@ function generateHTML(page) {
       "@type": "CollectionPage",
       "name": "${page.heroTitle}",
       "description": "${page.description}",
+      "datePublished": "2025-01-01",
+      "dateModified": "__BUILD_DATE__",
       "url": "https://jdjdndn.github.io/${page.slug}.html",
       "isPartOf": {
         "@type": "WebSite",
-        "name": "优惠活动聚合",
-        "url": "https://jdjdndn.github.io/"
-      },
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://jdjdndn.github.io/" },
-          { "@type": "ListItem", "position": 2, "name": "${page.heroTitle}", "item": "https://jdjdndn.github.io/${page.slug}.html" }
-        ]
+        "@id": "https://jdjdndn.github.io/#website",
+        "name": "优惠活动聚合"
       }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://jdjdndn.github.io/" },
+        { "@type": "ListItem", "position": 2, "name": "${page.heroTitle.replace(/^[^\s]+\s/, '')}", "item": "https://jdjdndn.github.io/${page.slug}.html" }
+      ]
     }
     </script>
 

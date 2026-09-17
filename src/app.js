@@ -1,7 +1,59 @@
 // ========== 数据（来自 data.js） ==========
 import QRCode from 'qrcode';
 import { track } from './analytics.js';
-import { friendLinks, tabs } from './data.js';
+import { friendLinks, tabs, selfData } from './data.js';
+
+// ========== API 活动数据 ==========
+let apiTabsLoaded = false;
+const loadApiData = async () => {
+  try {
+    const res = await fetch('./api-data/act-processed.json');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.tabs?.length) return;
+
+    // 将 API tabs 插入到精选之后
+    const jingxuanIdx = tabs.findIndex(t => t.id === 'jingxuan');
+    const insertIdx = jingxuanIdx + 1;
+    data.tabs.forEach((tab, i) => {
+      tab._isApi = true; // 标记为 API 数据
+      tabs.splice(insertIdx + i, 0, tab);
+    });
+
+    // 将 selfData 的各个 tab 作为子tab放入"其他"主tab
+    const otherTab = {
+      id: 'other',
+      label: '📋 其他',
+      name: '其他',
+      count: selfData.reduce((sum, tab) => {
+        return sum + tab.sections.reduce((s, sec) => s + sec.items.length, 0);
+      }, 0),
+      hasSubTabs: true,
+      sections: selfData.map(tab => ({
+        title: tab.name,
+        items: tab.sections.flatMap(sec => sec.items),
+        _tabLabel: tab.label, // 保留原始label用于显示
+        _hasSections: tab.sections.length > 1, // 标记是否有子分组
+        _sections: tab.sections, // 保留原始sections结构
+      })),
+    };
+
+    // 为 selfData 项生成 SVG 封面图
+    otherTab.sections.forEach((sec) => {
+      const cat = getCategoryForSection(sec.title);
+      sec.items.forEach((item) => { if (!item.img) item.img = generateCoverSvg(cat, item.name); });
+      if (sec._sections) {
+        sec._sections.forEach((sub) => {
+          const subCat = getCategoryForSection(sub.title);
+          sub.items.forEach((item) => { if (!item.img) item.img = generateCoverSvg(subCat, item.name); });
+        });
+      }
+    });
+    tabs.push(otherTab);
+
+    apiTabsLoaded = true;
+  } catch {}
+};
 
 // ========== 精选活动数据 ==========
 let jingxuanData = [];
@@ -89,10 +141,12 @@ const searchInput = $('#search-input');
 const searchClear = $('#search-clear');
 const searchCount = $('#search-count');
 const headerStats = $('#header-stats');
+const quickShortcuts = $('#quick-shortcuts');
 
 // ========== SVG 图标 ==========
 const ICONS = {
   stats_total: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+  stats_expired: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
   stats_update: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
   empty_search: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
   meituan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>',
@@ -105,8 +159,103 @@ const ICONS = {
   huaxiaozhu_ride: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
   dinner: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>',
   life: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-  huiyuan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
   jingxuan: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  other: '<svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>',
+};
+
+// ========== selfData 封面分类 ==========
+const getCategoryForSection = (title) => {
+  if (/京东|淘宝|拼多多|电商|闪购/.test(title)) return 'ecommerce';
+  if (/携程/.test(title)) return 'travel';
+  if (/同程/.test(title)) return 'hotel';
+  if (/飞猪/.test(title)) return 'fly';
+  if (/滴滴|花小猪|出行|打车/.test(title)) return 'transport';
+  if (/餐饮|美食/.test(title)) return 'food';
+  if (/电影|娱乐/.test(title)) return 'entertainment';
+  if (/会员/.test(title)) return 'member';
+  if (/酒店/.test(title)) return 'hotel';
+  if (/旅游|旅行/.test(title)) return 'travel';
+  return 'other';
+};
+
+// ========== selfData 封面 SVG 生成 ==========
+const generateCoverSvg = (_category, name) => {
+  // 根据名称哈希生成不同图标+配色，每个 item 唯一
+  const hash = [...name].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  const abs = Math.abs(hash);
+
+  // 12 种不同图标
+  const icons = [
+    // 购物袋
+    `<circle cx="24" cy="14" r="8" stroke="white" stroke-width="2" fill="none"/><line x1="20" y1="22" x2="14" y2="32" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="22" x2="34" y2="32" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="32" x2="34" y2="32" stroke="white" stroke-width="2" stroke-linecap="round"/>`,
+    // 礼物
+    `<rect x="12" y="20" width="24" height="14" rx="2" stroke="white" stroke-width="2" fill="none"/><rect x="10" y="16" width="28" height="6" rx="2" stroke="white" stroke-width="2" fill="none"/><line x1="24" y1="16" x2="24" y2="34" stroke="white" stroke-width="2"/><path d="M24 16c-3-6-10-4-6 0" stroke="white" stroke-width="2" fill="none"/><path d="M24 16c3-6 10-4 6 0" stroke="white" stroke-width="2" fill="none"/>`,
+    // 时钟
+    `<circle cx="24" cy="22" r="12" stroke="white" stroke-width="2" fill="none"/><line x1="24" y1="22" x2="24" y2="14" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="22" x2="30" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="1.5" fill="white"/>`,
+    // 价签
+    `<path d="M14 12h14l8 10-14 14L10 22z" stroke="white" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="2" fill="white"/>`,
+    // 百分号
+    `<circle cx="17" cy="17" r="4" stroke="white" stroke-width="2" fill="none"/><circle cx="31" cy="29" r="4" stroke="white" stroke-width="2" fill="none"/><line x1="33" y1="13" x2="15" y2="33" stroke="white" stroke-width="2" stroke-linecap="round"/>`,
+    // 闪电
+    `<polygon points="26,8 16,24 22,24 20,40 34,20 26,20" fill="white" opacity="0.9"/>`,
+    // 火焰
+    `<path d="M24 8c0 6-8 10-8 18 0 5 4 8 8 8s8-3 8-8c0-8-8-12-8-18z" stroke="white" stroke-width="2" fill="none"/><path d="M24 22c0 3-3 5-3 8 0 2 1.5 3 3 3s3-1 3-3c0-3-3-5-3-8z" fill="white" opacity="0.4"/>`,
+    // 购物车
+    `<path d="M8 8h4l3 16h16l3-12H16" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="30" r="2" fill="white"/><circle cx="28" cy="30" r="2" fill="white"/>`,
+    // 定位
+    `<path d="M24 10c-6 0-10 5-10 10 0 8 10 18 10 18s10-10 10-18c0-5-4-10-10-10z" stroke="white" stroke-width="2" fill="none"/><circle cx="24" cy="20" r="4" stroke="white" stroke-width="2" fill="none"/>`,
+    // 钻石
+    `<polygon points="24,8 36,20 24,38 12,20" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/><line x1="12" y1="20" x2="36" y2="20" stroke="white" stroke-width="2"/><line x1="18" y1="14" x2="15" y2="20" stroke="white" stroke-width="1.5"/><line x1="30" y1="14" x2="33" y2="20" stroke="white" stroke-width="1.5"/>`,
+    // 音符
+    `<circle cx="18" cy="30" r="4" stroke="white" stroke-width="2" fill="none"/><line x1="22" y1="30" x2="22" y2="12" stroke="white" stroke-width="2"/><path d="M22 12h8c2 0 3 2 1 4h-6" stroke="white" stroke-width="2" fill="none"/>`,
+    // 星形
+    `<polygon points="24,8 27,18 38,18 29,24 32,34 24,28 16,34 19,24 10,18 21,18" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>`,
+    // 相机
+    `<rect x="10" y="16" width="28" height="20" rx="3" stroke="white" stroke-width="2" fill="none"/><circle cx="24" cy="26" r="5" stroke="white" stroke-width="2" fill="none"/><path d="M18 16l2-4h8l2 4" stroke="white" stroke-width="2" fill="none"/>`,
+    // 皇冠
+    `<path d="M10 30l4-14 6 8 4-12 4 12 6-8 4 14z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/><line x1="10" y1="34" x2="38" y2="34" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="16" r="1.5" fill="white"/><circle cx="24" cy="12" r="1.5" fill="white"/><circle cx="34" cy="16" r="1.5" fill="white"/>`,
+    // 飞机
+    `<path d="M24 10l-4 10h-8l-2 4h10l-2 10h6l2-10h10l2-4h-8z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>`,
+    // 锁
+    `<rect x="14" y="22" width="20" height="14" rx="2" stroke="white" stroke-width="2" fill="none"/><path d="M18 22v-4a6 6 0 0112 0v4" stroke="white" stroke-width="2" fill="none"/><circle cx="24" cy="29" r="2" fill="white"/>`,
+    // 书本
+    `<path d="M10 12h12v24H10z" stroke="white" stroke-width="2" fill="none"/><path d="M38 12H26v24h12z" stroke="white" stroke-width="2" fill="none"/><line x1="24" y1="12" x2="24" y2="36" stroke="white" stroke-width="2"/>`,
+    // 游戏手柄
+    `<path d="M14 20c-4 0-6 2-6 6s2 6 6 6c2 0 4-1 5-3h8c1 2 3 3 5 3 4 0 6-2 6-6s-2-6-6-6c-1 0-3 1-5 3h-8c-1-2-3-3-5-3z" stroke="white" stroke-width="2" fill="none"/><circle cx="18" cy="26" r="1.5" fill="white"/><circle cx="30" cy="24" r="1.5" fill="white"/><line x1="28" y1="22" x2="32" y2="22" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="30" y1="20" x2="30" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>`,
+    // 太阳
+    `<circle cx="24" cy="24" r="6" stroke="white" stroke-width="2" fill="none"/><line x1="24" y1="10" x2="24" y2="14" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="34" x2="24" y2="38" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="24" x2="14" y2="24" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="34" y1="24" x2="38" y2="24" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="14.1" y1="14.1" x2="17" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="31" y1="31" x2="33.9" y2="33.9" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="14.1" y1="33.9" x2="17" y2="31" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="31" y1="17" x2="33.9" y2="14.1" stroke="white" stroke-width="2" stroke-linecap="round"/>`,
+    // 云朵
+    `<path d="M14 30h20c3 0 5-2 5-5s-2-5-5-5c0-4-4-6-7-6-4 0-8 3-8 7 0 0-3 0-3 3s2 6 4 6h4" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+    // 奖杯
+    `<path d="M16 12h16v10c0 5-3 8-8 8s-8-3-8-8z" stroke="white" stroke-width="2" fill="none"/><line x1="24" y1="30" x2="24" y2="34" stroke="white" stroke-width="2"/><line x1="18" y1="34" x2="30" y2="34" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="16" x2="10" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M10 20c0 4 4 6 6 4" stroke="white" stroke-width="2" fill="none"/><line x1="34" y1="16" x2="38" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M38 20c0 4-4 6-6 4" stroke="white" stroke-width="2" fill="none"/>`,
+    // 放大镜
+    `<circle cx="20" cy="20" r="10" stroke="white" stroke-width="2" fill="none"/><line x1="28" y1="28" x2="38" y2="38" stroke="white" stroke-width="3" stroke-linecap="round"/>`,
+    // 指南针
+    `<circle cx="24" cy="24" r="14" stroke="white" stroke-width="2" fill="none"/><polygon points="24,12 28,24 24,28 20,24" fill="white" opacity="0.9"/><polygon points="24,36 20,24 24,20 28,24" fill="white" opacity="0.4"/>`,
+    // 心形
+    `<path d="M24 36c-12-8-18-14-18-20a8 8 0 0116 0 8 8 0 0116 0c0 6-6 12-18 20z" stroke="white" stroke-width="2" fill="none"/>`,
+  ];
+
+  // 24 种渐变配色
+  const palettes = [
+    ['#FF6B35', '#FF8F5E'], ['#EC4899', '#F472B6'], ['#3B82F6', '#60A5FA'],
+    ['#8B5CF6', '#A78BFA'], ['#F59E0B', '#FBBF24'], ['#10B981', '#34D399'],
+    ['#EF4444', '#F87171'], ['#6366F1', '#818CF8'], ['#14B8A6', '#5EEAD4'],
+    ['#F97316', '#FB923C'], ['#06B6D4', '#67E8F9'], ['#22C55E', '#86EFAC'],
+    ['#D946EF', '#E879F9'], ['#0EA5E9', '#7DD3FC'], ['#EAB308', '#FDE047'],
+    ['#A855F7', '#C084FC'], ['#F43F5E', '#FB7185'], ['#059669', '#6EE7B7'],
+    ['#7C3AED', '#A78BFA'], ['#EA580C', '#FB923C'], ['#0891B2', '#67E8F9'],
+    ['#CA8A04', '#FACC15'], ['#9333EA', '#C084FC'], ['#DC2626', '#FCA5A5'],
+  ];
+
+  const icon = icons[abs % 24];
+  const [c1, c2] = palettes[(abs >> 3) % 24];
+  const label = name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').slice(0, 2);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><linearGradient id="bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="48" height="48" rx="10" fill="url(#bg)"/><text x="24" y="44" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="bold" fill="white" opacity="0.35">${label}</text>${icon}</svg>`;
+  const b64 = typeof btoa === 'function'
+    ? btoa(unescape(encodeURIComponent(svg)))
+    : Buffer.from(svg, 'utf-8').toString('base64');
+  return `data:image/svg+xml;base64,${b64}`;
 };
 
 // ========== sections 规范化 ==========
@@ -135,30 +284,51 @@ const calcTabCounts = () => tabs.map((t) =>
 let tabCounts = calcTabCounts();
 let totalCount = tabCounts.reduce((a, b) => a + b, 0);
 
-// 统计过期优惠数量
-const expiredCount = tabs.reduce((count, tab) => {
-  return count + normalizeSections(tab.sections).reduce((sectionCount, section) => {
-    return sectionCount + section.items.filter(item => isExpired(item.deadline)).length;
-  }, 0);
-}, 0);
-
 // 渲染头部统计
 const renderStats = () => {
   tabCounts = calcTabCounts();
   totalCount = tabCounts.reduce((a, b) => a + b, 0);
+  const expiredCount = tabs.reduce((count, tab) => {
+    return count + normalizeSections(tab.sections).reduce((sectionCount, section) => {
+      return sectionCount + section.items.filter(item => isExpired(item.deadline)).length;
+    }, 0);
+  }, 0) + jingxuanData.filter(item => isJingxuanExpired(item)).length;
   headerStats.innerHTML = `
     <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
-    ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_total} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
+    ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_expired} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
     <span class="stat-badge">${ICONS.stats_update} 数据持续更新中</span>
   `;
+};
+
+// ========== 渲染：快捷入口 ==========
+const SHORTCUTS_DATA = [
+  { tabId: 'ecommerce', name: '电商', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>', color: 'orange' },
+  { tabId: 'xiecheng_travel', name: '携程', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>', color: 'blue' },
+  { tabId: 'tongcheng_travel', name: '同程', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>', color: 'blue' },
+  { tabId: 'feizhu_travel', name: '飞猪', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>', color: 'green' },
+  { tabId: 'life', name: '电影票', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>', color: 'purple' },
+];
+
+const renderQuickShortcuts = () => {
+  if (!quickShortcuts) return;
+  // 只显示 tabs 中存在的快捷入口
+  const available = SHORTCUTS_DATA.filter(s => tabs.some(t => t.id === s.tabId));
+  quickShortcuts.innerHTML = available.map(s => `
+    <button class="quick-shortcut" data-tab="${s.tabId}" data-color="${s.color}" aria-label="${s.name}">
+      <span class="quick-shortcut-icon">${s.icon}</span>
+      <span class="quick-shortcut-name">${s.name}</span>
+    </button>
+  `).join('');
 };
 
 // ========== 渲染：Tab 导航 ==========
 const renderTabNav = () => {
   const tabBtns = tabs
     .map(
-      (t, i) =>
-        `<button class="tab-btn" data-tab="${t.id}" role="tab" aria-selected="false">${ICONS[t.id] || ''}<span class="tab-name">${t.name || t.label}</span><span class="badge">${tabCounts[i]}</span></button>`,
+      (t, i) => {
+        const isActive = t.id === activeTab;
+        return `<button class="tab-btn${isActive ? ' active' : ''}" data-tab="${t.id}" role="tab" aria-selected="${isActive}"><span class="tab-name">${t.name || t.label}</span><span class="badge">${tabCounts[i]}</span></button>`;
+      },
     )
     .join('');
   tabNav.innerHTML = tabBtns;
@@ -202,6 +372,7 @@ const renderCodeCard = (item, query) => {
   const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
   return `
   <div class="activity-card${expiredClass}${expiringClass}">
+    ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
     <div class="card-head">
       <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
       ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
@@ -228,6 +399,7 @@ const renderLinkCard = (item, query) => {
   try { host = new URL(item.link).hostname.replace('www.', ''); } catch { host = item.link; }
   return `
   <div class="activity-card${expiredClass}${expiringClass}">
+    ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
     <div class="card-head">
       <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
       ${expiredTag}
@@ -243,15 +415,19 @@ const renderLinkCard = (item, query) => {
 };
 
 // ========== 渲染：精选活动卡片 ==========
+const isJingxuanExpired = (item) => item.saleStatus === false;
+
 const renderJingxuanCard = (item) => {
+  if (hideExpired && isJingxuanExpired(item)) return '';
   const name = item.brandName ? `${item.brandName} · ${item.name}` : item.name;
   const price = parseFloat(item.sellPrice);
   const origPrice = parseFloat(item.originalPrice);
   const hasDiscount = !isNaN(price) && !isNaN(origPrice) && origPrice > price;
   const hasLink = !!item.h5;
-  const tag = !hasLink ? '<span class="jingxuan-tag">仅门店</span>' : '';
+  const expired = isJingxuanExpired(item);
+  const tag = expired ? '<span class="jingxuan-tag expired">已下架</span>' : !hasLink ? '<span class="jingxuan-tag">仅门店</span>' : '';
   return `
-  <${hasLink ? 'a' : 'div'} class="jingxuan-card${hasLink ? '' : ' no-link'}"${hasLink ? ` href="${item.h5}" target="_blank" rel="noopener"` : ''}>
+  <${hasLink ? 'a' : 'div'} class="jingxuan-card${hasLink ? '' : ' no-link'}${expired ? ' expired' : ''}"${hasLink ? ` href="${item.h5}" target="_blank" rel="noopener"` : ''}>
     <div class="jingxuan-img-wrap">
       <img class="jingxuan-img" src="${item.img}" alt="${name}" loading="lazy" />
       ${tag}
@@ -265,7 +441,50 @@ const renderJingxuanCard = (item) => {
   </${hasLink ? 'a' : 'div'}>`;
 };
 
+// ========== 渲染：API 活动卡片 ==========
+const renderApiCard = (item, query) => {
+  const hasLink = item.actionType === 'link' && !!item.link;
+  const hasMini = item.actionType === 'miniprogram' && !!item.appId;
+  const hasTkl = item.actionType === 'tkl' && !!item.tkl;
+
+  const dateInfo = item.startDate && item.endDate
+    ? `<span class="api-card-date">📅 ${item.startDate} ~ ${item.endDate}</span>`
+    : '';
+
+  const imgHtml = item.img
+    ? `<img class="api-card-img" src="${item.img}" alt="${item.name}" loading="lazy" />`
+    : '';
+
+  let actionHtml = '';
+  if (hasLink) {
+    actionHtml = `<a class="btn-go" href="${item.link}" target="_blank" rel="noopener">前往活动</a>`;
+  } else if (hasMini) {
+    actionHtml = `<span class="api-card-miniapp">小程序</span>`;
+  } else if (hasTkl) {
+    actionHtml = `<button class="btn-copy" data-tkl="${item.tkl.replace(/"/g, '&quot;')}">复制口令</button>`;
+  }
+
+  return `
+  <div class="activity-card api-card">
+    ${imgHtml}
+    <div class="api-card-body">
+      <div class="card-head">
+        <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
+      </div>
+      ${dateInfo ? `<div class="api-card-meta">${dateInfo}</div>` : ''}
+      <div class="card-actions">
+        ${actionHtml}
+        ${hasLink ? `<button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">二维码</button>` : ''}
+        <button class="btn-share" data-share-name="${item.name.replace(/"/g, '&quot;')}" data-share-url="${item.link || ''}">分享</button>
+      </div>
+    </div>
+  </div>`;
+};
+
 // ========== 渲染：Tab 内容 ==========
+// 当前激活的子tab
+let activeSubTab = {};
+
 const renderTabContent = (tabId) => {
   const tab = tabs.find((t) => t.id === tabId);
   if (!tab) return;
@@ -283,8 +502,9 @@ const renderTabContent = (tabId) => {
       return;
     }
 
-    const html = jingxuanData.length
-      ? `<section class="sub-section"><h2 class="sub-section-title">精选活动（${jingxuanData.length}）</h2><div class="jingxuan-grid">${jingxuanData.map(renderJingxuanCard).join('')}</div></section>`
+    const visibleJxData = hideExpired ? jingxuanData.filter(d => !isJingxuanExpired(d)) : jingxuanData;
+    const html = visibleJxData.length
+      ? `<section class="sub-section"><h2 class="sub-section-title">精选活动（${visibleJxData.length}）</h2><div class="jingxuan-grid">${visibleJxData.map(renderJingxuanCard).join('')}</div></section>`
       : `<div class="empty-state">
           <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="empty-state-title">精选活动即将上线</div>
@@ -307,13 +527,71 @@ const renderTabContent = (tabId) => {
     return;
   }
 
+  // 有子tab的情况
+  if (tab.hasSubTabs && sections.length > 1) {
+    // 初始化或获取当前激活的子tab
+    if (!activeSubTab[tabId]) {
+      activeSubTab[tabId] = sections[0].title;
+    }
+    const currentSubTab = activeSubTab[tabId];
+    const currentSection = sections.find(s => s.title === currentSubTab) || sections[0];
+
+    // 渲染子tab导航（使用 _tabLabel 如果有）
+    const subTabNavHtml = `
+      <div class="sub-tab-nav">
+        ${sections.map(sec => {
+          const displayLabel = sec._tabLabel || sec.title;
+          return `
+          <button class="sub-tab-btn ${sec.title === currentSubTab ? 'active' : ''}"
+                  data-subtab="${sec.title}">
+            ${displayLabel}（${sec.items.length}）
+          </button>
+        `;}).join('')}
+      </div>
+    `;
+
+    // 渲染当前子tab的内容
+    // 检查是否有子分组（selfData的tab可能有自己的sections）
+    const contentHtml = currentSection._hasSections
+      ? currentSection._sections.map(sec => `
+          <section class="sub-section">
+            <h2 class="sub-section-title">${sec.title}（${sec.items.length}）</h2>
+            <div class="card-grid">
+              ${sec.items.map((item) => {
+                if (item.actionType) return renderApiCard(item);
+                return item.code ? renderCodeCard(item) : renderLinkCard(item);
+              }).join('')}
+            </div>
+          </section>
+        `).join('')
+      : `
+          <section class="sub-section">
+            <div class="card-grid">
+              ${currentSection.items.map((item) => {
+                if (item.actionType) return renderApiCard(item);
+                return item.code ? renderCodeCard(item) : renderLinkCard(item);
+              }).join('')}
+            </div>
+          </section>
+        `;
+
+    tabContent.innerHTML = subTabNavHtml + contentHtml;
+    return;
+  }
+
+  // 没有子tab的情况
   tabContent.innerHTML = sections
     .map(
       (sec, i) => `
     <section class="sub-section" aria-labelledby="section-${tab.id}-${i}">
       <h2 class="sub-section-title" id="section-${tab.id}-${i}">${sec.title}（${sec.items.length}）</h2>
       <div class="card-grid">
-        ${sec.items.map((item) => (item.code ? renderCodeCard(item) : renderLinkCard(item))).join('')}
+        ${sec.items.map((item) => {
+          // API 活动卡片（有 img 和 actionType 字段）
+          if (item.actionType) return renderApiCard(item);
+          // 原有的口令/链接卡片
+          return item.code ? renderCodeCard(item) : renderLinkCard(item);
+        }).join('')}
       </div>
     </section>
   `,
@@ -323,10 +601,11 @@ const renderTabContent = (tabId) => {
 
 // ========== 渲染：友情链接 ==========
 const renderFriendLinks = () => {
+  const huiyuanEntry = `<a class="friend-link friend-link-highlight" href="./huiyuan.html">会员优惠</a>`;
   const haokaEntry = `<a class="friend-link friend-link-highlight" href="./haoka.html">号卡专区</a>`;
   const wifiEntry = `<a class="friend-link friend-link-highlight" href="./wifi.html">随身WiFi</a>`;
   const wangpanEntry = `<a class="friend-link friend-link-highlight" href="./wangpan.html">网盘资源</a>`;
-  friendLinksEl.innerHTML = haokaEntry + wifiEntry + wangpanEntry + friendLinks
+  friendLinksEl.innerHTML = haokaEntry + wifiEntry + wangpanEntry + huiyuanEntry + friendLinks
     .map((f) => {
       const description = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
       const category = f.category ? ` data-category="${f.category}"` : '';
@@ -376,9 +655,30 @@ const toggleHideExpired = () => {
 };
 
 // ========== 事件委托 ==========
+// 快捷入口点击
+if (quickShortcuts) {
+  quickShortcuts.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quick-shortcut');
+    if (btn) switchTab(btn.dataset.tab);
+  });
+}
+
 tabNav.addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn');
   if (btn) switchTab(btn.dataset.tab);
+});
+
+// 子tab点击事件
+tabContent.addEventListener('click', (e) => {
+  const subTabBtn = e.target.closest('.sub-tab-btn');
+  if (subTabBtn) {
+    const subTabName = subTabBtn.dataset.subtab;
+    const tab = tabs.find(t => t.id === activeTab);
+    if (tab && subTabName) {
+      activeSubTab[activeTab] = subTabName;
+      renderTabContent(activeTab);
+    }
+  }
 });
 
 // Tab 键盘导航（左右箭头）
@@ -399,11 +699,13 @@ tabContent.addEventListener('click', (e) => {
   const copyBtn = e.target.closest('.btn-copy');
   if (copyBtn) {
     if (copyBtn.disabled) return;
-    const text = copyBtn.dataset.copy
-      .replace(/&quot;/g, '"')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>');
+    // API 卡片的口令复制（data-tkl）
+    const tklText = copyBtn.dataset.tkl;
+    const codeText = copyBtn.dataset.copy;
+    const text = tklText
+      ? tklText.replace(/&quot;/g, '"').replace(/&amp;/g, '&')
+      : (codeText || '').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    if (!text) return;
     const cardName = copyBtn.closest('.activity-card')?.querySelector('.card-name')?.textContent || '';
     track('copy_code', { name: cardName });
     copyText(text);
@@ -443,10 +745,14 @@ const searchCoupons = (query) => {
     normalizeSections(tab.sections).forEach((sec) => {
       sec.items.forEach((item) => {
         if (hideExpired && isExpired(item.deadline)) return;
+        // API 活动：检查过期
+        if (item.endDate && item.endDate < new Date().toISOString().slice(0, 10)) return;
         const matchName = item.name.toLowerCase().includes(q);
         const matchCode = item.code && item.code.toLowerCase().includes(q);
+        const matchDesc = item.desc && item.desc.toLowerCase().includes(q);
+        const matchTkl = item.tkl && item.tkl.toLowerCase().includes(q);
         const matchSection = sec.title.toLowerCase().includes(q);
-        if (matchName || matchCode || matchSection) {
+        if (matchName || matchCode || matchDesc || matchTkl || matchSection) {
           results.push({ ...item, tabLabel: tab.label, tabId: tab.id, sectionTitle: sec.title });
         }
       });
@@ -454,6 +760,7 @@ const searchCoupons = (query) => {
   });
   // 搜索精选活动数据
   jingxuanData.forEach((d) => {
+    if (hideExpired && isJingxuanExpired(d)) return;
     const fullName = d.brandName ? `${d.brandName} ${d.name}` : d.name;
     if (fullName.toLowerCase().includes(q)) {
       results.push({ name: fullName, link: d.h5 || '#', tabLabel: '⭐ 精选', tabId: 'jingxuan', sectionTitle: '精选活动' });
@@ -488,7 +795,10 @@ const renderSearchResults = (results) => {
     <div class="sub-section">
       <div class="sub-section-title">${group.label}${group.sectionTitle ? ' · ' + group.sectionTitle : ''}（${group.items.length}）</div>
       <div class="card-grid">
-        ${group.items.map((item) => (item.code ? renderCodeCard(item, searchQuery) : renderLinkCard(item, searchQuery))).join('')}
+        ${group.items.map((item) => {
+          if (item.actionType) return renderApiCard(item, searchQuery);
+          return item.code ? renderCodeCard(item, searchQuery) : renderLinkCard(item, searchQuery);
+        }).join('')}
       </div>
     </div>
   `,
@@ -765,32 +1075,40 @@ const shareItem = async (name, url, text) => {
 };
 
 // ========== 初始化 ==========
-initDarkMode();
-renderStats();
-// 同步 localStorage 中的过期筛选状态到 UI
-if (hideExpired) {
-  const hideBtn = $('#hide-expired');
-  if (hideBtn) {
-    hideBtn.classList.add('active');
-    hideBtn.setAttribute('aria-pressed', 'true');
+const init = async () => {
+  initDarkMode();
+  // 加载 API 活动数据（插入到精选之后、selfData 之前）
+  await loadApiData();
+  // 同步 localStorage 中的过期筛选状态到 UI
+  if (hideExpired) {
+    const hideBtn = $('#hide-expired');
+    if (hideBtn) {
+      hideBtn.classList.add('active');
+      hideBtn.setAttribute('aria-pressed', 'true');
+    }
   }
-}
-renderTabNav();
-loadJingxuan();
+  renderStats();
+  renderTabNav();
+  renderQuickShortcuts();
+  loadJingxuan();
 
-// 支持 URL hash 直接定位，无 hash 时从 localStorage 恢复
-const initialHash = window.location.hash.slice(1);
-if (initialHash && tabs.some((t) => t.id === initialHash)) {
-  activeTab = initialHash;
-} else {
-  const saved = localStorage.getItem('activeTab');
-  if (saved && tabs.some((t) => t.id === saved)) {
-    activeTab = saved;
+  // 支持 URL hash 直接定位，无 hash 时从 localStorage 恢复
+  const initialHash = window.location.hash.slice(1);
+  if (initialHash && tabs.some((t) => t.id === initialHash)) {
+    activeTab = initialHash;
+  } else {
+    const saved = localStorage.getItem('activeTab');
+    if (saved && tabs.some((t) => t.id === saved)) {
+      activeTab = saved;
+    }
   }
-}
-switchTab(activeTab);
+  switchTab(activeTab);
 
-renderFriendLinks();
+  renderFriendLinks();
+};
+
+init();
+
 if (typeof ResizeObserver !== 'undefined') {
   new ResizeObserver(alignTabRows).observe(tabNav);
 } else {
@@ -830,3 +1148,16 @@ footerToggle.addEventListener('click', () => {
 // 暗色模式切换
 const darkToggle = $('#dark-toggle');
 if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);
+
+// ========== Tab 导航吸顶检测 ==========
+if (typeof IntersectionObserver !== 'undefined') {
+  const sentinel = document.createElement('div');
+  sentinel.style.height = '1px';
+  sentinel.style.position = 'absolute';
+  sentinel.style.top = '-1px';
+  sentinel.style.visibility = 'hidden';
+  tabNav.parentNode.insertBefore(sentinel, tabNav);
+  new IntersectionObserver(([entry]) => {
+    tabNav.classList.toggle('is-stuck', !entry.isIntersecting);
+  }).observe(sentinel);
+}

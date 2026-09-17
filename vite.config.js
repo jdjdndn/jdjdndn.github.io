@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import compression from 'vite-plugin-compression';
 
 // ========== 预渲染：从 data.js 提取优惠数据生成静态 HTML ==========
@@ -102,20 +102,40 @@ function buildPrerenderHTML(tabs) {
   return html;
 }
 
-// ========== 自动发现着陆页 ==========
+// ========== 自动发现着陆页（无独立 JS 的非首页 HTML） ==========
 function discoverLandingPages() {
   const landingDir = resolve(__dirname, 'src');
   const entries = {};
   try {
     for (const file of readdirSync(landingDir)) {
-      // 着陆页命名: xxx-yyy.html（包含短横线的非主页面）
-      if (file.endsWith('.html') && file.includes('-') && !file.startsWith('llms')) {
-        const name = file.replace('.html', '');
-        entries[name] = resolve(landingDir, file);
-      }
+      if (!file.endsWith('.html') || file === 'index.html' || file.startsWith('llms')) continue;
+      const name = file.replace('.html', '');
+      // 有对应 JS 文件的是子页面，不是着陆页
+      try {
+        statSync(resolve(landingDir, `${name}.js`));
+        continue;
+      } catch {}
+      entries[name] = resolve(landingDir, file);
     }
   } catch {}
   return entries;
+}
+
+// ========== 自动发现子页面（有独立 JS 模块的页面） ==========
+function discoverSubPages() {
+  const srcDir = resolve(__dirname, 'src');
+  const pages = [];
+  try {
+    for (const file of readdirSync(srcDir)) {
+      if (!file.endsWith('.html') || file === 'index.html' || file.startsWith('llms')) continue;
+      const name = file.replace('.html', '');
+      try {
+        statSync(resolve(srcDir, `${name}.js`));
+        pages.push(name);
+      } catch {}
+    }
+  } catch {}
+  return pages;
 }
 
 export default defineConfig({
@@ -132,6 +152,7 @@ export default defineConfig({
         haoka: resolve(__dirname, 'src/haoka.html'),
         wifi: resolve(__dirname, 'src/wifi.html'),
         wangpan: resolve(__dirname, 'src/wangpan.html'),
+        huiyuan: resolve(__dirname, 'src/huiyuan.html'),
         ...discoverLandingPages(),
       },
     },
@@ -144,7 +165,7 @@ export default defineConfig({
       name: 'inject-build-date',
       transformIndexHtml(html) {
         const today = new Date().toISOString().slice(0, 10);
-        return html.replace('__BUILD_DATE__', today);
+        return html.replaceAll('__BUILD_DATE__', today);
       },
     },
     {
@@ -178,6 +199,18 @@ export default defineConfig({
       name: 'generate-sitemap',
       writeBundle() {
         const today = new Date().toISOString().slice(0, 10);
+
+        // 子页面（haoka/wifi/wangpan/huiyuan 等）自动发现
+        const subPages = discoverSubPages();
+        const subPageUrls = subPages.map((name) => `
+  <url>
+    <loc>https://jdjdndn.github.io/${name}.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`).join('');
+
+        // 着陆页（meituan-waimai 等 SEO 长尾页）自动发现
         const landingPages = discoverLandingPages();
         const landingUrls = Object.keys(landingPages).map((name) => `
   <url>
@@ -206,19 +239,7 @@ export default defineConfig({
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://jdjdndn.github.io/haoka.html</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://jdjdndn.github.io/wifi.html</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>${landingUrls}
+  </url>${subPageUrls}${landingUrls}
 </urlset>`;
         writeFileSync(resolve(__dirname, 'dist/sitemap.xml'), sitemap, 'utf-8');
       },

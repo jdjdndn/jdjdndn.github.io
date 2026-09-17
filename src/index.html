@@ -154,7 +154,7 @@
         "cssSelector": [".faq-question", ".faq-answer"]
       },
       "datePublished": "2025-01-01",
-      "dateModified": "2025-07-18",
+      "dateModified": "__BUILD_DATE__",
       "mainEntity": [
         {
           "@type": "Question",
@@ -377,36 +377,40 @@
   <body>
     <div id="app">
       <header class="hero" aria-label="优惠活动聚合">
+        <div class="hero-bg-pattern"></div>
         <div class="hero-nav">
-          <span class="hero-logo">🏷️ 优惠聚合</span>
+          <span class="hero-logo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            优惠聚合
+          </span>
           <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
             <span id="dark-toggle-text">暗色</span>
           </button>
         </div>
-        <div class="hero-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <div class="hero-content">
+          <div class="hero-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h1>优惠活动聚合</h1>
+          <p class="hero-subtitle">外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递</p>
+          <p class="hero-desc">一站全聚合，每天更新</p>
         </div>
-        <h1>优惠活动聚合</h1>
-        <p>外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递 — 一站全聚合</p>
         <div class="hero-stats" id="header-stats"></div>
       </header>
 
       <!-- 搜索栏 -->
-      <div class="search-bar" role="search">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="search-input" id="search-input" placeholder="搜索优惠名称、口令码..." aria-label="搜索优惠" />
-        <button class="search-clear" id="search-clear" aria-label="清除搜索">✕</button>
+      <div class="search-wrapper">
+        <div class="search-bar" role="search">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-input" id="search-input" placeholder="搜索优惠名称、口令码..." aria-label="搜索优惠" />
+          <button class="search-clear" id="search-clear" aria-label="清除搜索">✕</button>
+        </div>
+        <div class="search-count" id="search-count" aria-live="polite"></div>
       </div>
-      <div class="search-count" id="search-count" aria-live="polite"></div>
 
-      <!-- 过期筛选 -->
-      <!-- <div class="filter-bar" id="filter-bar">
-        <button class="hide-expired-toggle" id="hide-expired" aria-pressed="false">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-          隐藏已过期
-        </button>
-      </div> -->
+      <!-- 快捷入口 -->
+      <nav class="quick-shortcuts" id="quick-shortcuts" aria-label="快捷入口"></nav>
 
       <!-- Tab 导航 -->
       <nav id="tab-nav" class="tab-nav" role="tablist" aria-label="优惠分类"></nav>
@@ -467,6 +471,10 @@
       <a href="./wangpan.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
         <span>网盘</span>
+      </a>
+      <a href="./huiyuan.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>会员</span>
       </a>
     </nav>
 
