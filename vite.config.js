@@ -131,6 +131,7 @@ export default defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         haoka: resolve(__dirname, 'src/haoka.html'),
         wifi: resolve(__dirname, 'src/wifi.html'),
+        wangpan: resolve(__dirname, 'src/wangpan.html'),
         ...discoverLandingPages(),
       },
     },

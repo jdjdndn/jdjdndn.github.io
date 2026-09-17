@@ -29,6 +29,18 @@ export const friendLinks = [
 
 // ========== Tab 数据 ==========
 export const tabs = [
+  // ────────────── 精选活动（数据从 JSON 加载） ──────────────
+  {
+    id: 'jingxuan',
+    label: '⭐ 精选',
+    name: '精选',
+    sections: [],
+  },
+
+];
+
+// 自己收集的官方活动
+export const selfData = [
   // ────────────── 美团 ──────────────
   {
     id: 'meituan',
@@ -376,4 +388,4 @@ export const tabs = [
       },
     ],
   },
-];
+]
