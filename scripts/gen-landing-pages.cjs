@@ -1,14 +1,16 @@
 // ============================================================
 //  着陆页生成脚本
-//  从 src/landing-pages.js 读取配置，生成静态 HTML 到 src/ 目录
-//  在 vite build 前运行，自动生成各平台着陆页
+//  从 src/landing-pages.js 读取配置，生成静态 HTML 到 dist/ 目录
+//  在 vite build 后运行，绕过 Vite 直接输出（纯静态 HTML，无需打包）
 // ============================================================
 
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 
 const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/landing-pages.js');
-const SRC_DIR = path.resolve(__dirname, '../src');
+const DIST_DIR = path.resolve(__dirname, '../dist');
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 // 解析 landing-pages.js 中的配置（文本解析，避免 ES module 问题）
 function parseConfig(filePath) {
@@ -236,11 +238,19 @@ function generateHTML(page) {
 
       <footer class="page-footer">
         <p>本站为优惠信息聚合平台，非官方平台。优惠信息仅供参考，以各平台实际页面为准。</p>
-        <p><a href="./index.html">返回首页</a></p>
+        <p><a href="./index.html">返回首页</a> · <a href="./about.html">关于我们</a></p>
       </footer>
     </div>
   </body>
 </html>`;
+}
+
+function compressFile(filePath) {
+  const content = fs.readFileSync(filePath);
+  // gzip
+  fs.writeFileSync(filePath + '.gz', zlib.gzipSync(content, { level: 9 }));
+  // brotli
+  fs.writeFileSync(filePath + '.br', zlib.brotliCompressSync(content));
 }
 
 function main() {
@@ -248,14 +258,17 @@ function main() {
   let generated = 0;
 
   for (const page of pages) {
-    const html = generateHTML(page);
-    const outPath = path.join(SRC_DIR, `${page.slug}.html`);
+    let html = generateHTML(page);
+    // 注入构建日期
+    html = html.replace(/__BUILD_DATE__/g, BUILD_DATE);
+    const outPath = path.join(DIST_DIR, `${page.slug}.html`);
     fs.writeFileSync(outPath, html, 'utf-8');
+    compressFile(outPath);
     generated++;
     console.log(`  ✓ ${page.slug}.html`);
   }
 
-  console.log(`\n生成 ${generated} 个着陆页`);
+  console.log(`\n生成 ${generated} 个着陆页（含 gzip + brotli 压缩）`);
 }
 
 main();

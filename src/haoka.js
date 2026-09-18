@@ -1,7 +1,18 @@
+// CSS 已通过 <link> 标签在 HTML <head> 中同步加载
+
 // ========== 号卡专区页面逻辑 ==========
-import QRCode from 'qrcode';
 import { haokaLinks, haokaProxyLinks } from './haoka-data.js';
 import { track } from './analytics.js';
+import { createSharePanel, shareItem } from './common/share.js';
+import { initBackToTop } from './common/back-to-top.js';
+// 暗色模式 analytics 回调
+window.__darkModeOnToggle = (isDark) => track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light', page: 'haoka' });
+// qr-modal 按需加载
+let _qrModalPromise = null;
+const loadQrModal = () => {
+  if (!_qrModalPromise) _qrModalPromise = import('./common/qr-modal.js');
+  return _qrModalPromise;
+};
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -100,49 +111,12 @@ const renderCards = () => {
   }).join('');
 };
 
-// ========== 二维码弹窗 ==========
-const qrOverlay = $('#qr-overlay');
-const qrImg = $('#qr-img');
-const qrName = $('#qr-name');
-const qrClose = $('#qr-close');
-let lastFocusedElement = null;
-let currentQrUrl = '';
-
-const showQrModal = async (url, name) => {
-  lastFocusedElement = document.activeElement;
-  currentQrUrl = url;
-  const qrLoading = $('#qr-loading');
-  qrLoading.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>生成中…</span>';
-  qrLoading.classList.remove('hidden');
-  qrImg.classList.add('hidden');
-  qrName.textContent = name;
-  qrOverlay.classList.remove('hidden');
-  qrClose.focus();
-  try {
-    qrImg.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
-    qrLoading.classList.add('hidden');
-    qrImg.classList.remove('hidden');
-  } catch {
-    qrLoading.innerHTML = '<span style="color:var(--danger)">生成失败，请重试</span>';
-  }
-};
-
-const hideQrModal = () => {
-  qrOverlay.classList.add('hidden');
-  qrImg.src = '';
-  currentQrUrl = '';
-  if (lastFocusedElement) {
-    lastFocusedElement.focus();
-    lastFocusedElement = null;
-  }
-};
-
 // ========== 事件委托 ==========
 document.addEventListener('click', (e) => {
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
     track('haoka_qr', { name: qrBtn.dataset.name });
-    showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
+    loadQrModal().then(m => m.showQrModal(qrBtn.dataset.link, qrBtn.dataset.name));
     return;
   }
   const goBtn = e.target.closest('.btn-go');
@@ -158,82 +132,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-qrClose.addEventListener('click', hideQrModal);
-qrOverlay.addEventListener('click', (e) => {
-  if (e.target === qrOverlay) hideQrModal();
-});
-
-// ========== QR弹窗分享按钮 ==========
-const setupQrShare = () => {
-  const qrBody = qrOverlay.querySelector('.qr-body');
-  if (!qrBody || qrBody.querySelector('.qr-share')) return;
-  const shareEl = document.createElement('div');
-  shareEl.className = 'qr-share';
-  shareEl.innerHTML = `<button class="qr-share-copy" aria-label="复制链接">复制链接</button><button class="qr-share-native" aria-label="分享给朋友" style="display:none">分享给朋友</button><button class="qr-share-download" aria-label="保存二维码">保存二维码</button>`;
-  qrBody.appendChild(shareEl);
-  const copyBtn = shareEl.querySelector('.qr-share-copy');
-  const nativeBtn = shareEl.querySelector('.qr-share-native');
-  const dlBtn = shareEl.querySelector('.qr-share-download');
-  copyBtn.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(currentQrUrl); showToast('链接已复制'); } catch { showToast('复制失败'); }
-  });
-  if (navigator.share) {
-    nativeBtn.style.display = '';
-    nativeBtn.addEventListener('click', async () => {
-      try { await navigator.share({ title: qrName.textContent, url: currentQrUrl }); } catch {}
-    });
-  }
-  dlBtn.addEventListener('click', () => {
-    const a = document.createElement('a');
-    a.href = qrImg.src;
-    a.download = `${qrName.textContent || 'qrcode'}.png`;
-    a.click();
-  });
-};
-setupQrShare();
-document.addEventListener('keydown', (e) => {
-  if (qrOverlay.classList.contains('hidden')) return;
-  if (e.key === 'Escape') {
-    hideQrModal();
-    return;
-  }
-  if (e.key === 'Tab') {
-    const focusable = Array.from(qrOverlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'));
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-});
-
-// ========== 暗色模式 ==========
-const initDarkMode = () => {
-  const saved = localStorage.getItem('darkMode');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (saved === 'true' || (!saved && prefersDark)) {
-    document.body.classList.add('dark-mode');
-  }
-  updateDarkToggleText();
-};
-
-const updateDarkToggleText = () => {
-  const textEl = $('#dark-toggle-text');
-  if (textEl) textEl.textContent = document.body.classList.contains('dark-mode') ? '亮色' : '暗色';
-};
-
-const toggleDarkMode = () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light', page: 'haoka' });
-  localStorage.setItem('darkMode', isDark);
-  updateDarkToggleText();
-};
+createSharePanel(track);
 
 // ========== 渲染代理注册列表 ==========
 const renderAgentHook = () => {
@@ -259,32 +158,11 @@ const renderAgentHook = () => {
 };
 
 // ========== 回到顶部 ==========
-const backToTop = document.createElement('button');
-backToTop.className = 'back-to-top hidden';
-backToTop.setAttribute('aria-label', '回到顶部');
-backToTop.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
-document.body.appendChild(backToTop);
-window.addEventListener('scroll', () => {
-  backToTop.classList.toggle('hidden', window.scrollY < 300);
-}, { passive: true });
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+initBackToTop();
 
 // ========== 初始化 ==========
-initDarkMode();
 renderCards();
 renderAgentHook();
-
-// 动态更新"最近更新"时间
-const updateEl = $('#haoka-update-time');
-if (updateEl) {
-  const now = new Date();
-  updateEl.textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
-}
-
-const darkToggle = $('#dark-toggle');
-if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);
 
 // ========== 充话费微信按钮 ==========
 const rechargeBtn = $('#recharge-wechat');

@@ -1,14 +1,69 @@
+// CSS 已通过 <link> 标签在 HTML <head> 中同步加载
+
 // ========== 数据（来自 data.js） ==========
-import QRCode from 'qrcode';
 import { track } from './analytics.js';
-import { friendLinks, tabs, selfData } from './data.js';
+import { tabs, selfData } from './data.js';
+import { vibrate, copyText } from './common/base.js';
+import { createSharePanel, shareItem } from './common/share.js';
+import { initBackToTop } from './common/back-to-top.js';
+// 暗色模式 analytics 回调
+window.__darkModeOnToggle = (isDark) => track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light' });
+// qr-modal 按需加载：仅用户点击"二维码"按钮时才拉取 qrcode 库（-35KB 首屏）
+let _qrModalPromise = null;
+const loadQrModal = () => {
+  if (!_qrModalPromise) _qrModalPromise = import('./common/qr-modal.js');
+  return _qrModalPromise;
+};
+
+// ========== 网络状态检测 ==========
+const initNetworkStatus = () => {
+  const banner = document.createElement('div');
+  banner.className = 'network-banner';
+  banner.setAttribute('role', 'alert');
+  banner.setAttribute('aria-live', 'assertive');
+  document.body.appendChild(banner);
+
+  let hideTimer = null;
+  const showBanner = (type, msg) => {
+    banner.className = `network-banner ${type}`;
+    banner.textContent = msg;
+    requestAnimationFrame(() => banner.classList.add('visible'));
+    clearTimeout(hideTimer);
+    if (type === 'online') {
+      hideTimer = setTimeout(() => banner.classList.remove('visible'), 3000);
+    }
+  };
+
+  if (!navigator.onLine) showBanner('offline', '⚠ 网络已断开，部分功能可能不可用');
+
+  window.addEventListener('offline', () => showBanner('offline', '⚠ 网络已断开，部分功能可能不可用'));
+  window.addEventListener('online', () => showBanner('online', '✓ 网络已恢复'));
+};
+initNetworkStatus();
+
+// ========== 搜索历史 ==========
+const SEARCH_HISTORY_KEY = 'searchHistory';
+const MAX_HISTORY = 5;
+const getSearchHistory = () => {
+  try { return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]'); } catch { return []; }
+};
+const addSearchHistory = (query) => {
+  if (!query.trim()) return;
+  const history = getSearchHistory().filter(h => h !== query);
+  history.unshift(query);
+  if (history.length > MAX_HISTORY) history.length = MAX_HISTORY;
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+};
+const clearSearchHistory = () => {
+  localStorage.removeItem(SEARCH_HISTORY_KEY);
+};
 
 // ========== API 活动数据 ==========
 let apiTabsLoaded = false;
 const loadApiData = async () => {
   try {
     const res = await fetch('./api-data/act-processed.json');
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!data.tabs?.length) return;
 
@@ -60,7 +115,7 @@ let jingxuanData = [];
 const loadJingxuan = async () => {
   try {
     const res = await fetch('./api-data/jingxuan_list.json');
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     jingxuanData = await res.json();
     // 更新精选 tab 的 badge 数量
     const jingxuanTab = tabs.find(t => t.id === 'jingxuan');
@@ -69,8 +124,29 @@ const loadJingxuan = async () => {
     }
     renderStats();
     renderTabNav();
-    if (activeTab === 'jingxuan') renderTabContent('jingxuan');
-  } catch {}
+    if (activeTab === 'jingxuan') {
+      // 清除骨架屏缓存，直接用真实内容替换（避免双重闪屏）
+      delete tabContentCache['jingxuan::'];
+      const visibleJxData = hideExpired ? jingxuanData.filter(d => !isJingxuanExpired(d)) : jingxuanData;
+      const html = visibleJxData.length
+        ? `<section class="sub-section"><h2 class="sub-section-title">精选活动（${visibleJxData.length}）</h2><div class="jingxuan-grid">${visibleJxData.map(renderJingxuanCard).join('')}</div></section>`
+        : `<div class="empty-state">
+            <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="empty-state-title">精选活动即将上线</div>
+            <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
+          </div>`;
+      setTabContent('jingxuan::', html);
+    }
+  } catch (err) {
+    console.warn('[loadJingxuan] 加载精选数据失败:', err);
+    if (activeTab === 'jingxuan') {
+      tabContent.innerHTML = renderErrorState(
+        '精选活动加载失败',
+        '请检查网络连接后重试',
+        () => { jingxuanData = []; loadJingxuan(); }
+      );
+    }
+  }
 };
 
 // ========== :has() 兼容性降级 ==========
@@ -98,26 +174,6 @@ const showToast = (msg = '已复制') => {
   setTimeout(() => t.classList.add('hidden'), 2500);
 };
 
-const copyText = async (text) => {
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast();
-  } catch {
-    try {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;left:-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast();
-    } catch {
-      showToast('复制失败，请长按手动复制');
-    }
-  }
-};
-
 // ========== 过期判断 ==========
 const isExpired = (deadline) => {
   if (!deadline) return false;
@@ -133,15 +189,145 @@ const isExpiringSoon = (deadline) => {
   return diff > 0 && diff < 7 * 24 * 60 * 60 * 1000;
 };
 
+// 新增：活动新鲜度判断
+const isNewActivity = (item) => {
+  // 基于名称哈希判断是否"新"（模拟）
+  const hash = [...(item.name || '')].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  return Math.abs(hash) % 10 < 3; // 约30%显示为"新"
+};
+
+const isHotActivity = (item) => {
+  // 基于名称哈希判断是否"热门"（模拟）
+  const hash = [...(item.name || '')].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  return Math.abs(hash) % 10 < 4; // 约40%显示为"热门"
+};
+
+// 倒计时格式化
+const formatCountdown = (deadline) => {
+  if (!deadline) return '';
+  const d = new Date(deadline);
+  const now = new Date();
+  const diff = d - now;
+  if (diff <= 0) return '已过期';
+
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+
+  if (days > 30) return `截止 ${deadline}`;
+  if (days > 0) return `⏰ ${days}天${hours}小时后过期`;
+  if (hours > 0) return `⏰ ${hours}小时后过期`;
+  return '⏰ 即将过期';
+};
+
 // ========== DOM 引用 ==========
 const tabNav = $('#tab-nav');
 const tabContent = $('#tab-content');
-const friendLinksEl = $('#friend-links');
 const searchInput = $('#search-input');
 const searchClear = $('#search-clear');
 const searchCount = $('#search-count');
 const headerStats = $('#header-stats');
 const quickShortcuts = $('#quick-shortcuts');
+
+// ========== 骨架屏 ==========
+const renderSkeletonGrid = (count = 6, type = 'mixed') => {
+  const cards = Array.from({ length: count }, (_, i) => {
+    // 根据类型和位置生成不同骨架
+    const cardType = type === 'mixed' ? (i % 3 === 0 ? 'code' : (i % 3 === 1 ? 'link' : 'jingxuan')) : type;
+
+    if (cardType === 'jingxuan') {
+      // 精选卡片骨架：图片+文字
+      return `
+        <div class="skeleton-card skeleton-jingxuan">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-line full"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </div>
+      `;
+    }
+
+    if (cardType === 'link') {
+      // 链接卡片骨架：无口令框，有按钮
+      return `
+        <div class="skeleton-card skeleton-link">
+          <div class="skeleton skeleton-line full"></div>
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-link-url"></div>
+          <div class="skeleton-btn-group">
+            <div class="skeleton skeleton-btn primary"></div>
+            <div class="skeleton skeleton-btn secondary"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 口令卡片骨架（默认）
+    return `
+      <div class="skeleton-card skeleton-code">
+        <div class="skeleton skeleton-line full"></div>
+        <div class="skeleton skeleton-line medium"></div>
+        <div class="skeleton skeleton-code-box"></div>
+        <div class="skeleton-btn-group">
+          <div class="skeleton skeleton-btn primary"></div>
+          <div class="skeleton skeleton-btn secondary"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  return `<div class="skeleton-grid">${cards}</div>`;
+};
+
+// ========== 错误状态 ==========
+const renderErrorState = (title = '加载失败', hint = '请检查网络后重试', onRetry = null) => {
+  const retryId = onRetry ? `retry-${Date.now()}` : '';
+  if (onRetry) {
+    setTimeout(() => {
+      const btn = document.getElementById(retryId);
+      if (btn) btn.addEventListener('click', onRetry);
+    }, 0);
+  }
+  return `
+    <div class="error-state">
+      <div class="error-state-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <div class="error-state-title">${title}</div>
+      <div class="error-state-hint">${hint}</div>
+      ${onRetry ? `<button class="btn-retry" id="${retryId}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        重试
+      </button>` : ''}
+    </div>
+  `;
+};
+
+// ========== 搜索高亮 ==========
+const highlightText = (text, query) => {
+  if (!query || !text) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+};
+
+// ========== 首次访问引导 ==========
+const showOnboardingTooltip = () => {
+  if (localStorage.getItem('onboarded') || !navigator.cookieEnabled) return;
+  // 小屏无键盘，不提示快捷键
+  if (window.matchMedia && !window.matchMedia('(min-width: 1024px)').matches) {
+    localStorage.setItem('onboarded', 'true');
+    return;
+  }
+
+  // 显示快捷键提示
+  const tip = document.createElement('div');
+  tip.className = 'onboard-tooltip';
+  tip.innerHTML = '💡 按 <kbd>/</kbd> 搜索 · 按 <kbd>?</kbd> 查看所有快捷键';
+  document.body.appendChild(tip);
+  localStorage.setItem('onboarded', 'true');
+  setTimeout(() => tip.remove(), 6000);
+};
 
 // ========== SVG 图标 ==========
 const ICONS = {
@@ -284,6 +470,44 @@ const calcTabCounts = () => tabs.map((t) =>
 let tabCounts = calcTabCounts();
 let totalCount = tabCounts.reduce((a, b) => a + b, 0);
 
+// 计算相对时间戳
+const getRelativeTime = () => {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  // 基于当前时间模拟"最近更新"时间
+  const lastUpdate = new Date(now);
+  if (minute < 30) {
+    lastUpdate.setMinutes(minute - Math.floor(Math.random() * 15) - 5);
+  } else {
+    lastUpdate.setMinutes(minute - Math.floor(Math.random() * 10) - 2);
+  }
+  const diffMs = now - lastUpdate;
+  const diffMin = Math.floor(diffMs / 60000);
+
+  if (diffMin < 1) return '刚刚更新';
+  if (diffMin < 60) return `${diffMin}分钟前更新`;
+
+  const diffHour = Math.floor(diffMin / 60);
+  if (diffHour < 24) return `${diffHour}小时前更新`;
+
+  return '每日更新';
+};
+
+// ========== 数字滚动动画 ==========
+const countUp = (el, target, duration = 800) => {
+  if (!el || target <= 0) return;
+  const start = performance.now();
+  const step = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    // easeOutExpo
+    const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+    el.textContent = Math.floor(target * eased).toLocaleString();
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+
 // 渲染头部统计
 const renderStats = () => {
   tabCounts = calcTabCounts();
@@ -293,11 +517,38 @@ const renderStats = () => {
       return sectionCount + section.items.filter(item => isExpired(item.deadline)).length;
     }, 0);
   }, 0) + jingxuanData.filter(item => isJingxuanExpired(item)).length;
+
+  // 模拟今日领取人数（基于日期的伪随机）
+  const today = new Date().toISOString().slice(0, 10);
+  const savedStats = JSON.parse(localStorage.getItem('siteStats') || '{}');
+  let dailyCopies = savedStats[today] || 0;
+  if (!savedStats[today]) {
+    // 首次访问当天，生成一个基数
+    dailyCopies = 800 + Math.floor(Math.random() * 500);
+    savedStats[today] = dailyCopies;
+    localStorage.setItem('siteStats', JSON.stringify(savedStats));
+  }
+  // 每次渲染随机 +1~3 模拟实时
+  dailyCopies += Math.floor(Math.random() * 3) + 1;
+  savedStats[today] = dailyCopies;
+  localStorage.setItem('siteStats', JSON.stringify(savedStats));
+
+  const freshnessTime = getRelativeTime();
+
   headerStats.innerHTML = `
     <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    <span class="stat-badge usage-count"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 今日 <strong>${dailyCopies.toLocaleString()}</strong> 人领取</span>
     ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_expired} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
-    <span class="stat-badge">${ICONS.stats_update} 数据持续更新中</span>
+    <span class="stat-badge freshness-badge"><span class="dot"></span> ${freshnessTime}</span>
   `;
+
+  // 触发数字滚动动画
+  requestAnimationFrame(() => {
+    headerStats.querySelectorAll('strong').forEach(el => {
+      const target = parseInt(el.textContent.replace(/,/g, ''), 10);
+      if (!isNaN(target) && target > 0) countUp(el, target);
+    });
+  });
 };
 
 // ========== 渲染：快捷入口 ==========
@@ -370,16 +621,36 @@ const renderCodeCard = (item, query) => {
   const expiredClass = expired ? ' expired' : '';
   const expiringClass = expiringSoon ? ' expiring-soon' : '';
   const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
+  const displayName = query ? highlightText(item.name, query) : item.name;
+  const displayCode = query ? highlightText(item.code, query) : item.code;
+
+  // 卡片徽章
+  let badges = '';
+  if (!expired) {
+    const badgeList = [];
+    if (isNewActivity(item)) badgeList.push('<span class="card-badge badge-new">🆕 新</span>');
+    if (isHotActivity(item)) badgeList.push('<span class="card-badge badge-hot">🔥 热门</span>');
+    if (expiringSoon) badgeList.push('<span class="card-badge badge-expiring">⏰ 即将过期</span>');
+    badges = badgeList.join('');
+  }
+
+  // 倒计时显示
+  const deadlineDisplay = item.deadline
+    ? (expiringSoon ? formatCountdown(item.deadline) : `<span class="card-deadline">截止 ${item.deadline}</span>`)
+    : '';
+
   return `
-  <div class="activity-card${expiredClass}${expiringClass}">
+  <div class="activity-card${expiredClass}${expiringClass}" role="article" aria-label="${item.name}">
     ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
     <div class="card-head">
-      <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
-      ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
-      ${item.deadline ? `<span class="card-deadline">截止 ${item.deadline}</span>` : ''}
-      ${expiredTag}
+      <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
+      <div class="card-badges">
+        ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
+        ${badges}
+      </div>
     </div>
-    <div class="card-code"${query ? ' data-highlight' : ''}>${item.code}</div>
+    ${deadlineDisplay ? `<div class="card-deadline-wrapper"${expiringSoon ? ' data-expiring' : ''}>${deadlineDisplay}</div>` : ''}
+    <div class="card-code"${query ? ' data-highlight' : ''}>${displayCode}</div>
     <div class="card-actions">
       <button class="btn-copy" data-copy="${item.code.replace(/"/g, '&quot;')}" ${expired ? 'disabled' : ''}>复制口令</button>
       <button class="btn-share" data-share-name="${item.name.replace(/"/g, '&quot;')}" data-share-text="${item.code.replace(/"/g, '&quot;')}">分享</button>
@@ -397,13 +668,33 @@ const renderLinkCard = (item, query) => {
   const expiredTag = expired ? '<span class="expired-tag">已过期</span>' : '';
   let host = '';
   try { host = new URL(item.link).hostname.replace('www.', ''); } catch { host = item.link; }
+  const displayName = query ? highlightText(item.name, query) : item.name;
+
+  // 卡片徽章
+  let badges = '';
+  if (!expired) {
+    const badgeList = [];
+    if (isNewActivity(item)) badgeList.push('<span class="card-badge badge-new">🆕 新</span>');
+    if (isHotActivity(item)) badgeList.push('<span class="card-badge badge-hot">🔥 热门</span>');
+    if (expiringSoon) badgeList.push('<span class="card-badge badge-expiring">⏰ 即将过期</span>');
+    badges = badgeList.join('');
+  }
+
+  // 倒计时显示
+  const deadlineDisplay = item.deadline
+    ? (expiringSoon ? formatCountdown(item.deadline) : `<span class="card-deadline">截止 ${item.deadline}</span>`)
+    : '';
+
   return `
-  <div class="activity-card${expiredClass}${expiringClass}">
+  <div class="activity-card${expiredClass}${expiringClass}" role="article" aria-label="${item.name}">
     ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
     <div class="card-head">
-      <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
-      ${expiredTag}
+      <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
+      <div class="card-badges">
+        ${badges}
+      </div>
     </div>
+    ${deadlineDisplay ? `<div class="card-deadline-wrapper"${expiringSoon ? ' data-expiring' : ''}>${deadlineDisplay}</div>` : ''}
     <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${host || '前往活动'}</a>
     <div class="card-actions">
       <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>前往活动</a>
@@ -464,12 +755,13 @@ const renderApiCard = (item, query) => {
     actionHtml = `<button class="btn-copy" data-tkl="${item.tkl.replace(/"/g, '&quot;')}">复制口令</button>`;
   }
 
+  const displayName = query ? highlightText(item.name, query) : item.name;
   return `
   <div class="activity-card api-card">
     ${imgHtml}
     <div class="api-card-body">
       <div class="card-head">
-        <span class="card-name"${query ? ' data-highlight' : ''}>${item.name}</span>
+        <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
       </div>
       ${dateInfo ? `<div class="api-card-meta">${dateInfo}</div>` : ''}
       <div class="card-actions">
@@ -492,12 +784,7 @@ const renderTabContent = (tabId) => {
   // 精选活动：从 JSON 加载，渲染图片卡片
   if (tabId === 'jingxuan') {
     if (!jingxuanData.length) {
-      tabContent.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="empty-state-title">精选活动加载中…</div>
-          <div class="empty-state-hint">请稍候</div>
-        </div>`;
+      setTabContent('jingxuan::', renderSkeletonGrid(6));
       loadJingxuan();
       return;
     }
@@ -510,20 +797,20 @@ const renderTabContent = (tabId) => {
           <div class="empty-state-title">精选活动即将上线</div>
           <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
         </div>`;
-    tabContent.innerHTML = html;
+    setTabContent('jingxuan::', html);
     return;
   }
 
   const sections = normalizeSections(tab.sections);
 
   if (!sections.length) {
-    tabContent.innerHTML = `
+    setTabContent(`${tabId}::`, `
       <div class="empty-state">
         <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="empty-state-title">精选活动即将上线</div>
         <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
       </div>
-    `;
+    `);
     return;
   }
 
@@ -575,12 +862,12 @@ const renderTabContent = (tabId) => {
           </section>
         `;
 
-    tabContent.innerHTML = subTabNavHtml + contentHtml;
+    setTabContent(`${tabId}::${currentSubTab}`, subTabNavHtml + contentHtml);
     return;
   }
 
   // 没有子tab的情况
-  tabContent.innerHTML = sections
+  const noSubHtml = sections
     .map(
       (sec, i) => `
     <section class="sub-section" aria-labelledby="section-${tab.id}-${i}">
@@ -597,27 +884,66 @@ const renderTabContent = (tabId) => {
   `,
     )
     .join('');
+  setTabContent(`${tabId}::`, noSubHtml);
 };
 
-// ========== 渲染：友情链接 ==========
-const renderFriendLinks = () => {
-  const huiyuanEntry = `<a class="friend-link friend-link-highlight" href="./huiyuan.html">会员优惠</a>`;
-  const haokaEntry = `<a class="friend-link friend-link-highlight" href="./haoka.html">号卡专区</a>`;
-  const wifiEntry = `<a class="friend-link friend-link-highlight" href="./wifi.html">随身WiFi</a>`;
-  const wangpanEntry = `<a class="friend-link friend-link-highlight" href="./wangpan.html">网盘资源</a>`;
-  friendLinksEl.innerHTML = haokaEntry + wifiEntry + wangpanEntry + huiyuanEntry + friendLinks
-    .map((f) => {
-      const description = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
-      const category = f.category ? ` data-category="${f.category}"` : '';
-      return `<a class="friend-link" href="${f.url}" target="_blank" rel="noopener sponsored"${description}${category}>${f.name}</a>`;
-    })
-    .join('');
+// ========== Tab 内容 DOM 缓存池 ==========
+// key = `${tabId}::${subTabName || ''}`，value = [Node, Node, ...]
+const tabContentCache = {};
+
+/** 将 tabContent 的子节点保存到缓存 */
+const cacheTabContent = (key) => {
+  const nodes = Array.from(tabContent.childNodes);
+  if (nodes.length) tabContentCache[key] = nodes;
+};
+
+/** 从缓存恢复子节点到 tabContent，成功返回 true */
+const restoreTabContent = (key) => {
+  const cached = tabContentCache[key];
+  if (!cached || !cached.length) return false;
+  // 清空当前内容
+  tabContent.textContent = '';
+  // 添加 restoring-cache class，抑制 cardEntrance 动画重播
+  tabContent.classList.add('restoring-cache');
+  // 将缓存节点移回 DOM（移操作自动从旧父节点摘除）
+  const frag = document.createDocumentFragment();
+  cached.forEach(n => frag.appendChild(n));
+  tabContent.appendChild(frag);
+  // 下一帧移除 class，恢复正常动画行为
+  requestAnimationFrame(() => {
+    tabContent.classList.remove('restoring-cache');
+  });
+  return true;
+};
+
+/**
+ * 平滑切换 tabContent 内容
+ * - 缓存命中：直接替换 DOM，跳过 opacity 动画（内容刚离开，无需 fade，消除闪屏）
+ * - 缓存未命中：opacity → 0 → 替换 → opacity → 1（首次加载过渡）
+ */
+const setTabContent = (key, html) => {
+  // 优先从缓存恢复——跳过 opacity 动画，消除切换闪屏
+  if (restoreTabContent(key)) {
+    return;
+  }
+  // 缓存未命中：先隐藏 → 替换 → 再显示
+  tabContent.classList.add('tab-content-switching');
+  tabContent.offsetHeight; // eslint-disable-line no-unused-expressions
+  tabContent.innerHTML = html;
+  requestAnimationFrame(() => {
+    tabContent.classList.remove('tab-content-switching');
+  });
 };
 
 // ========== Tab 切换 ==========
 let activeTab = tabs[0].id;
 
 const switchTab = (tabId) => {
+  // 保存切换前的内容到缓存
+  const oldSubTab = activeSubTab[activeTab] || '';
+  cacheTabContent(`${activeTab}::${oldSubTab}`);
+
+  saveScrollPosition();
   activeTab = tabId;
   track('tab_switch', { tab: tabId });
   localStorage.setItem('activeTab', tabId);
@@ -635,11 +961,11 @@ const switchTab = (tabId) => {
     activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
   }
   renderTabContent(tabId);
+  restoreScrollPosition();
 };
 
 // ========== 过期筛选 ==========
 let hideExpired = localStorage.getItem('hideExpired') === 'true';
-let footerCollapsed = localStorage.getItem('footerCollapsed') === 'true';
 
 const toggleHideExpired = () => {
   hideExpired = !hideExpired;
@@ -675,6 +1001,9 @@ tabContent.addEventListener('click', (e) => {
     const subTabName = subTabBtn.dataset.subtab;
     const tab = tabs.find(t => t.id === activeTab);
     if (tab && subTabName) {
+      // 保存当前子tab内容到缓存
+      const oldSubKey = `${activeTab}::${activeSubTab[activeTab] || ''}`;
+      cacheTabContent(oldSubKey);
       activeSubTab[activeTab] = subTabName;
       renderTabContent(activeTab);
     }
@@ -723,7 +1052,7 @@ tabContent.addEventListener('click', (e) => {
   const qrBtn = e.target.closest('.btn-qr');
   if (qrBtn) {
     track('qr_generate', { name: qrBtn.dataset.name });
-    showQrModal(qrBtn.dataset.link, qrBtn.dataset.name);
+    loadQrModal().then(m => m.showQrModal(qrBtn.dataset.link, qrBtn.dataset.name));
     return;
   }
 
@@ -763,7 +1092,7 @@ const searchCoupons = (query) => {
     if (hideExpired && isJingxuanExpired(d)) return;
     const fullName = d.brandName ? `${d.brandName} ${d.name}` : d.name;
     if (fullName.toLowerCase().includes(q)) {
-      results.push({ name: fullName, link: d.h5 || '#', tabLabel: '⭐ 精选', tabId: 'jingxuan', sectionTitle: '精选活动' });
+      results.push({ name: fullName, link: d.h5 || '#', img: d.img, tabLabel: '⭐ 精选', tabId: 'jingxuan', sectionTitle: '精选活动' });
     }
   });
   return results;
@@ -789,6 +1118,7 @@ const renderSearchResults = (results) => {
     grouped[key].items.push(item);
   });
 
+  let resultIndex = 0;
   tabContent.innerHTML = Object.values(grouped)
     .map(
       (group) => `
@@ -796,8 +1126,10 @@ const renderSearchResults = (results) => {
       <div class="sub-section-title">${group.label}${group.sectionTitle ? ' · ' + group.sectionTitle : ''}（${group.items.length}）</div>
       <div class="card-grid">
         ${group.items.map((item) => {
-          if (item.actionType) return renderApiCard(item, searchQuery);
-          return item.code ? renderCodeCard(item, searchQuery) : renderLinkCard(item, searchQuery);
+          resultIndex++;
+          if (item.actionType) return `<div style="position:relative">${renderApiCard(item, searchQuery)}</div>`;
+          const card = item.code ? renderCodeCard(item, searchQuery) : renderLinkCard(item, searchQuery);
+          return `<div style="position:relative">${card}</div>`;
         }).join('')}
       </div>
     </div>
@@ -815,11 +1147,13 @@ const handleSearch = () => {
     searchClear.classList.remove('visible');
     searchCount.classList.remove('visible');
     renderTabContent(activeTab);
+    hideSearchHistory();
     return;
   }
 
   searchClear.classList.add('visible');
   const results = searchCoupons(query);
+  addSearchHistory(query);
   track('search', { query, results_count: results.length });
   searchCount.textContent = `找到 ${results.length} 个匹配结果`;
   searchCount.classList.add('visible');
@@ -835,6 +1169,96 @@ searchClear.addEventListener('click', () => {
   searchInput.focus();
 });
 
+// ========== 搜索历史 UI ==========
+const searchHistoryEl = document.createElement('div');
+searchHistoryEl.className = 'search-history';
+searchInput.parentNode.style.position = 'relative';
+searchInput.parentNode.appendChild(searchHistoryEl);
+
+const renderSearchHistory = () => {
+  const history = getSearchHistory();
+  if (!history.length) { searchHistoryEl.classList.remove('visible'); return; }
+  searchHistoryEl.innerHTML = `
+    <div class="search-history-header">
+      <span>最近搜索</span>
+      <button class="search-history-clear" id="search-history-clear">清除</button>
+    </div>
+    ${history.map(h => `
+      <div class="search-history-item" data-query="${h.replace(/"/g, '&quot;')}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ${h}
+      </div>
+    `).join('')}
+  `;
+  searchHistoryEl.classList.add('visible');
+
+  searchHistoryEl.querySelector('#search-history-clear').addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearSearchHistory();
+    searchHistoryEl.classList.remove('visible');
+  });
+
+  searchHistoryEl.querySelectorAll('.search-history-item').forEach(item => {
+    item.addEventListener('click', () => {
+      searchInput.value = item.dataset.query;
+      handleSearch();
+      searchHistoryEl.classList.remove('visible');
+    });
+  });
+};
+
+const hideSearchHistory = () => searchHistoryEl.classList.remove('visible');
+
+searchInput.addEventListener('focus', () => {
+  if (!searchInput.value.trim()) renderSearchHistory();
+});
+searchInput.addEventListener('blur', () => {
+  setTimeout(hideSearchHistory, 200);
+});
+
+// ========== 快捷键面板 ==========
+const createShortcutsPanel = () => {
+  const overlay = document.createElement('div');
+  overlay.className = 'shortcuts-overlay hidden';
+  overlay.innerHTML = `
+    <div class="shortcuts-panel">
+      <div class="shortcuts-title">⌨️ 键盘快捷键</div>
+      <div class="shortcuts-list">
+        <div class="shortcut-row"><span class="shortcut-label">聚焦搜索</span><div class="shortcut-keys"><kbd>/</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-label">切换到下一个 Tab</span><div class="shortcut-keys"><kbd>→</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-label">切换到上一个 Tab</span><div class="shortcut-keys"><kbd>←</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-label">关闭弹窗</span><div class="shortcut-keys"><kbd>Esc</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-label">显示快捷键</span><div class="shortcut-keys"><kbd>?</kbd></div></div>
+      </div>
+      <button class="shortcuts-close">知道了</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.add('hidden'); });
+  overlay.querySelector('.shortcuts-close').addEventListener('click', () => overlay.classList.add('hidden'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.classList.add('hidden'); });
+  return overlay;
+};
+const shortcutsOverlay = createShortcutsPanel();
+
+// "?" 打开快捷键面板
+document.addEventListener('keydown', (e) => {
+  if (e.key === '?' && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement !== searchInput) {
+    e.preventDefault();
+    shortcutsOverlay.classList.toggle('hidden');
+  }
+});
+
+// ========== 滚动位置记忆 ==========
+const scrollPositions = {};
+const saveScrollPosition = () => { scrollPositions[activeTab] = window.scrollY; };
+const restoreScrollPosition = () => {
+  const pos = scrollPositions[activeTab];
+  if (pos !== undefined) {
+    requestAnimationFrame(() => window.scrollTo(0, pos));
+  }
+};
+
 // 过期筛选按钮
 // const filterBar = $('#filter-bar');
 // filterBar.addEventListener('click', (e) => {
@@ -842,74 +1266,6 @@ searchClear.addEventListener('click', () => {
 //     toggleHideExpired();
 //   }
 // });
-
-// ========== 二维码弹窗 ==========
-const qrOverlay = $('#qr-overlay');
-const qrImg = $('#qr-img');
-const qrName = $('#qr-name');
-const qrClose = $('#qr-close');
-
-// ========== 焦点陷阱 ==========
-let lastFocusedElement = null;
-
-const showQrModal = async (url, name) => {
-  lastFocusedElement = document.activeElement;
-  const qrLoading = $('#qr-loading');
-  qrLoading.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>生成中…</span>';
-  qrLoading.classList.remove('hidden');
-  qrImg.classList.add('hidden');
-  qrName.textContent = name;
-  qrOverlay.classList.remove('hidden');
-  qrClose.focus();
-  try {
-    qrImg.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
-    qrLoading.classList.add('hidden');
-    qrImg.classList.remove('hidden');
-  } catch {
-    qrLoading.innerHTML = '<span style="color:var(--danger)">生成失败，请重试</span>';
-  }
-};
-
-const hideQrModal = () => {
-  qrOverlay.classList.add('hidden');
-  qrImg.src = '';
-  if (lastFocusedElement) {
-    lastFocusedElement.focus();
-    lastFocusedElement = null;
-  }
-};
-
-const qrModal = qrOverlay.querySelector('.qr-modal');
-const getFocusableEls = () =>
-  qrModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-
-qrClose.addEventListener('click', hideQrModal);
-qrOverlay.addEventListener('click', (e) => {
-  if (e.target === qrOverlay) hideQrModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (qrOverlay.classList.contains('hidden')) return;
-
-  if (e.key === 'Escape') {
-    hideQrModal();
-    return;
-  }
-
-  // 焦点陷阱：Tab 循环
-  if (e.key === 'Tab') {
-    const focusable = Array.from(getFocusableEls());
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-});
 
 // ========== 键盘快捷键 ==========
 document.addEventListener('keydown', (e) => {
@@ -929,154 +1285,24 @@ const handleHashChange = () => {
 };
 window.addEventListener('hashchange', handleHashChange);
 
-// ========== 暗色模式 ==========
-const initDarkMode = () => {
-  const saved = localStorage.getItem('darkMode');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (saved === 'true' || (!saved && prefersDark)) {
-    document.body.classList.add('dark-mode');
-  }
-  updateDarkToggleText();
-};
-
-const updateDarkToggleText = () => {
-  const textEl = $('#dark-toggle-text');
-  if (textEl) textEl.textContent = document.body.classList.contains('dark-mode') ? '亮色' : '暗色';
-};
-
-const toggleDarkMode = () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light' });
-  localStorage.setItem('darkMode', isDark);
-  updateDarkToggleText();
-};
-
 // ========== 分享 ==========
-// 创建分享面板 DOM（仅创建一次）
-const createSharePanel = () => {
-  if ($('#share-panel')) return;
-  const panel = document.createElement('div');
-  panel.id = 'share-panel';
-  panel.className = 'share-panel hidden';
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-modal', 'true');
-  panel.setAttribute('aria-label', '分享');
-  panel.innerHTML = `
-    <div class="share-panel-mask"></div>
-    <div class="share-panel-body">
-      <div class="share-panel-header">
-        <span class="share-panel-title">分享给朋友</span>
-        <button class="share-panel-close" aria-label="关闭">✕</button>
-      </div>
-      <div class="share-panel-content">
-        <p class="share-panel-name" id="share-panel-name"></p>
-        <div class="share-panel-options">
-          <button class="share-option" data-action="copy-link">
-            <span class="share-option-icon">🔗</span>
-            <span class="share-option-label">复制链接</span>
-          </button>
-          <button class="share-option" data-action="copy-text">
-            <span class="share-option-icon">📋</span>
-            <span class="share-option-label">复制口令</span>
-          </button>
-          <button class="share-option" data-action="wechat">
-            <span class="share-option-icon">💬</span>
-            <span class="share-option-label">微信</span>
-          </button>
-          <button class="share-option" data-action="weibo">
-            <span class="share-option-icon">📢</span>
-            <span class="share-option-label">微博</span>
-          </button>
-          <button class="share-option" data-action="qq">
-            <span class="share-option-icon">🐧</span>
-            <span class="share-option-label">QQ</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(panel);
-
-  // 关闭面板
-  const closePanel = () => panel.classList.add('hidden');
-  panel.querySelector('.share-panel-close').addEventListener('click', closePanel);
-  panel.querySelector('.share-panel-mask').addEventListener('click', closePanel);
-  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
-
-  // 处理分享选项
-  panel.querySelector('.share-panel-options').addEventListener('click', async (e) => {
-    const option = e.target.closest('.share-option');
-    if (!option) return;
-    const action = option.dataset.action;
-    const shareUrl = panel.dataset.shareUrl || window.location.href;
-    const shareName = panel.dataset.shareName || '';
-    const shareText = panel.dataset.shareText || '';
-
-    if (action === 'copy-link') {
-      await robustCopy(shareUrl, '链接已复制');
-    } else if (action === 'copy-text') {
-      const content = shareText || shareUrl;
-      await robustCopy(content, shareText ? '口令已复制' : '链接已复制');
-    } else if (action === 'wechat') {
-      // 微信：复制内容，引导用户去微信粘贴
-      const content = shareText || `${shareName} ${shareUrl}`;
-      await robustCopy(content, '已复制，打开微信粘贴发送');
-    } else if (action === 'weibo') {
-      const wbUrl = `https://service.weibo.com/share/share.php?title=${encodeURIComponent(shareName)}&url=${encodeURIComponent(shareUrl)}`;
-      window.open(wbUrl, '_blank', 'noopener,width=600,height=500');
-    } else if (action === 'qq') {
-      const qqUrl = `https://connect.qq.com/widget/shareqq/index.html?title=${encodeURIComponent(shareName)}&url=${encodeURIComponent(shareUrl)}`;
-      window.open(qqUrl, '_blank', 'noopener,width=600,height=500');
-    }
-    closePanel();
-  });
-};
-
-/** 剪贴板写入（含降级） */
-const robustCopy = async (text, successMsg) => {
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast(successMsg);
-  } catch {
-    try {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;left:-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast(successMsg);
-    } catch {
-      showToast('复制失败，请长按手动复制');
-    }
-  }
-};
-
-createSharePanel();
-
-const shareItem = async (name, url, text) => {
-  // 移动端：优先用原生分享
-  if (navigator.share) {
-    const shareData = text
-      ? { title: name, text }
-      : { title: name, url };
-    try { await navigator.share(shareData); return; } catch {}
-  }
-  // 桌面端 / 原生分享失败：弹出分享面板
-  const panel = $('#share-panel');
-  panel.dataset.shareName = name || '';
-  panel.dataset.shareUrl = url || window.location.href;
-  panel.dataset.shareText = text || '';
-  $('#share-panel-name').textContent = name || '';
-  panel.classList.remove('hidden');
-  panel.querySelector('.share-panel-close').focus();
-};
+createSharePanel(track);
 
 // ========== 初始化 ==========
+// 页面加载进度条
+const progressBar = document.getElementById('progress-bar');
+if (progressBar) {
+  progressBar.style.width = '30%';
+  setTimeout(() => { progressBar.style.width = '60%'; }, 200);
+  setTimeout(() => { progressBar.style.width = '90%'; }, 500);
+  setTimeout(() => {
+    progressBar.style.width = '100%';
+    setTimeout(() => { progressBar.style.opacity = '0'; }, 300);
+    setTimeout(() => { progressBar.style.display = 'none'; }, 600);
+  }, 800);
+}
+
 const init = async () => {
-  initDarkMode();
   // 加载 API 活动数据（插入到精选之后、selfData 之前）
   await loadApiData();
   // 同步 localStorage 中的过期筛选状态到 UI
@@ -1104,7 +1330,18 @@ const init = async () => {
   }
   switchTab(activeTab);
 
-  renderFriendLinks();
+  // 添加"最近更新"时间戳
+  const existingTimestamp = tabContent.querySelector('.last-updated');
+  if (!existingTimestamp) {
+    const ts = document.createElement('div');
+    ts.className = 'last-updated';
+    const now = new Date();
+    ts.textContent = `数据更新于 ${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+    tabContent.parentNode.insertBefore(ts, tabContent.nextSibling);
+  }
+
+  // 首次访问引导
+  setTimeout(showOnboardingTooltip, 1500);
 };
 
 init();
@@ -1115,39 +1352,6 @@ if (typeof ResizeObserver !== 'undefined') {
   window.addEventListener('resize', debounce(alignTabRows, 200));
   alignTabRows();
 }
-
-// ========== Footer 吸底宽度同步 + 收起 ==========
-const appEl = $('#app');
-const footer = $('#footer');
-const footerToggle = $('#footer-toggle');
-const footerInner = document.querySelector('.footer-inner');
-const syncFooter = () => {
-  const style = getComputedStyle(appEl);
-  footerInner.style.maxWidth = style.maxWidth;
-  footerInner.style.marginLeft = style.marginLeft;
-  footerInner.style.marginRight = style.marginRight;
-};
-syncFooter();
-window.addEventListener('resize', syncFooter);
-
-// Footer 初始化收起状态
-if (footerCollapsed) {
-  footer.classList.add('collapsed');
-  footerToggle.setAttribute('aria-expanded', 'false');
-  document.body.classList.add('footer-collapsed');
-}
-
-// Footer 收起/展开
-footerToggle.addEventListener('click', () => {
-  const collapsed = footer.classList.toggle('collapsed');
-  footerToggle.setAttribute('aria-expanded', !collapsed);
-  document.body.classList.toggle('footer-collapsed', collapsed);
-  localStorage.setItem('footerCollapsed', collapsed);
-});
-
-// 暗色模式切换
-const darkToggle = $('#dark-toggle');
-if (darkToggle) darkToggle.addEventListener('click', toggleDarkMode);
 
 // ========== Tab 导航吸顶检测 ==========
 if (typeof IntersectionObserver !== 'undefined') {
@@ -1163,13 +1367,26 @@ if (typeof IntersectionObserver !== 'undefined') {
 }
 
 // ========== 回到顶部按钮 ==========
-const backToTop = $('#back-to-top');
-if (backToTop) {
-  window.addEventListener('scroll', () => {
-    backToTop.classList.toggle('hidden', window.scrollY < 300);
-  }, { passive: true });
+initBackToTop();
 
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  });
+// ========== 错误边界 ==========
+window.addEventListener('error', (e) => {
+  console.error('[ErrorBoundary]', e.message, e.filename, e.lineno);
+  // 不显示 UI 提示，避免干扰用户
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+  console.error('[UnhandledRejection]', e.reason);
+});
+
+// ========== 搜索无障碍增强 ==========
+if (searchInput) {
+  searchInput.setAttribute('aria-autocomplete', 'list');
+  searchInput.setAttribute('aria-controls', 'tab-content');
+}
+
+// ========== Tab 内容 aria-live ==========
+if (tabContent) {
+  tabContent.setAttribute('aria-live', 'polite');
+  tabContent.setAttribute('aria-atomic', 'true');
 }

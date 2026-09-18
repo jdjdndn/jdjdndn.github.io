@@ -1,309 +1,48 @@
 /* ========== 会员优惠页面样式（与主站风格对齐） ========== */
 
-/* ---------- 顶部导航栏 ---------- */
-.huiyuan-hero-nav {
-  position: absolute;
-  top: calc(var(--safe-area-inset-top) + 14px);
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  box-sizing: border-box;
-  width: 100%;
-  z-index: 10;
-}
-
-/* ---------- 返回链接 ---------- */
-.hero-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: all var(--transition);
-}
-.hero-back:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.35);
-}
-
-/* ---------- Hero 区域 ---------- */
+/* ---------- Hero 颜色变量（蓝紫渐变） ---------- */
 .huiyuan-hero {
-  position: relative;
-  text-align: center;
-  padding: 48px 20px 32px;
+  --hero-gradient: linear-gradient(145deg, #4a00e0 0%, #7c3aed 35%, #a78bfa 65%, #c4b5fd 100%);
+  --hero-dark-gradient: linear-gradient(145deg, #1a0050 0%, #2d1070 35%, #4a2090 65%, #5a30a0 100%);
+  --hero-pulse: rgba(124, 58, 237, 0);
   margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
-  background: linear-gradient(145deg, #E04A00 0%, #FF6B35 35%, #FF8F5E 65%, #FFB088 100%);
-  overflow: hidden;
+  padding-bottom: 32px;
 }
-.huiyuan-hero::before {
-  content: '';
-  position: absolute;
-  top: -80px;
-  right: -60px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: heroFloat 8s ease-in-out infinite;
-}
-.huiyuan-hero::after {
-  content: '';
-  position: absolute;
-  bottom: -60px;
-  left: -40px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: heroFloat 10s ease-in-out infinite reverse;
-}
-.huiyuan-hero > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hero 图标（圆角方形，与其他页面一致） */
-.huiyuan-hero-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 22px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+/* huiyuan 图标特殊 hover */
+.page-hero-icon.huiyuan-icon {
   transition: transform 0.3s ease;
 }
-.huiyuan-hero-icon:hover {
+.page-hero-icon.huiyuan-icon:hover {
   transform: scale(1.05) rotate(-2deg);
 }
-.huiyuan-hero-icon svg {
-  width: 34px;
-  height: 34px;
-  stroke: #fff;
-}
-
-.huiyuan-hero h1 {
-  font-size: 26px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  letter-spacing: 0.5px;
-}
-
-.huiyuan-hero p {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 24px;
-  letter-spacing: 1px;
-}
-
-/* Hero 统计徽章 */
-.huiyuan-hero-stats {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-width: 100%;
-  min-height: 32px;
-}
-.huiyuan-hero .stat-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
+/* ---------- Hero 统计徽章（基础样式在 shared.css）---------- */
+.hero-stats .stat-badge {
   transition: transform 0.2s ease, background 0.2s ease;
 }
-.huiyuan-hero .stat-badge:hover {
+.hero-stats .stat-badge:hover {
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.18);
 }
-.huiyuan-hero .stat-badge strong {
-  font-weight: 800;
-  font-size: 14px;
+
+/* ========== 卡片网格（基础样式在 shared.css） ========== */
+
+/* ========== 卡片按钮（蓝紫配色） ========== */
+.huiyuan-hero ~ .trust-bar ~ main .btn-go {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
 }
-.huiyuan-hero .stat-badge svg {
-  width: 14px;
-  height: 14px;
+.huiyuan-hero ~ .trust-bar ~ main .btn-go:hover {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
 }
 
-/* ========== 卡片网格 ========== */
-.huiyuan-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-  padding: 20px 16px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* ========== 卡片（与 activity-card 风格对齐） ========== */
-.huiyuan-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
-  display: flex;
-  flex-direction: column;
-}
-.huiyuan-card:hover {
-  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.1);
-  border-color: rgba(255, 107, 53, 0.25);
-  transform: translateY(-3px);
-}
-.huiyuan-card:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.08);
-}
-
-.huiyuan-card-cover {
-  width: 100%;
-  aspect-ratio: 16/9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.huiyuan-card-cover svg {
-  width: 80px;
-  height: 80px;
-}
-
-.huiyuan-card-info {
-  padding: 14px 16px 16px;
-}
-
-.huiyuan-card-info h3 {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0 0 4px;
-  color: var(--text);
-  line-height: 1.45;
-}
-
-.huiyuan-card-info p {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* ========== 响应式：桌面端 ========== */
-@media (min-width: 1024px) {
-  .huiyuan-hero {
-    padding: 72px 48px 56px;
-    margin: -32px calc(-32px + var(--safe-area-inset-right)) 0 calc(-32px + var(--safe-area-inset-left));
-    border-radius: 0 0 24px 24px;
-  }
-  .huiyuan-hero h1 { font-size: 32px; letter-spacing: 1px; }
-  .huiyuan-hero p { font-size: 15px; margin-bottom: 28px; }
-  .huiyuan-hero-icon {
-    width: 84px;
-    height: 84px;
-    border-radius: 24px;
-    margin-bottom: 24px;
-  }
-  .huiyuan-hero-icon svg { width: 38px; height: 38px; }
-  .huiyuan-hero .stat-badge {
-    padding: 8px 18px;
-    font-size: 13px;
-  }
-  .huiyuan-hero .stat-badge strong { font-size: 14px; }
-  .huiyuan-card-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 24px 32px;
-  }
-  .huiyuan-card { border-radius: 16px; }
-}
-
-/* ========== 响应式：手机端 ========== */
-@media (max-width: 480px) {
-  .huiyuan-hero {
-    padding: 40px 16px 28px;
-  }
-  .huiyuan-hero h1 { font-size: 22px; letter-spacing: 0.5px; }
-  .huiyuan-hero p { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 20px; }
-  .huiyuan-hero-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    margin-bottom: 14px;
-  }
-  .huiyuan-hero-icon svg { width: 26px; height: 26px; }
-  .huiyuan-hero .stat-badge {
-    font-size: 11px;
-    padding: 5px 10px;
-    gap: 4px;
-  }
-  .huiyuan-hero .stat-badge svg { width: 12px; height: 12px; }
-  .huiyuan-hero .stat-badge strong { font-size: 12px; }
-  .huiyuan-card-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 16px 12px;
-  }
-  .huiyuan-card { border-radius: 12px; }
-  .huiyuan-card-info { padding: 12px 14px 14px; }
-  .huiyuan-card-info h3 { font-size: 13px; }
-  /* 小屏隐藏返回文字，只留图标 */
-  .hero-back span { display: none; }
-  .hero-back { padding: 8px; }
-}
-
-/* ========== 暗色模式 ========== */
-@media (prefers-color-scheme: dark) {
-  .huiyuan-card-cover {
-    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-  }
-}
-body.dark-mode .huiyuan-card-cover {
-  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-}
-body.dark-mode .huiyuan-hero {
-  background: linear-gradient(145deg, #3d1200 0%, #5a2000 35%, #7a3520 65%, #8c4a30 100%);
-}
-body.dark-mode .huiyuan-hero::before {
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-}
-body.dark-mode .huiyuan-hero::after {
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+/* ========== 暗色模式（蓝紫渐变） ========== */
+.huiyuan-hero {
+  background: var(--hero-gradient);
 }
 @media (prefers-color-scheme: dark) {
   .huiyuan-hero {
-    background: linear-gradient(145deg, #3d1200 0%, #5a2000 35%, #7a3520 65%, #8c4a30 100%);
+    background: var(--hero-dark-gradient);
   }
   .huiyuan-hero::before {
     background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
@@ -311,4 +50,13 @@ body.dark-mode .huiyuan-hero::after {
   .huiyuan-hero::after {
     background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
   }
+}
+body.dark-mode .huiyuan-hero {
+  background: var(--hero-dark-gradient);
+}
+body.dark-mode .huiyuan-hero::before {
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+body.dark-mode .huiyuan-hero::after {
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
 }

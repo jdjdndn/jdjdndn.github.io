@@ -124,8 +124,19 @@ fillCircle(W / 2 + 60, 540, 4, 255, 255, 255);
 
 // ========== 输出 ==========
 const outDir = path.join(__dirname, '..', 'public');
+const outFile = path.join(outDir, 'og-image.png');
+
+// 脚本内容未变则跳过生成
+try {
+  const outStat = fs.statSync(outFile);
+  const srcStat = fs.statSync(__filename);
+  if (outStat.mtimeMs > srcStat.mtimeMs) {
+    console.log(`✓ og-image.png (cached)`);
+    process.exit(0);
+  }
+} catch {}
+
 fs.mkdirSync(outDir, { recursive: true });
 const png = createPNG(px);
-const outFile = path.join(outDir, 'og-image.png');
 fs.writeFileSync(outFile, png);
 console.log(`✓ ${outFile} (${(png.length / 1024).toFixed(1)} KB)`);

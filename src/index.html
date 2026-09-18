@@ -372,31 +372,49 @@
     }
     </script>
 
-    <link rel="stylesheet" href="./style.css" />
+    <!-- CSS 同步加载，消除页面闪烁 -->
+    <link rel="stylesheet" href="./shared.css" />
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
+    <!-- 页面加载进度条 -->
+    <div class="progress-bar" id="progress-bar"></div>
+
     <div id="app">
-      <header class="hero" aria-label="优惠活动聚合">
-        <div class="hero-bg-pattern"></div>
-        <div class="hero-nav">
+      <header class="page-hero index-hero" aria-label="优惠活动聚合">
+        <!-- 装饰：微粒网格纹理 -->
+        <div class="page-hero-deco" aria-hidden="true"></div>
+        <!-- 顶部导航栏 -->
+        <div class="page-hero-nav">
           <span class="hero-logo">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             优惠聚合
           </span>
-          <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <span id="dark-toggle-text">暗色</span>
-          </button>
-        </div>
-        <div class="hero-content">
-          <div class="hero-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <div class="page-hero-controls">
+            <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+              <span id="dark-toggle-text">暗色</span>
+            </button>
           </div>
-          <h1>优惠活动聚合</h1>
-          <p class="hero-subtitle">外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递</p>
-          <p class="hero-desc">一站全聚合，每天更新</p>
         </div>
+        <div class="page-hero-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h1>优惠活动聚合</h1>
+        <p class="hero-subtitle">外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递</p>
+        <p class="hero-desc">一站全聚合，每天更新</p>
+        <!-- <div class="trust-badges">
+          <span class="trust-badge">✓ 免费无广告</span>
+          <span class="trust-badge">✓ 每日更新</span>
+          <span class="trust-badge">✓ 开源项目</span>
+        </div> -->
         <div class="hero-stats" id="header-stats"></div>
+        <!-- 底部波浪过渡 -->
+        <div class="page-hero-wave" aria-hidden="true">
+          <svg viewBox="0 0 1440 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,14 C180,28 360,0 540,14 C720,28 900,0 1080,14 C1260,28 1440,8 1440,8 L1440,28 L0,28 Z" fill="var(--bg, #fff)"/>
+          </svg>
+        </div>
       </header>
 
       <!-- 搜索栏 -->
@@ -415,44 +433,21 @@
       <!-- Tab 导航 -->
       <nav id="tab-nav" class="tab-nav" role="tablist" aria-label="优惠分类"></nav>
 
-      <!-- Tab 内容 -->
-      <main id="tab-content" class="tab-content"></main>
+      <!-- Tab 内容（JS 加载后替换为实际内容） -->
+      <main id="tab-content" class="tab-content">
+        <div class="skeleton-grid">
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-line full"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton-btn-group"><div class="skeleton skeleton-btn primary"></div><div class="skeleton skeleton-btn secondary"></div></div></div>
+        </div>
+      </main>
     </div>
 
-    <!-- 友情链接（fixed 吸底，可收起） -->
-    <footer class="footer friend-links-box" id="footer">
-      <div class="footer-inner">
-        <button class="footer-toggle" id="footer-toggle" aria-expanded="false" aria-controls="footer-body">
-          <span>友情链接</span>
-          <span class="footer-arrow" id="footer-arrow">▲</span>
-        </button>
-        <div class="footer-body" id="footer-body">
-          <nav id="friend-links" class="friend-links" aria-label="友情链接导航"></nav>
-          <p class="footer-disclaimer" style="font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4;">本站为优惠信息聚合平台，非美团/淘宝/京东等官方平台。优惠信息仅供参考，以各平台实际页面为准。有问题或建议联系我，微信号：wcbblll</p>
-          <!-- <p class="footer-note">省钱大作战，我们一起冲！</p> -->
-          <!-- <p class="footer-contact"></p> -->
-        </div>
-      </div>
-    </footer>
+    <footer class="footer" id="footer"></footer>
 
-    <!-- 二维码弹窗 -->
-    <div id="qr-overlay" class="qr-overlay hidden" role="dialog" aria-modal="true" aria-label="手机扫码访问">
-      <div class="qr-modal">
-        <div class="qr-header">
-          <span class="qr-title">手机扫码访问</span>
-          <button id="qr-close" class="qr-close" aria-label="关闭弹窗">✕</button>
-        </div>
-        <div class="qr-body">
-          <div id="qr-loading" class="qr-loading">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
-            <span>生成中…</span>
-          </div>
-          <img id="qr-img" class="qr-img hidden" alt="QR Code" />
-          <p id="qr-name" class="qr-name"></p>
-          <p class="qr-hint">打开手机相机或微信扫一扫</p>
-        </div>
-      </div>
-    </div>
 
     <!-- 底部导航栏 -->
     <nav class="bottom-nav" aria-label="页面导航">
@@ -518,7 +513,9 @@
     <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script> -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="6d07bd00-c044-47d9-99ce-a833e6358390"></script>
 
+    <script type="module" src="./common/dark-mode.js"></script>
     <script type="module" src="./app.js"></script>
+    <script type="module" src="./footer.js"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

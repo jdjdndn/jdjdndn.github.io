@@ -145,7 +145,6 @@ export default defineConfig({
   build: {
     outDir: '../dist',
     emptyOutDir: true,
-    cssCodeSplit: false,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
@@ -153,6 +152,7 @@ export default defineConfig({
         wifi: resolve(__dirname, 'src/wifi.html'),
         wangpan: resolve(__dirname, 'src/wangpan.html'),
         huiyuan: resolve(__dirname, 'src/huiyuan.html'),
+        about: resolve(__dirname, 'src/about.html'),
         ...discoverLandingPages(),
       },
     },
@@ -189,7 +189,7 @@ export default defineConfig({
       transformIndexHtml(html) {
         // 在 </head> 前注入 preload，加速首屏渲染
         const preload = [
-          '<link rel="preload" href="./style.css" as="style" />',
+          '<link rel="preload" href="./shared.css" as="style" />',
           '<link rel="modulepreload" href="./app.js" />',
         ].join('\n    ');
         return html.replace('</head>', `    ${preload}\n  </head>`);

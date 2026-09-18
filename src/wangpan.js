@@ -1,4 +1,13 @@
+// CSS 已通过 <link> 标签在 HTML <head> 中同步加载
+
 // ========== 网盘资源页面 JS ==========
+import { initBackToTop } from './common/back-to-top.js';
+// qr-modal 按需加载
+let _qrModalPromise = null;
+const loadQrModal = () => {
+  if (!_qrModalPromise) _qrModalPromise = import('./common/qr-modal.js');
+  return _qrModalPromise;
+};
 
 // 网盘资源数据
 const WANGPAN_LIST = [
@@ -71,7 +80,6 @@ const WANGPAN_LIST = [
 // DOM 元素
 const tabContent = document.getElementById('tab-content');
 const wangpanCount = document.getElementById('wangpan-count');
-const wangpanUpdateTime = document.getElementById('wangpan-update-time');
 
 // 初始化
 function init() {
@@ -79,37 +87,57 @@ function init() {
     wangpanCount.textContent = WANGPAN_LIST.length;
   }
 
-  if (wangpanUpdateTime) {
-    const now = new Date();
-    wangpanUpdateTime.textContent = `${now.getFullYear()}年${now.getMonth() + 1}月`;
-  }
-
   renderList();
-  initDarkMode();
 }
+
+// 网盘平台图标
+function getWangpanIcon(url) {
+  if (url.includes('quark')) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>';
+  }
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>';
+}
+
+function getWangpanPlatform(url) {
+  if (url.includes('quark')) return '夸克网盘';
+  if (url.includes('baidu')) return '百度网盘';
+  return '网盘';
+}
+
+const ICONS = {
+  external: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+  qr: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+};
 
 // 渲染资源列表
 function renderList() {
   if (!tabContent) return;
 
   tabContent.innerHTML = `
-    <div class="wangpan-list">
+    <div class="haoka-grid">
       ${WANGPAN_LIST.map(item => `
-        <div class="wangpan-card">
-          <div class="wangpan-card-header">
-            <div class="wangpan-card-title">${item.name}</div>
+        <article class="haoka-card">
+          <div class="haoka-card-top"></div>
+          <div class="haoka-card-body">
+            <div class="haoka-card-header">
+              <div class="haoka-card-platform-icon">${getWangpanIcon(item.url)}</div>
+              <div class="haoka-card-info">
+                <span class="haoka-card-name">${item.name}</span>
+              </div>
+              <span class="haoka-card-platform">${getWangpanPlatform(item.url)}</span>
+            </div>
+            <div class="haoka-card-actions">
+              <a href="${item.url}" target="_blank" rel="noopener" class="btn-go">
+                ${ICONS.external}
+                前往访问
+              </a>
+              <button class="btn-qr" onclick="showQR('${item.url}', '${item.name}')">
+                ${ICONS.qr}
+                扫码
+              </button>
+            </div>
           </div>
-          <div class="wangpan-card-actions">
-            <a href="${item.url}" target="_blank" rel="noopener" class="btn-go">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              前往访问
-            </a>
-            <button class="btn-qr" onclick="showQR('${item.url}', '${item.name}')">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-              扫码
-            </button>
-          </div>
-        </div>
+        </article>
       `).join('')}
     </div>
   `;
@@ -117,52 +145,11 @@ function renderList() {
 
 // 显示二维码（挂到 window 供 onclick 调用）
 window.showQR = function (url, name) {
-  const overlay = document.getElementById('qr-overlay');
-  const img = document.getElementById('qr-img');
-  const nameEl = document.getElementById('qr-name');
-  const loading = document.getElementById('qr-loading');
-
-  if (!overlay || !img || !nameEl || !loading) return;
-
-  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-  nameEl.textContent = name;
-  loading.classList.add('hidden');
-  img.classList.remove('hidden');
-  overlay.classList.remove('hidden');
+  loadQrModal().then(m => m.showQrModal(url, name, (u) =>
+    `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(u)}`
+  ));
 }
-
-// 初始化暗色模式
-function initDarkMode() {
-  const toggle = document.getElementById('dark-toggle');
-  const toggleText = document.getElementById('dark-toggle-text');
-
-  if (!toggle) return;
-
-  const isDark = localStorage.getItem('darkMode') === 'true' ||
-    (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-  if (isDark) {
-    document.body.classList.add('dark-mode');
-    if (toggleText) toggleText.textContent = '亮色';
-  }
-
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkNow = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkNow);
-    if (toggleText) toggleText.textContent = isDarkNow ? '亮色' : '暗色';
-  });
-}
-
-// 关闭二维码弹窗
-document.getElementById('qr-close')?.addEventListener('click', () => {
-  document.getElementById('qr-overlay')?.classList.add('hidden');
-});
-document.getElementById('qr-overlay')?.addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) {
-    e.currentTarget.classList.add('hidden');
-  }
-});
 
 // 启动
 init();
+initBackToTop();

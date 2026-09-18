@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- SEO 基础 -->
+    <title>关于我们 — 优惠活动聚合</title>
+    <meta name="description" content="优惠活动聚合 — 一站式优惠券导航平台，聚合美团、淘宝、京东、携程、滴滴等全网热门优惠。关于我们。" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#FF6B35" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://jdjdndn.github.io/about.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jdjdndn.github.io/about.html" />
+    <meta property="og:title" content="关于我们 — 优惠活动聚合" />
+    <meta property="og:description" content="一站式优惠券导航平台，聚合全网热门优惠活动。" />
+    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="优惠活动聚合" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- CSS 同步加载，消除页面闪烁 -->
+    <link rel="stylesheet" href="./shared.css" />
+    <link rel="stylesheet" href="./about.css" />
+  </head>
+  <body>
+    <div id="app">
+
+        <!-- Hero -->
+        <section class="page-hero about-hero" aria-label="关于我们">
+          <!-- 装饰：微粒网格纹理 -->
+          <div class="page-hero-deco" aria-hidden="true"></div>
+          <!-- 顶部导航栏 -->
+          <div class="page-hero-nav">
+            <a href="./" class="back-link" aria-label="返回首页">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              返回首页
+            </a>
+            <div class="page-hero-controls">
+              <button class="dark-toggle" id="dark-toggle" aria-label="切换暗色模式">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                <span id="dark-toggle-text">暗色</span>
+              </button>
+            </div>
+          </div>
+          <div class="page-hero-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <h1>优惠活动聚合</h1>
+          <p>一站式优惠券导航平台</p>
+          <!-- 底部波浪过渡 -->
+          <div class="page-hero-wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,14 C180,28 360,0 540,14 C720,28 900,0 1080,14 C1260,28 1440,8 1440,8 L1440,28 L0,28 Z" fill="var(--bg, #fff)"/>
+            </svg>
+          </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section class="about-section">
+          <h2 class="about-section-title">关于本站</h2>
+          <p class="about-section-desc">
+            优惠活动聚合是一个优惠信息导航平台，致力于帮助用户快速找到各大平台的优惠活动。
+            我们收录了美团外卖、淘宝闪购、京东、拼多多、携程、同程、飞猪、滴滴出行等主流平台的热门优惠，
+            以及肯德基、瑞幸、星巴克等连锁餐饮品牌的优惠券。
+          </p>
+          <p class="about-section-desc">
+            只需复制口令码或点击链接，即可跳转到对应 App 领取优惠，整个过程约 10 秒完成。
+          </p>
+        </section>
+
+        <!-- 核心数据 -->
+        <section class="about-section">
+          <h2 class="about-section-title">我们的数据</h2>
+          <div class="about-stats">
+            <div class="about-stat-card">
+              <div class="about-stat-num">150+</div>
+              <div class="about-stat-label">收录优惠活动</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-num">10+</div>
+              <div class="about-stat-label">覆盖平台</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-num">6</div>
+              <div class="about-stat-label">生活场景</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 功能特色 -->
+        <section class="about-section">
+          <h2 class="about-section-title">功能特色</h2>
+          <ul class="about-features">
+            <li class="about-feature-item"><span class="about-feature-icon">📋</span>一键复制口令码，打开 App 自动识别</li>
+            <li class="about-feature-item"><span class="about-feature-icon">🔗</span>支持小程序口令（mp://）直接跳转</li>
+            <li class="about-feature-item"><span class="about-feature-icon">📱</span>链接类优惠支持二维码扫码访问</li>
+            <li class="about-feature-item"><span class="about-feature-icon">🔍</span>智能搜索，支持优惠名称、口令码、分类搜索</li>
+            <li class="about-feature-item"><span class="about-feature-icon">⏰</span>过期优惠自动标记，支持一键隐藏</li>
+            <li class="about-feature-item"><span class="about-feature-icon">🌙</span>暗色模式，支持手动切换或跟随系统</li>
+            <li class="about-feature-item"><span class="about-feature-icon">📤</span>分享功能，支持微信、微博、QQ 一键分享</li>
+            <li class="about-feature-item"><span class="about-feature-icon">📲</span>PWA 支持，可添加到手机桌面</li>
+            <li class="about-feature-item"><span class="about-feature-icon">🔄</span>数据持续更新，每天新增热门优惠</li>
+          </ul>
+        </section>
+
+        <!-- 覆盖场景 -->
+        <section class="about-section">
+          <h2 class="about-section-title">覆盖场景</h2>
+          <div class="about-scenarios">
+            <div class="about-scenario-card">
+              <h3>🍜 外卖餐饮</h3>
+              <p>美团外卖红包、肯德基、瑞幸咖啡、星巴克等连锁品牌优惠</p>
+            </div>
+            <div class="about-scenario-card">
+              <h3>🛒 购物电商</h3>
+              <p>淘宝闪购、京东秒杀、拼多多、抖音商城等电商优惠</p>
+            </div>
+            <div class="about-scenario-card">
+              <h3>🚗 出行打车</h3>
+              <p>滴滴出行、花小猪、高德打车等出行平台优惠券</p>
+            </div>
+            <div class="about-scenario-card">
+              <h3>🏨 酒旅住宿</h3>
+              <p>携程、同程、飞猪酒店预订优惠及政府文旅补贴</p>
+            </div>
+            <div class="about-scenario-card">
+              <h3>🎬 电影娱乐</h3>
+              <p>电影票在线预订折扣，最低 19.9 元起</p>
+            </div>
+            <div class="about-scenario-card">
+              <h3>📦 快递寄件</h3>
+              <p>快递寄件 4 折起优惠，低至 5 元寄全国</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 免责声明 -->
+        <section class="about-section">
+          <h2 class="about-section-title">免责声明</h2>
+          <div class="about-disclaimer">
+            <p>
+              本站为优惠信息聚合导航平台，非美团、淘宝、京东等官方平台。本站所展示的优惠信息均来自互联网公开渠道，
+              信息仅供参考，以各平台实际页面为准。优惠活动的最终解释权归各平台所有。
+            </p>
+            <p>
+              本站不直接提供任何商品销售或服务，也不对第三方平台的内容、隐私政策或服务质量承担责任。
+              用户通过本站跳转到第三方平台时，请自行注意信息安全。
+            </p>
+          </div>
+        </section>
+
+        <!-- 友情链接 -->
+        <section class="about-section">
+          <h2 class="about-section-title">友情链接</h2>
+          <p class="about-section-desc">以下是我们精心筛选的优质平台推荐：</p>
+          <div id="about-friend-links" class="about-friend-links"></div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section class="about-section">
+          <div class="feedback-section">
+            <h3>💬 联系我们</h3>
+            <p>有问题或建议？欢迎通过以下方式联系</p>
+            <div class="feedback-options">
+              <!-- <a class="about-link primary" href="https://github.com/jdjdndn" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+              </a> -->
+              <button class="about-link secondary" id="feedback-wechat" data-wechat="wcbblll">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                微信反馈
+              </button>
+              <a class="about-link secondary" href="https://github.com/jdjdndn/jdjdndn.github.io/issues" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                在线反馈
+              </a>
+            </div>
+          </div>
+        </section>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
+
+    <footer class="footer" id="footer"></footer>
+
+    <script type="module" src="./common/dark-mode.js"></script>
+    <script type="module" src="./common/base.js"></script>
+    <script type="module">
+      import { showToast } from './common/base.js';
+      // 微信反馈：优先调用微信URL Scheme打开对话
+      const wechatBtn = document.getElementById('feedback-wechat');
+      if (wechatBtn) {
+        wechatBtn.addEventListener('click', async () => {
+          const wechatId = wechatBtn.dataset.wechat;
+          const wechatUrl = `weixin://dl/chat?${wechatId}`;
+
+          // 检测是否在微信内置浏览器
+          const isWechatBrowser = /MicroMessenger/i.test(navigator.userAgent);
+
+          // 尝试打开微信对话
+          const openWechat = () => {
+            return new Promise((resolve) => {
+              const startTime = Date.now();
+              // 监听页面失去焦点（微信成功打开时页面会进入后台）
+              const handleVisibilityChange = () => {
+                if (document.hidden || Date.now() - startTime > 1500) {
+                  document.removeEventListener('visibilitychange', handleVisibilityChange);
+                  resolve(document.hidden);
+                }
+              };
+              document.addEventListener('visibilitychange', handleVisibilityChange);
+
+              // 尝试打开微信
+              window.location.href = wechatUrl;
+
+              // 超时检测（1.5秒后如果页面仍在前台，说明打开失败）
+              setTimeout(() => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                resolve(false);
+              }, 1500);
+            });
+          };
+
+          try {
+            const opened = await openWechat();
+            if (opened) {
+              showToast('已打开微信对话');
+            } else {
+              // 打开失败，回退到复制微信号
+              throw new Error('wechat open failed');
+            }
+          } catch {
+            // 回退：复制微信号
+            try {
+              await navigator.clipboard.writeText(wechatId);
+              showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+            } catch {
+              // 剪贴板API也不可用，使用输入框方式
+              const input = document.createElement('input');
+              input.value = wechatId;
+              input.style.cssText = 'position:fixed;left:-9999px;';
+              document.body.appendChild(input);
+              input.select();
+              document.execCommand('copy');
+              document.body.removeChild(input);
+              showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+            }
+          }
+        });
+      }
+    </script>
+    <script type="module" src="./about.js"></script>
+    <script type="module" src="./footer.js"></script>
+    <script type="module">
+      import { friendLinks } from './data.js';
+      const el = document.getElementById('about-friend-links');
+      if (el) {
+        el.innerHTML = friendLinks.map((f) => {
+          const desc = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
+          return `<a href="${f.url}" target="_blank" rel="noopener sponsored" class="friend-link"${desc}>${f.name}</a>`;
+        }).join('');
+      }
+    </script>
+  </body>
+</html>
