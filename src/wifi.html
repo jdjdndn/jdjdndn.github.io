@@ -223,6 +223,10 @@
     <!-- CSS 同步加载，消除页面闪烁 -->
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./wifi.css" />
+  
+    <meta name="google" content="notranslate" />
+  
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
     <!-- 页面加载进度条 -->
@@ -524,5 +528,19 @@
         setTimeout(function() { p.style.display = 'none'; }, 600);
       })();
     </script>
-  </body>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "wifi — 优惠活动聚合",
+    "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+            ".hero-title",
+            ".hero-desc"
+        ]
+    }
+}
+    </script>  </body>
 </html>

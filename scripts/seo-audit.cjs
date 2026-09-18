@@ -292,6 +292,16 @@ function checkGeoOptimization(filePath, content) {
   if (!content.includes('FAQPage')) {
     report(filePath, 'INFO', 'geo', '建议添加 FAQPage JSON-LD（提升 AI 搜索引用率）');
   }
+
+  // 检查 llms.txt alternate link（子页面）
+  if (name !== 'index.html' && !content.includes('llms.txt')) {
+    report(filePath, 'INFO', 'geo', '缺少 llms.txt alternate link（引导 AI 爬虫）', true);
+  }
+
+  // 检查 notranslate meta（防止 Google 翻译破坏中文）
+  if (!content.includes('notranslate')) {
+    report(filePath, 'INFO', 'geo', '缺少 notranslate meta（防止 Google 翻译破坏页面）', true);
+  }
 }
 
 // ========== 主流程 ==========

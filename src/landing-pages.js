@@ -18,6 +18,11 @@ export const landingPages = [
       { label: '更多美团优惠', url: './index.html#meituan' },
       { label: '号卡办理', url: './haoka.html' },
     ],
+    faq: [
+      { q: '美团外卖红包怎么领？', a: '在本站找到想要的外卖红包，点击"复制口令"按钮复制口令码，然后打开美团App，口令会自动识别并跳转到红包领取页面。天天可领，新客最高减20元。' },
+      { q: '美团外卖红包可以叠加使用吗？', a: '部分红包可以叠加使用，具体以美团App内活动规则为准。建议领取多个红包，在下单时选择最优组合。' },
+      { q: '美团外卖红包有有效期吗？', a: '大部分红包当天有效，部分大额红包有效期为3-7天。建议领取后尽快使用，过期作废。' },
+    ],
   },
   {
     slug: 'meituan-jiuLv',
@@ -31,6 +36,10 @@ export const landingPages = [
     relatedPages: [
       { label: '更多美团优惠', url: './index.html#meituan' },
       { label: '号卡办理', url: './haoka.html' },
+    ],
+    faq: [
+      { q: '美团酒店预订怎么最便宜？', a: '在本站领取美团酒店优惠券后，打开美团App预订酒店即可享受折扣。全国爆款酒店最低3折起，大额出行券包可叠加使用。' },
+      { q: '美团出行券包包含哪些？', a: '出行券包含打车、公交、骑行等多场景优惠券，总额最高可达数十元，覆盖日常出行全场景。' },
     ],
   },
   {
@@ -46,6 +55,10 @@ export const landingPages = [
       { label: '电商优惠', url: './index.html#ecommerce' },
       { label: '号卡办理', url: './haoka.html' },
     ],
+    faq: [
+      { q: '淘宝闪购红包怎么领？', a: '在本站点击"复制口令"复制口令码，打开淘宝App后口令自动识别，跳转到闪购红包领取页面。新客最高可领20元。' },
+      { q: '淘宝闪购消费日是什么时候？', a: '消费日不定期举行，届时有城市大额红包，可叠加使用。关注本站即可第一时间获取消费日信息。' },
+    ],
   },
   {
     slug: 'jingdong-pdd',
@@ -59,6 +72,10 @@ export const landingPages = [
     relatedPages: [
       { label: '淘宝闪购', url: './index.html#taobaoshangou' },
       { label: '号卡办理', url: './haoka.html' },
+    ],
+    faq: [
+      { q: '京东秒杀怎么参加？', a: '在本站找到京东秒杀活动，点击链接直接跳转京东App秒杀页面。京东秒杀每天多场，商品低至1折。' },
+      { q: '拼多多百亿补贴是真的吗？', a: '拼多多百亿补贴是官方活动，商品由平台补贴差价，价格确实低于常规售价。在本站领取福利券后下单更优惠。' },
     ],
   },
   {
@@ -74,6 +91,10 @@ export const landingPages = [
       { label: '同程旅行', url: './index.html#tongcheng_travel' },
       { label: '号卡办理', url: './haoka.html' },
     ],
+    faq: [
+      { q: '携程酒店预订怎么用优惠？', a: '在本站找到携程酒店优惠活动，点击链接跳转携程App预订页面，享受专属折扣价。' },
+      { q: '携程机票什么时候最便宜？', a: '关注本站携程机票活动，不定期有特价机票和立减券。提前预订、错峰出行通常更划算。' },
+    ],
   },
   {
     slug: 'didi',
@@ -88,6 +109,10 @@ export const landingPages = [
       { label: '花小猪', url: './index.html#huaxiaozhu_ride' },
       { label: '号卡办理', url: './haoka.html' },
     ],
+    faq: [
+      { q: '滴滴打车红包怎么用？', a: '在本站复制口令码或点击链接，打开滴滴App即可领取打车红包。下单时自动抵扣，天天可领。' },
+      { q: '花小猪和滴滴有什么区别？', a: '花小猪是滴滴旗下子品牌，主打低价出行。新客老客最高可领100元券包，打车更便宜。' },
+    ],
   },
   {
     slug: 'liansuocanyin',
@@ -101,6 +126,10 @@ export const landingPages = [
     relatedPages: [
       { label: '美团外卖', url: './index.html#meituan' },
       { label: '号卡办理', url: './haoka.html' },
+    ],
+    faq: [
+      { q: '瑞幸咖啡优惠券怎么领？', a: '在本站找到瑞幸咖啡优惠活动，复制口令码打开瑞幸App即可领取专属优惠券，部分饮品低至5折。' },
+      { q: '肯德基优惠怎么使用？', a: '复制本站口令码后打开肯德基App，优惠券自动到账。支持堂食、外带、外卖多场景使用。' },
     ],
   },
 ];

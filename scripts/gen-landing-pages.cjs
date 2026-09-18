@@ -17,6 +17,14 @@ function parseConfig(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const pages = [];
 
+  // 先提取所有 slug 位置，用于界定每个页面的搜索范围
+  const slugPositions = [];
+  const slugPattern = /slug:\s*'([^']+)'/g;
+  let slugMatch;
+  while ((slugMatch = slugPattern.exec(content)) !== null) {
+    slugPositions.push({ slug: slugMatch[1], pos: slugMatch.index });
+  }
+
   // 匹配每个页面配置块
   const pagePattern = /\{[^}]*slug:\s*'([^']+)'[^}]*\}/gs;
   let match;
@@ -38,6 +46,22 @@ function parseConfig(filePath) {
       return items;
     };
 
+    // 解析 faq 数组（从 slug 位置向后搜索到下一个页面的 slug 或数组末尾）
+    const faq = [];
+    const currentSlugIdx = slugPositions.findIndex(sp => sp.pos >= match.index);
+    const nextSlugPos = currentSlugIdx + 1 < slugPositions.length
+      ? slugPositions[currentSlugIdx + 1].pos
+      : content.length;
+    const searchRegion = content.slice(match.index, nextSlugPos);
+    const faqArrMatch = searchRegion.match(/faq:\s*\[([\s\S]*?)\]\s*,?\s*\n/);
+    if (faqArrMatch) {
+      const faqItemPattern = /\{\s*q:\s*'([^']*)',\s*a:\s*'([^']*)'\s*\}/g;
+      let faqMatch;
+      while ((faqMatch = faqItemPattern.exec(faqArrMatch[1])) !== null) {
+        faq.push({ q: faqMatch[1], a: faqMatch[2] });
+      }
+    }
+
     pages.push({
       slug: get('slug'),
       title: get('title'),
@@ -48,6 +72,7 @@ function parseConfig(filePath) {
       tabId: get('tabId'),
       sectionFilter: get('sectionFilter'),
       relatedPages: getList('relatedPages'),
+      faq,
     });
   }
   return pages;
@@ -74,6 +99,8 @@ function generateHTML(page) {
     <link rel="canonical" href="https://jdjdndn.github.io/${page.slug}.html" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/${page.slug}.html" />
     <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/${page.slug}.html" />
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
+    <meta name="google" content="notranslate" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -121,6 +148,35 @@ function generateHTML(page) {
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "${page.heroTitle}",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".hero h1", ".hero p"]
+      }
+    }
+    </script>
+${page.faq.length > 0 ? `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+${page.faq.map((item, i) => `        {
+          "@type": "Question",
+          "name": "${item.q}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "${item.a}"
+          }
+        }${i < page.faq.length - 1 ? ',' : ''}`).join('\n')}
+      ]
+    }
+    </script>
+` : ''}
     <style>
       :root {
         --bg: #f5f3f0; --card: #ffffff; --text: #1a1a2e; --muted: #6b7280;
@@ -197,6 +253,20 @@ function generateHTML(page) {
       }
       .page-footer a { color: var(--primary); text-decoration: none; }
 
+      /* FAQ */
+      .faq-section { margin-top: 24px; }
+      .faq-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+      .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+      .faq-question {
+        width: 100%; padding: 16px 20px; background: none; border: none; cursor: pointer;
+        font-size: 15px; font-weight: 600; color: var(--text); text-align: left;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .faq-question::after { content: '+'; font-size: 20px; color: var(--primary); transition: transform 0.2s; }
+      .faq-question[aria-expanded="true"]::after { transform: rotate(45deg); }
+      .faq-answer { padding: 0 20px 16px; font-size: 14px; color: var(--muted); line-height: 1.7; display: none; }
+      .faq-question[aria-expanded="true"] + .faq-answer { display: block; }
+
       @media (prefers-color-scheme: dark) {
         :root { --bg: #1a1a2e; --card: #16213e; --text: #e0e0e0; --muted: #9ca3af; --border: #2d3748; }
         .hero { background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%); }
@@ -228,6 +298,27 @@ function generateHTML(page) {
         <p>查看更多优惠活动</p>
         <a href="./index.html">浏览全部优惠 →</a>
       </div>
+${page.faq.length > 0 ? `
+      <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
+        <h2>常见问题</h2>
+${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false" itemprop="name">${item.q}</button>
+          <div class="faq-answer" itemscope itemprop="acceptedEntity" itemtype="https://schema.org/Answer">
+            <p itemprop="text">${item.a}</p>
+          </div>
+        </div>`).join('\n')}
+      </section>
+
+      <script>
+        document.querySelectorAll('.faq-question').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!expanded));
+          });
+        });
+      </script>
+` : ''}
+      <div class="related-section">
 
       <div class="related-section">
         <h2>相关页面</h2>

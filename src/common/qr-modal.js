@@ -32,16 +32,27 @@ const showQrModal = async (url, name, generateFn) => {
   nameEl.textContent = name;
   overlay.classList.remove('hidden');
   closeBtn.focus();
+  // 确保 img 加载失败时也能隐藏 loading
+  const onImgLoad = () => { loading.classList.add('hidden'); img.classList.remove('hidden'); };
+  const onImgError = () => { loading.innerHTML = '<span style="color:var(--danger)">生成失败，请重试</span>'; };
+  img.addEventListener('load', onImgLoad, { once: true });
+  img.addEventListener('error', onImgError, { once: true });
   try {
     if (generateFn) {
       img.src = await generateFn(url);
     } else {
       img.src = await QRCode.toDataURL(url, { width: 240, margin: 2 });
     }
-    loading.classList.add('hidden');
-    img.classList.remove('hidden');
+    // 本地 data URL 立即生效，直接隐藏 loading
+    if (img.src.startsWith('data:')) {
+      loading.classList.add('hidden');
+      img.classList.remove('hidden');
+    }
+    // 外部 URL 由 img load/error 事件处理
   } catch {
     loading.innerHTML = '<span style="color:var(--danger)">生成失败，请重试</span>';
+    img.removeEventListener('load', onImgLoad);
+    img.removeEventListener('error', onImgError);
   }
 };
 

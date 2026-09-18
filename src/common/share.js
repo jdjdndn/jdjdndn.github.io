@@ -1,7 +1,33 @@
 import { $, showToast, vibrate, robustCopy } from './base.js';
+import 'social-share.js/dist/css/share.min.css';
 
 // ---------- 分享 ----------
 const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+// social-share.js 模板配置
+const shareTemplates = {
+  qzone: 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{URL}}&title={{TITLE}}&desc={{DESCRIPTION}}&summary={{SUMMARY}}&site={{SOURCE}}',
+  qq: 'https://connect.qq.com/widget/shareqq/index.html?url={{URL}}&title={{TITLE}}&source={{SOURCE}}&desc={{DESCRIPTION}}&pics={{IMAGE}}',
+  weibo: 'https://service.weibo.com/share/share.php?url={{URL}}&title={{TITLE}}&pic={{IMAGE}}',
+};
+
+/** 替换模板变量 */
+const renderTemplate = (template, data) => {
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key) => encodeURIComponent(data[key] || ''));
+};
+
+/** 生成分享 URL */
+const getShareUrl = (site, { url, title, description, image }) => {
+  const data = {
+    URL: url,
+    TITLE: title,
+    DESCRIPTION: description,
+    SUMMARY: description,
+    SOURCE: document.title,
+    IMAGE: image || '',
+  };
+  return renderTemplate(shareTemplates[site], data);
+};
 
 /** 尝试调起微信分享 */
 const shareToWechat = async (name, url, text) => {
@@ -17,22 +43,24 @@ const shareToWechat = async (name, url, text) => {
 
 /** 尝试调起 QQ 分享 */
 const shareToQQ = (name, url, text) => {
-  const shareDesc = text || name;
+  const shareUrl = getShareUrl('qq', {
+    url,
+    title: name,
+    description: text || name,
+  });
   if (isMobile()) {
-    const qqShareUrl = `https://connect.qq.com/widget/shareqq/index.html?title=${encodeURIComponent(name)}&summary=${encodeURIComponent(shareDesc)}&url=${encodeURIComponent(url)}&desc=${encodeURIComponent(shareDesc)}`;
-    const qqScheme = `mqqapi://share/to_fri?src_type=web&share_type=5&url=${encodeURIComponent(url)}&title=${encodeURIComponent(name)}&desc=${encodeURIComponent(shareDesc)}`;
+    const qqScheme = `mqqapi://share/to_fri?src_type=web&share_type=5&url=${encodeURIComponent(url)}&title=${encodeURIComponent(name)}&desc=${encodeURIComponent(text || name)}`;
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = qqScheme;
     document.body.appendChild(iframe);
     setTimeout(() => {
       document.body.removeChild(iframe);
-      window.open(qqShareUrl, '_blank', 'noopener');
+      window.open(shareUrl, '_blank', 'noopener');
     }, 2000);
     showToast('正在打开 QQ…');
   } else {
-    const qqShareUrl = `https://connect.qq.com/widget/shareqq/index.html?title=${encodeURIComponent(name)}&summary=${encodeURIComponent(shareDesc)}&url=${encodeURIComponent(url)}&desc=${encodeURIComponent(shareDesc)}`;
-    window.open(qqShareUrl, '_blank', 'noopener,width=600,height=500');
+    window.open(shareUrl, '_blank', 'noopener,width=600,height=500');
   }
 };
 
@@ -141,7 +169,11 @@ const createSharePanel = (trackFn) => {
       await shareToWechat(shareName, shareUrl, shareText);
     } else if (action === 'weibo') {
       if (trackFn) trackFn('share_weibo', { name: shareName });
-      const wbUrl = `https://service.weibo.com/share/share.php?title=${encodeURIComponent(shareName)}&url=${encodeURIComponent(shareUrl)}`;
+      const wbUrl = getShareUrl('weibo', {
+        url: shareUrl,
+        title: shareName,
+        description: shareText || shareName,
+      });
       window.open(wbUrl, '_blank', 'noopener,width=600,height=500');
     } else if (action === 'qq') {
       if (trackFn) trackFn('share_qq', { name: shareName });

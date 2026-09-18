@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>请在浏览器中打开</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .icon { font-size: 56px; margin-bottom: 16px; }
+    h2 { font-size: 20px; margin-bottom: 12px; }
+    .steps {
+      text-align: left;
+      margin: 20px 0;
+      padding: 16px 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 2;
+      color: #555;
+    }
+    .steps li { list-style: none; }
+    .steps li::before {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      text-align: center;
+      background: #07c160;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      margin-right: 8px;
+    }
+    .steps li:nth-child(1)::before { content: "1"; }
+    .steps li:nth-child(2)::before { content: "2"; }
+    .steps li:nth-child(3)::before { content: "3"; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:active { opacity: 0.7; }
+    .btn-primary { background: #07c160; color: #fff; }
+    .btn-secondary { background: #eee; color: #333; margin-top: 10px; }
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="wechat-hint" style="display:none">
+    <div class="icon">🔗</div>
+    <h2>请在浏览器中打开</h2>
+    <p style="color:#888;font-size:14px">微信内无法直接访问此页面</p>
+    <ol class="steps">
+      <li>点击右上角 <b>⋯</b></li>
+      <li>选择 <b>在浏览器中打开</b></li>
+    </ol>
+    <button class="btn btn-primary" onclick="copyLink()">复制链接</button>
+  </div>
+  <div class="container" id="normal-hint" style="display:none">
+    <div class="icon">🔄</div>
+    <h2>正在跳转…</h2>
+    <p style="color:#888;font-size:14px">如果没有自动跳转，请点击下方按钮</p>
+    <button class="btn btn-primary" id="goBtn">立即前往</button>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '';
+      var isWeChat = /MicroMessenger/i.test(ua);
+      var params = new URLSearchParams(window.location.search);
+      var target = params.get('url');
+
+      if (!target) {
+        document.body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#999">缺少目标链接参数</div>';
+        return;
+      }
+
+      if (isWeChat) {
+        document.getElementById('wechat-hint').style.display = '';
+        window.copyLink = function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(target).then(showToast);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = target;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); showToast(); } catch (e) { showToast('复制失败，请长按复制'); }
+            document.body.removeChild(ta);
+          }
+        };
+        function showToast(msg) {
+          var t = document.getElementById('toast');
+          t.textContent = msg || '已复制链接';
+          t.style.display = 'block';
+          setTimeout(function () { t.style.display = 'none'; }, 2000);
+        }
+      } else {
+        document.getElementById('normal-hint').style.display = '';
+        document.getElementById('goBtn').onclick = function () { window.location.href = target; };
+        window.location.replace(target);
+      }
+    })();
+  </script>
+</body>
+</html>

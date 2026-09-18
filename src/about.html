@@ -11,6 +11,8 @@
     <meta name="theme-color" content="#FF6B35" />
     <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://jdjdndn.github.io/about.html" />
+    <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/about.html" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/about.html" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -18,8 +20,15 @@
     <meta property="og:title" content="关于我们 — 优惠活动聚合" />
     <meta property="og:description" content="一站式优惠券导航平台，聚合全网热门优惠活动。" />
     <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:site_name" content="优惠活动聚合" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="关于我们 — 优惠活动聚合" />
+    <meta name="twitter:description" content="一站式优惠券导航平台，聚合全网热门优惠活动。" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
@@ -33,6 +42,10 @@
     <!-- CSS 同步加载，消除页面闪烁 -->
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./about.css" />
+  
+    <meta name="google" content="notranslate" />
+  
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
     <div id="app">
@@ -270,11 +283,50 @@
       import { friendLinks } from './data.js';
       const el = document.getElementById('about-friend-links');
       if (el) {
+        const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
         el.innerHTML = friendLinks.map((f) => {
+          let url = f.url;
+          if (isWeChat && /^https?:\/\//.test(url)) {
+            url = './open.html?url=' + encodeURIComponent(url);
+          }
           const desc = f.description ? ` title="${f.description.replace(/"/g, '&quot;')}"` : '';
-          return `<a href="${f.url}" target="_blank" rel="noopener sponsored" class="friend-link"${desc}>${f.name}</a>`;
+          return `<a href="${url}" target="_blank" rel="noopener sponsored" class="friend-link"${desc}>${f.name}</a>`;
         }).join('');
       }
     </script>
-  </body>
-</html>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "about — 优惠活动聚合",
+    "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+            ".about-hero h1",
+            ".about-hero p"
+        ]
+    }
+}
+    </script>  </body>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://jdjdndn.github.io/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "about",
+            "item": "https://jdjdndn.github.io/about.html"
+        }
+    ]
+}
+    </script></html>

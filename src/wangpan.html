@@ -87,6 +87,10 @@
     <!-- CSS 同步加载，消除页面闪烁 -->
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./wangpan.css" />
+  
+    <meta name="google" content="notranslate" />
+  
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
     <!-- 页面加载进度条 -->
@@ -184,5 +188,43 @@
         setTimeout(function() { p.style.display = 'none'; }, 600);
       })();
     </script>
-  </body>
-</html>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "wangpan — 优惠活动聚合",
+    "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+            ".hero-title",
+            ".hero-desc"
+        ]
+    }
+}
+    </script>  </body>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "网盘资源安全吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "本站仅提供网盘平台的资源索引链接，资源由第三方用户分享，请自行判断资源内容的合法性和安全性。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "支持哪些网盘平台？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "目前支持百度网盘和夸克网盘两大主流平台，持续更新中。"
+            }
+        }
+    ]
+}
+    </script></html>

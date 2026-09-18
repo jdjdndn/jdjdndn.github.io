@@ -929,6 +929,9 @@ a:focus-visible {
   color: var(--muted);
   font-size: 13px;
 }
+.qr-loading.hidden{
+  display: none;
+}
 .qr-loading .spinner {
   animation: spin 1s linear infinite;
 }

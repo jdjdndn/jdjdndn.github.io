@@ -2,10 +2,10 @@
 
 // ========== 数据（来自 data.js） ==========
 import { track } from './analytics.js';
-import { tabs, selfData } from './data.js';
-import { vibrate, copyText } from './common/base.js';
-import { createSharePanel, shareItem } from './common/share.js';
 import { initBackToTop } from './common/back-to-top.js';
+import { copyText } from './common/base.js';
+import { createSharePanel, shareItem } from './common/share.js';
+import { selfData, tabs } from './data.js';
 // 暗色模式 analytics 回调
 window.__darkModeOnToggle = (isDark) => track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light' });
 // qr-modal 按需加载：仅用户点击"二维码"按钮时才拉取 qrcode 库（-35KB 首屏）
@@ -901,6 +901,14 @@ const cacheTabContent = (key) => {
 const restoreTabContent = (key) => {
   const cached = tabContentCache[key];
   if (!cached || !cached.length) return false;
+  // 骨架屏缓存不应被恢复——清除并重新渲染，避免骨架屏卡住
+  const hasSkeleton = cached.some(n =>
+    n.nodeType === 1 && (n.classList?.contains('skeleton-grid') || n.querySelector?.('.skeleton-grid'))
+  );
+  if (hasSkeleton) {
+    delete tabContentCache[key];
+    return false;
+  }
   // 清空当前内容
   tabContent.textContent = '';
   // 添加 restoring-cache class，抑制 cardEntrance 动画重播
@@ -1006,6 +1014,9 @@ tabContent.addEventListener('click', (e) => {
       cacheTabContent(oldSubKey);
       activeSubTab[activeTab] = subTabName;
       renderTabContent(activeTab);
+      // 将激活的子tab按钮滚入可视区域
+      const activeSubBtn = tabContent.querySelector('.sub-tab-btn.active');
+      if (activeSubBtn) activeSubBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
     }
   }
 });
@@ -1304,7 +1315,7 @@ if (progressBar) {
 
 const init = async () => {
   // 加载 API 活动数据（插入到精选之后、selfData 之前）
-  await loadApiData();
+  // await loadApiData();
   // 同步 localStorage 中的过期筛选状态到 UI
   if (hideExpired) {
     const hideBtn = $('#hide-expired');

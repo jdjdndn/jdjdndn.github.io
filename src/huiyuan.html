@@ -106,6 +106,10 @@
     <!-- CSS 同步加载，消除页面闪烁 -->
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./huiyuan.css" />
+  
+    <meta name="google" content="notranslate" />
+  
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
     <!-- 页面加载进度条 -->
@@ -291,5 +295,43 @@
         setTimeout(function() { p.style.display = 'none'; }, 600);
       })();
     </script>
-  </body>
-</html>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "huiyuan — 优惠活动聚合",
+    "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+            ".hero-title",
+            ".hero-desc"
+        ]
+    }
+}
+    </script>  </body>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "会员优惠是真的吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "本站聚合的会员优惠均来自官方或授权渠道，优惠价格以实际购买页面为准。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "支持哪些会员类型？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "涵盖影视会员（爱奇艺、优酷、腾讯视频等）、音乐会员（网易云、QQ音乐等）、以及流量站等多种会员服务。"
+            }
+        }
+    ]
+}
+    </script></html>
