@@ -882,27 +882,30 @@ const setTabContent = (key, html) => {
   const skeletonShownAt = performance.now();
   const gen = ++skeletonGeneration;
   tabContent.innerHTML = renderSkeletonGrid(6, 'mixed');
-  tabContent.offsetHeight; // eslint-disable-line no-unused-expressions
+  // 双 rAF：第一帧让浏览器绘制骨架屏，第二帧再替换为实际内容
+  // 单 rAF 会在同一帧内插入+替换，骨架屏从未被绘制到屏幕
   requestAnimationFrame(() => {
-    // 快速切换 tab 时，过期回调直接丢弃
-    if (gen !== skeletonGeneration) return;
-    const elapsed = performance.now() - skeletonShownAt;
-    const remaining = Math.max(0, 200 - elapsed);
-    const render = () => {
-      // 二次校验：setTimeout 等待期间可能又切换了 tab
+    requestAnimationFrame(() => {
+      // 快速切换 tab 时，过期回调直接丢弃
       if (gen !== skeletonGeneration) return;
-      tabContent.innerHTML = html;
-      // 确保激活的子tab按钮在可视区域（初始渲染和切换时）
-      const activeSubBtn = tabContent.querySelector('.sub-tab-btn.active');
-      if (activeSubBtn) {
-        activeSubBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      const elapsed = performance.now() - skeletonShownAt;
+      const remaining = Math.max(0, 200 - elapsed);
+      const render = () => {
+        // 二次校验：setTimeout 等待期间可能又切换了 tab
+        if (gen !== skeletonGeneration) return;
+        tabContent.innerHTML = html;
+        // 确保激活的子tab按钮在可视区域（初始渲染和切换时）
+        const activeSubBtn = tabContent.querySelector('.sub-tab-btn.active');
+        if (activeSubBtn) {
+          activeSubBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        }
+      };
+      if (remaining > 0) {
+        setTimeout(render, remaining);
+      } else {
+        render();
       }
-    };
-    if (remaining > 0) {
-      setTimeout(render, remaining);
-    } else {
-      render();
-    }
+    });
   });
 };
 

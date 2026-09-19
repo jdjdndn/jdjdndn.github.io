@@ -32,35 +32,47 @@ const getShareUrl = (site, { url, title, description, image }) => {
 /** 尝试调起微信分享 */
 const shareToWechat = async (name, url, text) => {
   const content = text || `${name} ${url}`;
+  // 优先尝试系统分享面板（部分系统可直接分享到微信）
   if (navigator.share) {
     try {
       await navigator.share({ title: name, text: content, url });
       return;
     } catch {}
   }
-  await robustCopy(content, '已复制口令，打开微信粘贴发送给朋友');
+  // 回退到复制：普通网页无法直接调起微信 App
+  await robustCopy(content, '已复制，打开微信粘贴发送给朋友');
 };
 
 /** 尝试调起 QQ 分享 */
 const shareToQQ = (name, url, text) => {
-  const shareUrl = getShareUrl('qq', {
+  const webUrl = getShareUrl('qq', {
     url,
     title: name,
     description: text || name,
   });
   if (isMobile()) {
+    // 用 window.open 打开 scheme URL（iframe 会被浏览器拦截）
     const qqScheme = `mqqapi://share/to_fri?src_type=web&share_type=5&url=${encodeURIComponent(url)}&title=${encodeURIComponent(name)}&desc=${encodeURIComponent(text || name)}`;
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = qqScheme;
-    document.body.appendChild(iframe);
-    setTimeout(() => {
-      document.body.removeChild(iframe);
-      window.open(shareUrl, '_blank', 'noopener');
-    }, 2000);
+    const newTab = window.open('about:blank');
+    if (newTab) {
+      newTab.location.href = qqScheme;
+      // 3 秒后检测：若 QQ 未安装，页面会停留在 about:blank，回退到网页版
+      setTimeout(() => {
+        try {
+          if (newTab.location.href === 'about:blank') {
+            newTab.location.href = webUrl;
+          }
+        } catch {
+          // 跨域异常说明 QQ 已打开（scheme 生效），忽略
+        }
+      }, 3000);
+    } else {
+      // 弹窗被阻止，直接打开网页版
+      window.open(webUrl, '_blank', 'noopener');
+    }
     showToast('正在打开 QQ…');
   } else {
-    window.open(shareUrl, '_blank', 'noopener,width=600,height=500');
+    window.open(webUrl, '_blank', 'noopener,width=600,height=500');
   }
 };
 

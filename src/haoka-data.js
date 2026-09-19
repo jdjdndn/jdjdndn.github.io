@@ -61,6 +61,14 @@ export const haokaLinks = [
     nationwide: false,
     badge: '四网',
   },
+  {
+    name: '青禾号卡',
+    url: 'https://www.hemorn.cn/index?k=Vm5qREtSUUFyMTA9',
+    description: '号卡办理平台，四网套餐可选，新上线高性价比渠道',
+    priceRange: '19-49元/月',
+    nationwide: false,
+    badge: '四网',
+  },
 ];
 
 // ========== 代理注册链接 ==========
@@ -73,4 +81,5 @@ export const haokaProxyLinks = [
   {name: '咔咔通信代理', url: 'https://haoka.kakatx.com/register?inviteCode=KBOMJG1T'},
   {name: '蛋蛋号卡代理', url: 'https://ka.dandanhou.net/agent/reg.php?code=TA2O2ZZ4'},
   {name: '灵渠号卡代理', url: 'https://lingqu.87haoka.cn/r/06844666'},
+  {name: '青禾号卡代理', url: 'https://www.hemorn.cn/api/register?code=4XZ619ZX'},
 ]
