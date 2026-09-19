@@ -14,18 +14,20 @@ self.addEventListener('install', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
 
-  // iframe 外部链接：缓存优先，避免每次导航回首页重新请求
+  // iframe 外部链接：SWR — 缓存秒开，后台静默更新
   if (e.request.url.includes('kzurl18.cn')) {
     e.respondWith(
-      caches.match(e.request).then((cached) => {
-        return cached || fetch(e.request).then((res) => {
-          if (res && (res.status === 200 || res.type === 'opaque')) {
-            const clone = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(e.request, clone));
-          }
-          return res;
-        });
-      }),
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(e.request).then((cached) => {
+          const fetched = fetch(e.request).then((res) => {
+            if (res && (res.status === 200 || res.type === 'opaque')) {
+              cache.put(e.request, res.clone());
+            }
+            return res;
+          }).catch(() => cached);
+          return cached || fetched;
+        }),
+      ),
     );
     return;
   }

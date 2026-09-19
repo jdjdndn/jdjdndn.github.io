@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- SEO 基础 -->
+    <title>网购聚合平台</title>
+    <meta name="description" content="京东、淘宝、拼多多网购优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器。" />
+    <meta name="keywords" content="京东、淘宝、拼多多网购,优惠券,优惠聚合,省钱" />
+    <meta name="author" content="jdjdndn" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#FF6B35" />
+    <meta name="application-name" content="京东、淘宝、拼多多网购" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://jdjdndn.github.io/index.html" />
+    <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/index.html" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/index.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jdjdndn.github.io/index.html" />
+    <meta property="og:title" content="网购聚合平台" />
+    <meta property="og:description" content="京东、淘宝、拼多多网购优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器。" />
+    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+    <meta property="og:image:alt" content="网购聚合平台" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="京东、淘宝、拼多多网购" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="网购聚合平台" />
+    <meta name="twitter:description" content="京东、淘宝、拼多多网购优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器。" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="优惠券" />
+
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "优惠券",
+      "description": "优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器",
+      "datePublished": "2025-01-01",
+      "dateModified": "__BUILD_DATE__",
+      "url": "https://jdjdndn.github.io/index.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jdjdndn.github.io/#website",
+        "name": "京东、淘宝、拼多多网购"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://jdjdndn.github.io/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "活动",
+          "item": "https://jdjdndn.github.io/huodong.html"
+        }
+      ]
+    }
+    </script>
+
+    <!-- CSS 同步加载，消除页面闪烁 -->
+    <link rel="stylesheet" href="./shared.css" />
+    <link rel="stylesheet" href="./gouwu.css" />
+
+    <meta name="google" content="notranslate" />
+
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
+  </head>
+  <body>
+    <!-- 页面加载进度条 -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div id="app">
+      <!-- SEO: 视觉隐藏的 h1（页面以 iframe 为主，h1 供搜索引擎识别） -->
+      <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">网购聚合平台</h1>
+
+      <!-- iframe 内容区 -->
+      <div class="iframe-container">
+        <div class="iframe-loading" id="iframe-loading">
+          <div class="iframe-loading-spinner"></div>
+          <span>加载中...</span>
+        </div>
+        <iframe
+          src="http://yh.kdje3.cn/wechat/#/master/0cf6962f0eadc3974b06fcd79dab0af5/home?ucode=jPj0Gxx9ko"
+          class="index-iframe"
+          id="index-iframe"
+          title="优惠券平台"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+        <div class="iframe-error hidden" id="iframe-error">
+          <p>页面加载失败，请检查网络后刷新</p>
+          <button onclick="location.reload()" class="btn-retry">刷新重试</button>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer" id="footer"></footer>
+
+    <!-- <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div> -->
+
+    <script type="module" src="./common/dark-mode.js"></script>
+    <script type="module" src="./common/base.js"></script>
+    <script type="module" src="./common/sw-register.js"></script>
+    <script type="module" src="./footer.js"></script>
+    <script>
+      // 进度条自动隐藏
+      (function() {
+        var p = document.getElementById('progress-bar');
+        if (!p) return;
+        p.style.width = '90%';
+        setTimeout(function() { p.style.width = '100%'; p.style.opacity = '0'; }, 300);
+        setTimeout(function() { p.style.display = 'none'; }, 600);
+      })();
+
+      // iframe 加载状态
+      (function() {
+        var iframe = document.getElementById('index-iframe');
+        var loading = document.getElementById('iframe-loading');
+        var error = document.getElementById('iframe-error');
+        if (!iframe || !loading) return;
+
+        var failTimer = setTimeout(function() {
+          // 15秒超时未加载则显示错误
+          if (!iframe._loaded) {
+            loading.classList.add('fade-out');
+            error.classList.remove('hidden');
+          }
+        }, 15000);
+
+        iframe.addEventListener('load', function() {
+          iframe._loaded = true;
+          clearTimeout(failTimer);
+          loading.classList.add('fade-out');
+          setTimeout(function() { loading.style.display = 'none'; }, 300);
+        });
+
+        iframe.addEventListener('error', function() {
+          clearTimeout(failTimer);
+          loading.classList.add('fade-out');
+          error.classList.remove('hidden');
+        });
+      })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "首页 — 京东、淘宝、拼多多网购",
+    "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+            ".hero-title",
+            ".hero-subtitle"
+        ]
+    },
+    "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jdjdndn.github.io/#website"
+    }
+    }
+    </script>
+  </body>
+</html>

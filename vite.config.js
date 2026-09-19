@@ -152,7 +152,7 @@ export default defineConfig({
         wifi: resolve(__dirname, 'src/wifi.html'),
         wangpan: resolve(__dirname, 'src/wangpan.html'),
         huiyuan: resolve(__dirname, 'src/huiyuan.html'),
-        yangmao: resolve(__dirname, 'src/yangmao.html'),
+        gouwu: resolve(__dirname, 'src/gouwu.html'),
         about: resolve(__dirname, 'src/about.html'),
         ...discoverLandingPages(),
       },
