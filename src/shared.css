@@ -1505,7 +1505,9 @@ body.dark-mode .page-hero-wave svg path { fill: var(--bg); }
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
   transform: skewX(-20deg);
   border-radius: inherit;
-  animation: heroIconShimmer 6s ease-in-out 1.5s infinite;
+  animation: heroIconShimmer 6s ease-in-out 1.5s both infinite;
+  will-change: left;
+  transition: none !important;
 }
 @keyframes heroIconShimmer {
   0%, 70%, 100% { left: -60%; }

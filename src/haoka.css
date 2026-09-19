@@ -79,6 +79,8 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
   transform: skewX(-20deg);
   animation: btnShimmer 5s ease-in-out infinite;
+  will-change: left;
+  transition: none !important;
 }
 @keyframes btnShimmer {
   0%, 80%, 100% { left: -60%; }
