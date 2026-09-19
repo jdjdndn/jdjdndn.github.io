@@ -297,36 +297,91 @@
 
     <script type="application/ld+json">
     {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "about — 优惠活动聚合",
-    "speakable": {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "关于我们 — 券宝",
+      "description": "券宝优惠券聚合平台的关于我们页面，介绍平台功能特色、覆盖场景和使用方式。",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jdjdndn.github.io/#website",
+        "name": "券宝"
+      },
+      "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
-            ".about-hero h1",
-            ".about-hero p"
+          ".about-hero h1",
+          ".about-hero p",
+          ".about-section-desc"
         ]
+      }
     }
-}
-    </script>  </body>
+    </script>
 
     <script type="application/ld+json">
     {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".about-section-title", ".about-section-desc"]
+      },
+      "mainEntity": [
         {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "首页",
-            "item": "https://jdjdndn.github.io/"
+          "@type": "Question",
+          "name": "券宝是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "券宝是一个一站式优惠券导航平台，聚合美团外卖、淘宝闪购、京东、拼多多、携程、同程、飞猪、滴滴出行等主流平台的热门优惠活动，以及肯德基、瑞幸、星巴克等连锁餐饮品牌的优惠券。"
+          }
         },
         {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "about",
-            "item": "https://jdjdndn.github.io/about.html"
+          "@type": "Question",
+          "name": "券宝如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "复制口令码或点击链接，即可跳转到对应App领取优惠，整个过程约10秒完成。本站还支持智能搜索、过期自动标记、暗色模式、分享功能、PWA添加到桌面等特性。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "券宝覆盖哪些优惠场景？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "券宝覆盖六大生活场景：外卖餐饮（美团外卖、肯德基、瑞幸等）、购物电商（淘宝、京东、拼多多）、出行打车（滴滴、花小猪）、酒旅住宿（携程、同程、飞猪）、电影娱乐、快递寄件。收录超过150个优惠活动。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "券宝是官方平台吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "券宝不是美团、淘宝、京东等官方平台，而是一个优惠信息聚合导航平台。本站所展示的优惠信息均来自互联网公开渠道，信息仅供参考，以各平台实际页面为准。"
+          }
         }
-    ]
-}
-    </script></html>
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://jdjdndn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "关于我们",
+          "item": "https://jdjdndn.github.io/about.html"
+        }
+      ]
+    }
+    </script>
+
+  </body>
+</html>

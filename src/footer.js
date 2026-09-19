@@ -7,12 +7,13 @@ const initFooter = () => {
 
   const page = location.pathname.split('/').pop() || 'index.html';
   const navItems = [
-    { href: './index.html', label: '首页', id: 'index.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
+    { href: './index.html', label: '首页', id: 'index.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>' },
+    { href: './huodong.html', label: '活动', id: 'huodong.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
     { href: './haoka.html', label: '号卡', id: 'haoka.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>' },
     { href: './wifi.html', label: 'WiFi', id: 'wifi.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>' },
     { href: './wangpan.html', label: '网盘', id: 'wangpan.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>' },
-    { href: './quanbao.html', label: '券宝', id: 'quanbao.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>' },
     { href: './huiyuan.html', label: '会员', id: 'huiyuan.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' },
+    { href: './youmao.html', label: '羊毛', id: 'youmao.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>' },
     { href: './about.html', label: '关于', id: 'about.html', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' },
   ];
 
@@ -24,6 +25,18 @@ const initFooter = () => {
     const active = page === item.id ? ' class="active" aria-current="page"' : '';
     return `<a href="${item.href}"${active}>${item.icon}<span>${item.label}</span></a>`;
   }).join('');
+  // 当前页链接不跳转，避免整页刷新
+  navBar.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    const target = href.split('/').pop();
+    if (target === page) {
+      e.preventDefault();
+      // 已在当前页，回到顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
   footer.appendChild(navBar);
 
   // 侧边导航栏（桌面端）— 作为 #app 的兄弟元素，通过 flex 容器一起居中
@@ -34,6 +47,17 @@ const initFooter = () => {
     const active = page === item.id ? ' class="active" aria-current="page"' : '';
     return `<a href="${item.href}"${active} title="${item.label}">${item.icon}<span>${item.label}</span></a>`;
   }).join('');
+  // 当前页链接不跳转，避免整页刷新
+  sideBar.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    const target = href.split('/').pop();
+    if (target === page) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
   const app = $('#app');
   if (app) {
     const wrapper = document.createElement('div');

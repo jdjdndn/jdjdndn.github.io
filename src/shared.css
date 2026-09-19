@@ -463,7 +463,9 @@ body.dark-mode .btn-share:hover { filter: brightness(1.2); }
 }
 .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
 .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
+.tab-btn.active .badge {   background: rgba(255, 255, 255, 0.25);     color: #fff;   }
+body.dark-mode .tab-btn.active { background: var(--primary); color: #fff; }
+body.dark-mode .tab-btn.active .badge { background: rgba(255, 255, 255, 0.25);  color: #fff;}
 /* ========== 卡片组件（所有子页面共享） ========== */
 .haoka-card {
   background: var(--card);

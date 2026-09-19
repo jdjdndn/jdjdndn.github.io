@@ -133,6 +133,10 @@ function generateHTML(page) {
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website",
         "name": "优惠活动聚合"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".hero h1", ".hero p"]
       }
     }
     </script>
@@ -153,6 +157,10 @@ function generateHTML(page) {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "${page.heroTitle}",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jdjdndn.github.io/#website"
+      },
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [".hero h1", ".hero p"]
@@ -164,6 +172,10 @@ ${page.faq.length > 0 ? `
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".faq-question", ".faq-answer"]
+      },
       "mainEntity": [
 ${page.faq.map((item, i) => `        {
           "@type": "Question",

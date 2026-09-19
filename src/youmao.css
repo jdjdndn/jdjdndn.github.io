@@ -1,0 +1,347 @@
+/* ========== 羊毛页面样式 ========== */
+
+/* Hero 区域 */
+.youmao-hero {
+  --hero-gradient: linear-gradient(155deg, #0a2e1a 0%, #0d5c3a 25%, #10B981 50%, #34D399 75%, #6EE7B7 100%);
+}
+
+.youmao-hero .page-hero-icon svg {
+  stroke: white;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tab 导航 */
+.youmao-tab-nav {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg, #f8f7f4);
+}
+
+.youmao-tab-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.youmao-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--border, #e5e2dd);
+  border-radius: 2rem;
+  background: var(--card, #fff);
+  color: var(--text-secondary, #4a5568);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition, 0.2s ease);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.youmao-tab-btn:hover {
+  border-color: #10B981;
+  color: #10B981;
+}
+
+.youmao-tab-btn.active {
+  background: linear-gradient(135deg, #10B981, #34D399);
+  border-color: #10B981;
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.youmao-tab-icon {
+  font-size: 1rem;
+}
+
+.youmao-tab-name {
+  font-weight: 600;
+}
+
+.youmao-tab-count {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.youmao-tab-btn:not(.active) .youmao-tab-count {
+  background: var(--bg, #f8f7f4);
+  color: var(--muted, #6b7280);
+}
+
+/* 主内容区 */
+.youmao-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem 1rem 6rem;
+}
+
+/* 日期分组 */
+.youmao-date-group {
+  margin-bottom: 2rem;
+}
+
+.youmao-date-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border, #e5e2dd);
+  position: sticky;
+  top: 0;
+  background: var(--bg, #f8f7f4);
+  z-index: 10;
+  padding-top: 0.5rem;
+}
+
+.youmao-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10B981, #34D399);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.youmao-date-badge.today {
+  background: linear-gradient(135deg, #F59E0B, #FBBF24);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+  animation: today-pulse 2s ease-in-out infinite;
+}
+
+@keyframes today-pulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 2px 16px rgba(245, 158, 11, 0.6); }
+}
+
+.youmao-date-count {
+  color: var(--muted, #6b7280);
+  font-size: 0.85rem;
+}
+
+/* 羊毛卡片 */
+.youmao-card {
+  background: var(--card, #fff);
+  border-radius: var(--radius, 12px);
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow, 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03));
+  border-left: 4px solid #10B981;
+  transition: all var(--transition, 0.2s ease);
+  animation: card-in 0.3s ease backwards;
+}
+
+.youmao-card:hover {
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03));
+  transform: translateY(-1px);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 卡片头部（标题 + 平台徽章） */
+.youmao-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.youmao-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text, #1a1a2e);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.youmao-card-title .emoji {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* 平台徽章 */
+.youmao-platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.youmao-platform-taobao {
+  background: linear-gradient(135deg, #FF6B00, #FF8C33);
+  color: white;
+}
+
+.youmao-platform-jd {
+  background: linear-gradient(135deg, #E2231A, #FF4D4D);
+  color: white;
+}
+
+.youmao-platform-pdd {
+  background: linear-gradient(135deg, #F23030, #FF6B6B);
+  color: white;
+}
+
+.youmao-card-body {
+  color: var(--text-secondary, #4a5568);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.youmao-card-body a {
+  color: #10B981;
+  text-decoration: none;
+  border-bottom: 1px dashed #10B981;
+  transition: color var(--transition, 0.2s ease);
+}
+
+.youmao-card-body a:hover {
+  color: #059669;
+  border-bottom-style: solid;
+}
+
+/* 羊毛链接（直接点击跳转） */
+.youmao-link {
+  display: inline;
+  color: #10B981;
+  text-decoration: none;
+  border-bottom: 1px dashed #10B981;
+  word-break: break-all;
+  font-size: 0.85rem;
+  transition: all var(--transition, 0.2s ease);
+}
+
+.youmao-link:hover {
+  color: #059669;
+  border-bottom-style: solid;
+}
+
+/* 二维码小按钮 */
+.youmao-qr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  margin-left: 0.3rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: rgba(16, 185, 129, 0.1);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition, 0.2s ease);
+  vertical-align: middle;
+}
+
+.youmao-qr-btn:hover {
+  background: rgba(16, 185, 129, 0.25);
+  transform: scale(1.1);
+}
+
+.youmao-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.youmao-tag {
+  display: inline-block;
+  background: var(--primary-light, #FFF4ED);
+  color: #10B981;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-weight: 500;
+}
+
+/* 空状态 */
+.youmao-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--muted, #6b7280);
+}
+
+.youmao-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.youmao-empty-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text, #1a1a2e);
+  margin-bottom: 0.5rem;
+}
+
+/* 暗色模式适配 */
+:root.dark .youmao-card,
+.dark .youmao-card {
+  background: #1a2e1a;
+  border-left-color: #34D399;
+}
+
+:root.dark .youmao-date-header,
+.dark .youmao-date-header {
+  background: #0d1117;
+}
+
+:root.dark .youmao-tab-btn,
+.dark .youmao-tab-btn {
+  background: #1a2e1a;
+  border-color: #2d4a3e;
+  color: #a0aec0;
+}
+
+:root.dark .youmao-tab-btn:hover,
+.dark .youmao-tab-btn:hover {
+  border-color: #34D399;
+  color: #34D399;
+}
+
+:root.dark .youmao-tab-btn:not(.active) .youmao-tab-count,
+.dark .youmao-tab-btn:not(.active) .youmao-tab-count {
+  background: #0d1117;
+}
+
+:root.dark .youmao-tab-nav,
+.dark .youmao-tab-nav {
+  background: #0d1117;
+}

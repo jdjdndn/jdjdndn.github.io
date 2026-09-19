@@ -5,7 +5,8 @@ import { track } from './analytics.js';
 import { initBackToTop } from './common/back-to-top.js';
 import { copyText } from './common/base.js';
 import { createSharePanel, shareItem } from './common/share.js';
-import { selfData, tabs } from './data.js';
+import { renderSkeletonGrid } from './common/skeleton.js';
+import { tabs } from './data.js';
 // 暗色模式 analytics 回调
 window.__darkModeOnToggle = (isDark) => track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light' });
 // qr-modal 按需加载：仅用户点击"二维码"按钮时才拉取 qrcode 库（-35KB 首屏）
@@ -67,86 +68,19 @@ const loadApiData = async () => {
     const data = await res.json();
     if (!data.tabs?.length) return;
 
-    // 将 API tabs 插入到精选之后
-    const jingxuanIdx = tabs.findIndex(t => t.id === 'jingxuan');
-    const insertIdx = jingxuanIdx + 1;
-    data.tabs.forEach((tab, i) => {
+    // 将 API tabs 插入到 tabs 末尾
+    data.tabs.forEach((tab) => {
       tab._isApi = true; // 标记为 API 数据
-      tabs.splice(insertIdx + i, 0, tab);
+      tabs.push(tab);
     });
-
-    // 将 selfData 的各个 tab 作为子tab放入"其他"主tab
-    const otherTab = {
-      id: 'other',
-      label: '📋 其他',
-      name: '其他',
-      count: selfData.reduce((sum, tab) => {
-        return sum + tab.sections.reduce((s, sec) => s + sec.items.length, 0);
-      }, 0),
-      hasSubTabs: true,
-      sections: selfData.map(tab => ({
-        title: tab.name,
-        items: tab.sections.flatMap(sec => sec.items),
-        _tabLabel: tab.label, // 保留原始label用于显示
-        _hasSections: tab.sections.length > 1, // 标记是否有子分组
-        _sections: tab.sections, // 保留原始sections结构
-      })),
-    };
-
-    // 为 selfData 项生成 SVG 封面图
-    otherTab.sections.forEach((sec) => {
-      const cat = getCategoryForSection(sec.title);
-      sec.items.forEach((item) => { if (!item.img) item.img = generateCoverSvg(cat, item.name); });
-      if (sec._sections) {
-        sec._sections.forEach((sub) => {
-          const subCat = getCategoryForSection(sub.title);
-          sub.items.forEach((item) => { if (!item.img) item.img = generateCoverSvg(subCat, item.name); });
-        });
-      }
-    });
-    tabs.push(otherTab);
 
     apiTabsLoaded = true;
   } catch {}
 };
 
-// ========== 精选活动数据 ==========
-let jingxuanData = [];
-const loadJingxuan = async () => {
-  try {
-    const res = await fetch('./api-data/jingxuan_list.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    jingxuanData = await res.json();
-    // 更新精选 tab 的 badge 数量
-    const jingxuanTab = tabs.find(t => t.id === 'jingxuan');
-    if (jingxuanTab) {
-      jingxuanTab.sections = [{ title: '精选活动', items: jingxuanData.map(d => ({ name: d.name })) }];
-    }
-    renderStats();
-    renderTabNav();
-    if (activeTab === 'jingxuan') {
-      // 清除骨架屏缓存，直接用真实内容替换（避免双重闪屏）
-      delete tabContentCache['jingxuan::'];
-      const visibleJxData = hideExpired ? jingxuanData.filter(d => !isJingxuanExpired(d)) : jingxuanData;
-      const html = visibleJxData.length
-        ? `<section class="sub-section"><h2 class="sub-section-title">精选活动（${visibleJxData.length}）</h2><div class="jingxuan-grid">${visibleJxData.map(renderJingxuanCard).join('')}</div></section>`
-        : `<div class="empty-state">
-            <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-            <div class="empty-state-title">精选活动即将上线</div>
-            <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
-          </div>`;
-      setTabContent('jingxuan::', html);
-    }
-  } catch (err) {
-    console.warn('[loadJingxuan] 加载精选数据失败:', err);
-    if (activeTab === 'jingxuan') {
-      tabContent.innerHTML = renderErrorState(
-        '精选活动加载失败',
-        '请检查网络连接后重试',
-        () => { jingxuanData = []; loadJingxuan(); }
-      );
-    }
-  }
+// ========== 加载数据 ==========
+const loadData = async () => {
+  renderStats();
 };
 
 // ========== :has() 兼容性降级 ==========
@@ -227,54 +161,6 @@ const searchClear = $('#search-clear');
 const searchCount = $('#search-count');
 const headerStats = $('#header-stats');
 const quickShortcuts = $('#quick-shortcuts');
-
-// ========== 骨架屏 ==========
-const renderSkeletonGrid = (count = 6, type = 'mixed') => {
-  const cards = Array.from({ length: count }, (_, i) => {
-    // 根据类型和位置生成不同骨架
-    const cardType = type === 'mixed' ? (i % 3 === 0 ? 'code' : (i % 3 === 1 ? 'link' : 'jingxuan')) : type;
-
-    if (cardType === 'jingxuan') {
-      // 精选卡片骨架：图片+文字
-      return `
-        <div class="skeleton-card skeleton-jingxuan">
-          <div class="skeleton skeleton-img"></div>
-          <div class="skeleton skeleton-line full"></div>
-          <div class="skeleton skeleton-line short"></div>
-        </div>
-      `;
-    }
-
-    if (cardType === 'link') {
-      // 链接卡片骨架：无口令框，有按钮
-      return `
-        <div class="skeleton-card skeleton-link">
-          <div class="skeleton skeleton-line full"></div>
-          <div class="skeleton skeleton-line medium"></div>
-          <div class="skeleton skeleton-link-url"></div>
-          <div class="skeleton-btn-group">
-            <div class="skeleton skeleton-btn primary"></div>
-            <div class="skeleton skeleton-btn secondary"></div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 口令卡片骨架（默认）
-    return `
-      <div class="skeleton-card skeleton-code">
-        <div class="skeleton skeleton-line full"></div>
-        <div class="skeleton skeleton-line medium"></div>
-        <div class="skeleton skeleton-code-box"></div>
-        <div class="skeleton-btn-group">
-          <div class="skeleton skeleton-btn primary"></div>
-          <div class="skeleton skeleton-btn secondary"></div>
-        </div>
-      </div>
-    `;
-  }).join('');
-  return `<div class="skeleton-grid">${cards}</div>`;
-};
 
 // ========== 错误状态 ==========
 const renderErrorState = (title = '加载失败', hint = '请检查网络后重试', onRetry = null) => {
@@ -446,8 +332,12 @@ const generateCoverSvg = (_category, name) => {
 
 // ========== sections 规范化 ==========
 // featured tab 的 sections 可能是原始字符串数组，需要转换为 {title, items} 格式
-const normalizeSections = (sections) =>
-  sections.map((s) => {
+const normalizeSections = (sections) => {
+  if (!sections || !Array.isArray(sections)) {
+    console.warn('[normalizeSections] sections is not an array:', sections);
+    return [];
+  }
+  return sections.filter(s => s != null).map((s) => {
     if (typeof s === 'string') {
       // 从字符串中提取名称和链接
       const lines = s.split('\n').map((l) => l.trim()).filter(Boolean);
@@ -462,6 +352,7 @@ const normalizeSections = (sections) =>
     }
     return s;
   });
+};
 
 // ========== 统计 ==========
 const calcTabCounts = () => tabs.map((t) =>
@@ -516,7 +407,7 @@ const renderStats = () => {
     return count + normalizeSections(tab.sections).reduce((sectionCount, section) => {
       return sectionCount + section.items.filter(item => isExpired(item.deadline)).length;
     }, 0);
-  }, 0) + jingxuanData.filter(item => isJingxuanExpired(item)).length;
+  }, 0);
 
   // 模拟今日领取人数（基于日期的伪随机）
   const today = new Date().toISOString().slice(0, 10);
@@ -536,7 +427,7 @@ const renderStats = () => {
   const freshnessTime = getRelativeTime();
 
   headerStats.innerHTML = `
-    <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个优惠</span>
+    <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${totalCount}</strong> 个活动</span>
     <span class="stat-badge usage-count"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 今日 <strong>${dailyCopies.toLocaleString()}</strong> 人领取</span>
     ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_expired} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
     <span class="stat-badge freshness-badge"><span class="dot"></span> ${freshnessTime}</span>
@@ -558,6 +449,7 @@ const SHORTCUTS_DATA = [
   { tabId: 'tongcheng_travel', name: '同程', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>', color: 'blue' },
   { tabId: 'feizhu_travel', name: '飞猪', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>', color: 'green' },
   { tabId: 'life', name: '电影票', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>', color: 'purple' },
+  { tabId: 'qita', name: '其他', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>', color: 'gray' },
 ];
 
 const renderQuickShortcuts = () => {
@@ -574,11 +466,16 @@ const renderQuickShortcuts = () => {
 
 // ========== 渲染：Tab 导航 ==========
 const renderTabNav = () => {
+  // 确保 tabCounts 与 tabs 同步（loadApiData 可能添加了新 tab）
+  if (tabCounts.length !== tabs.length) {
+    tabCounts = calcTabCounts();
+  }
   const tabBtns = tabs
     .map(
       (t, i) => {
         const isActive = t.id === activeTab;
-        return `<button class="tab-btn${isActive ? ' active' : ''}" data-tab="${t.id}" role="tab" aria-selected="${isActive}"><span class="tab-name">${t.name || t.label}</span><span class="badge">${tabCounts[i]}</span></button>`;
+        const count = tabCounts[i] ?? 0;
+        return `<button class="tab-btn${isActive ? ' active' : ''}" data-tab="${t.id}" role="tab" aria-selected="${isActive}"><span class="tab-name">${t.name || t.label}</span><span class="badge">${count}</span></button>`;
       },
     )
     .join('');
@@ -639,9 +536,32 @@ const renderCodeCard = (item, query) => {
     ? (expiringSoon ? formatCountdown(item.deadline) : `<span class="card-deadline">截止 ${item.deadline}</span>`)
     : '';
 
+  // 生成渐变色（基于名称哈希）
+  const hash = [...(item.name || '')].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  const hue1 = Math.abs(hash) % 360;
+  const hue2 = (hue1 + 40) % 360;
+
+  // 根据名称判断图标
+  const getIcon = (name) => {
+    if (/电影|影院|观影/.test(name)) return '🎬';
+    if (/外卖|美团/.test(name)) return '🍜';
+    if (/电商|购物|淘宝|京东|拼多多/.test(name)) return '🛒';
+    if (/酒店|住宿/.test(name)) return '🏨';
+    if (/旅行|旅游|机票|火车/.test(name)) return '✈️';
+    if (/餐饮|美食/.test(name)) return '🍽️';
+    if (/花|鲜花/.test(name)) return '🌸';
+    if (/云|服务器/.test(name)) return '☁️';
+    if (/打车|出行/.test(name)) return '🚗';
+    if (/快递|寄件/.test(name)) return '📦';
+    if (/优惠|红包|券/.test(name)) return '🎁';
+    return '🎫';
+  };
+  const icon = getIcon(item.name);
+
   return `
-  <div class="activity-card${expiredClass}${expiringClass}" role="article" aria-label="${item.name}">
-    ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
+  <div class="activity-card card-code-style${expiredClass}${expiringClass}" role="article" aria-label="${item.name}" style="--card-gradient: linear-gradient(135deg, hsl(${hue1}, 75%, 94%), hsl(${hue2}, 65%, 90%)); --card-accent: hsl(${hue1}, 65%, 45%);">
+    <div class="card-gradient-bar"></div>
+    <div class="card-icon-badge">${icon}</div>
     <div class="card-head">
       <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
       <div class="card-badges">
@@ -685,15 +605,43 @@ const renderLinkCard = (item, query) => {
     ? (expiringSoon ? formatCountdown(item.deadline) : `<span class="card-deadline">截止 ${item.deadline}</span>`)
     : '';
 
+  // 描述文本
+  const descHtml = item.description ? `<p class="card-desc">${item.description}</p>` : '';
+
+  // 生成渐变色（基于名称哈希）
+  const hash = [...(item.name || '')].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  const hue1 = Math.abs(hash) % 360;
+  const hue2 = (hue1 + 30) % 360;
+
+  // 根据名称判断图标
+  const getIcon = (name) => {
+    if (/电商|购物|淘宝|京东|拼多多|商城|超市/.test(name)) return '🛒';
+    if (/酒店|住宿|民宿|宾馆/.test(name)) return '🏨';
+    if (/旅行|旅游|携程|同程|飞猪|出行|机票|火车/.test(name)) return '✈️';
+    if (/餐饮|美食|咖啡|茶|奶茶|餐厅|火锅/.test(name)) return '🍽️';
+    if (/电影|娱乐|演出|票/.test(name)) return '🎬';
+    if (/花|鲜花|礼品/.test(name)) return '🌸';
+    if (/云|服务器|主机|域名/.test(name)) return '☁️';
+    if (/打车|滴滴|出行|代驾/.test(name)) return '🚗';
+    if (/快递|寄件|物流/.test(name)) return '📦';
+    if (/话费|流量|充值/.test(name)) return '📱';
+    if (/优惠|红包|券|折扣|补贴/.test(name)) return '🎁';
+    if (/会员|VIP/.test(name)) return '👑';
+    return '🔗';
+  };
+  const icon = getIcon(item.name);
+
   return `
-  <div class="activity-card${expiredClass}${expiringClass}" role="article" aria-label="${item.name}">
-    ${item.img ? `<div class="card-cover"><img class="card-cover-img" src="${item.img}" alt="${item.name}" loading="lazy" /></div>` : ''}
+  <div class="activity-card card-link-style${expiredClass}${expiringClass}" role="article" aria-label="${item.name}" style="--card-gradient: linear-gradient(135deg, hsl(${hue1}, 80%, 95%), hsl(${hue2}, 70%, 92%)); --card-accent: hsl(${hue1}, 70%, 50%);">
+    <div class="card-gradient-bar"></div>
+    <div class="card-icon-badge">${icon}</div>
     <div class="card-head">
       <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
       <div class="card-badges">
         ${badges}
       </div>
     </div>
+    ${descHtml}
     ${deadlineDisplay ? `<div class="card-deadline-wrapper"${expiringSoon ? ' data-expiring' : ''}>${deadlineDisplay}</div>` : ''}
     <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${host || '前往活动'}</a>
     <div class="card-actions">
@@ -703,33 +651,6 @@ const renderLinkCard = (item, query) => {
     </div>
   </div>
   `;
-};
-
-// ========== 渲染：精选活动卡片 ==========
-const isJingxuanExpired = (item) => item.saleStatus === false;
-
-const renderJingxuanCard = (item) => {
-  if (hideExpired && isJingxuanExpired(item)) return '';
-  const name = item.brandName ? `${item.brandName} · ${item.name}` : item.name;
-  const price = parseFloat(item.sellPrice);
-  const origPrice = parseFloat(item.originalPrice);
-  const hasDiscount = !isNaN(price) && !isNaN(origPrice) && origPrice > price;
-  const hasLink = !!item.h5;
-  const expired = isJingxuanExpired(item);
-  const tag = expired ? '<span class="jingxuan-tag expired">已下架</span>' : !hasLink ? '<span class="jingxuan-tag">仅门店</span>' : '';
-  return `
-  <${hasLink ? 'a' : 'div'} class="jingxuan-card${hasLink ? '' : ' no-link'}${expired ? ' expired' : ''}"${hasLink ? ` href="${item.h5}" target="_blank" rel="noopener"` : ''}>
-    <div class="jingxuan-img-wrap">
-      <img class="jingxuan-img" src="${item.img}" alt="${name}" loading="lazy" />
-      ${tag}
-    </div>
-    <div class="jingxuan-info">
-      <div class="jingxuan-name">${name}</div>
-      <div class="jingxuan-price">
-        ${hasDiscount ? `<span class="jingxuan-price-sell">¥${item.sellPrice}</span><span class="jingxuan-price-orig">¥${item.originalPrice}</span>` : item.sellPrice ? `<span class="jingxuan-price-sell">¥${item.sellPrice}</span>` : ''}
-      </div>
-    </div>
-  </${hasLink ? 'a' : 'div'}>`;
 };
 
 // ========== 渲染：API 活动卡片 ==========
@@ -779,25 +700,11 @@ let activeSubTab = {};
 
 const renderTabContent = (tabId) => {
   const tab = tabs.find((t) => t.id === tabId);
-  if (!tab) return;
-
-  // 精选活动：从 JSON 加载，渲染图片卡片
-  if (tabId === 'jingxuan') {
-    if (!jingxuanData.length) {
-      setTabContent('jingxuan::', renderSkeletonGrid(6));
-      loadJingxuan();
-      return;
+  if (!tab) {
+    // 降级：如果找不到 tab，显示第一个 tab
+    if (tabs.length > 0 && tabId !== tabs[0].id) {
+      switchTab(tabs[0].id);
     }
-
-    const visibleJxData = hideExpired ? jingxuanData.filter(d => !isJingxuanExpired(d)) : jingxuanData;
-    const html = visibleJxData.length
-      ? `<section class="sub-section"><h2 class="sub-section-title">精选活动（${visibleJxData.length}）</h2><div class="jingxuan-grid">${visibleJxData.map(renderJingxuanCard).join('')}</div></section>`
-      : `<div class="empty-state">
-          <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="empty-state-title">精选活动即将上线</div>
-          <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
-        </div>`;
-    setTabContent('jingxuan::', html);
     return;
   }
 
@@ -816,9 +723,10 @@ const renderTabContent = (tabId) => {
 
   // 有子tab的情况
   if (tab.hasSubTabs && sections.length > 1) {
-    // 初始化或获取当前激活的子tab
-    if (!activeSubTab[tabId]) {
-      activeSubTab[tabId] = sections[0].title;
+    // 初始化或获取当前激活的子tab，确保子tab存在于sections中
+    const savedSubTab = activeSubTab[tabId];
+    if (!savedSubTab || !sections.some(s => s && s.title === savedSubTab)) {
+      activeSubTab[tabId] = sections[0]?.title || '';
     }
     const currentSubTab = activeSubTab[tabId];
     const currentSection = sections.find(s => s.title === currentSubTab) || sections[0];
@@ -868,6 +776,7 @@ const renderTabContent = (tabId) => {
 
   // 没有子tab的情况
   const noSubHtml = sections
+    .filter(sec => sec && sec.items && sec.items.length > 0) // 过滤掉空section
     .map(
       (sec, i) => `
     <section class="sub-section" aria-labelledby="section-${tab.id}-${i}">
@@ -884,16 +793,28 @@ const renderTabContent = (tabId) => {
   `,
     )
     .join('');
-  setTabContent(`${tabId}::`, noSubHtml);
+  setTabContent(`${tabId}::`, noSubHtml || `
+    <div class="empty-state">
+      <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div class="empty-state-title">精选活动即将上线</div>
+      <div class="empty-state-hint">敬请期待，我们会为你挑选最值得入手的优惠</div>
+    </div>
+  `);
 };
 
 // ========== Tab 内容 DOM 缓存池 ==========
 // key = `${tabId}::${subTabName || ''}`，value = [Node, Node, ...]
 const tabContentCache = {};
+// 骨架屏代际计数器：快速切换 tab 时丢弃过期的 setTimeout 回调
+let skeletonGeneration = 0;
 
 /** 将 tabContent 的子节点保存到缓存 */
 const cacheTabContent = (key) => {
-  const nodes = Array.from(tabContent.childNodes);
+  // 过滤掉预渲染内容，不缓存
+  const nodes = Array.from(tabContent.childNodes).filter(n => {
+    if (n.nodeType !== 1) return true; // 保留文本节点
+    return !n.classList?.contains('prerender') && !n.querySelector?.('.prerender');
+  });
   if (nodes.length) tabContentCache[key] = nodes;
 };
 
@@ -901,11 +822,16 @@ const cacheTabContent = (key) => {
 const restoreTabContent = (key) => {
   const cached = tabContentCache[key];
   if (!cached || !cached.length) return false;
-  // 骨架屏缓存不应被恢复——清除并重新渲染，避免骨架屏卡住
-  const hasSkeleton = cached.some(n =>
-    n.nodeType === 1 && (n.classList?.contains('skeleton-grid') || n.querySelector?.('.skeleton-grid'))
+  // 骨架屏或预渲染内容不应被恢复——清除并重新渲染
+  const hasInvalidContent = cached.some(n =>
+    n.nodeType === 1 && (
+      n.classList?.contains('skeleton-grid') ||
+      n.classList?.contains('prerender') ||
+      n.querySelector?.('.skeleton-grid') ||
+      n.querySelector?.('.prerender')
+    )
   );
-  if (hasSkeleton) {
+  if (hasInvalidContent) {
     delete tabContentCache[key];
     return false;
   }
@@ -930,16 +856,53 @@ const restoreTabContent = (key) => {
  * - 缓存未命中：opacity → 0 → 替换 → opacity → 1（首次加载过渡）
  */
 const setTabContent = (key, html) => {
-  // 优先从缓存恢复——跳过 opacity 动画，消除切换闪屏
+  // 优先从缓存恢复——跳过动画，消除切换闪屏
   if (restoreTabContent(key)) {
+    // 缓存恢复后，也确保子tab按钮在可视区域
+    requestAnimationFrame(() => {
+      const activeSubBtn = tabContent.querySelector('.sub-tab-btn.active');
+      if (activeSubBtn) {
+        activeSubBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      }
+    });
     return;
   }
-  // 缓存未命中：先隐藏 → 替换 → 再显示
-  tabContent.classList.add('tab-content-switching');
+  // html 为空时直接显示空状态，不显示骨架屏
+  if (!html) {
+    tabContent.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="empty-state-title">暂无内容</div>
+        <div class="empty-state-hint">敬请期待</div>
+      </div>
+    `;
+    return;
+  }
+  // 缓存未命中：先显示骨架屏 → 再替换为实际内容
+  const skeletonShownAt = performance.now();
+  const gen = ++skeletonGeneration;
+  tabContent.innerHTML = renderSkeletonGrid(6, 'mixed');
   tabContent.offsetHeight; // eslint-disable-line no-unused-expressions
-  tabContent.innerHTML = html;
   requestAnimationFrame(() => {
-    tabContent.classList.remove('tab-content-switching');
+    // 快速切换 tab 时，过期回调直接丢弃
+    if (gen !== skeletonGeneration) return;
+    const elapsed = performance.now() - skeletonShownAt;
+    const remaining = Math.max(0, 200 - elapsed);
+    const render = () => {
+      // 二次校验：setTimeout 等待期间可能又切换了 tab
+      if (gen !== skeletonGeneration) return;
+      tabContent.innerHTML = html;
+      // 确保激活的子tab按钮在可视区域（初始渲染和切换时）
+      const activeSubBtn = tabContent.querySelector('.sub-tab-btn.active');
+      if (activeSubBtn) {
+        activeSubBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      }
+    };
+    if (remaining > 0) {
+      setTimeout(render, remaining);
+    } else {
+      render();
+    }
   });
 };
 
@@ -949,7 +912,8 @@ let activeTab = tabs[0].id;
 const switchTab = (tabId) => {
   // 保存切换前的内容到缓存
   const oldSubTab = activeSubTab[activeTab] || '';
-  cacheTabContent(`${activeTab}::${oldSubTab}`);
+  const cacheKey = oldSubTab ? `${activeTab}::${oldSubTab}` : `${activeTab}::`;
+  cacheTabContent(cacheKey);
 
   saveScrollPosition();
   activeTab = tabId;
@@ -963,13 +927,16 @@ const switchTab = (tabId) => {
     btn.classList.toggle('active', isActive);
     btn.setAttribute('aria-selected', isActive);
   });
-  // H5 端自动将当前 tab 滚入可视区域
-  const activeBtn = tabNav.querySelector('.tab-btn.active');
-  if (activeBtn) {
-    activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-  }
   renderTabContent(tabId);
-  restoreScrollPosition();
+  // 恢复滚动位置（如果没有保存过，让 tab 按钮可见）
+  if (scrollPositions[tabId] !== undefined) {
+    restoreScrollPosition();
+  } else {
+    const activeBtn = tabNav.querySelector('.tab-btn.active');
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+  }
 };
 
 // ========== 过期筛选 ==========
@@ -1010,7 +977,8 @@ tabContent.addEventListener('click', (e) => {
     const tab = tabs.find(t => t.id === activeTab);
     if (tab && subTabName) {
       // 保存当前子tab内容到缓存
-      const oldSubKey = `${activeTab}::${activeSubTab[activeTab] || ''}`;
+      const oldSubTabName = activeSubTab[activeTab] || '';
+      const oldSubKey = oldSubTabName ? `${activeTab}::${oldSubTabName}` : `${activeTab}::`;
       cacheTabContent(oldSubKey);
       activeSubTab[activeTab] = subTabName;
       renderTabContent(activeTab);
@@ -1097,14 +1065,6 @@ const searchCoupons = (query) => {
         }
       });
     });
-  });
-  // 搜索精选活动数据
-  jingxuanData.forEach((d) => {
-    if (hideExpired && isJingxuanExpired(d)) return;
-    const fullName = d.brandName ? `${d.brandName} ${d.name}` : d.name;
-    if (fullName.toLowerCase().includes(q)) {
-      results.push({ name: fullName, link: d.h5 || '#', img: d.img, tabLabel: '⭐ 精选', tabId: 'jingxuan', sectionTitle: '精选活动' });
-    }
   });
   return results;
 };
@@ -1324,10 +1284,6 @@ const init = async () => {
       hideBtn.setAttribute('aria-pressed', 'true');
     }
   }
-  renderStats();
-  renderTabNav();
-  renderQuickShortcuts();
-  loadJingxuan();
 
   // 支持 URL hash 直接定位，无 hash 时从 localStorage 恢复
   const initialHash = window.location.hash.slice(1);
@@ -1339,6 +1295,11 @@ const init = async () => {
       activeTab = saved;
     }
   }
+
+  renderStats();
+  renderTabNav();
+  renderQuickShortcuts();
+  loadData();
   switchTab(activeTab);
 
   // 添加"最近更新"时间戳
@@ -1353,6 +1314,14 @@ const init = async () => {
 
   // 首次访问引导
   setTimeout(showOnboardingTooltip, 1500);
+
+  // 确保初始加载时，当前 tab 按钮滚动到可视区域（DOM 渲染后执行）
+  requestAnimationFrame(() => {
+    const activeBtn = tabNav.querySelector('.tab-btn.active');
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+  });
 };
 
 init();

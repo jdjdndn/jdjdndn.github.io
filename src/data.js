@@ -15,14 +15,14 @@
 
 // ========== 友情链接 ==========
 export const friendLinks = [
-  // { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u', description: '苏宁易购优惠券', category: '电商平台' },
-  // { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y', description: '当当网图书优惠', category: '电商平台' },
-  // { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发优惠', category: '电商平台' },
-  // { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器优惠', category: '云服务' },
+  // {name:"花店",url:"https://wxmpurl.cn/AOPNUIe3tHa", description:"鲜花预订配送服务，节日礼物生日蛋糕，全国同城速递"},
+  // {name:"fq1",url:"https://www.tszjs2.com/#/register?code=OHOBoxeX"},
+  // {name:"fq2",url:"https://ktmcloud.lol/#/register?code=Zj1JYw95"},
+  // { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u', description: '苏宁易购优惠券' },
+  // { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y', description: '当当网图书优惠' },
+  // { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发优惠' },
+  // { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器优惠'},
   // {name:"优惠券",url:"https://kzurl18.cn/tHj1ww", description:"全网热门优惠券聚合，涵盖外卖、购物、出行等多场景优惠", category:"优惠券平台"},
-  {name:"花店",url:"https://wxmpurl.cn/AOPNUIe3tHa", description:"鲜花预订配送服务，节日礼物生日蛋糕，全国同城速递"},
-  {name:"fq1",url:"https://www.tszjs2.com/#/register?code=OHOBoxeX"},
-  {name:"fq2",url:"https://ktmcloud.lol/#/register?code=Zj1JYw95"},
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/', description: '电商优惠聚合', category: '电商平台' },
   // { name: '京东·淘宝·拼多多', url: 'https://github.com/jdjdndn/jd_tb_pxx', description: '京东淘宝拼多多优惠', category: '电商平台' },
   // { name: '美团优惠聚合', url: 'https://github.com/jdjdndn/meituan_youhuiquan', description: '美团优惠券合集', category: '优惠券平台' },
@@ -31,140 +31,13 @@ export const friendLinks = [
 
 // ========== Tab 数据 ==========
 export const tabs = [
-  // ────────────── 精选活动（数据从 JSON 加载） ──────────────
-  {
-    id: 'jingxuan',
-    label: '⭐ 精选',
-    name: '精选',
-    sections: [],
-  },
-
-  // API 动态数据的 tab 会在 app.js 中从 act-processed.json 加载并插入此处
-];
-
-// 自己收集的官方活动
-export const selfData = [
-  // ────────────── 美团 ──────────────
-  // {
-  //   id: 'meituan',
-  //   label: '🍜 美团',
-  //   name: '美团',
-  //   sections: [
-  //     {
-  //       title: '外卖美食',
-  //       items: [
-  //         { name: '美团外卖节', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰0oNDdiZTcyMDE💰', deadline: '2027.12.31' },
-  //         { name: '吃喝玩乐每日福利', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰2gOWRkZTMwYzc💰', deadline: '2027.3.31' },
-  //         { name: '红包天天领综合会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰43Y2YwOTVkOTA💰', deadline: '2026.12.31' },
-  //         { name: '大牌饮品商品券会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰4wZjZkNzBjNDc💰', deadline: '2028.4.30' },
-  //         { name: '甄选好店优惠专享', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰61Zjc5NzcwMmY💰', deadline: '2026.12.31' },
-  //         { name: '万物享优惠', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰hcNzcyYjZiYTk💰', deadline: '2026.12.31' },
-  //         { name: '超市便利店专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰cgMTI5MmJlOTI💰', deadline: '2026.12.31' },
-  //         { name: '零食天天有优惠', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰kjYmQ5YjA4NGQ💰', deadline: '2026.12.31' },
-  //         { name: '水果会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰g7ODQ1ZmFmMWQ💰', deadline: '2027.3.31' },
-  //         { name: '美团品质会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰raYWYwNWFjY2I💰', deadline: '2026.12.31' },
-  //         { name: '爆款团低至1折', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰v8NTAyNDYxYmI💰', deadline: '2026.12.31' },
-  //       ],
-  //     },
-  //     {
-  //       title: '酒旅出行',
-  //       items: [
-  //         { name: '全国爆款酒店3折起', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰t8YzEyNzRhYjA💰', deadline: '2027.11.3' },
-  //         { name: '大额出行券包', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰grNDRmNTNiYmQ💰', deadline: '2028.3.1' },
-  //         { name: '低价购票畅快启程', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰i8MzZiODg3MWQ💰', deadline: '2028.3.31' },
-  //         { name: '景点门票超值精选', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰l9MTk3YjRjMTE💰', deadline: '2026.12.31' },
-  //         { name: '暑期出游季', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰mcY2U0OGJjZDM💰', deadline: '2026.12.31' },
-  //         { name: '119元起全国酒店任你住', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰44ZmQyMDgxM2Y💰', deadline: '2026.12.31' },
-  //       ],
-  //     },
-  //     {
-  //       title: '健康买药',
-  //       items: [
-  //         { name: '买药享好价', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰87ZTc2MzhjNDU💰', deadline: '2026.12.31' },
-  //         { name: '买药新客会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰qaMTY1MjZiZTc💰', deadline: '2026.12.31' },
-  //         { name: '儿童用药专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰rnMDIwYTAyYmM💰', deadline: '2026.12.31' },
-  //         { name: '仙特明专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰2qZmIyZTM3ZTY💰', deadline: '2026.12.31' },
-  //         { name: '海露专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰0rMWI3YzczOTg💰', deadline: '2026.12.31' },
-  //         { name: '内舒拿专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰oaY2FmNGY1NzM💰', deadline: '2026.12.31' },
-  //         { name: '氯雷他定专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰y7NjQxYTcxZmE💰', deadline: '2026.12.31' },
-  //         { name: '买药成人会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰ujMzZmNGVhYTU💰', deadline: '2026.12.31' },
-  //       ],
-  //     },
-  //     {
-  //       title: '美妆个护',
-  //       items: [
-  //         { name: '美妆综合会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰b4MWUzNDAxNWU💰', deadline: '2026.12.31' },
-  //         { name: '屈臣氏专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰d0MzM1ZWNhZDQ💰', deadline: '2026.12.31' },
-  //         { name: '健康变美品质专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰n6NTFjODM2ODg💰', deadline: '2026.12.31' },
-  //         { name: '玩乐变美一折起', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰qsOTU1MjhjYTE💰', deadline: '2026.12.31' },
-  //       ],
-  //     },
-  //     {
-  //       title: '母婴·生活·数码',
-  //       items: [
-  //         { name: '伊利奶粉专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰wyZDU1MTY5MmE💰', deadline: '2026.12.31' },
-  //         { name: '母婴专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰9jMGQ2NTkzNWM💰', deadline: '2026.12.31' },
-  //         { name: '美团生活服务专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰kxNTI5OTBhMmI💰', deadline: '2026.12.31' },
-  //         { name: '无忧保洁专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰luMjY3MjU4OTg💰', deadline: '2026.12.31' },
-  //         { name: '轻喜到家品牌专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰psZTNjMzkxZmY💰', deadline: '2026.9.30' },
-  //         { name: '天鹅到家品牌专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰vyNjgzMjk4ODg💰', deadline: '2026.9.30' },
-  //         { name: '随心学教育专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰itMTlkY2RlMDk💰', deadline: '2026.12.31' },
-  //         { name: '数码会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰diZTU0NmJjYjA💰', deadline: '2026.12.31' },
-  //         { name: 'TOP TOY专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰fnMmUyY2VmNjE💰', deadline: '2026.12.31' },
-  //         { name: '日百综合会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰mrZjgwNWUxNjM💰', deadline: '2026.12.31' },
-  //         { name: '名创优品专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰voZDdkMDhjMjE💰', deadline: '2026.12.31' },
-  //         { name: '鲜花会场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰jlZjI0MDE0OGM💰', deadline: '2026.12.31' },
-  //       ],
-  //     },
-  //     {
-  //       title: '限时特惠',
-  //       items: [
-  //         { name: '9.9元购360元神券包', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰nkMDBiOTVmZjY💰', deadline: '2026.9.30' },
-  //         { name: '民宿特惠7折起', code: '#小程序://美团丨外卖团购特价美食酒店电影/民宿特惠7折起/09Bdj7vsgb64nCk', deadline: '2026.12.31' },
-  //         { name: '九号温泉品牌专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰ryNTA0Zjc2ZDY💰', deadline: '2026.12.31' },
-  //         { name: '开学季专场', code: '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰l9MjlmNjdhMzY💰', deadline: '2026.9.24' },
-  //       ],
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: "taobaoshangou",
-  //   label: '淘宝闪购',
-  //   name: '淘宝闪购',
-  //   sections: [
-  //     {
-  //       title: "淘宝闪购",
-  //       items:[
-  //     { name: '闪购天天领红包', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021004134685665%2Fpages%2Ftaoke-guide%2Findex%3Ffrom%3Dminiapp.taobao%26channelInfo%3D%7B%22subSubChannel%22%3A%22miniapp.taobao.et%22%7D%26alsc_exsrc%3DES0006299852%26scene%3D8c43025b5bd64e71b0ebca47606ad6fa',deadline: '2032.4.14'},
-  //     { name: '闪购消费日专享，城市大额红包等你抢，叠加更优惠！', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021003183669766%2Fpages%2Fwh-coupon-guide%2Findex%3Ffrom%3Dminiapp.taobao%26channelInfo%3D%7B%22subSubChannel%22%3A%22miniapp.taobao.et%22%7D%26alsc_exsrc%3DES0006299852%26scene%3Dff13be18793241a387453bff04b3133e', deadline: '2026.12.31' },
-  //     { name: '闪购最高领18元红包', code: 'mp://DkIMsAbgHcTEKuC' },
-  //     { name: '闪购新客专享最高20元红包，叠加使用更划算！', link: 'https://lloSK69S0O5.ug.ele.me/wow/alsc/mod/dd84fb45b245f3292e170527?inviterId=9b7db08&channel=3&actId=1&scene=f5ec977ff3d645ad9d02523a0da8e1d0',deadline: '2028.7.31'},
-  //     { name: '闪购品牌日 单单有福利，最高22元，可叠加', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=9249&slk_force_set_request=true&scene=5ca8b0c019de4736a5808aaf3950a266',deadline: '2027.5.13'},
-  //     { name: '零售闪购品牌日，超市好价 即刻送达', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=9249&slk_force_set_request=true&scene=7b5880f900f94640a992e112c1e60965',deadline: '2026.12.31'},
-  //     { name: '闪购夜宵专享会场，每晚8点抢免单红包', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=8706&slk_force_set_request=true&alsc_exsrc=ES0007485972&scene=0620bdbc5178441aa8bf7ec28fd8f6fc',deadline: '2027.1.14' },
-  //     { name: '来闪购一下 可赢免单福利，闪购大额满减红包', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=8339&slk_force_set_request=true&tfPos=h5&alsc_exsrc=ES0007076172&scene=ff7376711fea4d93b579c4ec6aba0e79',deadline: '2028.5.11' },
-  //     { name: '领8元红包，叠加更优惠，买药更省钱！', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021003183669766%2Fpages%2Fwh-coupon-guide%2Findex%3Fscene%3Dbaf73ba7154643d398b8293cbb0dbfc2',deadline: '2027.2.28'},
-  //     { name: '名创优品品牌馆，叠券最高99-65', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=9249&slk_force_set_request=true&scene=2b22a4b4cfef44099d65b9292dd1d99e',deadline:'2026.12.31' },
-  //     { name: '闪购果蔬日日鲜，领专属红包福利', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=9249&slk_force_set_request=true&scene=748268b0d12b4229ac524d5d92d75271',deadline:'2026.12.31' },
-  //     { name: '猫超品牌馆，夏季出游季爆品5折起', link: 'https://tb.ele.me/wow/z/uniapp/1100497/ad-miniapp/et-union/home?wh_weex=true&weex_mode=dom&channelInfo=%7B%22subSubChannel%22%3A%22miniapp.taobao.et%22%7D&alsc_exsrc=ES0007485972&scene=2eff0a5dc8f4491eb842b3c6918b6d1e' ,deadline:'2026.12.31'},
-  //     { name: '近铁商圈', code: 'mp://BDz9UZSBfokxAwh',deadline:'2026.12.31'} ,
-  //     { name: '闪购天天领红包，来闪购 下单抽免单', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021003183669766%2Fpages%2Fwh-coupon-guide%2Findex%3Ffrom%3Dminiapp.taobao%26channelInfo%3D%7B%22subSubChannel%22%3A%22miniapp.taobao.et%22%7D%26alsc_exsrc%3DES0007485972%26scene%3D1e27b4980dfc4265b6dc393cd9145658', deadline: '2027.5.13' },
-  //     { name: '淘宝闪购-爆品好价 爆品9.9元起，全场免运费', link: 'https://market.m.taobao.com/app/starlink/wakeup-transit/pages/download?star_id=8706&slk_force_set_request=true&alsc_exsrc=ES0008124452&scene=9202534329974f2aaf36208c8c3bd461',deadline:'2027.9.30'} ,
-  //     { name: '淘宝闪购-领最高15元大红包', link: 'https://render.alipay.com/p/s/i/?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D2021005151656223%26page%3D%252Fpages%252Findex%252Findex%26query%3DchannelInfo%253D%25257B%252522channel%252522%25253A%252522mini_app%252522%25252C%252522subChannel%252522%25253A%252522miniapp.alipay%252522%25252C%252522subSubChannel%252522%25253A%252522miniapp.alipay.et%252522%25257D%2526alsc_exsrc%253DES0007265508%2526scene%253D9c1b8c64364e4bac85227067e9d319b4',deadline:'2028.5.31'} ,
-  //     { name: '领券省更多 评价赢现金 叠加红包 优评返现', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021004134685665%2Fpages%2Fcompose-reduce-guide%2Findex%3 -Fscene%3D4df2be751471483a95ff58b0dd6f9df4',deadline:'2030.4.3'},
-  //     { name: '评价有礼单单返(淘天版) 下单写优评高额返现页面商户下单，评价再返现', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021003183669766%2Fpages%2Fcomment-poliely-guide%2Findex%3Fscene%3D552c2d91e92e431097bb7c03d34279e4',deadline:'2026.12.31'} ,
-  //     { name: '品牌好物抢5-10元叠加红包，限时抢购正当时！', code: 'mp://RsWmDT1EWP8pzzs',deadline:'2033.6.30'} ,
-  //     { name: '零售会场 一键领零售红包零售红包聚合会场，一键全领取', link: 'https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021004134685665%2Fpages%2Fbdlm-ls-guide%2Findex%3FconfigKey%3DPAGE_TAOBAO_RETAIL%26scene%3D917b19c60eb54693bd1249c7e5208f44',deadline:'2028.12.31'} ,
-  //   ]
-  //     }
-  //   ]
-  // },
 
   // ────────────── 电商 ──────────────
   {
     id: 'ecommerce',
     label: '🛒 电商',
     name: '电商',
+    hasSubTabs: true,
     cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23FF8F5E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='80' height='80' rx='16' fill='url(%23g)'/%3E%3Cpath d='M24 28h4l4 20h16l4-14H32' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='34' cy='54' r='2.5' fill='white'/%3E%3Ccircle cx='48' cy='54' r='2.5' fill='white'/%3E%3C/svg%3E",
     sections: [
       {
@@ -211,17 +84,25 @@ export const selfData = [
           { name: '今日爆款推荐', link: 'https://mobile.yangkeduo.com/duo_today_burst.html?pid=40353314_284993965&cpsSign=CM_260908_40353314_284993965_cd9f0c56fa9affae067d07e91b6af9cd&_x_ddjb_act=%7B%22st%22%3A%223%22%7D&duoduo_type=2' },
         ],
       },
+      {
+        title: '购物',
+        items: [
+          { name: '苏宁易购', link: 'https://tb.jiuxinban.com/CK1W4u', description: '苏宁易购' },
+          { name: '当当网', link: 'https://tb.jiuxinban.com/CK1W9y', description: '当当网图' },
+          { name: '1688', link: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发' },],
+      },
     ],
   },
 
-  // ────────────── 酒店旅游 ──────────────
+  // ────────────── 出行 ──────────────
   {
-    id:'xiecheng_travel',
-    label: '🏨 携程旅行',
-    name: '携程旅行',
+    id: 'travel',
+    label: '✈️ 出行',
+    name: '出行',
+    hasSubTabs: true,
     sections: [
       {
-        title: '携程旅行',
+        title: '携程',
         items: [
           { name: '携程老友会，0购物0自费，100%严选安心服务！', link: 'https://t.ctrip.cn/xbFv7H5' },
           { name: '携程酒店，支持全球酒店预订！', link: 'https://t.ctrip.cn/pVufKgm' },
@@ -243,46 +124,23 @@ export const selfData = [
           // { name: '1V1定制|在线比价|代订资源|行程无忧，定制师免费出行程方案，定制您的专属旅程', link: 'https://t.ctrip.cn/wwvOZ2x' },
         ],
       },
-    ],
-  },
-  {
-    id:'tongcheng_travel',
-    label: '🏨 同程旅行',
-    name: '同程旅行',
-    sections: [
       {
-        title: '同程旅行',
+        title: '同程',
         items: [
-        { name: '同程酒店，让每段旅程，都邂逅家的温暖与美好', link: 'https://s.ly.com/Hsx2zm6eB' },
-        { name: '国际酒店预订就选同程，让环球之旅，每一站都拥抱家的温馨与奢华', link: 'https://s.ly.com/6wnK8q6tS' },
-        { name: '跨越传统观演界限，尊享顶级赛事殿堂级沉浸式盛宴', link: 'https://s.ly.com/2wAB8q6CJ' },
-        { name: '【一张门票，开启无限精彩!】这不仅是入场凭证，更是通往奇妙世界的钥匙', link: 'https://s.ly.com/2wGM8q6IU' },
-        { name: '预订民宿就上同程。让每一场奔赴，都有归家的温度', link: 'https://s.ly.com/vwbL8q6GT' },
-        { name: '🛫同程旅行，让你便宜到爆炸的国内机票和酒店一键搞定！', link: 'https://s.ly.com/bw2N8q6dV' },
-        { name: '🌍 想要游全球？同程旅行一键搞定！价实惠，省心到爆炸！', link: 'https://s.ly.com/Qt1lrn6RM' },
-        { name: '🚄极速抢票神器，同程旅行承包你的火车出行！', link: 'https://s.ly.com/xscLym6Jj' },
-        { name: '周末微度假神器，1小时直达山海湖林！不用抢票、不用纠结，轻松上车出发！', link: 'https://s.ly.com/jsHMym60k' },
-        // { name: '23元打车券免费送', link: 'https://s.ly.com/BuPBwo6q7' },
-      ],
+          { name: '同程酒店，让每段旅程，都邂逅家的温暖与美好', link: 'https://s.ly.com/Hsx2zm6eB' },
+          { name: '国际酒店预订就选同程，让环球之旅，每一站都拥抱家的温馨与奢华', link: 'https://s.ly.com/6wnK8q6tS' },
+          { name: '跨越传统观演界限，尊享顶级赛事殿堂级沉浸式盛宴', link: 'https://s.ly.com/2wAB8q6CJ' },
+          { name: '【一张门票，开启无限精彩!】这不仅是入场凭证，更是通往奇妙世界的钥匙', link: 'https://s.ly.com/2wGM8q6IU' },
+          { name: '预订民宿就上同程。让每一场奔赴，都有归家的温度', link: 'https://s.ly.com/vwbL8q6GT' },
+          { name: '🛫同程旅行，让你便宜到爆炸的国内机票和酒店一键搞定！', link: 'https://s.ly.com/bw2N8q6dV' },
+          { name: '🌍 想要游全球？同程旅行一键搞定！价实惠，省心到爆炸！', link: 'https://s.ly.com/Qt1lrn6RM' },
+          { name: '🚄极速抢票神器，同程旅行承包你的火车出行！', link: 'https://s.ly.com/xscLym6Jj' },
+          { name: '周末微度假神器，1小时直达山海湖林！不用抢票、不用纠结，轻松上车出发！', link: 'https://s.ly.com/jsHMym60k' },
+        ],
       },
-    ],
-  },
-  {
-    id: 'feizhu_travel',
-    label: '🏨 飞猪出行',
-    name: '飞猪出行',
-    sections: [
       {
-        title: '飞猪出行',
+        title: '飞猪',
         items: [
-          // { name: '办签证上飞猪，立减30元', link: 'https://a.feizhu.com/2qn6vC' },
-          // { name: '飞猪酒店热门精选、天天特惠', link: 'https://a.feizhu.com/3q16xL' },
-          // { name: '底价抢先订，领券下单低至3折起', link: 'https://a.feizhu.com/3lT77o' },
-          // { name: '飞猪酒店天天特惠，最高立减150元，订房6折起', link: 'https://a.feizhu.com/2QUOyd' },
-          // { name: '领政府文旅补贴，单笔最高立减600元', link: 'https://a.feizhu.com/3WFJeq' },
-          // { name: '88会员更优惠，大牌酒店85折起', link: 'https://a.feizhu.com/3q16xL' },
-          // { name: '飞猪特价门票，低至5折起', link: 'https://kurl06.cn/txhh54' },
-          // { name: '飞猪机票活动，不止5折', link: 'https://a.feizhu.com/3tKMcE' },
           { name: '全网严选高星酒店 好房5折起', link: 'https://s.click.taobao.com/t?union_lens=lensId%3APUB%401789274783%400b52291f_0db6_1a099167e2b_4079%4001%40eyJmbG9vcklkIjozODg1Miiwiic3BtQiiI6Il9wb3J0YWxfdjJfcGFnZXNfYWN0aXZpdHlfb2ZmaWNpYWxfaW5kZXhfaHRtIn0ie%3BeventPageId%3A20150318020027618&e=m%3D2%26s%3Dxfo%2FALaM3olw4vFB6t2Z2iperVdZeJviv2laukthwYhnX1vWUft3ZbmzyRzShjps4b70r0fAnWdJ97zhtcSo6svPGLvBbfpKdx2L%2BhbrtHcAuD%2BepaUWbEF9QWNxdP%2F5qwgOWsQKa%2FjqVN6yUKh2837uq6sLYIqu0Q7QOybCaQxAFEHVckI7b5WH5moke253sYkY97mnO%2Fh4RX4z5YTqZ1dlc7ZjpFf6Hoa1Sr%2BxpXHRTitSXl54eV7VDiGWf5QXa4uMo5ttScj%2BmCgdowa4Jv3rXByHKCv5HjLzd%2FE%2BWVu%2B9nzZvOpT%2BEflLgrqP3hzRQBRwtGMduuAvxOfb3g%2BHSAmPO7PYxf4AQSUYEc3jX7L6V3pkWat61%2B2hPcX8rJGGtuiaMlJYk830GxxTiTbYZCRsY%2F8NVZaCJJHHcCf3Drup5TKVZzpNJfdzDItOUCGwBd29%2FS66hFhCHeAi4Yh%2FgivBTXkaMvFli%2BMV9FnYUEmvPRXnfm9BLTy7ksugmhNKYf5CNjlTlF%2FFq65eHHhxnoZRKchLMlAxiXvDf8DaRs%3D',deadline:'2126.8.31' },
           { name: '淘端酒店会场', link: 'https://s.click.taobao.com/t?union_lens=lensId%3APUB%401789274859%4021674880_0d10_1a09917a6bf_60f7%4001%40eyJmbG9vcklkIjozODg1Miiwiic3BtQiiI6Il9wb3J0YWxfdjJfcGFnZXNfYWN0aXZpdHlfb2ZmaWNpYWxfaW5kZXhfaHRtIn0ie%3BeventPageId%3A20150318020027075&e=m%3D2%26s%3Do23AO1EwSSZw4vFB6t2Z2iperVdZeJviv2laukthwYhnX1vWUft3ZbmzyRzShjpsUpL65%2Fulk1VJ97zhtcSo6svPGLvBbfpKdx2L%2BhbrtHcAuD%2BepaUWbEF9QWNxdP%2F5qwgOWsQKa%2FjqVN6yUKh2837uq6sLYIqu0Q7QOybCaQxAFEHVckI7b9XSpRlaJaElaJe2Xd4pkBlyeNAoQluSajK%2FmpnItMR0oVa05xHttSU4XWtTRmgWnCCW5iAZOzgO56oz2h0JSXizrmiLf7vt2sZ62EHkJNZyNmbPeXlRkt2IEi4Qw1bCnZbfieIyIblOkh5%2FZgU7Pi6MFy0Uq%2BYsHAz7tdk4Ep22bX4w261Uyx3Y4unVkj49ueMcgpR1lXsufAhn03tPGrBEepAKOhfA9107%2F%2BfNFtbp%2FgZb8yaXh5STnJpwZznOOk19MMaham4iZ9AQkrCl3Q8%3D',deadline:'2126.12.31' },
           { name: '闪购特价酒店', link: 'https://s.click.taobao.com/t?union_lens=lensId%3APUB%401789274910%402166e047_1ae5_1a099187046_dd80%4001%40eyJmbG9vcklkIjozODg1Miiwiic3BtQiiI6Il9wb3J0YWxfdjJfcGFnZXNfYWN0aXZpdHlfb2ZmaWNpYWxfaW5kZXhfaHRtIn0ie%3BeventPageId%3A20150318020027074&e=m%3D2%26s%3DCzikrw7lv45w4vFB6t2Z2iperVdZeJviv2laukthwYhnX1vWUft3ZbmzyRzShjpsoJg2KvmoHmRJ97zhtcSo6svPGLvBbfpKdx2L%2BhbrtHcAuD%2BepaUWbEF9QWNxdP%2F5qwgOWsQKa%2FjqVN6yUKh2837uq6sLYIqu0Q7QOybCaQxAFEHVckI7b9XSpRlaJaElaJe2Xd4pkBlyeNAoQluSajK%2FmpnItMR0oVa05xHttSXTLOyX%2FAe9j6ZWg0DGwHSg7CzvptU%2B4ylZUntLJ%2B0PpxP3td72NHg9ErgNfAAXwUuID4dlaW73E%2FD8DpA%2BLpWXIqhj7dEOncVEOBbYZfcU971fDuQUfY9mKaNhph4aLh5%2FlzILFlmmleJnNi%2F7od8hNcwDbqGDeU3Dk9vFOQ3Ms1IMG9TIFQq2ZIFcHD4VkUk30GxxTiTbYQehqAEVMyutO40KHY7b8Bbup5TKVZzpNJfdzDItOUCG5opYXspgnEFhCHeAi4Yh%2Fk6NLZZdIw5CZJ2jiexVoYH0%2FSojh29GRQsLREpU%2FmU5OwlCXpgyLnS7jk3t3Uq8T1Kc%2FJqEq3%2FyxiXvDf8DaRs%3D', deadline: '2126.12.31' },
@@ -298,71 +156,9 @@ export const selfData = [
     ],
   },
 
-  // ────────────── 出行 ──────────────
-  // {
-  //   id:'didi_ride',
-  //   label: '🚗 滴滴出行',
-  //   name: '滴滴出行',
-  //   sections: [
-  //     {
-  //       title: '滴滴出行',
-  //       items: [
-  //         { name: '滴滴酒店，最高可领200元抵扣券', link: 'https://kurl08.cn/txR5Jg' },
-  //         { name: '南航机票立减券：满600元减20元', link: 'https://kurl07.cn/txR5Cx' },
-  //         { name: '网约车用户可领取8折打车券，单笔最高抵扣10元', link: 'https://kurl06.cn/txRKjA' },
-  //         { name: '网约车、顺风车、代驾优惠券', link: 'https://kzurl18.cn/txy3Fv' },
-  //         { name: '滴滴打车红包天天领', link: 'https://kurl07.cn/txRW89' },
-  //         { name: '每日领网约车&代驾大额红包', link: 'https://kurl07.cn/txRWhB' },
-  //         { name: '滴滴代驾最高可领20元立减券', link: 'https://v.didi.cn/qvJwjMz?source_id=179175jutuikeh5mall&ref_from=dunion' },
-  //       ],
-  //     },
-  //   ],
-  // },
-  // {
-  //   id:'huaxiaozhu_ride',
-  //   label: '🚗 花小猪出行',
-  //   name: '花小猪出行',
-  //   sections: [
-  //     {
-  //       title: '花小猪出行',
-  //       items: [
-  //         { name: '最高领128元优惠券包', link: 'https://kzurl18.cn/txRKXA' },
-  //         { name: '新客最高可领100元券包', link: 'https://kurl07.cn/txRWeE' },
-  //         { name: '老客最高可领100元券包', link: 'https://kurl04.cn/txRWyX' },
-  //       ],
-  //     },
-  //   ],
-  // },
-  // 连锁餐饮
-  // {
-  //   id: 'dinner',
-  //   label: '🎯 连锁餐饮',
-  //   name: '连锁餐饮',
-  //   sections: [
-  //     {
-  //       title: '连锁餐饮',
-  //       items: [
-  //         { name: '大牌餐券', link: 'https://kurl07.cn/tufFcx' },
-  //         { name: '肯德基在线点餐1', link: 'https://kurl05.cn/txN4UZ' },
-  //         { name: '肯德基在线点餐2', link: 'https://kzurl18.cn/txNOus' },
-  //         { name: '肯德基在线点餐3', link: 'https://kurl05.cn/txNOsP' },
-  //         { name: '瑞幸咖啡', link: 'https://kurl08.cn/txNOcx' },
-  //         { name: '库迪咖啡', link: 'https://kurl04.cn/txhRZ8' },
-  //         { name: '奈雪的茶', link: 'https://kurl05.cn/txNOMF' },
-  //         { name: '星巴克', link: 'https://kurl07.cn/txNOiV' },
-  //         { name: '必胜客', link: 'https://kurl08.cn/txNOBN' },
-  //         { name: '百果园', link: 'https://kurl04.cn/txNOfM' },
-  //         { name: '喜茶', link: 'https://kurl08.cn/txNOpk' },
-  //         { name: '汉堡王', link: 'https://kurl04.cn/txNOYh' },
-  //         { name: '华莱士', link: 'https://kurl06.cn/txNOPg' },
-  //       ],
-  //     },
-  //   ],
-  // },
-
   // ────────────── 生活 ──────────────
   {
-    id: 'life',
+    id: 'dianying',
     label: '🎯 电影票',
     name: '电影票',
     sections: [
@@ -370,11 +166,51 @@ export const selfData = [
         title: '电影票',
         items: [
           // { name: '电影票在线预订1', link: 'https://kurl04.cn/txh9iy' },
-          { name: '电影票在线预订2', code: 'weixin://dl/business/?t=f6MDcoTPZpe' },
+          { name: '电影票在线预订', code: 'weixin://dl/business/?t=f6MDcoTPZpe' },
           // { name: '寄件享4折起优惠，低至5元寄快递', link: 'https://kurl06.cn/txh9El' },
           // {name:"优惠券",link:"https://kzurl18.cn/tHj1ww"}
         ],
       },
     ],
   },
+  {
+    id: 'huadian',
+    label: '🎯 花店',
+    name: '花店',
+    sections: [
+      {
+        title: '花店',
+        items: [
+          { name: '花店', link: 'https://wxmpurl.cn/AOPNUIe3tHa', description: '鲜花预订' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'yunfuwu',
+    label: '🎯 云服务',
+    name: '云服务',
+    sections: [
+      {
+        title: '云服务',
+        items: [
+          { name: '腾讯云', link: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器' },
+        ],
+      },
+    ],
+  },
+  // {
+  //   id: 'teshu',
+  //   label: '🎯 VPN',
+  //   name: 'VPN',
+  //   sections: [
+  //     {
+  //       title: 'VPN',
+  //       items: [
+  //         { name: 'vpn', link: 'https://www.tszjs2.com/#/register?code=OHOBoxeX' },
+  //         { name: 'vpn', link: 'https://ktmcloud.lol/#/register?code=Zj1JYw95' },
+  //       ],
+  //     },
+  //   ],
+  // },
 ]

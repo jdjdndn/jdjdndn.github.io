@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="google" content="notranslate" />
 
     <!-- SEO -->
     <title>连锁餐饮优惠 — 肯德基·瑞幸·星巴克·必胜客 | 优惠活动聚合</title>
@@ -12,6 +13,7 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#FF6B35" />
     <link rel="canonical" href="https://jdjdndn.github.io/liansuocanyin.html" />
+    <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/liansuocanyin.html" />
     <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/liansuocanyin.html" />
 
@@ -46,11 +48,43 @@
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website",
         "name": "优惠活动聚合"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".hero h1, .hero p"]
       }
     }
     </script>
 
     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".faq-question", ".faq-answer"]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "收录了哪些连锁餐饮品牌？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本站收录了肯德基、瑞幸咖啡、库迪咖啡、奈雪的茶、星巴克、必胜客、喜茶、汉堡王等大牌连锁餐饮品牌的优惠券。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "餐饮优惠券怎么使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "复制口令码或点击链接，跳转到对应App领取优惠券，到店消费时出示使用。"
+          }
+        }
+      ]
+    }
+    </script>
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
