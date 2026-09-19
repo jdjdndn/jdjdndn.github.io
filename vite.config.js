@@ -186,6 +186,13 @@ export default defineConfig({
       },
     },
     {
+      name: 'cache-control-meta',
+      transformIndexHtml(html) {
+        const meta = '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />';
+        return html.replace('<head>', `<head>\n    ${meta}`);
+      },
+    },
+    {
       name: 'seo-preload',
       transformIndexHtml(html) {
         // 在 </head> 前注入 preload，加速首屏渲染

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coupon-v2';
+const CACHE_NAME = 'coupon-v3';
 const PRECACHE = ['./', './index.html'];
 
 // 安装：预缓存核心文件
@@ -10,26 +10,35 @@ self.addEventListener('install', (e) => {
   );
 });
 
-// 请求拦截：缓存优先，网络兜底
+// 请求拦截：导航请求网络优先，静态资源缓存优先
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
 
+  // 导航请求（HTML 页面）：网络优先，失败时回退缓存
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).then((res) => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request).then((cached) => cached || caches.match('./index.html'))),
+    );
+    return;
+  }
+
+  // 静态资源（JS/CSS/图片）：缓存优先，无缓存时网络获取
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;
 
       return fetch(e.request).then((res) => {
-        // 只缓存同源成功请求
         if (!res || res.status !== 200 || res.type !== 'basic') return res;
 
         const clone = res.clone();
         caches.open(CACHE_NAME).then((c) => c.put(e.request, clone));
         return res;
-      }).catch(() => {
-        // 离线时导航请求返回首页
-        if (e.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
       });
     }),
   );
