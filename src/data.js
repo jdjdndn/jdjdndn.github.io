@@ -201,14 +201,14 @@ export const tabs = [
   },
   // {
   //   id: 'teshu',
-  //   label: '🎯 VPN',
-  //   name: 'VPN',
+  //   label: '🎯 特殊',
+  //   name: '特殊',
   //   sections: [
   //     {
-  //       title: 'VPN',
+  //       title: '特殊',
   //       items: [
-  //         { name: 'vpn', link: 'https://www.tszjs2.com/#/register?code=OHOBoxeX' },
-  //         { name: 'vpn', link: 'https://ktmcloud.lol/#/register?code=Zj1JYw95' },
+  //         { name: '特殊', link: 'https://www.tszjs2.com/#/register?code=OHOBoxeX' },
+  //         { name: '特殊', link: 'https://ktmcloud.lol/#/register?code=Zj1JYw95' },
   //       ],
   //     },
   //   ],
