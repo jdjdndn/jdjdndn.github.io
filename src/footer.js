@@ -39,32 +39,23 @@ const initFooter = () => {
   });
   footer.appendChild(navBar);
 
-  // 侧边导航栏（桌面端）— 作为 #app 的兄弟元素，通过 flex 容器一起居中
-  const sideBar = document.createElement('nav');
-  sideBar.className = 'side-nav';
-  sideBar.setAttribute('aria-label', '侧边导航');
-  sideBar.innerHTML = navItems.map((item) => {
-    const active = page === item.id ? ' class="active" aria-current="page"' : '';
-    return `<a href="${item.href}"${active} title="${item.label}">${item.icon}<span>${item.label}</span></a>`;
-  }).join('');
-  // 当前页链接不跳转，避免整页刷新
-  sideBar.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    const target = href.split('/').pop();
-    if (target === page) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-  const app = $('#app');
-  if (app) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'app-wrapper';
-    app.parentNode.insertBefore(wrapper, app);
-    wrapper.appendChild(sideBar);
-    wrapper.appendChild(app);
+  // 侧边导航栏（桌面端）— 填充 HTML 中预置的 #side-nav 容器
+  const sideNav = $('#side-nav');
+  if (sideNav) {
+    sideNav.innerHTML = navItems.map((item) => {
+      const active = page === item.id ? ' class="active" aria-current="page"' : '';
+      return `<a href="${item.href}"${active} title="${item.label}">${item.icon}<span>${item.label}</span></a>`;
+    }).join('');
+    sideNav.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      const target = href.split('/').pop();
+      if (target === page) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
   }
 };
 
