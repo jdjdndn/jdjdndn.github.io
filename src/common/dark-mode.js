@@ -21,10 +21,33 @@ if (darkToggle) {
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDark);
     updateDarkToggleText();
+    updateIframeDarkToggleText();
     // 可选 analytics 回调：页面设置 window.__darkModeOnToggle(isDark) 即可
     if (typeof window.__darkModeOnToggle === 'function') window.__darkModeOnToggle(isDark);
     setTimeout(() => document.body.classList.remove('dark-mode-transition'), 400);
   });
 }
 
-export { updateDarkToggleText };
+// iframe 页面专用暗色切换（移动端 hero 被隐藏时使用）
+const updateIframeDarkToggleText = () => {
+  const textEl = document.getElementById('iframe-dark-toggle-text');
+  if (textEl) textEl.textContent = document.body.classList.contains('dark-mode') ? '亮色' : '暗色';
+};
+updateIframeDarkToggleText();
+
+const iframeDarkToggle = document.getElementById('iframe-dark-toggle');
+if (iframeDarkToggle) {
+  iframeDarkToggle.addEventListener('click', () => {
+    document.body.classList.add('dark-mode-transition');
+    document.body.classList.toggle('dark-mode');
+    document.documentElement.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    updateDarkToggleText();
+    updateIframeDarkToggleText();
+    if (typeof window.__darkModeOnToggle === 'function') window.__darkModeOnToggle(isDark);
+    setTimeout(() => document.body.classList.remove('dark-mode-transition'), 400);
+  });
+}
+
+export { updateDarkToggleText, updateIframeDarkToggleText };
