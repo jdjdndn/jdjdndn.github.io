@@ -39,8 +39,8 @@ export const renderCodeCard = (item, query) => {
   return `
   <div class="activity-card card-code-style${expiredClass}${expiringClass}" role="article" aria-label="${item.name}" style="--card-gradient: linear-gradient(135deg, hsl(${hue1}, 75%, 94%), hsl(${hue2}, 65%, 90%)); --card-accent: hsl(${hue1}, 65%, 45%);">
     <div class="card-gradient-bar"></div>
-    <div class="card-icon-badge">${icon}</div>
     <div class="card-head">
+      <span class="card-icon-badge">${icon}</span>
       <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
       <div class="card-badges">
         ${isMiniApp ? '<span class="miniapp-tag">小程序</span>' : ''}
@@ -91,8 +91,8 @@ export const renderLinkCard = (item, query) => {
   return `
   <div class="activity-card card-link-style${expiredClass}${expiringClass}" role="article" aria-label="${item.name}" style="--card-gradient: linear-gradient(135deg, hsl(${hue1}, 80%, 95%), hsl(${hue2}, 70%, 92%)); --card-accent: hsl(${hue1}, 70%, 50%);">
     <div class="card-gradient-bar"></div>
-    <div class="card-icon-badge">${icon}</div>
     <div class="card-head">
+      <span class="card-icon-badge">${icon}</span>
       <span class="card-name"${query ? ' data-highlight' : ''}>${displayName}</span>
       <div class="card-badges">
         ${badges}
