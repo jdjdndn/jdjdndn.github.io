@@ -19,6 +19,14 @@ export const wifiLinks = [
     priceRange: '39元/月起',
   },
   {
+    name: '格行随身WiFi',
+    url: 'http://2.0.gexing.cn/m/shopList?userId=27519',
+    description: '格行随身WiFi，移动上网便携解决方案，出差旅行必备。信号稳定、资费实惠，支持多设备同时连接。',
+    tags: ['便携上网', '出差旅行', '多设备'],
+    badge: '热门',
+    priceRange: '59元/月起',
+  },
+  {
     name: '超能犇随身WiFi 充电宝款',
     url: 'https://h5.lianhengkj.com/#/pages/agentMoudle/goods/goods-info?a=744a27823582798b6deb22acf781964f4e73c1e346a28065',
     description: '充电宝+WiFi二合一，三网切换，出门不用带两个设备。适合短途出行和应急使用。',
@@ -51,5 +59,6 @@ export const wifiLinks = [
 
 export const wifiProxyLinks = [
   {name: '飞利猫随身WiFi代理', url: 'https://sales.feilimao.cn/#/register_choose/9cd45bdffaa18d79'},
+  {name: '格行随身WiFi代理', url: 'http://2.0.gexing.cn/m/Addkh?id=27519'},
   {name: '超能犇随身WiFi代理', url: 'https://h5.lianhengkj.com/#/pages/agentMoudle/register/register?code=63709258'},
 ]
