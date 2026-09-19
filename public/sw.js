@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coupon-v3';
+const CACHE_NAME = 'coupon-v4';
 const PRECACHE = ['./', './index.html'];
 
 // 安装：预缓存核心文件
@@ -13,6 +13,22 @@ self.addEventListener('install', (e) => {
 // 请求拦截：导航请求网络优先，静态资源缓存优先
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
+
+  // iframe 外部链接：缓存优先，避免每次导航回首页重新请求
+  if (e.request.url.includes('kzurl18.cn')) {
+    e.respondWith(
+      caches.match(e.request).then((cached) => {
+        return cached || fetch(e.request).then((res) => {
+          if (res && (res.status === 200 || res.type === 'opaque')) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(e.request, clone));
+          }
+          return res;
+        });
+      }),
+    );
+    return;
+  }
 
   // 导航请求（HTML 页面）：网络优先，失败时回退缓存
   if (e.request.mode === 'navigate') {
