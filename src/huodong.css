@@ -152,6 +152,7 @@
   position: relative;
   max-width: 100%;
   margin: 0;
+  z-index: 2;
 }
 .search-input {
   position: relative;
@@ -316,7 +317,16 @@ body.dark-mode .quick-shortcut[data-color="purple"] .quick-shortcut-icon { backg
 }
 .tab-nav.is-stuck {
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  margin-bottom: 0;
+  border-radius: 0;
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
+.dark-mode .tab-nav.is-stuck {
+  background: var(--bg-secondary);
+}
+
 
 .tab-btn {
   flex: 0 0 auto;
@@ -399,6 +409,14 @@ body.dark-mode .quick-shortcut[data-color="purple"] .quick-shortcut-icon { backg
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--sub-tab-top, 0px);
+  z-index: 49;
+  background: var(--card);
+}
+.dark-mode .sub-tab-nav {
+  background: var(--bg-secondary);
 }
 .sub-tab-nav::-webkit-scrollbar {
   display: none;

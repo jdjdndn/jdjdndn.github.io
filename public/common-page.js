@@ -32,8 +32,10 @@
     '<link rel="stylesheet" href="' + CSS_URL + '">' +
     '<div class="cp-wrap">' +
       '<div class="cp-loading">' +
-        '<div class="cp-spinner"></div>' +
-        '<span>加载中…</span>' +
+        '<div class="cp-dots"><i></i><i></i><i></i></div>' +
+        '<span class="cp-loading-text">正在加载页面</span>' +
+        '<span class="cp-loading-time"></span>' +
+        '<div class="cp-progress"><div class="cp-progress-bar"></div></div>' +
       '</div>' +
       '<iframe class="cp-iframe" allowfullscreen loading="lazy"></iframe>' +
       '<div class="cp-error cp-hidden">' +
@@ -42,13 +44,15 @@
       '</div>' +
     '</div>';
 
-  var FAIL_TIMEOUT = 15000;
+  var FAIL_TIMEOUT = 60000;
 
   class CommonPage extends HTMLElement {
     constructor() {
       super();
       this._loaded = false;
       this._failTimer = null;
+      this._tickTimer = null;
+      this._loadStartTime = 0;
       this._onMessage = this._handleMessage.bind(this);
     }
 
@@ -65,6 +69,7 @@
       this._wrap = shadow.querySelector('.cp-wrap');
       this._iframe = shadow.querySelector('.cp-iframe');
       this._loading = shadow.querySelector('.cp-loading');
+      this._loadingTime = shadow.querySelector('.cp-loading-time');
       this._error = shadow.querySelector('.cp-error');
       this._retryBtn = shadow.querySelector('.cp-btn-retry');
 
@@ -77,6 +82,7 @@
     disconnectedCallback() {
       window.removeEventListener('message', this._onMessage);
       if (this._failTimer) clearTimeout(this._failTimer);
+      if (this._tickTimer) clearInterval(this._tickTimer);
     }
 
     attributeChangedCallback() {
@@ -115,6 +121,7 @@
       }
 
       this._iframe.src = src;
+      this._startLoadTimer();
 
       this._failTimer = setTimeout(function () {
         if (!_this._loaded) _this._showError();
@@ -124,18 +131,21 @@
         if (!_this._iframe.src || _this._iframe.src === 'about:blank') return;
         _this._loaded = true;
         if (_this._failTimer) clearTimeout(_this._failTimer);
+        _this._stopLoadTimer();
         _this._loading.classList.add('fade-out');
         setTimeout(function () { _this._loading.style.display = 'none'; }, 300);
       });
 
       this._iframe.addEventListener('error', function () {
         if (_this._failTimer) clearTimeout(_this._failTimer);
+        _this._stopLoadTimer();
         _this._showError();
       });
     }
 
     _reload(src) {
       if (this._failTimer) clearTimeout(this._failTimer);
+      this._stopLoadTimer();
       this._loaded = false;
       this._loading.style.display = '';
       this._loading.classList.remove('fade-out');
@@ -148,10 +158,30 @@
 
       var _this = this;
       this._iframe.src = src;
+      this._startLoadTimer();
 
       this._failTimer = setTimeout(function () {
         if (!_this._loaded) _this._showError();
       }, FAIL_TIMEOUT);
+    }
+
+    _startLoadTimer() {
+      var _this = this;
+      this._loadStartTime = Date.now();
+      if (this._loadingTime) this._loadingTime.textContent = '';
+      this._tickTimer = setInterval(function () {
+        if (_this._loadingTime) {
+          var sec = Math.floor((Date.now() - _this._loadStartTime) / 1000);
+          _this._loadingTime.textContent = sec + 's';
+        }
+      }, 1000);
+    }
+
+    _stopLoadTimer() {
+      if (this._tickTimer) {
+        clearInterval(this._tickTimer);
+        this._tickTimer = null;
+      }
     }
 
     _showError() {

@@ -40,12 +40,28 @@ const initNetworkStatus = () => {
 
   let hideTimer = null;
   const showBanner = (type, msg) => {
+    clearTimeout(hideTimer);
     banner.className = `network-banner ${type}`;
     banner.textContent = msg;
-    requestAnimationFrame(() => banner.classList.add('visible'));
-    clearTimeout(hideTimer);
+    // 先隐藏，确保 display:block 生效后再加 visible 触发过渡
+    banner.style.visibility = 'hidden';
+    banner.style.pointerEvents = 'none';
+    requestAnimationFrame(() => {
+      banner.style.visibility = 'visible';
+      banner.classList.add('visible');
+    });
     if (type === 'online') {
-      hideTimer = setTimeout(() => banner.classList.remove('visible'), 3000);
+      hideTimer = setTimeout(() => {
+        banner.classList.remove('visible');
+        // 过渡结束后彻底隐藏，避免残留在文档流
+        banner.addEventListener('transitionend', function handler() {
+          banner.removeEventListener('transitionend', handler);
+          banner.style.visibility = 'hidden';
+          banner.style.pointerEvents = 'none';
+        });
+      }, 3000);
+    } else {
+      banner.style.pointerEvents = 'auto';
     }
   };
 
@@ -301,18 +317,52 @@ if (typeof ResizeObserver !== 'undefined') {
   alignTabRows();
 }
 
-// ========== Tab 导航吸顶检测 ==========
-if (typeof IntersectionObserver !== 'undefined') {
-  const sentinel = document.createElement('div');
-  sentinel.style.height = '1px';
-  sentinel.style.position = 'absolute';
-  sentinel.style.top = '-1px';
-  sentinel.style.visibility = 'hidden';
-  tabNav.parentNode.insertBefore(sentinel, tabNav);
-  new IntersectionObserver(([entry]) => {
-    tabNav.classList.toggle('is-stuck', !entry.isIntersecting);
-  }).observe(sentinel);
+// ========== 二级Tab吸顶定位 ==========
+const applySubTabTop = () => {
+  const subTabNav = document.querySelector('.sub-tab-nav');
+  if (!subTabNav) return;
+  const isMobile = window.innerWidth < 1024;
+  const safeTop = isMobile
+    ? parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--safe-area-inset-top')) || 0
+    : 0;
+  subTabNav.style.setProperty('--sub-tab-top', `${tabNav.offsetHeight + safeTop}px`);
+};
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(applySubTabTop).observe(tabNav);
 }
+// 监听 tab-content 子节点变化，二级 tab 动态插入时立即定位
+const tabContentEl = document.getElementById('tab-content');
+if (tabContentEl && typeof MutationObserver !== 'undefined') {
+  new MutationObserver(applySubTabTop).observe(tabContentEl, { childList: true, subtree: true });
+}
+
+// ========== Tab 导航吸顶检测 ==========
+const updateTabStuck = () => {
+  const rect = tabNav.getBoundingClientRect();
+  const threshold = window.innerWidth < 1024
+    ? (parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--safe-area-inset-top')) || 0)
+    : 0;
+  const stuck = rect.top <= threshold;
+  tabNav.classList.toggle('is-stuck', stuck);
+  if (stuck) {
+    const appRect = tabNav.closest('#app').getBoundingClientRect();
+    tabNav.style.marginLeft = `-${appRect.left}px`;
+    tabNav.style.paddingLeft = `${appRect.left}px`;
+    tabNav.style.paddingRight = `${window.innerWidth - appRect.right}px`;
+    tabNav.style.width = `${window.innerWidth}px`;
+    tabNav.style.maxWidth = 'none';
+  } else {
+    tabNav.style.marginLeft = '';
+    tabNav.style.paddingLeft = '';
+    tabNav.style.paddingRight = '';
+    tabNav.style.width = '';
+    tabNav.style.maxWidth = '';
+  }
+};
+window.addEventListener('scroll', updateTabStuck, { passive: true });
+updateTabStuck();
 
 // ========== 回到顶部按钮 ==========
 initBackToTop();

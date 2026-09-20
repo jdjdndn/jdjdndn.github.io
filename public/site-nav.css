@@ -74,6 +74,7 @@
   display: none;
 }
 
+/* 减小高度，防止页面出现滚动条 */
 @media (min-width: 1024px) {
   .side-bar {
     display: flex;
@@ -82,7 +83,7 @@
     top: 24px;
     align-self: flex-start;
     width: 64px;
-    height: calc(100vh - 48px);
+    height: calc(100vh - 70px);
     flex-shrink: 0;
     margin-right: 30px;
     background: var(--card, #fff);
