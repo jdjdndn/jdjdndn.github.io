@@ -1,4 +1,4 @@
-// ========== 友情链接 Web Component ==========
+// ========== article专用 友情链接 Web Component ==========
 // 展示项目所有真实入口链接，按分类组织，用于文章底部
 
 const FRIEND_LINKS_DATA = [
@@ -93,27 +93,27 @@ class FriendLinks extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.innerHTML = `
       <style>
-        :host { display: block; margin: 40px 0 0; }
-        .fl-section { margin-bottom: 24px; }
+        :host { display: block; margin: 24px 0 0; }
+        .fl-section { margin-bottom: 12px; }
         .fl-title {
-          font-size: 15px; font-weight: 600; margin-bottom: 10px;
-          color: var(--text, #333); padding-bottom: 6px;
-          border-bottom: 2px solid var(--primary, #FF6B35);
+          font-size: 13px; font-weight: 600; margin-bottom: 6px;
+          color: var(--text, #333); padding-bottom: 4px;
+          border-bottom: 1px solid var(--primary, #FF6B35);
         }
         .fl-grid {
-          display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-          gap: 8px;
+          display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          gap: 4px;
         }
         .fl-link {
-          display: flex; flex-direction: column; padding: 8px 12px;
-          border-radius: 8px; text-decoration: none; transition: background .2s;
+          display: flex; flex-direction: column; padding: 4px 8px;
+          border-radius: 4px; text-decoration: none; transition: background .2s;
           background: var(--card-bg, #f5f5f5);
         }
         .fl-link:hover { background: var(--hover-bg, #eee); }
-        .fl-name { font-size: 14px; font-weight: 500; color: var(--text, #333); }
-        .fl-desc { font-size: 12px; color: var(--muted, #888); margin-top: 2px; }
+        .fl-name { font-size: 13px; font-weight: 500; color: var(--text, #333); }
+        .fl-desc { font-size: 11px; color: var(--muted, #888); margin-top: 1px; }
         .fl-divider {
-          border: none; border-top: 1px solid var(--border, #eee); margin: 20px 0;
+          border: none; border-top: 1px solid var(--border, #eee); margin: 16px 0;
         }
         @media (prefers-color-scheme: dark) {
           :host { --card-bg: #2a2a2a; --hover-bg: #333; --text: #e0e0e0; --muted: #999; --border: #444; }
