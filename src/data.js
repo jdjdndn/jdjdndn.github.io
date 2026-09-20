@@ -34,6 +34,22 @@ export const friendLinks = [
 
 // ========== Tab 数据 ==========
 export const tabs = [
+  {
+    id: 'bendishenghuo',
+    label: '本地生活',
+    name: '本地生活',
+    sections: [
+      {
+        title: '本地生活',
+        items: [
+          { name: '美团本地生活集合页', link: 'https://kurl07.cn/te2qe9',deadline:"2026.12.31" },
+          { name: '京东外卖集合页', link: 'https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4',deadline:"2026.12.31" },
+          { name: '千问新用户免费喝奶茶（复制口令打开千问App，对话框中粘贴口令即可）', code: '千问新用户红包198867', deadline: '2026.12.31' },
+          // { name: '本地生活', link: 'https://ktmcloud.lol/#/register?code=Zj1JYw95' },
+        ],
+      },
+    ],
+  },
 
   // ────────────── 电商 ──────────────
   {
@@ -177,18 +193,4 @@ export const tabs = [
       },
     ],
   },
-  // {
-  //   id: 'teshu',
-  //   label: '🎯 特殊',
-  //   name: '特殊',
-  //   sections: [
-  //     {
-  //       title: '特殊',
-  //       items: [
-  //         { name: '特殊', link: 'https://www.tszjs2.com/#/register?code=OHOBoxeX' },
-  //         { name: '特殊', link: 'https://ktmcloud.lol/#/register?code=Zj1JYw95' },
-  //       ],
-  //     },
-  //   ],
-  // },
 ]
