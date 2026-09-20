@@ -219,3 +219,6 @@
 :host(.dark-mode) {
   background: var(--hero-dark-gradient);
 }
+:host(.dark-mode) .ph-wave svg path {
+  fill: var(--bg, #1a1a2e);
+}

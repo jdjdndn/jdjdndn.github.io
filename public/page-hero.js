@@ -155,10 +155,10 @@
     }
 
     _syncDark() {
-      if (!this._darkText) return;
       var isDark = document.body.classList.contains('dark-mode') ||
                    document.documentElement.classList.contains('dark-mode');
-      this._darkText.textContent = isDark ? '亮色' : '暗色';
+      this.classList.toggle('dark-mode', isDark);
+      if (this._darkText) this._darkText.textContent = isDark ? '亮色' : '暗色';
     }
   }
 
