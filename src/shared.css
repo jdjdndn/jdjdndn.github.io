@@ -1655,7 +1655,7 @@ body.dark-mode .page-hero::after {
 
 @media (min-width: 1024px) {
   /* 隐藏底部导航，显示侧边栏 */
-  .footer-nav, .footer{ display: none; }
+  .footer-nav, .footer, site-nav[position="footer"] { display: none; }
   body { padding-bottom: 0; }
   .page-hero-nav {
     padding: 0 40px;
