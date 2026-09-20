@@ -1,10 +1,10 @@
 // CSS 已通过 <link> 标签在 HTML <head> 中同步加载
 
 // ========== 号卡专区页面逻辑 ==========
-import { haokaLinks, haokaProxyLinks } from './haoka-data.js';
 import { track } from './analytics.js';
-import { createSharePanel, shareItem } from './common/share.js';
 import { initBackToTop } from './common/back-to-top.js';
+import { createSharePanel } from './common/share.js';
+import { haokaLinks, haokaProxyLinks } from './haoka-data.js';
 // 暗色模式 analytics 回调
 window.__darkModeOnToggle = (isDark) => track('dark_mode_toggle', { mode: isDark ? 'dark' : 'light', page: 'haoka' });
 // qr-modal 按需加载
@@ -165,26 +165,26 @@ renderCards();
 renderAgentHook();
 
 // ========== 充话费微信按钮 ==========
-const rechargeBtn = $('#recharge-wechat');
-if (rechargeBtn) {
-  rechargeBtn.addEventListener('click', async () => {
-    const wechatId = rechargeBtn.dataset.wechat;
-    try {
-      await navigator.clipboard.writeText(wechatId);
-      showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
-    } catch {
-      try {
-        const ta = document.createElement('textarea');
-        ta.value = wechatId;
-        ta.style.cssText = 'position:fixed;left:-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
-      } catch {
-        showToast('复制失败，请手动搜索微信号：wcbblll');
-      }
-    }
-  });
-}
+// const rechargeBtn = $('#recharge-wechat');
+// if (rechargeBtn) {
+//   rechargeBtn.addEventListener('click', async () => {
+//     const wechatId = rechargeBtn.dataset.wechat;
+//     try {
+//       await navigator.clipboard.writeText(wechatId);
+//       showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+//     } catch {
+//       try {
+//         const ta = document.createElement('textarea');
+//         ta.value = wechatId;
+//         ta.style.cssText = 'position:fixed;left:-9999px';
+//         document.body.appendChild(ta);
+//         ta.select();
+//         document.execCommand('copy');
+//         document.body.removeChild(ta);
+//         showToast(`微信号 ${wechatId} 已复制，打开微信搜索添加`);
+//       } catch {
+//         showToast('复制失败，请手动搜索微信号：wcbblll');
+//       }
+//     }
+//   });
+// }

@@ -15,12 +15,15 @@
 
 // ========== 友情链接 ==========
 export const friendLinks = [
-  // {name:"花店",url:"https://wxmpurl.cn/AOPNUIe3tHa", description:"鲜花预订配送服务，节日礼物生日蛋糕，全国同城速递"},
-  // {name:"fq1",url:"https://www.tszjs2.com/#/register?code=OHOBoxeX"},
-  // {name:"fq2",url:"https://ktmcloud.lol/#/register?code=Zj1JYw95"},
-  // { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u', description: '苏宁易购优惠券' },
-  // { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y', description: '当当网图书优惠' },
-  // { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发优惠' },
+  { name: '电影票', url: 'weixin://dl/business/?t=f6MDcoTPZpe', description: '电影票在线预订，支持微信快捷购票' },
+  { name: '花店', url: 'https://wxmpurl.cn/AOPNUIe3tHa', description: '鲜花预订配送服务，节日礼物生日蛋糕，全国同城速递' },
+  { name: '寄快递', link: 'https://kurl06.cn/txh9El',description: '快递寄件优惠，支持顺丰、圆通、申通、韵达等多家快递公司' },
+  { name: '上门回收', link: 'weixin://dl/business/?appid=wx3f0209cc35a953a4&path=wjyk_recycle/pages/index/index&query=scene%3D23542300',description: '上门回收旧手机、旧电脑、旧家电等电子产品，环保又省心' },
+  {name:"fq1",url:"https://www.tszjs2.com/#/register?code=OHOBoxeX"},
+  {name:"fq2",url:"https://ktmcloud.lol/#/register?code=Zj1JYw95"},
+  { name: '苏宁易购', url: 'https://tb.jiuxinban.com/CK1W4u', description: '苏宁易购优惠券' },
+  { name: '当当网', url: 'https://tb.jiuxinban.com/CK1W9y', description: '当当网图书优惠' },
+  { name: '1688', url: 'https://tb.jiuxinban.com/CK1Vl5', description: '1688批发优惠' },
   // { name: '腾讯云', url: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器优惠'},
   // {name:"优惠券",url:"https://kzurl18.cn/tHj1ww", description:"全网热门优惠券聚合，涵盖外卖、购物、出行等多场景优惠", category:"优惠券平台"},
   // { name: '淘宝·拼多多·唯品会', url: 'https://pqjdg.yhzu.cn/', description: '电商优惠聚合', category: '电商平台' },
@@ -157,35 +160,6 @@ export const tabs = [
   },
 
   // ────────────── 生活 ──────────────
-  {
-    id: 'dianying',
-    label: '🎯 电影票',
-    name: '电影票',
-    sections: [
-      {
-        title: '电影票',
-        items: [
-          // { name: '电影票在线预订1', link: 'https://kurl04.cn/txh9iy' },
-          { name: '电影票在线预订', code: 'weixin://dl/business/?t=f6MDcoTPZpe' },
-          // { name: '寄件享4折起优惠，低至5元寄快递', link: 'https://kurl06.cn/txh9El' },
-          // {name:"优惠券",link:"https://kzurl18.cn/tHj1ww"}
-        ],
-      },
-    ],
-  },
-  {
-    id: 'huadian',
-    label: '🎯 花店',
-    name: '花店',
-    sections: [
-      {
-        title: '花店',
-        items: [
-          { name: '花店', link: 'https://wxmpurl.cn/AOPNUIe3tHa', description: '鲜花预订' },
-        ],
-      },
-    ],
-  },
   {
     id: 'yunfuwu',
     label: '🎯 云服务',
