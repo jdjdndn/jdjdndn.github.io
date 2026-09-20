@@ -104,23 +104,11 @@ const renderStats = () => {
     }, 0);
   }, 0);
 
-  const today = new Date().toISOString().slice(0, 10);
-  const savedStats = JSON.parse(localStorage.getItem('siteStats') || '{}');
-  let dailyCopies = savedStats[today] || 0;
-  if (!savedStats[today]) {
-    dailyCopies = 800 + Math.floor(Math.random() * 500);
-    savedStats[today] = dailyCopies;
-    localStorage.setItem('siteStats', JSON.stringify(savedStats));
-  }
-  dailyCopies += Math.floor(Math.random() * 3) + 1;
-  savedStats[today] = dailyCopies;
-  localStorage.setItem('siteStats', JSON.stringify(savedStats));
-
   const freshnessTime = getRelativeTime();
 
   headerStats.innerHTML = `
     <span class="stat-badge">${ICONS.stats_total} 已收录 <strong>${_totalCount}</strong> 个活动</span>
-    <span class="stat-badge usage-count"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 今日 <strong>${dailyCopies.toLocaleString()}</strong> 人领取</span>
+    <span class="stat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 覆盖 <strong>${tabs.length}</strong> 大平台</span>
     ${expiredCount > 0 ? `<span class="stat-badge expired-count">${ICONS.stats_expired} 已过期 <strong>${expiredCount}</strong> 个</span>` : ''}
     <span class="stat-badge freshness-badge"><span class="dot"></span> ${freshnessTime}</span>
   `;

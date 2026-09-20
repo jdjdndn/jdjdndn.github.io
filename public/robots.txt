@@ -1,4 +1,4 @@
-# 优惠活动聚合 - robots.txt
+# 券宝 - robots.txt
 User-agent: *
 Allow: /
 Allow: /llms.txt

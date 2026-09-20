@@ -9,10 +9,15 @@ const loadQrModal = () => {
   return _qrModalPromise;
 };
 
-// 显示二维码
-window.showQR = function (url, name) {
-  loadQrModal().then(m => m.showQrModal(url, name, (u) =>
-    `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(u)}`
-  ));
-}
-
+// 事件委托：处理 .btn-qr 点击
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-qr');
+  if (!btn) return;
+  const url = btn.dataset.qrUrl;
+  const name = btn.dataset.qrName;
+  if (url && name) {
+    loadQrModal().then(m => m.showQrModal(url, name, (u) =>
+      `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(u)}`
+    ));
+  }
+});

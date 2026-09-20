@@ -165,16 +165,21 @@
     {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "wangpan — 优惠活动聚合",
+    "name": "网盘资源 — 券宝",
     "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
-            ".hero-title",
-            ".hero-desc"
+            ".page-hero h1",
+            ".page-hero p"
         ]
+    },
+    "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jdjdndn.github.io/#website",
+        "name": "券宝"
     }
 }
-    </script>  </body>
+    </script>
 
     <script type="application/ld+json">
     {
@@ -200,7 +205,24 @@
                 "@type": "Answer",
                 "text": "目前支持百度网盘和夸克网盘两大主流平台，持续更新中。"
             }
+        },
+        {
+            "@type": "Question",
+            "name": "网盘链接会失效吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "第三方分享的网盘链接可能因分享者取消分享或过期而失效。建议及时保存所需资源到自己的网盘。本站会定期更新可用链接。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "如何使用网盘资源？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "点击资源链接后会跳转到对应网盘平台（百度网盘或夸克网盘），登录后即可查看或转存资源。部分资源可能需要提取码，请按页面提示操作。"
+            }
         }
     ]
 }
-    </script></html>
+    </script>
+  </body>
