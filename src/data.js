@@ -194,7 +194,11 @@ export const tabs = [
       {
         title: '云服务',
         items: [
-          { name: '腾讯云', link: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器' },
+          { name: '腾讯云国内站', link: 'https://curl.qcloud.com/ITnFdvQ9', description: '腾讯云服务器' },
+          { name: '腾讯云国外站', link: 'https://curl.qcloud.com/Kholy9gT', description: '腾讯云服务器' },
+          { name: 'WorkBuddy 全场景 AI 办公工作台', link: 'https://cloud.tencent.com/act/cps/redirect?redirect=6871&cps_key=e1a339fa804f2f1f68cb6f3a74ee7da5&from=console', description: '腾讯云服务器' },
+          { name: '阿里云新客户', link: 'https://www.aliyun.com/minisite/goods?userCode=9iwd9zzb', description: '阿里云' },
+          { name: '阿里云OPC产品套餐', link: 'https://opc.aliyun.com/products?utm_content=g_1000413977&userCode=9iwd9zzb', description: '阿里云' },
         ],
       },
     ],
