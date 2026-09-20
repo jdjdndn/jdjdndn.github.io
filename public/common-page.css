@@ -1,0 +1,98 @@
+/* ========== <common-page> Shadow DOM 样式 ========== */
+/* 此文件由 Web Component 的 Shadow DOM 加载，天然隔离，不影响父页面 */
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cp-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cp-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #fff;
+}
+
+/* 加载中 */
+.cp-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #999;
+  font-size: 14px;
+  z-index: 1;
+  background: var(--bg, #f8f7f4);
+  transition: opacity 0.3s ease;
+}
+.cp-loading.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cp-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #FF6B35;
+  border-radius: 50%;
+  animation: cp-spin 0.8s linear infinite;
+}
+@keyframes cp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 加载失败 */
+.cp-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
+.cp-hidden { display: none; }
+
+.cp-btn-retry {
+  margin-top: 12px;
+  padding: 8px 24px;
+  border: 1px solid #FF6B35;
+  color: #FF6B35;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.cp-btn-retry:hover {
+  background: #FF6B35;
+  color: #fff;
+}
+
+/* 暗色模式 */
+:host(.dark) .cp-loading,
+.cp-wrap.dark .cp-loading {
+  background: #1a1a1a;
+}
+:host(.dark) .cp-wrap,
+.cp-wrap.dark {
+  background: #1a1a1a;
+}
+:host(.dark) .cp-iframe,
+.cp-wrap.dark .cp-iframe {
+  background: #1a1a1a;
+}

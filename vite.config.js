@@ -192,17 +192,8 @@ export default defineConfig({
         return html.replace('<head>', `<head>\n    ${meta}`);
       },
     },
-    {
-      name: 'seo-preload',
-      transformIndexHtml(html) {
-        // 在 </head> 前注入 preload，加速首屏渲染
-        const preload = [
-          '<link rel="preload" href="./shared.css" as="style" />',
-          '<link rel="modulepreload" href="./app.js" />',
-        ].join('\n    ');
-        return html.replace('</head>', `    ${preload}\n  </head>`);
-      },
-    },
+    // seo-preload 已移除：shared.css 和 app.js 由 Vite 打包进 hashed assets，
+    // 预加载源文件名会 404
     {
       name: 'generate-sitemap',
       writeBundle() {
