@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'fs';
 import compression from 'vite-plugin-compression';
 
 // ========== 预渲染：从 data.js 提取优惠数据生成静态 HTML ==========
@@ -241,6 +241,43 @@ export default defineConfig({
   </url>${subPageUrls}${landingUrls}
 </urlset>`;
         writeFileSync(resolve(__dirname, 'dist/sitemap.xml'), sitemap, 'utf-8');
+      },
+    },
+    // ========== 构建后校验：检测 HTML 中引用的静态资源是否 404 ==========
+    {
+      name: 'verify-assets',
+      closeBundle() {
+        const distDir = resolve(__dirname, 'dist');
+        const htmlFiles = readdirSync(distDir).filter(f => f.endsWith('.html'));
+        const assetsDir = resolve(distDir, 'assets');
+        const assets = existsSync(assetsDir)
+          ? readdirSync(assetsDir)
+          : [];
+        const distRoot = readdirSync(distDir);
+        const allDistFiles = new Set([...distRoot, ...assets.map(a => 'assets/' + a)]);
+
+        const missing = [];
+        for (const html of htmlFiles) {
+          const content = readFileSync(resolve(distDir, html), 'utf-8');
+          // 提取 src="./xxx" 和 href="./xxx" 中的相对路径（排除 http/data/#）
+          const refPattern = /(?:src|href)="\.\/([^"#]+)"/g;
+          let m;
+          while ((m = refPattern.exec(content)) !== null) {
+            const ref = m[1];
+            if (!allDistFiles.has(ref) && !existsSync(resolve(distDir, ref))) {
+              missing.push({ html, ref });
+            }
+          }
+        }
+        if (missing.length > 0) {
+          console.error('\n❌ 构建校验失败：以下资源在 dist/ 中不存在，部署后会 404：');
+          for (const { html, ref } of missing) {
+            console.error(`   ${html} → ./${ref}`);
+          }
+          console.error('\n如果是 Web Component 的 JS/CSS，请放到 public/ 目录。\n');
+          process.exit(1);
+        }
+        console.log('✅ 构建校验通过：所有静态资源引用有效');
       },
     },
     compression({ algorithm: 'gzip' }),
