@@ -121,6 +121,20 @@ function discoverLandingPages() {
   return entries;
 }
 
+// ========== 自动发现文章页（src/article/ 下的 HTML） ==========
+function discoverArticlePages() {
+  const articleDir = resolve(__dirname, 'src/article');
+  const entries = {};
+  try {
+    for (const file of readdirSync(articleDir)) {
+      if (!file.endsWith('.html')) continue;
+      const name = file.replace('.html', '');
+      entries[`article/${name}`] = resolve(articleDir, file);
+    }
+  } catch {}
+  return entries;
+}
+
 // ========== 自动发现子页面（有独立 JS 模块的页面） ==========
 function discoverSubPages() {
   const srcDir = resolve(__dirname, 'src');
@@ -155,6 +169,7 @@ export default defineConfig({
         gouwu: resolve(__dirname, 'src/gouwu.html'),
         about: resolve(__dirname, 'src/about.html'),
         ...discoverLandingPages(),
+        ...discoverArticlePages(),
       },
     },
   },
@@ -219,6 +234,16 @@ export default defineConfig({
     <priority>0.7</priority>
   </url>`).join('');
 
+        // 文章页（src/article/ 下的 SEO 内容页）自动发现
+        const articlePages = discoverArticlePages();
+        const articleUrls = Object.keys(articlePages).map((name) => `
+  <url>
+    <loc>https://jdjdndn.github.io/${name}.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('');
+
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -238,7 +263,7 @@ export default defineConfig({
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>${subPageUrls}${landingUrls}
+  </url>${subPageUrls}${landingUrls}${articleUrls}
 </urlset>`;
         writeFileSync(resolve(__dirname, 'dist/sitemap.xml'), sitemap, 'utf-8');
       },
