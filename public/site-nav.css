@@ -1,0 +1,160 @@
+/* ========== <site-nav> Shadow DOM 样式 ========== */
+
+:host {
+  display: block;
+}
+
+/* ====== 底部导航栏 (position="footer") ====== */
+.footer-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(248, 247, 244, 0.95);
+  border-top: 1px solid var(--border, #e5e2dd);
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.footer-bar .nav-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 48px;
+  padding: 0px 8px;
+  margin: 0;
+  list-style: none;
+}
+
+.footer-bar .nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  text-decoration: none;
+  color: var(--muted, #6b7280);
+  font-size: 11px;
+  padding: 6px 0;
+  border-radius: 8px;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.footer-bar .nav-link svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.footer-bar .nav-link.active {
+  color: var(--primary, #FF6B35);
+  font-weight: 600;
+}
+.footer-bar .nav-link.active svg {
+  stroke: var(--primary, #FF6B35);
+  fill: var(--primary-light, #FFF4ED);
+}
+.footer-bar .nav-link:hover:not(.active) {
+  color: var(--text, #1a1a2e);
+}
+
+/* 小屏手机微调 */
+@media (max-width: 480px) {
+  .footer-bar { height: 44px; }
+  .footer-bar .nav-link { font-size: 9px; }
+  .footer-bar .nav-link svg { width: 20px; height: 20px; }
+}
+
+/* ====== 侧边导航栏 (position="side") ====== */
+.side-bar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .side-bar {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 24px;
+    align-self: flex-start;
+    width: 64px;
+    height: calc(100vh - 48px);
+    flex-shrink: 0;
+    margin-right: 30px;
+    background: var(--card, #fff);
+    border: 1px solid var(--border, #e5e2dd);
+    border-radius: var(--radius-lg, 16px);
+    z-index: 100;
+    padding: 12px 0;
+    gap: 4px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .side-bar::-webkit-scrollbar { display: none; }
+
+  .side-bar .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .side-bar .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 10px 4px;
+    margin: 0 6px;
+    border-radius: 10px;
+    color: var(--text-secondary, #4a5568);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .side-bar .nav-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .side-bar .nav-link.active {
+    color: var(--primary, #FF6B35);
+    background: var(--primary-light, #FFF4ED);
+    font-weight: 600;
+  }
+  .side-bar .nav-link.active svg {
+    stroke: var(--primary, #FF6B35);
+  }
+  .side-bar .nav-link:hover:not(.active) {
+    color: var(--text, #1a1a2e);
+    background: var(--hover-bg, #f5f4f1);
+  }
+}
+
+/* ====== 暗色模式 ====== */
+:host(.dark-mode) .footer-bar {
+  background: rgba(26, 26, 46, 0.95);
+  border-color: var(--border, #333);
+}
+:host(.dark-mode) .footer-bar .nav-link.active svg {
+  fill: rgba(255, 107, 53, 0.15);
+}
+:host(.dark-mode) .side-bar {
+  background: var(--card, #1a1a2e);
+  border-color: var(--border, #333);
+}
+:host(.dark-mode) .side-bar .nav-link.active {
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--primary, #FF6B35);
+}
