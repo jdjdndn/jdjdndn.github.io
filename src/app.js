@@ -305,6 +305,11 @@ const init = async () => {
     if (activeBtn) {
       activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
     }
+    // 二级tab滚入可视区
+    const subNav = tabContent.querySelector('.sub-tab-nav');
+    if (subNav) {
+      subNav.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
   });
 };
 

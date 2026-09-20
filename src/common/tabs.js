@@ -292,6 +292,11 @@ export const switchTab = (tabId) => {
     if (activeBtn) {
       activeBtn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
     }
+    // 二级tab滚入可视区
+    const subNav = tabContent.querySelector('.sub-tab-nav');
+    if (subNav) {
+      requestAnimationFrame(() => subNav.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
+    }
   }
 };
 
