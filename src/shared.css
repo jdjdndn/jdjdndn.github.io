@@ -1671,6 +1671,11 @@ body.dark-mode .page-hero::after {
     padding: 24px calc(16px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom)) calc(16px + var(--safe-area-inset-left));
     position: relative;
   }
+  site-nav[position="side"] {
+    position: sticky;
+    top: 24px;
+    align-self: flex-start;
+  }
   .app-wrapper #app {
     padding: 0;
     margin: 0;
