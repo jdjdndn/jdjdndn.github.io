@@ -20,8 +20,17 @@
       @media (prefers-color-scheme: dark) { :root { --bg: #1a1a1a; --text: #e0e0e0; --muted: #999; --card-bg: #2a2a2a; --border: #333; } }
       .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
       h1 { font-size: 28px; margin-bottom: 8px; }
-      .subtitle { color: var(--muted); margin-bottom: 32px; font-size: 15px; }
-      .cat-section { margin-bottom: 32px; }
+      .subtitle { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
+
+      /* Tab 导航样式 */
+      .tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+      .tab-btn { padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px; background: var(--card-bg); color: var(--text); font-size: 14px; cursor: pointer; transition: all .2s; white-space: nowrap; }
+      .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+      .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+      /* 文章列表样式 */
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
       .cat-title { font-size: 17px; font-weight: 600; padding-bottom: 8px; border-bottom: 2px solid var(--primary); margin-bottom: 12px; }
       .article-list { list-style: none; }
       .article-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
@@ -30,6 +39,15 @@
       .article-item a:hover h3 { color: var(--primary); }
       .article-item h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; transition: color .2s; }
       .article-item p { font-size: 13px; color: var(--muted); }
+
+      /* 分页样式 */
+      .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+      .page-btn { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); color: var(--text); font-size: 13px; cursor: pointer; transition: all .2s; }
+      .page-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+      .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+      .page-info { font-size: 13px; color: var(--muted); }
+
       .back-link { display: inline-block; margin-top: 32px; color: var(--primary); text-decoration: none; font-size: 14px; }
       .back-link:hover { text-decoration: underline; }
     </style>
@@ -39,9 +57,21 @@
       <h1>省钱攻略</h1>
       <p class="subtitle">实用优惠指南，帮你省下每一分钱</p>
 
-      <section class="cat-section">
+      <!-- Tab 导航 -->
+      <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="tab1">👑 影视会员</button>
+        <button class="tab-btn" data-tab="tab2">🎵 音乐会员</button>
+        <button class="tab-btn" data-tab="tab3">📚 教育学习</button>
+        <button class="tab-btn" data-tab="tab4">🔧 效率工具</button>
+        <button class="tab-btn" data-tab="tab5">🎮 游戏娱乐</button>
+        <button class="tab-btn" data-tab="tab6">🍜 生活服务</button>
+        <button class="tab-btn" data-tab="tab7">📦 其他会员</button>
+      </nav>
+
+      <!-- Tab 内容 -->
+      <div class="tab-content active" id="tab1">
         <h2 class="cat-title">👑 影视会员</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./追剧社.html"><h3>追剧社会员省钱攻略</h3><p>追剧社会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./movo视频.html"><h3>movo视频会员省钱攻略</h3><p>movo视频会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./韩剧圈.html"><h3>韩剧圈会员省钱攻略</h3><p>韩剧圈会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -91,11 +121,12 @@
           <li class="article-item"><a href="./傲软视频转换王.html"><h3>傲软视频转换王会员省钱攻略</h3><p>傲软视频转换王会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./元祖视频.html"><h3>元祖视频会员省钱攻略</h3><p>元祖视频会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab2">
         <h2 class="cat-title">🎵 音乐会员</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./汽水音乐.html"><h3>汽水音乐会员省钱攻略</h3><p>汽水音乐会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./酷狗音乐.html"><h3>酷狗音乐会员省钱攻略</h3><p>酷狗音乐会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./网易云音乐.html"><h3>网易云音乐会员省钱攻略</h3><p>网易云音乐会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -117,11 +148,12 @@
           <li class="article-item"><a href="./小米音箱.html"><h3>小米音箱会员省钱攻略</h3><p>小米音箱会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./一路听天下.html"><h3>一路听天下会员省钱攻略</h3><p>一路听天下会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab3">
         <h2 class="cat-title">📚 教育学习</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./小米儿童成长会员.html"><h3>小米儿童成长会员会员省钱攻略</h3><p>小米儿童成长会员会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./背duo分单词.html"><h3>背duo分单词会员省钱攻略</h3><p>背duo分单词会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./咕噜口语.html"><h3>咕噜口语会员省钱攻略</h3><p>咕噜口语会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -237,11 +269,12 @@
           <li class="article-item"><a href="./蜜蜂剪辑.html"><h3>蜜蜂剪辑会员省钱攻略</h3><p>蜜蜂剪辑会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./代数学家.html"><h3>代数学家会员省钱攻略</h3><p>代数学家会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab4">
         <h2 class="cat-title">🔧 效率工具</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./小白智慧打印.html"><h3>小白智慧打印会员省钱攻略</h3><p>小白智慧打印会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./丰巢.html"><h3>丰巢会员省钱攻略</h3><p>丰巢会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./丰巢洗护.html"><h3>丰巢洗护会员省钱攻略</h3><p>丰巢洗护会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -356,11 +389,12 @@
           <li class="article-item"><a href="./百度翻译.html"><h3>百度翻译会员省钱攻略</h3><p>百度翻译会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./简单扫描.html"><h3>简单扫描会员省钱攻略</h3><p>简单扫描会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab5">
         <h2 class="cat-title">🎮 游戏娱乐</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./酷卡云游戏.html"><h3>酷卡云游戏会员省钱攻略</h3><p>酷卡云游戏会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./start云游戏.html"><h3>start云游戏会员省钱攻略</h3><p>start云游戏会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./起飞云游戏.html"><h3>起飞云游戏会员省钱攻略</h3><p>起飞云游戏会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -370,11 +404,12 @@
           <li class="article-item"><a href="./九一云游戏.html"><h3>九一云游戏会员省钱攻略</h3><p>九一云游戏会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./wegame游戏流放之路2.html"><h3>WeGame游戏流放之路2会员省钱攻略</h3><p>WeGame游戏流放之路2会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab6">
         <h2 class="cat-title">🍜 生活服务</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./京东plus会员.html"><h3>京东plus会员会员省钱攻略</h3><p>京东plus会员会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./小电充电.html"><h3>小电充电会员省钱攻略</h3><p>小电充电会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./1905电影网.html"><h3>1905电影网会员省钱攻略</h3><p>1905电影网会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -437,11 +472,12 @@
           <li class="article-item"><a href="./曹操出行代金券-5-10-15-20.html"><h3>曹操出行代金券（5/10/15/20）会员省钱攻略</h3><p>曹操出行代金券（5/10/15/20）会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./花小猪打车券-10-20-30.html"><h3>花小猪打车券（10/20/30）会员省钱攻略</h3><p>花小猪打车券（10/20/30）会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
-      <section class="cat-section">
+      <div class="tab-content" id="tab7">
         <h2 class="cat-title">📦 其他会员</h2>
-        <ul class="article-list">
+        <ul class="article-list" data-page-size="15">
           <li class="article-item"><a href="./同程旅行通勤卡.html"><h3>同程旅行通勤卡会员省钱攻略</h3><p>同程旅行通勤卡会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./同程旅行租车卡.html"><h3>同程旅行租车卡会员省钱攻略</h3><p>同程旅行租车卡会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./同程旅行金卡.html"><h3>同程旅行金卡会员省钱攻略</h3><p>同程旅行金卡会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
@@ -481,9 +517,112 @@
           <li class="article-item"><a href="./coco都可.html"><h3>Coco都可会员省钱攻略</h3><p>Coco都可会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./一鸣真鲜奶.html"><h3>一鸣真鲜奶会员省钱攻略</h3><p>一鸣真鲜奶会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
         </ul>
-      </section>
+        <div class="pagination"></div>
+      </div>
 
       <a href="../index.html" class="back-link">&larr; 返回券宝首页</a>
     </div>
+
+    <script>
+      // Tab 切换功能
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          // 移除所有 active 类
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+          // 添加 active 类到当前 tab
+          this.classList.add('active');
+          const tabId = this.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
+
+          // 初始化分页
+          initPagination(document.getElementById(tabId));
+        });
+      });
+
+      // 分页功能
+      const PAGE_SIZE = 15;
+
+      function initPagination(tabContent) {
+        const list = tabContent.querySelector('.article-list');
+        const pagination = tabContent.querySelector('.pagination');
+        const items = list.querySelectorAll('.article-item');
+        const totalItems = items.length;
+        const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+
+        if (totalPages <= 1) {
+          pagination.style.display = 'none';
+          items.forEach(item => item.style.display = '');
+          return;
+        }
+
+        pagination.style.display = 'flex';
+        let currentPage = 1;
+
+        function showPage(page) {
+          currentPage = page;
+          const start = (page - 1) * PAGE_SIZE;
+          const end = start + PAGE_SIZE;
+
+          items.forEach((item, index) => {
+            item.style.display = (index >= start && index < end) ? '' : 'none';
+          });
+
+          renderPagination();
+        }
+
+        function renderPagination() {
+          let html = '';
+          html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">上一页</button>`;
+
+          // 显示页码
+          const maxVisible = 5;
+          let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+          let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+          if (endPage - startPage < maxVisible - 1) {
+            startPage = Math.max(1, endPage - maxVisible + 1);
+          }
+
+          if (startPage > 1) {
+            html += `<button class="page-btn" data-page="1">1</button>`;
+            if (startPage > 2) html += `<span class="page-info">...</span>`;
+          }
+
+          for (let i = startPage; i <= endPage; i++) {
+            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+          }
+
+          if (endPage < totalPages) {
+            if (endPage < totalPages - 1) html += `<span class="page-info">...</span>`;
+            html += `<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+          }
+
+          html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">下一页</button>`;
+          html += `<span class="page-info">共 ${totalItems} 项</span>`;
+
+          pagination.innerHTML = html;
+
+          // 绑定分页按钮事件
+          pagination.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              if (!this.disabled) {
+                showPage(parseInt(this.getAttribute('data-page')));
+              }
+            });
+          });
+        }
+
+        showPage(1);
+      }
+
+      // 初始化第一个 tab 的分页
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        if (tab.classList.contains('active')) {
+          initPagination(tab);
+        }
+      });
+    </script>
   </body>
 </html>
