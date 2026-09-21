@@ -32,6 +32,12 @@
       .article-item p { font-size: 13px; color: var(--muted); }
       .back-link { display: inline-block; margin-top: 32px; color: var(--primary); text-decoration: none; font-size: 14px; }
       .back-link:hover { text-decoration: underline; }
+      .tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+      .tab-btn { padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px; background: var(--card-bg); color: var(--text); font-size: 14px; cursor: pointer; transition: all .2s; white-space: nowrap; }
+      .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+      .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+      .cat-section { display: none; }
+      .cat-section.active { display: block; }
     </style>
   </head>
   <body>
@@ -39,7 +45,25 @@
       <h1>省钱攻略</h1>
       <p class="subtitle">实用优惠指南，帮你省下每一分钱</p>
 
-      <section class="cat-section">
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="all">全部</button>
+        <button class="tab-btn" data-tab="电商优惠">🛒 电商优惠</button>
+        <button class="tab-btn" data-tab="外卖餐饮">🍜 外卖餐饮</button>
+        <button class="tab-btn" data-tab="出行旅行">✈️ 出行旅行</button>
+        <button class="tab-btn" data-tab="影视会员">👑 影视会员</button>
+        <button class="tab-btn" data-tab="音乐会员">🎵 音乐会员</button>
+        <button class="tab-btn" data-tab="音频/知识会员">🎧 音频/知识</button>
+        <button class="tab-btn" data-tab="综合会员">👑 综合会员</button>
+        <button class="tab-btn" data-tab="网盘资源">💾 网盘资源</button>
+        <button class="tab-btn" data-tab="号卡套餐">📱 号卡套餐</button>
+        <button class="tab-btn" data-tab="随身WiFi / 宽带">📶 随身WiFi</button>
+        <button class="tab-btn" data-tab="生活服务">🏠 生活服务</button>
+        <button class="tab-btn" data-tab="云服务">☁️ 云服务</button>
+        <button class="tab-btn" data-tab="数码工具">🔧 数码工具</button>
+        <button class="tab-btn" data-tab="终极省钱指南">📊 终极省钱</button>
+      </nav>
+
+      <section class="cat-section active" data-category="电商优惠">
         <h2 class="cat-title">🛒 电商优惠</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./jd-coupon-guide.html"><h3>京东优惠券怎么领最划算</h3><p>京东秒杀、百亿补贴、自营热卖、优惠雷达等入口汇总</p></a></li>
@@ -56,7 +80,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="外卖餐饮">
         <h2 class="cat-title">🍜 外卖餐饮</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./meituan-waimai-guide.html"><h3>美团外卖红包天天领指南</h3><p>新客最高减20元，老客天天领，大牌饮品券全覆盖</p></a></li>
@@ -69,7 +93,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="出行旅行">
         <h2 class="cat-title">✈️ 出行旅行</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./didi-coupon-guide.html"><h3>滴滴出行打车红包领取攻略</h3><p>打车红包天天领、8折打车券、花小猪最高100元券包</p></a></li>
@@ -87,7 +111,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="影视会员">
         <h2 class="cat-title">👑 影视会员</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./iqiyi-vip-guide.html"><h3>爱奇艺会员哪里买便宜</h3><p>爱奇艺VIP会员优惠办理渠道对比</p></a></li>
@@ -96,10 +120,11 @@
           <li class="article-item"><a href="./youku-vip-guide.html"><h3>优酷VIP会员省钱攻略</h3><p>优酷VIP和酷喵VIP区别、价格对比、优惠办理</p></a></li>
           <li class="article-item"><a href="./mango-tv-guide.html"><h3>芒果TV会员优惠办理</h3><p>芒果TV各会员等级、独家综艺、优惠办理</p></a></li>
           <li class="article-item"><a href="./bilibili-vip-guide.html"><h3>B站大会员省钱指南</h3><p>B站大会员权益、1080P+、漫画、课堂全解析</p></a></li>
+          <li class="article-item"><a href="./korean-drama-vip-guide.html"><h3>韩剧社VIP会员省钱攻略</h3><p>韩剧社VIP月卡九折优惠，官方直充秒到账，四端通用</p></a></li>
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="音乐会员">
         <h2 class="cat-title">🎵 音乐会员</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./qq-music-guide.html"><h3>QQ音乐会员省钱攻略</h3><p>QQ音乐、网易云、汽水音乐VIP优惠对比</p></a></li>
@@ -109,7 +134,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="音频/知识会员">
         <h2 class="cat-title">🎧 音频/知识会员</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./ximalaya-guide.html"><h3>喜马拉雅会员省钱攻略</h3><p>喜马拉雅VIP权益、热门有声书、优惠办理</p></a></li>
@@ -118,7 +143,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="综合会员">
         <h2 class="cat-title">👑 综合会员</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./meituan-meituan-vip.html"><h3>美团会员省钱攻略</h3><p>美团会员各项权益、外卖红包、酒店优惠</p></a></li>
@@ -128,7 +153,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="网盘资源">
         <h2 class="cat-title">💾 网盘资源</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./baidu-netdisk-guide.html"><h3>百度网盘会员值不值得开</h3><p>会员权益解析，什么情况下开会员最划算</p></a></li>
@@ -139,7 +164,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="号卡套餐">
         <h2 class="cat-title">📱 号卡套餐</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./sim-card-guide.html"><h3>流量卡怎么选不踩坑</h3><p>四大运营商对比、选卡四步法、常见陷阱避坑</p></a></li>
@@ -148,7 +173,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="随身WiFi / 宽带">
         <h2 class="cat-title">📶 随身WiFi / 宽带</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./wifi-vs-sim-guide.html"><h3>随身WiFi和流量卡怎么选</h3><p>随身WiFi vs 流量卡 vs 手机热点对比</p></a></li>
@@ -158,7 +183,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="生活服务">
         <h2 class="cat-title">🏠 生活服务</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./movie-ticket-guide.html"><h3>电影票怎么买最便宜</h3><p>在线预订优惠，比窗口便宜一半</p></a></li>
@@ -173,14 +198,14 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="云服务">
         <h2 class="cat-title">☁️ 云服务</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./cloud-server-guide.html"><h3>腾讯云阿里云服务器优惠购买指南</h3><p>新用户专属优惠，云服务器怎么买最便宜</p></a></li>
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="数码工具">
         <h2 class="cat-title">🔧 数码工具</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./wps-guide.html"><h3>WPS会员省钱攻略</h3><p>WPS会员和稻壳会员区别、各渠道价格、优惠办理</p></a></li>
@@ -191,7 +216,7 @@
         </ul>
       </section>
 
-      <section class="cat-section">
+      <section class="cat-section" data-category="终极省钱指南">
         <h2 class="cat-title">📊 终极省钱指南</h2>
         <ul class="article-list">
           <li class="article-item"><a href="./huiyuan-compare2026.html"><h3>2026年会员省钱终极指南</h3><p>各平台会员权益全面对比、哪些会员最值得开</p></a></li>
@@ -200,5 +225,17 @@
 
       <a class="back-link" href="../index.html">← 返回券宝首页</a>
     </div>
+    <script>
+      document.querySelector('.tab-nav').addEventListener('click', function(e) {
+        var btn = e.target.closest('.tab-btn');
+        if (!btn) return;
+        var tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('.cat-section').forEach(function(sec) {
+          sec.classList.toggle('active', tab === 'all' || sec.getAttribute('data-category') === tab);
+        });
+      });
+    </script>
   </body>
 </html>
