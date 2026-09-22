@@ -228,3 +228,23 @@ li {
   border-color: var(--primary, #FF6B35);
   color: #fff;
 }
+
+/* ===== 时效提示（CTA 前警示条） ===== */
+.time-tip {
+  margin: 14px 0;
+  padding: 11px 14px 11px 16px;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: #7a5c00;
+  background: #fff7e0;
+  border: 1px solid #f0dc9a;
+  border-left: 4px solid #e8a33d;
+  border-radius: 10px;
+}
+.time-tip-title {
+  font-weight: 700;
+  margin-right: 6px;
+}
+.time-tip-title::after {
+  content: '：';
+}
