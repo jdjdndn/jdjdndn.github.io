@@ -1,0 +1,178 @@
+/* ========== 首页自有内容（hero / 搜索 / 分类卡片 / 领取中心） ========== */
+/* 首页主体为自有可索引内容，第三方口令站降级为页面内区块 */
+
+.home-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+  box-sizing: border-box;
+}
+
+/* ---------- Hero ---------- */
+.home-hero {
+  position: relative;
+  border-radius: var(--radius-lg, 16px);
+  padding: 2.2rem 1.6rem;
+  color: #fff;
+  background: var(--hero-gradient, linear-gradient(155deg, #1a0a00, #FF6B35));
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.1));
+  overflow: hidden;
+}
+.home-hero h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.home-hero p {
+  margin: 0 0 1.1rem;
+  font-size: 0.92rem;
+  opacity: 0.92;
+  line-height: 1.6;
+}
+
+/* ---------- 搜索 ---------- */
+.home-search {
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 6px 6px 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+}
+.home-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: var(--text, #1a1a2e);
+}
+.home-search input::placeholder {
+  color: var(--placeholder, #b0aaa0);
+}
+.home-search button {
+  border: none;
+  background: var(--primary, #FF6B35);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+.home-search button:hover {
+  background: var(--primary-hover, #E55A2B);
+}
+
+/* ---------- 分类卡片 ---------- */
+.home-cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 1.2rem 0 1.6rem;
+}
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1rem;
+  background: var(--card, #fff);
+  border: 1px solid var(--border-light, #f0eeeb);
+  border-radius: var(--radius, 12px);
+  text-decoration: none;
+  color: var(--text, #1a1a2e);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-xs, 0 1px 2px rgba(0,0,0,0.03));
+}
+.cat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover, 0 8px 28px rgba(255, 107, 53, 0.1));
+  border-color: var(--primary, #FF6B35);
+}
+.cat-card .cat-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.cat-card .cat-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.cat-card .cat-desc {
+  font-size: 0.78rem;
+  color: var(--muted, #6b7280);
+  line-height: 1.4;
+}
+
+/* ---------- 领取中心（第三方口令站区块） ---------- */
+.home-links-panel {
+  margin-top: 0.4rem;
+}
+.home-links-panel .panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text, #1a1a2e);
+  margin-bottom: 0.8rem;
+}
+.home-links-panel .panel-title::before {
+  content: '';
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--primary, #FF6B35);
+}
+.home-links-panel .panel-tip {
+  font-size: 0.78rem;
+  color: var(--muted, #6b7280);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* iframe 区块高度（覆盖 iframe.css 的全屏布局，仅作用于首页） */
+#app.home-app .iframe-container {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: calc(100vh - 50px);
+  border-radius: var(--radius-lg, 16px);
+  overflow: hidden;
+  border: 1px solid var(--border-light, #f0eeeb);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.06));
+}
+#app.home-app .index-iframe {
+  width: 100%;
+  height: calc(100vh - 50px);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 移动端：保持区块式（覆盖 iframe.css 的撑满逻辑） */
+@media (max-width: 1023px) {
+  #app.home-app {
+    padding: 0.75rem 0.75rem 1.5rem;
+  }
+  #app.home-app .iframe-container {
+    height: calc(100%vh - 50px);
+    border-radius: var(--radius, 12px);
+  }
+  #app.home-app .home-hero {
+    padding: 1.6rem 1.2rem;
+  }
+}
+@media (max-width: 480px) {
+  #app.home-app .iframe-container {
+    height: calc(100%vh - 50px);
+  }
+  .home-cats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}

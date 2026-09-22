@@ -59,6 +59,42 @@
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website",
         "name": "券宝"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "热门优惠分类",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "美团外卖红包", "url": "https://jdjdndn.github.io/meituan-waimai.html" },
+          { "@type": "ListItem", "position": 2, "name": "淘宝闪购", "url": "https://jdjdndn.github.io/taobao-shangou.html" },
+          { "@type": "ListItem", "position": 3, "name": "电商优惠（京东/拼多多）", "url": "https://jdjdndn.github.io/jingdong-pdd.html" },
+          { "@type": "ListItem", "position": 4, "name": "携程旅行", "url": "https://jdjdndn.github.io/chengxie.html" },
+          { "@type": "ListItem", "position": 5, "name": "美团酒店旅行", "url": "https://jdjdndn.github.io/meituan-jiuLv.html" },
+          { "@type": "ListItem", "position": 6, "name": "滴滴出行", "url": "https://jdjdndn.github.io/didi.html" },
+          { "@type": "ListItem", "position": 7, "name": "连锁餐饮", "url": "https://jdjdndn.github.io/liansuocanyin.html" },
+          { "@type": "ListItem", "position": 8, "name": "号卡办理专区", "url": "https://jdjdndn.github.io/haoka.html" },
+          { "@type": "ListItem", "position": 9, "name": "随身WiFi专区", "url": "https://jdjdndn.github.io/wifi.html" },
+          { "@type": "ListItem", "position": 10, "name": "会员优惠专区", "url": "https://jdjdndn.github.io/huiyuan.html" }
+        ]
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://jdjdndn.github.io/#website",
+      "name": "券宝",
+      "url": "https://jdjdndn.github.io/",
+      "description": "券宝优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器",
+      "inLanguage": "zh-CN",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://jdjdndn.github.io/huodong.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
       }
     }
     </script>
@@ -124,6 +160,7 @@
     <!-- CSS 同步加载，消除页面闪烁 -->
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./home.css" />
     <script src="./common-page.js"></script>
     <script src="./page-progress.js"></script>
     <script src="./dark-toggle.js"></script>
@@ -137,23 +174,52 @@
     <!-- 页面加载进度条 -->
     <page-progress></page-progress>
 
-    <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
-      <!-- SEO: 视觉隐藏的 h1（页面以 iframe 为主，h1 供搜索引擎识别） -->
+    <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app" class="home-app">
+      <!-- SEO: 视觉隐藏的 h1 -->
       <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">券宝 — 优惠券聚合平台</h1>
 
-      <!-- iframe 内容区（Web Component，Shadow DOM 样式隔离） -->
-      <div class="iframe-container">
-        <common-page
-          class="index-iframe"
-          src="https://kzurl18.cn/tHj1ww"
-          title="优惠券平台"
-        ></common-page>
-      </div>
+      <!-- 自有内容主体：Hero + 搜索（提交到活动大厅深链） -->
+      <section class="home-hero" style="display: none;">
+        <h2 class="hero-title">全网热门优惠，一站式领取</h2>
+        <p class="hero-subtitle">覆盖外卖、出行、购物、酒旅、餐饮、号卡等场景，复制口令或点击直达，天天更新</p>
+        <form class="home-search" action="./huodong.html" method="get" role="search">
+          <input type="search" name="q" placeholder="搜索优惠，如：美团、爱奇艺、话费…" aria-label="搜索优惠" />
+          <button type="submit">搜索</button>
+        </form>
+      </section>
+
+      <!-- 热门优惠分类（与 JSON-LD mainEntity 对应，自有可索引入口） -->
+      <nav class="home-cats" aria-label="热门优惠分类" style="display: none;">
+        <a class="cat-card" href="./meituan-waimai.html"><span class="cat-icon">🍜</span><span class="cat-name">美团外卖</span><span class="cat-desc">天天领红包，新客立减</span></a>
+        <a class="cat-card" href="./taobao-shangou.html"><span class="cat-icon">🛒</span><span class="cat-name">淘宝闪购</span><span class="cat-desc">限时秒杀超值购</span></a>
+        <a class="cat-card" href="./jingdong-pdd.html"><span class="cat-icon">🛍️</span><span class="cat-name">京东 / 拼多多</span><span class="cat-desc">电商大促优惠</span></a>
+        <a class="cat-card" href="./chengxie.html"><span class="cat-icon">✈️</span><span class="cat-name">携程旅行</span><span class="cat-desc">机票酒店立减</span></a>
+        <a class="cat-card" href="./meituan-jiuLv.html"><span class="cat-icon">🏨</span><span class="cat-name">美团酒旅</span><span class="cat-desc">酒店民宿特惠</span></a>
+        <a class="cat-card" href="./didi.html"><span class="cat-icon">🚕</span><span class="cat-name">滴滴出行</span><span class="cat-desc">打车代驾优惠</span></a>
+        <a class="cat-card" href="./liansuocanyin.html"><span class="cat-icon">🍔</span><span class="cat-name">连锁餐饮</span><span class="cat-desc">肯德基瑞幸等优惠</span></a>
+        <a class="cat-card" href="./haoka.html"><span class="cat-icon">📱</span><span class="cat-name">号卡办理</span><span class="cat-desc">低至19元/月</span></a>
+        <a class="cat-card" href="./wifi.html"><span class="cat-icon">📶</span><span class="cat-name">随身WiFi</span><span class="cat-desc">大流量便携上网</span></a>
+        <a class="cat-card" href="./huiyuan.html"><span class="cat-icon">👑</span><span class="cat-name">会员优惠</span><span class="cat-desc">视频音乐网盘会员</span></a>
+        <a class="cat-card" href="./huodong.html"><span class="cat-icon">🎁</span><span class="cat-name">全部优惠</span><span class="cat-desc">搜索全站优惠活动</span></a>
+        <a class="cat-card" href="./article/index.html"><span class="cat-icon">📚</span><span class="cat-name">省钱攻略</span><span class="cat-desc">800+ 篇攻略教程</span></a>
+      </nav>
+
+      <!-- 优惠领取中心（第三方口令站，保留功能、降级为页面区块） -->
+      <section class="home-links-panel">
+        <div class="panel-title" style="display: none;">优惠领取中心<span class="panel-tip">口令码领取 · 约10秒到账</span></div>
+        <div class="iframe-container">
+          <common-page
+            class="index-iframe"
+            src="https://kzurl18.cn/tHj1ww"
+            title="优惠券平台"
+          ></common-page>
+        </div>
+      </section>
 
     </div></div>
 
     <!-- 移动端暗色切换按钮 -->
-    <dark-toggle></dark-toggle>
+    <!-- <dark-toggle></dark-toggle> -->
 
     <!-- 底部导航栏 -->
     <site-nav position="footer"></site-nav>

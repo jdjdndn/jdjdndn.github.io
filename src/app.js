@@ -289,6 +289,16 @@ const init = async () => {
   loadData();
   switchTab(getActiveTab());
 
+  // URL ?q= 深链搜索（SEO/GEO：搜索结果可被搜索引擎/AI 直接链接访问）
+  const urlQuery = new URLSearchParams(window.location.search).get('q');
+  if (urlQuery && urlQuery.trim()) {
+    const searchInputEl = $('#search-input');
+    if (searchInputEl) {
+      searchInputEl.value = urlQuery.trim();
+      handleSearch();
+    }
+  }
+
   const existingTimestamp = tabContent.querySelector('.last-updated');
   if (!existingTimestamp) {
     const ts = document.createElement('div');

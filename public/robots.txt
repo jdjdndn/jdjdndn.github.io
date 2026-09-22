@@ -6,12 +6,17 @@ Allow: /llms-full.txt
 Disallow: /sw.js
 
 # AI 爬虫（GEO 优化）
+# OpenAI
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic / Claude
 User-agent: ClaudeBot
 Allow: /
 
@@ -21,25 +26,57 @@ Allow: /
 User-agent: Anthropic-ai
 Allow: /
 
+# Google AI
 User-agent: Google-Extended
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
+# 字节跳动（豆包/即梦）
 User-agent: Bytespider
 Allow: /
 
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
+# Amazon
 User-agent: Amazonbot
 Allow: /
 
+# Apple
 User-agent: Applebot-Extended
 Allow: /
 
+# Meta AI
 User-agent: Meta-ExternalAgent
 Allow: /
 
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# 通用爬虫 / 内容聚合（被多家 AI 使用）
 User-agent: Diffbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+User-agent: omgilibot
+Allow: /
+
+# 其他 AI 搜索
+User-agent: YouBot
+Allow: /
+
+User-agent: SeekrBot
 Allow: /
 
 Sitemap: https://jdjdndn.github.io/sitemap.xml

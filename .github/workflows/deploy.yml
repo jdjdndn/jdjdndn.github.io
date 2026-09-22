@@ -28,6 +28,16 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      # 质量门禁：SEO 审计 0 错误 0 警告（含 JSON-LD/llms 检查），失败则中止部署
+      - name: SEO 审计门禁
+        run: node scripts/seo-audit.cjs
+
+      # 质量门禁：关键页面 Playwright 冒烟（无 JS 错误 / JSON-LD 可解析 / 关键元素存在）
+      - name: Playwright 冒烟测试
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/smoke-test.cjs
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -28,7 +28,22 @@ function getAllHtmlFiles() {
       files.push(path.join(SRC_DIR, f));
     }
   }
+  // 文章目录（src/article/）
+  const articleDir = path.join(SRC_DIR, 'article');
+  if (fs.existsSync(articleDir)) {
+    for (const f of fs.readdirSync(articleDir)) {
+      if (f.endsWith('.html')) {
+        files.push(path.join(articleDir, f));
+      }
+    }
+  }
   return files;
+}
+
+// noindex 页面（组件加载页等）豁免完整 SEO 检查
+function isNoindexPage(filePath, content) {
+  if (path.basename(filePath) === 'common-page.html') return true;
+  return /<meta name="robots"[^>]*content="[^"]*noindex/.test(content);
 }
 
 function readFile(filePath) {
@@ -271,14 +286,22 @@ function checkPerformanceSeo(filePath, content) {
 function checkGeoOptimization(filePath, content) {
   const name = path.basename(filePath);
 
-  // 检查 llms.txt（仅首页）
-  if (name === 'index.html') {
-    const llmsPath = path.join(PUBLIC_DIR, 'llms.txt');
-    if (!fs.existsSync(llmsPath)) {
+  // 检查 llms.txt（仅站点首页 src/index.html）
+  // llms.txt / llms-full.txt 现由构建时生成（vite.config.js generate-llms 插件输出到 dist/），
+  // 因此同时检查 dist 产物与 public 静态文件
+  if (filePath === path.join(SRC_DIR, 'index.html')) {
+    const llmsCandidates = [
+      path.join(PUBLIC_DIR, 'llms.txt'),
+      path.join(__dirname, '../dist/llms.txt'),
+    ];
+    if (!llmsCandidates.some((p) => fs.existsSync(p))) {
       report(filePath, 'WARN', 'geo', '缺少 llms.txt（AI 搜索优化）');
     }
-    const llmsFullPath = path.join(PUBLIC_DIR, 'llms-full.txt');
-    if (!fs.existsSync(llmsFullPath)) {
+    const llmsFullCandidates = [
+      path.join(PUBLIC_DIR, 'llms-full.txt'),
+      path.join(__dirname, '../dist/llms-full.txt'),
+    ];
+    if (!llmsFullCandidates.some((p) => fs.existsSync(p))) {
       report(filePath, 'WARN', 'geo', '缺少 llms-full.txt（AI 搜索优化）');
     }
   }
@@ -317,6 +340,11 @@ function main() {
   for (const file of files) {
     const content = readFile(file);
     const name = path.basename(file);
+
+    // noindex 页面（如 common-page.html 组件加载页）跳过完整检查
+    if (isNoindexPage(file, content)) {
+      continue;
+    }
 
     console.log(`── ${name} ──`);
 
@@ -376,7 +404,8 @@ function main() {
   }
 
   console.log('');
-  process.exit(errors.length > 0 ? 1 : 0);
+  // 门禁语义：0 错误 0 警告才算通过（建议级 INFO 放行）
+  process.exit(errors.length > 0 || warns.length > 0 ? 1 : 0);
 }
 
 main();

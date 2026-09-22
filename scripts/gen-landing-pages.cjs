@@ -6,7 +6,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const zlib = require('zlib');
 
 const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/landing-pages.js');
 const DIST_DIR = path.resolve(__dirname, '../dist');
@@ -79,9 +78,25 @@ function parseConfig(filePath) {
 }
 
 function generateHTML(page) {
+  // 转义助手：JSON 字符串转义 / HTML 属性转义 / HTML 文本转义
+  const jsonStr = (v) => JSON.stringify(String(v == null ? '' : v));
+  const escAttr = (v) => String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const escHtml = (v) => String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
   const relatedLinks = page.relatedPages
-    .map((r) => `<a href="${r.url}" class="related-link">${r.label}</a>`)
+    .map((r) => `<a href="${escAttr(r.url)}" class="related-link">${escHtml(r.label)}</a>`)
     .join('\n        ');
+
+  // FAQPage JSON-LD 数据（统一 JSON.stringify 转义）
+  const faqItemsJson = page.faq.length
+    ? JSON.stringify(page.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })), null, 2).split('\n').map((l) => '        ' + l).join('\n')
+    : '';
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -90,25 +105,25 @@ function generateHTML(page) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- SEO -->
-    <title>${page.title}</title>
-    <meta name="description" content="${page.description}" />
-    <meta name="keywords" content="${page.keywords}" />
+    <title>${escHtml(page.title)}</title>
+    <meta name="description" content="${escAttr(page.description)}" />
+    <meta name="keywords" content="${escAttr(page.keywords)}" />
     <meta name="author" content="jdjdndn" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#FF6B35" />
     <link rel="canonical" href="https://jdjdndn.github.io/${page.slug}.html" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/${page.slug}.html" />
-    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/${page.slug}.html" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/" />
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
     <meta name="google" content="notranslate" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jdjdndn.github.io/${page.slug}.html" />
-    <meta property="og:title" content="${page.title}" />
-    <meta property="og:description" content="${page.description}" />
+    <meta property="og:title" content="${escAttr(page.title)}" />
+    <meta property="og:description" content="${escAttr(page.description)}" />
     <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
-    <meta property="og:image:alt" content="${page.heroTitle}" />
+    <meta property="og:image:alt" content="${escAttr(page.heroTitle)}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="zh_CN" />
@@ -116,17 +131,18 @@ function generateHTML(page) {
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${page.title}" />
-    <meta name="twitter:description" content="${page.description}" />
+    <meta name="twitter:title" content="${escAttr(page.title)}" />
+    <meta name="twitter:description" content="${escAttr(page.description)}" />
+    <meta name="twitter:image" content="https://jdjdndn.github.io/og-image.png" />
 
     <!-- JSON-LD 结构化数据 -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "${page.heroTitle}",
-      "description": "${page.description}",
-      "datePublished": "2025-01-01",
+      "name": ${jsonStr(page.heroTitle)},
+      "description": ${jsonStr(page.description)},
+      "datePublished": "2026-09-16",
       "dateModified": "__BUILD_DATE__",
       "url": "https://jdjdndn.github.io/${page.slug}.html",
       "isPartOf": {
@@ -147,7 +163,7 @@ function generateHTML(page) {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://jdjdndn.github.io/" },
-        { "@type": "ListItem", "position": 2, "name": "${page.heroTitle.replace(/^[^\s]+\s/, '')}", "item": "https://jdjdndn.github.io/${page.slug}.html" }
+        { "@type": "ListItem", "position": 2, "name": ${jsonStr(page.heroTitle.replace(/^[^\s]+\s/, ''))}, "item": "https://jdjdndn.github.io/${page.slug}.html" }
       ]
     }
     </script>
@@ -156,7 +172,7 @@ function generateHTML(page) {
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "${page.heroTitle}",
+      "name": ${jsonStr(page.heroTitle)},
       "isPartOf": {
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website"
@@ -177,14 +193,7 @@ ${page.faq.length > 0 ? `
         "cssSelector": [".faq-question", ".faq-answer"]
       },
       "mainEntity": [
-${page.faq.map((item, i) => `        {
-          "@type": "Question",
-          "name": "${item.q}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "${item.a}"
-          }
-        }${i < page.faq.length - 1 ? ',' : ''}`).join('\n')}
+${faqItemsJson}
       ]
     }
     </script>
@@ -289,12 +298,12 @@ ${page.faq.map((item, i) => `        {
   <body>
     <div class="container">
       <nav class="breadcrumb">
-        <a href="./index.html">首页</a> &gt; ${page.heroTitle}
+        <a href="./index.html">首页</a> &gt; ${escHtml(page.heroTitle)}
       </nav>
 
       <div class="hero">
-        <h1>${page.heroTitle}</h1>
-        <p>${page.heroDesc}</p>
+        <h1>${escHtml(page.heroTitle)}</h1>
+        <p>${escHtml(page.heroDesc)}</p>
       </div>
 
       <div class="guide-card">
@@ -314,9 +323,9 @@ ${page.faq.length > 0 ? `
       <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
         <h2>常见问题</h2>
 ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <button class="faq-question" aria-expanded="false" itemprop="name">${item.q}</button>
+          <button class="faq-question" aria-expanded="false" itemprop="name">${escHtml(item.q)}</button>
           <div class="faq-answer" itemscope itemprop="acceptedEntity" itemtype="https://schema.org/Answer">
-            <p itemprop="text">${item.a}</p>
+            <p itemprop="text">${escHtml(item.a)}</p>
           </div>
         </div>`).join('\n')}
       </section>
@@ -330,8 +339,6 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
         });
       </script>
 ` : ''}
-      <div class="related-section">
-
       <div class="related-section">
         <h2>相关页面</h2>
         <div class="related-links">
@@ -348,14 +355,6 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
 </html>`;
 }
 
-function compressFile(filePath) {
-  const content = fs.readFileSync(filePath);
-  // gzip
-  fs.writeFileSync(filePath + '.gz', zlib.gzipSync(content, { level: 9 }));
-  // brotli
-  fs.writeFileSync(filePath + '.br', zlib.brotliCompressSync(content));
-}
-
 function main() {
   const pages = parseConfig(LANDING_PAGES_CONFIG);
   let generated = 0;
@@ -366,12 +365,11 @@ function main() {
     html = html.replace(/__BUILD_DATE__/g, BUILD_DATE);
     const outPath = path.join(DIST_DIR, `${page.slug}.html`);
     fs.writeFileSync(outPath, html, 'utf-8');
-    compressFile(outPath);
     generated++;
     console.log(`  ✓ ${page.slug}.html`);
   }
 
-  console.log(`\n生成 ${generated} 个着陆页（含 gzip + brotli 压缩）`);
+  console.log(`\n生成 ${generated} 个着陆页（GitHub Pages 已自动 gzip，不再输出预压缩副本）`);
 }
 
 main();
