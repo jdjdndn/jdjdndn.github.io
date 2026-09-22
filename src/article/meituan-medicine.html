@@ -1,118 +1,99 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>美团买药享好价 — 在线购药更省钱</title>
-    <meta name="description" content="美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。" />
-    <meta name="keywords" content="美团买药,在线购药,药品优惠,网上买药,美团医药" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
-    <link rel="canonical" href="./meituan-medicine">
-    <link rel="stylesheet" href="../shared.css" />
-    <style>
-      :root { --primary: #FF6B35; --bg: #f8f7f4; --text: #1a1a2e; --text-secondary: #4a5568; --muted: #6b7280; --card: #fff; --border: #e5e2dd; }
-      @media (prefers-color-scheme: dark) { :root { --bg: #0f0f23; --text: #e2e8f0; --text-secondary: #a0aec0; --muted: #94a3b8; --card: #1a1a2e; --border: #2d2d44; } }
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; }
-      .article-container { max-width: 720px; margin: 0 auto; padding: 24px 20px 48px; }
-      h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
-      .article-meta { font-size: 13px; color: var(--muted); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-      .deadline-tag { display: inline-block; padding: 4px 12px; background: #FEE2E2; color: #DC2626; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
-      .article-body h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; color: var(--text); }
-      .article-body p { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
-      .article-body ul { list-style: none; margin-bottom: 20px; }
-      .article-body ul li { position: relative; padding: 10px 0 10px 20px; font-size: 15px; color: var(--text-secondary); border-bottom: 1px solid #f0eeeb; }
-      .article-body ul li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
-      .steps-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 20px 0; }
-      .steps-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-      .step-item { display: flex; gap: 12px; margin-bottom: 12px; }
-      .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-      .step-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; padding-top: 2px; }
-      .cta-box { background: linear-gradient(135deg, #FFF4ED 0%, var(--card) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 32px 0; text-align: center; }
-      .cta-btn { display: inline-block; padding: 12px 32px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-size: 15px; font-weight: 700; }
-      .cta-btn:hover { background: #E55A2B; }
-      .back-link { display: inline-flex; align-items: center; margin-top: 32px; font-size: 14px; color: var(--primary); text-decoration: none; }
-    </style>
-      <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-      {
-            "@type": "Question",
-            "name": "美团买药怎么领优惠券？",
-            "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "在美团App搜索药品后，进入商品详情页即可查看可用优惠券，部分处方药和非处方药均有专属满减券，新用户还能享受首单优惠。"
-            }
-      },
-      {
-            "@type": "Question",
-            "name": "美团买药配送时效是多久？",
-            "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "普通药品一般30分钟至1小时送达，24小时药店支持夜间配送，急用药可选择加急配送服务，具体以门店实际配送范围为准。"
-            }
-      },
-      {
-            "@type": "Question",
-            "name": "美团买药和其他平台比有什么优势？",
-            "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "美团买药依托本地药店即时配送优势，覆盖门店广、配送速度快，同时有定期会员日和品类专场活动，综合性价比高。"
-            }
-      }
-]
-    }
-    </script>
-  <meta name="author" content="券宝">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="./meituan-medicine.html">
+<title>美团买药享好价 — 在线购药更省钱</title>
+<meta name="description" content="美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。">
+<meta name="keywords" content="美团买药,在线购药,药品优惠,网上买药,美团医药">
+<meta name="theme-color" content="#FF6B35">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="券宝">
 <meta property="og:locale" content="zh_CN">
-
+<meta property="og:type" content="article">
+<meta property="og:title" content="美团买药享好价 — 在线购药更省钱">
+<meta property="og:description" content="美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。">
+<meta property="og:url" content="./meituan-medicine.html">
+<meta property="og:image" content="../og-image.png">
+<meta property="og:site_name" content="券宝">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="美团买药享好价 — 在线购药更省钱">
 <meta name="twitter:description" content="美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。">
 <meta name="twitter:image" content="../og-image.png">
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ItemList",
+  "@type": "Article",
+  "headline": "美团买药享好价 — 在线购药更省钱",
+  "description": "美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。",
+  "author": { "@type": "Organization", "name": "券宝" },
+  "publisher": { "@type": "Organization", "name": "券宝" },
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "url": "./meituan-medicine.html",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "./meituan-medicine.html" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
   "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "url": "https://wcbblll.99kami.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "url": "https://wcbblll.99kami.com/"
-    }
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "../" },
+    { "@type": "ListItem", "position": 2, "name": "省钱攻略", "item": "./" },
+    { "@type": "ListItem", "position": 3, "name": "美团买药享好价 — 在线购药更省钱", "item": "./meituan-medicine.html" }
   ]
 }
 </script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "券宝",
-  "url": "../",
-  "logo": "../logo.png",
-  "description": "帮你花少钱过好生活的省钱攻略站"
-}
-</script>
+<style>
+:root{--primary:#FF6B35;--primary2:#FF6B35;--dark:#FF6B35;--ink:#1a2233;--sub:#5b6472;--line:#e6ecf5;--bg:#f4f7fc;--card:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+friend-links{margin: 0 auto;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px;}
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 55%,var(--primary2) 100%);border-radius:0 0 22px 22px;padding:36px max(22px, calc(50% - 400px)) 28px;color:#fff;box-shadow:0 8px 22px #FF6B3540;}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.5px;}
+.hero h1{font-size:26px;line-height:1.35;margin:14px 0 8px;font-weight:800;color:#fff;}
+.hero p.lead{font-size:15px;color:rgba(255,255,255,.85);}
+.deadline{margin:14px 0 0;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.4);color:#fff;font-size:14px;font-weight:600;padding:9px 12px;border-radius:10px;display:inline-block;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:18px 0;box-shadow:0 2px 10px #FF6B3515;}
+h2{font-size:19px;margin:4px 0 12px;padding-left:10px;border-left:4px solid var(--primary);line-height:1.4;}
+h3{font-size:16px;margin:14px 0 6px;color:var(--dark);}
+p{font-size:15px;color:#2b3444;margin:8px 0;}
+ul{margin:10px 0;padding-left:20px;}
+li{font-size:15px;color:#2b3444;margin:6px 0;}
+.cta{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;text-align:center;padding:22px 18px;border-radius:12px;margin:16px 0;}
+.cta a{color:#fff;font-size:18px;font-weight:700;text-decoration:none;display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.mini{background:#FF6B3510;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2b3444;}
+.mini b{color:var(--primary);}
+.faq h3{margin-top:16px;}
+.faq h3::before{content:"Q";display:inline-block;background:var(--primary);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:13px;margin-right:8px;font-weight:800;}
+.faq p{padding-left:30px;}
+.disc{font-size:12.5px;color:#64748b;background:#f1f5f9;border-radius:10px;padding:10px 12px;margin-top:12px;}
+.footer{text-align:center;color:#94a3b8;border-top:1px dashed var(--line);margin-top:24px;padding-top:16px;font-size:12.5px;}
+@media(max-width:480px){.hero h1{font-size:22px;}.grid2{grid-template-columns:1fr;}}
+</style>
 </head>
-  <body>
-    <article class="article-container">
-      <h1>美团买药享好价 — 在线购药更省钱</h1>
-      <div class="article-meta">券宝编辑部 &middot; 2026年9月更新</div>
-      <div class="deadline-tag">⏰ 活动截止：2026年12月31日</div>
+<body>
+<header class="hero">
+  <span class="tag">专属优惠</span>
+  <h1>美团买药享好价 — 在线购药更省钱</h1>
+  <p class="lead">美团买药享好价活动，在线购买常用药品，价格比线下药店更优惠。</p>
+  
+</header>
 
-      <div class="article-body">
-        <p>生病买药是生活中不可避免的需求，但每次去药店总担心价格不透明、排队耗时。美团买药享好价活动，让你足不出户就能以更实惠的价格买到常用药品，涵盖感冒发烧、肠胃不适、皮肤护理等多种品类，价格比线下药店更透明、更优惠。</p>
+<div style="max-width:760px;margin:0 auto;padding:12px 16px 0;">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;color:#666;text-decoration:none;font-size:14px;">
+    ← 返回首页
+  </a>
+</div>
 
-        <h2>为什么选择美团买药</h2>
+<main class="wrap">
+<section class="card"><p>生病买药是生活中不可避免的需求，但每次去药店总担心价格不透明、排队耗时。美团买药享好价活动，让你足不出户就能以更实惠的价格买到常用药品，涵盖感冒发烧、肠胃不适、皮肤护理等多种品类，价格比线下药店更透明、更优惠。</p>
+
+        </section><section class="card"><h2>为什么选择美团买药</h2>
         <ul>
           <li><strong>价格透明更实惠</strong> — 在线药品价格一目了然，平台补贴让常用药比线下药店便宜不少，再也不用担心被"看人定价"</li>
           <li><strong>配送快速到家</strong> — 下单后最快30分钟送达，急用药品不再需要跑药房排队，节省宝贵时间</li>
@@ -138,7 +119,7 @@
         <p>美团买药不仅价格实惠，还有专业药师在线答疑，用药前可以先咨询，安全更有保障。家庭常备药品建议提前囤货，遇到换季流感高峰期也不用慌张。</p>
 
         
-        <h2>常见问题</h2>
+        </section><section class="card"><h2>常见问题</h2><div class="faq">
         <h3>Q：美团买药怎么领优惠券？</h3>
         <p>A：在美团App搜索药品后，进入商品详情页即可查看可用优惠券，部分处方药和非处方药均有专属满减券，新用户还能享受首单优惠。</p>
         <h3>Q：美团买药配送时效是多久？</h3>
@@ -146,16 +127,18 @@
         <h3>Q：美团买药和其他平台比有什么优势？</h3>
         <p>A：美团买药依托本地药店即时配送优势，覆盖门店广、配送速度快，同时有定期会员日和品类专场活动，综合性价比高。</p>
 
-        <div class="cta-box">
-          <p>立享在线购药好价，常用药品下单即省</p>
-          <a href="https://wcbblll.99kami.com/" class="cta-btn">立即打开美团买药</a>
-          <a href="https://wcbblll.99kami.com/" class="cta-btn" style="margin-left:8px;background:#3b82f6;">领取更多优惠</a>
-        </div>
-      </div>
+        </div></section>
 
-      <a href="../index.html" class="back-link">&larr; 返回首页</a>
-    <friend-links></friend-links>
-    </article>
-      <script src="../friend-links.js"></script>
+  <div class="cta">
+    <a href="https://wcbblll.99kami.com/" target="_blank" rel="noopener">领取优惠立即办理</a>
+  </div>
+
+  <p class="disc">说明：本页面为优惠信息整理，具体优惠内容、价格与活动规则以官方页面实时展示为准。</p>
+  <p class="footer">© 券宝省钱攻略 · 帮你花少钱过好生活</p>
+
+  <friend-links></friend-links>
+</main>
+
+<script src="../friend-links.js"></script>
 </body>
 </html>

@@ -1,117 +1,99 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>美团外卖节 — 天天领红包，美食更省钱</title>
-    <meta name="description" content="美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。" />
-    <meta name="keywords" content="美团外卖节,美团红包,外卖优惠,美团省钱,美食外卖" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
-    <link rel="canonical" href="./meituan-food-festival.html">
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="美团外卖节 — 天天领红包，美食更省钱" />
-    <meta property="og:description" content="美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领。" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="../shared.css" />
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "外卖红包每天几点更新？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "一般每天凌晨0点刷新新红包。建议早上打开领一次，午高峰前确认红包状态，避免到下单时才发现红包已用完或过期。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "红包能和满减叠加吗？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "外卖红包通常可以和商家满减叠加使用，下单时系统自动计算最优组合。但部分特价商品不与红包叠加，以页面显示为准。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "新用户红包和老用户红包冲突吗？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "不冲突。新用户首单立减是一次性的新人福利，老用户天天领红包是长期活动。新用户用完首单后，后续每天领老用户红包即可。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "红包金额随机吗？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "是的，每天领取的红包金额随机，从0.5元到15元不等。坚持每天领，碰到大红包那天多下几单最划算。"
-      }
-    }
-  ]
-}
-    </script>
-    
-    <style>
-      :root { --primary: #FF6B35; --bg: #f8f7f4; --text: #1a1a2e; --text-secondary: #4a5568; --muted: #6b7280; --card: #ffffff; --border: #e5e2dd; }
-      @media (prefers-color-scheme: dark) { :root { --bg: #0f0f23; --text: #e2e8f0; --text-secondary: #a0aec0; --muted: #94a3b8; --card: #1a1a2e; --border: #2d2d44; } }
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; }
-      .article-container { max-width: 720px; margin: 0 auto; padding: 24px 20px 48px; }
-      .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-      .breadcrumb a { color: var(--primary); text-decoration: none; }
-      h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
-      .article-meta { font-size: 13px; color: var(--muted); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-      .article-body h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; color: var(--text); }
-      .article-body p { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
-      .article-body ul { list-style: none; margin-bottom: 20px; }
-      .article-body ul li { position: relative; padding: 10px 0 10px 20px; font-size: 15px; color: var(--text-secondary); border-bottom: 1px solid #f0eeeb; }
-      .article-body ul li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
-      .steps-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 20px 0; }
-      .steps-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-      .step-item { display: flex; gap: 12px; margin-bottom: 12px; }
-      .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-      .step-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; padding-top: 2px; }
-      .cta-box { background: linear-gradient(135deg, #FFF4ED 0%, var(--card) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 32px 0; text-align: center; }
-      .cta-box p { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
-      .cta-btn { display: inline-block; padding: 12px 32px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-size: 15px; font-weight: 700; transition: all 0.2s; }
-      .cta-btn:hover { background: #E55A2B; transform: translateY(-1px); }
-      .back-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 32px; font-size: 14px; color: var(--primary); text-decoration: none; }
-    </style>
-  <meta name="author" content="券宝">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="./meituan-food-festival.html">
+<title>美团外卖节 — 天天领红包，美食更省钱</title>
+<meta name="description" content="美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。">
+<meta name="keywords" content="美团外卖节,美团红包,外卖优惠,美团省钱,美食外卖">
+<meta name="theme-color" content="#FF6B35">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="券宝">
 <meta property="og:locale" content="zh_CN">
-
+<meta property="og:type" content="article">
+<meta property="og:title" content="美团外卖节 — 天天领红包，美食更省钱">
+<meta property="og:description" content="美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。">
+<meta property="og:url" content="./meituan-food-festival.html">
+<meta property="og:image" content="../og-image.png">
+<meta property="og:site_name" content="券宝">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="美团外卖节 — 天天领红包，美食更省钱">
 <meta name="twitter:description" content="美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。">
 <meta name="twitter:image" content="../og-image.png">
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "券宝",
-  "url": "../",
-  "logo": "../logo.png",
-  "description": "帮你花少钱过好生活的省钱攻略站"
+  "@type": "Article",
+  "headline": "美团外卖节 — 天天领红包，美食更省钱",
+  "description": "美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。",
+  "author": { "@type": "Organization", "name": "券宝" },
+  "publisher": { "@type": "Organization", "name": "券宝" },
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "url": "./meituan-food-festival.html",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "./meituan-food-festival.html" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "../" },
+    { "@type": "ListItem", "position": 2, "name": "省钱攻略", "item": "./" },
+    { "@type": "ListItem", "position": 3, "name": "美团外卖节 — 天天领红包，美食更省钱", "item": "./meituan-food-festival.html" }
+  ]
+}
+</script>
+<style>
+:root{--primary:#FF6B35;--primary2:#FF6B35;--dark:#FF6B35;--ink:#1a2233;--sub:#5b6472;--line:#e6ecf5;--bg:#f4f7fc;--card:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+friend-links{margin: 0 auto;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px;}
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 55%,var(--primary2) 100%);border-radius:0 0 22px 22px;padding:36px max(22px, calc(50% - 400px)) 28px;color:#fff;box-shadow:0 8px 22px #FF6B3540;}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.5px;}
+.hero h1{font-size:26px;line-height:1.35;margin:14px 0 8px;font-weight:800;color:#fff;}
+.hero p.lead{font-size:15px;color:rgba(255,255,255,.85);}
+.deadline{margin:14px 0 0;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.4);color:#fff;font-size:14px;font-weight:600;padding:9px 12px;border-radius:10px;display:inline-block;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:18px 0;box-shadow:0 2px 10px #FF6B3515;}
+h2{font-size:19px;margin:4px 0 12px;padding-left:10px;border-left:4px solid var(--primary);line-height:1.4;}
+h3{font-size:16px;margin:14px 0 6px;color:var(--dark);}
+p{font-size:15px;color:#2b3444;margin:8px 0;}
+ul{margin:10px 0;padding-left:20px;}
+li{font-size:15px;color:#2b3444;margin:6px 0;}
+.cta{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;text-align:center;padding:22px 18px;border-radius:12px;margin:16px 0;}
+.cta a{color:#fff;font-size:18px;font-weight:700;text-decoration:none;display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.mini{background:#FF6B3510;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2b3444;}
+.mini b{color:var(--primary);}
+.faq h3{margin-top:16px;}
+.faq h3::before{content:"Q";display:inline-block;background:var(--primary);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:13px;margin-right:8px;font-weight:800;}
+.faq p{padding-left:30px;}
+.disc{font-size:12.5px;color:#64748b;background:#f1f5f9;border-radius:10px;padding:10px 12px;margin-top:12px;}
+.footer{text-align:center;color:#94a3b8;border-top:1px dashed var(--line);margin-top:24px;padding-top:16px;font-size:12.5px;}
+@media(max-width:480px){.hero h1{font-size:22px;}.grid2{grid-template-columns:1fr;}}
+</style>
 </head>
-  <body>
-    <article class="article-container">
-      <nav class="breadcrumb">
-        <a href="../index.html">首页</a><span> &gt; </span><a href="./index.html">省钱攻略</a><span> &gt; </span>美团外卖节
-      </nav>
+<body>
+<header class="hero">
+  <span class="tag">专属优惠</span>
+  <h1>美团外卖节 — 天天领红包，美食更省钱</h1>
+  <p class="lead">美团外卖节活动进行中，每天领取外卖红包，新客立减，老客天天领，美食外卖更划算。</p>
+  
+</header>
 
-      <h1>美团外卖节 — 天天领红包，美食更省钱</h1>
-      <div class="article-meta">券宝编辑部 &middot; 2026年9月更新 &middot; 有效期至2027年12月</div>
+<div style="max-width:760px;margin:0 auto;padding:12px 16px 0;">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;color:#666;text-decoration:none;font-size:14px;">
+    ← 返回首页
+  </a>
+</div>
 
-      <div class="article-body">
-        <p>美团外卖节是美团平台推出的长期优惠活动，用户每天都可以领取外卖红包，下单时自动抵扣。无论是新用户还是老用户，都能享受实实在在的优惠。</p>
+<main class="wrap">
+<section class="card"><p>美团外卖节是美团平台推出的长期优惠活动，用户每天都可以领取外卖红包，下单时自动抵扣。无论是新用户还是老用户，都能享受实实在在的优惠。</p>
 
-        <h2>红包类型</h2>
+        </section><section class="card"><h2>红包类型</h2>
         <ul>
           <li><strong>新用户红包</strong> — 首次使用美团外卖的用户可享受立减优惠，最高可减20元</li>
           <li><strong>老用户天天领</strong> — 每天登录即可领取随机红包，金额0.5-15元不等</li>
@@ -137,7 +119,7 @@
 
         <p>建议养成每天领红包的习惯，积少成多，一个月能省下不少外卖钱。外卖节活动持续到2027年底，时间充裕。</p>
 
-        <h2>红包使用技巧</h2>
+        </section><section class="card"><h2>红包使用技巧</h2>
         <ul>
           <li><strong>每天0点领新</strong> — 红包每天凌晨刷新，建议早上领一次，确保午晚高峰有红包可用。</li>
           <li><strong>大额红包当天用</strong> — 领到5元以上的大额红包当天就用，小金额红包攒着凑单。</li>
@@ -145,7 +127,7 @@
           <li><strong>别为红包凑单</strong> — 红包有满减门槛，为用红包点了吃不完的量浪费更大。按需点餐。</li>
         </ul>
 
-        <h2>常见问题</h2>
+        </section><section class="card"><h2>常见问题</h2><div class="faq">
         <h3>Q：外卖红包每天几点更新？</h3>
         <p>A：一般每天凌晨0点刷新新红包。建议早上打开领一次，午高峰前确认红包状态，避免到下单时才发现红包已用完或过期。</p>
         <h3>Q：红包能和满减叠加吗？</h3>
@@ -157,15 +139,18 @@
 
 
 
-        <div class="cta-box">
-          <p>立即领取美团外卖红包，今天下单立省！</p>
-          <a href="https://wcbblll.99kami.com/" class="cta-btn">打开美团领红包</a>
-        </div>
-      </div>
+        </div></section>
 
-      <a href="../index.html" class="back-link">&larr; 返回首页</a>
-    <friend-links></friend-links>
-    </article>
-      <script src="../friend-links.js"></script>
+  <div class="cta">
+    <a href="https://wcbblll.99kami.com/" target="_blank" rel="noopener">领取优惠立即办理</a>
+  </div>
+
+  <p class="disc">说明：本页面为优惠信息整理，具体优惠内容、价格与活动规则以官方页面实时展示为准。</p>
+  <p class="footer">© 券宝省钱攻略 · 帮你花少钱过好生活</p>
+
+  <friend-links></friend-links>
+</main>
+
+<script src="../friend-links.js"></script>
 </body>
 </html>

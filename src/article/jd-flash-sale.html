@@ -1,116 +1,108 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>京东限时优惠页 — 手慢无的超值折扣</title>
-    <meta name="description" content="京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。" />
-    <meta name="keywords" content="京东限时优惠,京东折扣,限时抢购,京东特惠,限时特价" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
-    <link rel="canonical" href="./jd-flash-sale.html">
-    <link rel="stylesheet" href="../shared.css" />
-    <style>
-      :root { --primary: #FF6B35; --bg: #f8f7f4; --text: #1a1a2e; --text-secondary: #4a5568; --muted: #6b7280; --card: #fff; --border: #e5e2dd; }
-      @media (prefers-color-scheme: dark) { :root { --bg: #0f0f23; --text: #e2e8f0; --text-secondary: #a0aec0; --muted: #94a3b8; --card: #1a1a2e; --border: #2d2d44; } }
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; }
-      .article-container { max-width: 720px; margin: 0 auto; padding: 24px 20px 48px; }
-      h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
-      .article-meta { font-size: 13px; color: var(--muted); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-      .deadline-tag { display: inline-block; padding: 4px 12px; background: #FEE2E2; color: #DC2626; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
-      .article-body h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; color: var(--text); }
-      .article-body p { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; }
-      .article-body ul { list-style: none; margin-bottom: 20px; }
-      .article-body ul li { position: relative; padding: 10px 0 10px 20px; font-size: 15px; color: var(--text-secondary); border-bottom: 1px solid #f0eeeb; }
-      .article-body ul li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
-      .steps-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 20px 0; }
-      .steps-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-      .step-item { display: flex; gap: 12px; margin-bottom: 12px; }
-      .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-      .step-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; padding-top: 2px; }
-      .cta-box { background: linear-gradient(135deg, #FFF4ED 0%, var(--card) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 32px 0; text-align: center; }
-      .cta-btn { display: inline-block; padding: 12px 32px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-size: 15px; font-weight: 700; }
-      .cta-btn:hover { background: #E55A2B; }
-      .back-link { display: inline-flex; align-items: center; margin-top: 32px; font-size: 14px; color: var(--primary); text-decoration: none; }
-    </style>
-  
-    <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "京东限时页是什么？", "acceptedAnswer": {"@type": "Answer", "text": "京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。"}}, {"@type": "Question", "name": "京东限时页怎么使用？", "acceptedAnswer": {"@type": "Answer", "text": "提前关注限时优惠页面，查看即将开售的商品列表，对感兴趣的商品设置开售提醒，确保不错过抢购时间。；开售前几分钟就进入商品页面，提前选好规格型号，将商品加入购物车，等开售时间一到立即提交订单。；使用京东支付或微信支付等快捷支付方式，减少支付环节的时间消耗，提高抢购成功率。。"}}, {"@type": "Question", "name": "活动/优惠什么时候截止？", "acceptedAnswer": {"@type": "Answer", "text": "活动截止：长期有效，具体以平台页面显示为准。"}}, {"@type": "Question", "name": "京东限时页领取或使用时要注意什么？", "acceptedAnswer": {"@type": "Answer", "text": "京东活动覆盖自营商品、秒杀、外卖、团购等场景，先领平台券再叠加店铺活动，通常能拿到更低价。下单前仔细核对券的使用范围与有效期，部分券仅限指定商品或品类。"}}]}
-    </script>
-  <meta name="author" content="券宝">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="./jd-flash-sale.html">
+<title>京东限时优惠页 — 手慢无的超值折扣</title>
+<meta name="description" content="京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。">
+<meta name="keywords" content="京东限时优惠,京东折扣,限时抢购,京东特惠,限时特价">
+<meta name="theme-color" content="#FF6B35">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="券宝">
 <meta property="og:locale" content="zh_CN">
-
+<meta property="og:type" content="article">
+<meta property="og:title" content="京东限时优惠页 — 手慢无的超值折扣">
+<meta property="og:description" content="京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。">
+<meta property="og:url" content="./jd-flash-sale.html">
+<meta property="og:image" content="../og-image.png">
+<meta property="og:site_name" content="券宝">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="京东限时优惠页 — 手慢无的超值折扣">
 <meta name="twitter:description" content="京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。">
 <meta name="twitter:image" content="../og-image.png">
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "券宝",
-  "url": "../",
-  "logo": "../logo.png",
-  "description": "帮你花少钱过好生活的省钱攻略站"
+  "@type": "Article",
+  "headline": "京东限时优惠页 — 手慢无的超值折扣",
+  "description": "京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。",
+  "author": { "@type": "Organization", "name": "券宝" },
+  "publisher": { "@type": "Organization", "name": "券宝" },
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "url": "./jd-flash-sale.html",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "./jd-flash-sale.html" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "../" },
+    { "@type": "ListItem", "position": 2, "name": "省钱攻略", "item": "./" },
+    { "@type": "ListItem", "position": 3, "name": "京东限时优惠页 — 手慢无的超值折扣", "item": "./jd-flash-sale.html" }
+  ]
+}
+</script>
+<style>
+:root{--primary:#FF6B35;--primary2:#FF6B35;--dark:#FF6B35;--ink:#1a2233;--sub:#5b6472;--line:#e6ecf5;--bg:#f4f7fc;--card:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+friend-links{margin: 0 auto;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px;}
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 55%,var(--primary2) 100%);border-radius:0 0 22px 22px;padding:36px max(22px, calc(50% - 400px)) 28px;color:#fff;box-shadow:0 8px 22px #FF6B3540;}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.5px;}
+.hero h1{font-size:26px;line-height:1.35;margin:14px 0 8px;font-weight:800;color:#fff;}
+.hero p.lead{font-size:15px;color:rgba(255,255,255,.85);}
+.deadline{margin:14px 0 0;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.4);color:#fff;font-size:14px;font-weight:600;padding:9px 12px;border-radius:10px;display:inline-block;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:18px 0;box-shadow:0 2px 10px #FF6B3515;}
+h2{font-size:19px;margin:4px 0 12px;padding-left:10px;border-left:4px solid var(--primary);line-height:1.4;}
+h3{font-size:16px;margin:14px 0 6px;color:var(--dark);}
+p{font-size:15px;color:#2b3444;margin:8px 0;}
+ul{margin:10px 0;padding-left:20px;}
+li{font-size:15px;color:#2b3444;margin:6px 0;}
+.cta{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;text-align:center;padding:22px 18px;border-radius:12px;margin:16px 0;}
+.cta a{color:#fff;font-size:18px;font-weight:700;text-decoration:none;display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.mini{background:#FF6B3510;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2b3444;}
+.mini b{color:var(--primary);}
+.faq h3{margin-top:16px;}
+.faq h3::before{content:"Q";display:inline-block;background:var(--primary);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:13px;margin-right:8px;font-weight:800;}
+.faq p{padding-left:30px;}
+.disc{font-size:12.5px;color:#64748b;background:#f1f5f9;border-radius:10px;padding:10px 12px;margin-top:12px;}
+.footer{text-align:center;color:#94a3b8;border-top:1px dashed var(--line);margin-top:24px;padding-top:16px;font-size:12.5px;}
+@media(max-width:480px){.hero h1{font-size:22px;}.grid2{grid-template-columns:1fr;}}
+</style>
 </head>
-  <body>
-    <article class="article-container">
-      <h1>京东限时优惠页 — 手慢无的超值折扣</h1>
-      <div class="article-meta">券宝编辑部 &middot; 2026年9月更新</div>
-      <div class="deadline-tag">⏰ 活动截止：长期有效</div>
+<body>
+<header class="hero">
+  <span class="tag">专属优惠</span>
+  <h1>京东限时优惠页 — 手慢无的超值折扣</h1>
+  <p class="lead">京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。</p>
+  
+</header>
 
-      <div class="article-body">
-        <p>限时优惠是京东最具吸引力的促销形式之一，每天都有大量商品以超低折扣限时开售。从数码3C到生鲜食品，从服饰鞋包到家居日用，几乎你能想到的商品品类都会出现在限时优惠中。想要用最少的钱买到心仪的商品？限时优惠页就是你的战场。</p>
+<div style="max-width:760px;margin:0 auto;padding:12px 16px 0;">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;color:#666;text-decoration:none;font-size:14px;">
+    ← 返回首页
+  </a>
+</div>
 
-        <h2>限时优惠的独特魅力</h2>
-        <ul>
-          <li><strong>折扣力度大，价格超惊喜</strong> — 限时优惠的商品折扣通常在5折以下，部分爆款甚至低至1折，平时舍不得买的大牌商品在这里都能以白菜价入手。</li>
-          <li><strong>品类覆盖全，选择多样</strong> — 数码产品、家电、服装、美妆、食品、图书等品类全覆盖，无论你是什么类型的消费者，都能找到适合自己的优惠。</li>
-          <li><strong>更新频率高，每天有惊喜</strong> — 限时优惠每天更新多场，不同时段有不同的商品开售，让你每次打开都有新发现。</li>
-        </ul>
+<main class="wrap">
 
-        <div class="steps-box">
-          <h3>抢购技巧</h3>
-          <div class="step-item">
-            <div class="step-num">1</div>
-            <div class="step-text">提前关注限时优惠页面，查看即将开售的商品列表，对感兴趣的商品设置开售提醒，确保不错过抢购时间。</div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">2</div>
-            <div class="step-text">开售前几分钟就进入商品页面，提前选好规格型号，将商品加入购物车，等开售时间一到立即提交订单。</div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">3</div>
-            <div class="step-text">使用京东支付或微信支付等快捷支付方式，减少支付环节的时间消耗，提高抢购成功率。</div>
-          </div>
-        </div>
 
-        <p>限时优惠的竞争非常激烈，热门商品往往在开售几秒内就被抢光。除了上述技巧外，保持良好的网络环境也很重要。建议使用WiFi网络，并提前清理手机内存，确保APP运行流畅。另外，多设备同时抢购也能提高成功率。</p>
+  <div class="cta">
+    <a href="https://wcbblll.99kami.com/" target="_blank" rel="noopener">领取优惠立即办理</a>
+  </div>
 
-        <div class="cta-box">
-          <p>想要抢到超值好物？立即进入京东限时优惠页，开启你的抢购之旅！</p>
-          <a href="https://wcbblll.99kami.com/" class="cta-btn">进入限时优惠页</a>
-        </div>
-      </div>
+  <p class="disc">说明：本页面为优惠信息整理，具体优惠内容、价格与活动规则以官方页面实时展示为准。</p>
+  <p class="footer">© 券宝省钱攻略 · 帮你花少钱过好生活</p>
 
-          <section class="faq-section" style="margin:30px 0 8px;padding:22px 20px;background:var(--card,#ffffff);border:1px solid var(--border,#e5e2dd);border-radius:14px;">
-      <h2 style="font-size:19px;font-weight:700;margin:0 0 12px;color:var(--text,#1a1a2e);">常见问题</h2>
-      <h3 style="font-size:15px;font-weight:700;margin:14px 0 6px;color:var(--text,#1a1a2e);">京东限时页是什么？</h3>
-      <p style="font-size:14px;line-height:1.8;margin:0 0 4px;color:var(--text-secondary,#4a5568);">京东限时优惠页，汇集正在进行的限时折扣活动，价格低到让你心动。</p>
-      <h3 style="font-size:15px;font-weight:700;margin:14px 0 6px;color:var(--text,#1a1a2e);">京东限时页怎么使用？</h3>
-      <p style="font-size:14px;line-height:1.8;margin:0 0 4px;color:var(--text-secondary,#4a5568);">提前关注限时优惠页面，查看即将开售的商品列表，对感兴趣的商品设置开售提醒，确保不错过抢购时间。；开售前几分钟就进入商品页面，提前选好规格型号，将商品加入购物车，等开售时间一到立即提交订单。；使用京东支付或微信支付等快捷支付方式，减少支付环节的时间消耗，提高抢购成功率。。</p>
-      <h3 style="font-size:15px;font-weight:700;margin:14px 0 6px;color:var(--text,#1a1a2e);">活动/优惠什么时候截止？</h3>
-      <p style="font-size:14px;line-height:1.8;margin:0 0 4px;color:var(--text-secondary,#4a5568);">活动截止：长期有效，具体以平台页面显示为准。</p>
-      <h3 style="font-size:15px;font-weight:700;margin:14px 0 6px;color:var(--text,#1a1a2e);">京东限时页领取或使用时要注意什么？</h3>
-      <p style="font-size:14px;line-height:1.8;margin:0 0 4px;color:var(--text-secondary,#4a5568);">京东活动覆盖自营商品、秒杀、外卖、团购等场景，先领平台券再叠加店铺活动，通常能拿到更低价。下单前仔细核对券的使用范围与有效期，部分券仅限指定商品或品类。</p>
-    </section>
+  <friend-links></friend-links>
+</main>
 
-<a href="../index.html" class="back-link">&larr; 返回首页</a>
-    <friend-links></friend-links>
-    </article>
-      <script src="../friend-links.js"></script>
+<script src="../friend-links.js"></script>
 </body>
 </html>

@@ -1,167 +1,108 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>寄快递优惠攻略 — 券宝省钱攻略</title>
-    <meta name="description" content="顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。" />
-    <meta name="keywords" content="寄快递优惠,快递寄件折扣,顺丰快递,圆通快递,申通快递,韵达快递,快递怎么寄便宜" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="./express-guide.html">
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="寄快递优惠攻略 — 券宝省钱攻略" />
-    <meta property="og:description" content="顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜。" />
-    <meta property="og:url" content="./express-guide.html">
-    <meta property="og:image" content="../og-image.png" />
-    <meta property="og:site_name" content="券宝" />
-    <link rel="stylesheet" href="../shared.css" />
-    <style>
-      .article-page { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
-      .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-      .breadcrumb a { color: var(--primary); text-decoration: none; }
-      .breadcrumb a:hover { text-decoration: underline; }
-      .breadcrumb span { margin: 0 6px; }
-      .article-title { font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.4; }
-      .article-meta { font-size: 13px; color: var(--muted); margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-      .article-body h2 { font-size: 18px; font-weight: 700; color: var(--text); margin: 28px 0 12px; }
-      .article-body p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
-      .article-body ul { padding-left: 20px; margin-bottom: 14px; }
-      .article-body li { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
-      .article-body strong { color: var(--text); }
-      .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 14px; }
-      .compare-table th { background: var(--primary-light); color: var(--text); font-weight: 600; padding: 10px 12px; text-align: left; border: 1px solid var(--border); }
-      .compare-table td { padding: 10px 12px; border: 1px solid var(--border); color: var(--text-secondary); }
-      .compare-table tr:nth-child(even) td { background: var(--bg-elevated); }
-      .tip-box { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 14px 16px; margin: 20px 0; }
-      .tip-box p { margin: 0; font-size: 14px; color: var(--text); }
-      .cta-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 32px; padding: 12px 24px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px; transition: all 0.2s; }
-      .cta-link:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,107,53,0.25); }
-    </style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "寄快递优惠攻略",
-      "description": "顺丰、圆通、申通、韵达等多家快递寄件折扣，一件省几块。",
-      "url": "./express-guide.html",
-      "author": { "@type": "Organization", "name": "券宝" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "券宝",
-        "url": "https://jdjdndn.github.io"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "./express-guide.html"
-      },
-      "datePublished": "2025-01-15",
-      "dateModified": "2025-01-15"
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "为什么在线下单比直接去快递点便宜？",
-          "acceptedAnswer": { "@type": "Answer", "text": "线上渠道有新用户券、满减券和平台补贴，加上聚合平台具备批量议价能力，同一条线路的协议价通常比线下网点挂牌价低2-5元。到店寄件多按散客价结算，没有这些优惠叠加，所以同样的快递线上更划算。" }
-        },
-        {
-          "@type": "Question",
-          "name": "顺丰怎么寄最省钱？",
-          "acceptedAnswer": { "@type": "Answer", "text": "不急的件优先选顺丰特惠，比标准快递便宜3-5元、只慢一天；再配合顺丰App新用户首单立减券和公众号月度券，价格能压到更低。急件才用顺丰标快，别为了时效多花冤枉钱。" }
-        },
-        {
-          "@type": "Question",
-          "name": "大件重物应该走快递还是物流？",
-          "acceptedAnswer": { "@type": "Answer", "text": "超过20公斤的大件建议走德邦物流、跨越速运等零担物流，首公斤低至5元，比普通快递按续重累加便宜很多；小件轻包裹走快递更划算。打包时尽量压缩体积，轻抛货按体积重量计费，体积越小越省钱。" }
-        },
-        {
-          "@type": "Question",
-          "name": "电商退换货时运费怎么省？",
-          "acceptedAnswer": { "@type": "Answer", "text": "有运费险的订单退货时，使用平台合作快递寄回，运费险会直接抵扣或理赔；没有运费险的件，用聚合比价选最便宜的快递下单，比直接找商家到付更省。寄出前保留好运单和包裹照片。" }
-        },
-        {
-          "@type": "Question",
-          "name": "经常寄件的人有什么长期省钱方法？",
-          "acceptedAnswer": { "@type": "Answer", "text": "每月寄件3次以上的用户，可以同时装2-3个快递App轮流吃新人券；寄件量大的企业或个人办理月结账户，月单量越大折扣越高，最低可到5折。日常选圆通、申通、韵达这类性价比快递，急件再切换顺丰。" }
-        }
-      ]
-    }
-    </script>
-  <meta name="author" content="券宝">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="./express-guide.html">
+<title>寄快递优惠攻略 — 券宝省钱攻略</title>
+<meta name="description" content="顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。">
+<meta name="keywords" content="寄快递优惠,快递寄件折扣,顺丰快递,圆通快递,申通快递,韵达快递,快递怎么寄便宜">
+<meta name="theme-color" content="#6366f1">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="券宝">
 <meta property="og:locale" content="zh_CN">
-
+<meta property="og:type" content="article">
+<meta property="og:title" content="寄快递优惠攻略 — 券宝省钱攻略">
+<meta property="og:description" content="顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。">
+<meta property="og:url" content="./express-guide.html">
+<meta property="og:image" content="../og-image.png">
+<meta property="og:site_name" content="券宝">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="寄快递优惠攻略 — 券宝省钱攻略">
 <meta name="twitter:description" content="顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。">
 <meta name="twitter:image" content="../og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "寄快递优惠攻略 — 券宝省钱攻略",
+  "description": "顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。",
+  "author": { "@type": "Organization", "name": "券宝" },
+  "publisher": { "@type": "Organization", "name": "券宝" },
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "url": "./express-guide.html",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "./express-guide.html" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "../" },
+    { "@type": "ListItem", "position": 2, "name": "省钱攻略", "item": "./" },
+    { "@type": "ListItem", "position": 3, "name": "寄快递优惠攻略 — 券宝省钱攻略", "item": "./express-guide.html" }
+  ]
+}
+</script>
+<style>
+:root{--primary:#6366f1;--primary2:#6366f1;--dark:#6366f1;--ink:#1a2233;--sub:#5b6472;--line:#e6ecf5;--bg:#f4f7fc;--card:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+friend-links{margin: 0 auto;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px;}
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 55%,var(--primary2) 100%);border-radius:0 0 22px 22px;padding:36px max(22px, calc(50% - 400px)) 28px;color:#fff;box-shadow:0 8px 22px #6366f140;}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.5px;}
+.hero h1{font-size:26px;line-height:1.35;margin:14px 0 8px;font-weight:800;color:#fff;}
+.hero p.lead{font-size:15px;color:rgba(255,255,255,.85);}
+.deadline{margin:14px 0 0;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.4);color:#fff;font-size:14px;font-weight:600;padding:9px 12px;border-radius:10px;display:inline-block;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:18px 0;box-shadow:0 2px 10px #6366f115;}
+h2{font-size:19px;margin:4px 0 12px;padding-left:10px;border-left:4px solid var(--primary);line-height:1.4;}
+h3{font-size:16px;margin:14px 0 6px;color:var(--dark);}
+p{font-size:15px;color:#2b3444;margin:8px 0;}
+ul{margin:10px 0;padding-left:20px;}
+li{font-size:15px;color:#2b3444;margin:6px 0;}
+.cta{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;text-align:center;padding:22px 18px;border-radius:12px;margin:16px 0;}
+.cta a{color:#fff;font-size:18px;font-weight:700;text-decoration:none;display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.mini{background:#6366f110;border-radius:10px;padding:10px 12px;font-size:13.5px;color:#2b3444;}
+.mini b{color:var(--primary);}
+.faq h3{margin-top:16px;}
+.faq h3::before{content:"Q";display:inline-block;background:var(--primary);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:13px;margin-right:8px;font-weight:800;}
+.faq p{padding-left:30px;}
+.disc{font-size:12.5px;color:#64748b;background:#f1f5f9;border-radius:10px;padding:10px 12px;margin-top:12px;}
+.footer{text-align:center;color:#94a3b8;border-top:1px dashed var(--line);margin-top:24px;padding-top:16px;font-size:12.5px;}
+@media(max-width:480px){.hero h1{font-size:22px;}.grid2{grid-template-columns:1fr;}}
+</style>
 </head>
-  <body>
-    <div class="article-page">
-      <nav class="breadcrumb" aria-label="面包屑导航">
-        <a href="../index.html">首页</a><span>&gt;</span>
-        <a href="../article/">省钱攻略</a><span>&gt;</span>
-        寄快递优惠攻略
-      </nav>
+<body>
+<header class="hero">
+  <span class="tag">专属优惠</span>
+  <h1>寄快递优惠攻略 — 券宝省钱攻略</h1>
+  <p class="lead">顺丰、圆通、申通、韵达等多家快递寄件折扣，在线下单比到店便宜，一件省几块。各大快递时效与价格对比。</p>
+  
+</header>
 
-      <h1 class="article-title">寄快递优惠攻略</h1>
-      <div class="article-meta">券宝编辑部 · 生活省钱</div>
+<div style="max-width:760px;margin:0 auto;padding:12px 16px 0;">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;color:#666;text-decoration:none;font-size:14px;">
+    ← 返回首页
+  </a>
+</div>
 
-      <div class="article-body">
-        <h2>在线下单比到店便宜</h2>
-        <p>寄快递最简单的省钱方式就是<strong>在线下单而不是到店寄件</strong>。通过快递公司官方 App、小程序或第三方聚合平台下单，价格通常比直接去快递点便宜 2-5 元。这是因为线上渠道经常发放新用户券和寄件折扣券，而且部分平台有批量议价能力。</p>
+<main class="wrap">
 
-        <h2>四大快递对比</h2>
-        <table class="compare-table">
-          <thead>
-            <tr><th>快递公司</th><th>首重价格</th><th>时效</th><th>特点</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>顺丰</strong></td><td>12-13元</td><td>次日达</td><td>速度快、服务好，但价格最高</td></tr>
-            <tr><td><strong>圆通</strong></td><td>8-10元</td><td>2-3天</td><td>性价比高，网点覆盖广</td></tr>
-            <tr><td><strong>申通</strong></td><td>7-9元</td><td>2-3天</td><td>价格实惠，适合普通包裹</td></tr>
-            <tr><td><strong>韵达</strong></td><td>7-9元</td><td>2-4天</td><td>网点最多，偏远地区也能到</td></tr>
-          </tbody>
-        </table>
 
-        <h2>顺丰怎么寄更便宜</h2>
-        <p>顺丰虽然品质最好，但价格也最高。省钱技巧：使用顺丰 App 新用户首单立减券、关注顺丰公众号领取月度优惠券、选择"顺丰特惠"（比标准快递便宜 3-5 元，时效慢一天）。如果不急，特惠是最佳选择。</p>
+  <div class="cta">
+    <a href="https://wcbblll.99kami.com/" target="_blank" rel="noopener">领取优惠立即办理</a>
+  </div>
 
-        <h2>各快递优惠渠道</h2>
-        <ul>
-          <li><strong>官方渠道</strong>：各快递公司 App 和小程序经常有新人券和满减活动</li>
-          <li><strong>聚合平台</strong>：快递100、快递鸟等平台可以一键比价，找到最低价</li>
-          <li><strong>闲鱼代发</strong>：搜索"快递代发"，有人通过月结账号帮你发，价格更低</li>
-          <li><strong>电商退换货</strong>：淘宝/京东退货时使用平台合作快递，运费险直接抵扣</li>
-        </ul>
+  <p class="disc">说明：本页面为优惠信息整理，具体优惠内容、价格与活动规则以官方页面实时展示为准。</p>
+  <p class="footer">© 券宝省钱攻略 · 帮你花少钱过好生活</p>
 
-        <div class="tip-box">
-          <p><strong>省钱小贴士：</strong>寄大件或重物时，走物流比快递更便宜。德邦物流、跨越速运是大件首选，首公斤价格低至 5 元。</p>
-        </div>
+  <friend-links></friend-links>
+</main>
 
-        <h2>总结</h2>
-        <p>寄快递省钱核心：在线下单优于到店、根据需求选择快递公司、善用新人券和优惠活动。日常寄件选圆通/申通/韵达性价比最高，急件选顺丰特惠。每月寄件超过 3 次的用户，建议下载 2-3 个快递 App 轮流使用新人优惠。</p>
-
-        <h2>常见问题</h2>
-        <h3>Q：为什么在线下单比直接去快递点便宜？</h3>
-        <p>A：线上渠道有新用户券、满减券和平台补贴，加上聚合平台具备批量议价能力，同一条线路的协议价通常比线下网点挂牌价低2-5元。到店寄件多按散客价结算，没有这些优惠叠加，所以同样的快递线上更划算。</p>
-        <h3>Q：顺丰怎么寄最省钱？</h3>
-        <p>A：不急的件优先选顺丰特惠，比标准快递便宜3-5元、只慢一天；再配合顺丰App新用户首单立减券和公众号月度券，价格能压到更低。急件才用顺丰标快，别为了时效多花冤枉钱。</p>
-        <h3>Q：大件重物应该走快递还是物流？</h3>
-        <p>A：超过20公斤的大件建议走德邦物流、跨越速运等零担物流，首公斤低至5元，比普通快递按续重累加便宜很多；小件轻包裹走快递更划算。打包时尽量压缩体积，轻抛货按体积重量计费，体积越小越省钱。</p>
-        <h3>Q：电商退换货时运费怎么省？</h3>
-        <p>A：有运费险的订单退货时，使用平台合作快递寄回，运费险会直接抵扣或理赔；没有运费险的件，用聚合比价选最便宜的快递下单，比直接找商家到付更省。寄出前保留好运单和包裹照片。</p>
-        <h3>Q：经常寄件的人有什么长期省钱方法？</h3>
-        <p>A：每月寄件3次以上的用户，可以同时装2-3个快递App轮流吃新人券；寄件量大的企业或个人办理月结账户，月单量越大折扣越高，最低可到5折。日常选圆通、申通、韵达这类性价比快递，急件再切换顺丰。</p>
-      </div>
-
-      <a class="cta-link" href="../index.html">前往券宝首页查看更多优惠 →</a>
-
-      <friend-links></friend-links>
-    </div>
-    <script src="../friend-links.js"></script>
-  </body>
+<script src="../friend-links.js"></script>
+</body>
 </html>
