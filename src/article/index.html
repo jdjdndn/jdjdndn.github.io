@@ -1,75 +1,380 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>省钱攻略 — 券宝优惠指南</title>
-    <meta name="description" content="券宝省钱攻略文章合集：外卖红包、电商优惠、影视会员、音乐会员、出行省钱、生活服务等实用指南。" />
-    <meta name="keywords" content="省钱攻略,优惠指南,外卖红包,电商优惠,影视会员,音乐会员,出行省钱,生活服务" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://jdjdndn.github.io/article/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="省钱攻略 — 券宝优惠指南" />
-    <meta property="og:description" content="券宝省钱攻略文章合集，涵盖外卖、电商、会员、号卡、出行等全方位省钱指南。" />
-    <meta property="og:url" content="https://jdjdndn.github.io/article/" />
-    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg, #fff); color: var(--text, #333); line-height: 1.6; }
-      :root { --primary: #FF6B35; --bg: #fff; --text: #333; --muted: #888; --card-bg: #f8f8f8; --border: #eee; }
-      @media (prefers-color-scheme: dark) { :root { --bg: #1a1a1a; --text: #e0e0e0; --muted: #999; --card-bg: #2a2a2a; --border: #333; } }
-      .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-      h1 { font-size: 28px; margin-bottom: 8px; }
-      .subtitle { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>省钱攻略大全 — 券宝优惠指南 | 会员折扣·好物推荐·号卡办理</title>
+<meta name="description" content="券宝省钱攻略文章合集：影视会员、音乐会员、网盘会员、外卖红包、电商优惠、号卡办理、好物推荐等全方位省钱指南，帮你花少钱过好生活。">
+<meta name="keywords" content="省钱攻略,优惠指南,会员折扣,影视会员,音乐会员,网盘会员,外卖红包,电商优惠,号卡办理,好物推荐">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jdjdndn.github.io/article/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="省钱攻略大全 — 券宝优惠指南">
+<meta property="og:description" content="涵盖影视、音乐、网盘、外卖、电商、号卡、好物等全方位省钱指南。">
+<meta property="og:url" content="https://jdjdndn.github.io/article/">
+<meta property="og:image" content="https://jdjdndn.github.io/og-image.png">
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #eef2ff;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+    --primary-light: #312e81;
+  }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
 
-      /* Tab 导航样式 */
-      .tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-      .tab-btn { padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px; background: var(--card-bg); color: var(--text); font-size: 14px; cursor: pointer; transition: all .2s; white-space: nowrap; }
-      .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
-      .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+/* 顶部导航 */
+.top-nav {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.top-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-logo:hover { color: var(--primary-dark); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--primary); }
 
-      /* 文章列表样式 */
-      .tab-content { display: none; }
-      .tab-content.active { display: block; }
-      .cat-title { font-size: 17px; font-weight: 600; padding-bottom: 8px; border-bottom: 2px solid var(--primary); margin-bottom: 12px; }
-      .article-list { list-style: none; }
-      .article-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
-      .article-item:last-child { border-bottom: none; }
-      .article-item a { text-decoration: none; color: var(--text); display: block; }
-      .article-item a:hover h3 { color: var(--primary); }
-      .article-item h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; transition: color .2s; }
-      .article-item p { font-size: 13px; color: var(--muted); }
+/* Hero区域 */
+.hero {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.hero p {
+  font-size: 17px;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat-num {
+  font-size: 28px;
+  font-weight: 800;
+}
+.hero-stat-label {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
 
-      /* 分页样式 */
-      .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
-      .page-btn { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); color: var(--text); font-size: 13px; cursor: pointer; transition: all .2s; }
-      .page-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
-      .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-      .page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-      .page-info { font-size: 13px; color: var(--muted); }
+/* 主容器 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-      .back-link { display: inline-block; margin-top: 32px; color: var(--primary); text-decoration: none; font-size: 14px; }
-      .back-link:hover { text-decoration: underline; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>省钱攻略</h1>
-      <p class="subtitle">实用优惠指南，帮你省下每一分钱</p>
+/* 分类Tab导航 */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 76px;
+  z-index: 50;
+}
+.tab-btn {
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
 
-      <!-- Tab 导航 -->
-      <nav class="tab-nav" id="tabNav">
-        <button class="tab-btn active" data-tab="tab1">👑 影视会员</button>
-        <button class="tab-btn" data-tab="tab2">🎵 音乐会员</button>
-        <button class="tab-btn" data-tab="tab3">📚 教育学习</button>
-        <button class="tab-btn" data-tab="tab4">🔧 效率工具</button>
-        <button class="tab-btn" data-tab="tab5">🎮 游戏娱乐</button>
-        <button class="tab-btn" data-tab="tab6">🍜 生活服务</button>
-        <button class="tab-btn" data-tab="tab7">📦 其他会员</button>
-        <button class="tab-btn" data-tab="tab8">🎁 优惠活动</button>
+/* Tab内容区 */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-      </nav>
+.cat-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--primary);
+  display: inline-block;
+}
 
+/* 文章卡片网格 */
+.article-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.article-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all .25s ease;
+  box-shadow: var(--shadow-sm);
+}
+.article-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+.article-item a {
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+  padding: 20px;
+  height: 100%;
+}
+.article-item h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  transition: color .2s;
+}
+.article-item:hover h3 { color: var(--primary); }
+.article-item p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.page-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.page-btn:hover:not(:disabled):not(.active) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.page-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 0 4px;
+}
+
+/* 底部 */
+.footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 60px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--primary); }
+.footer-copy {
+  font-size: 13px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* 友情链接居中 */
+friend-links {
+  display: block;
+  margin: 40px auto 0;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .hero { padding: 40px 20px; }
+  .hero h1 { font-size: 26px; }
+  .hero p { font-size: 15px; }
+  .hero-stats { gap: 24px; }
+  .hero-stat-num { font-size: 22px; }
+  .container { padding: 24px 16px; }
+  .article-list { grid-template-columns: 1fr; gap: 16px; }
+  .tab-nav { top: 76px; padding: 12px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <span>💰</span> 券宝省钱攻略
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">首页</a>
+      <a href="#tab1">会员折扣</a>
+      <a href="#tab9">号卡办理</a>
+      <a href="#tab10">好物推荐</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero区域 -->
+<section class="hero">
+  <h1>省钱攻略大全</h1>
+  <p>影视会员、音乐会员、网盘会员、外卖红包、电商优惠、号卡办理、好物推荐 —— 一站式省钱指南，帮你花少钱过好生活。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">10+</div>
+      <div class="hero-stat-label">分类频道</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">200+</div>
+      <div class="hero-stat-label">优惠攻略</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">每日更新</div>
+      <div class="hero-stat-label">最新优惠</div>
+    </div>
+  </div>
+</section>
+
+<!-- 主内容 -->
+<div class="container">
+
+  <!-- Tab 导航 -->
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="tab1">👑 影视会员</button>
+    <button class="tab-btn" data-tab="tab2">🎵 音乐会员</button>
+    <button class="tab-btn" data-tab="tab3">📚 教育学习</button>
+    <button class="tab-btn" data-tab="tab4">🔧 效率工具</button>
+    <button class="tab-btn" data-tab="tab5">🎮 游戏娱乐</button>
+    <button class="tab-btn" data-tab="tab6">🍜 生活服务</button>
+    <button class="tab-btn" data-tab="tab7">📦 其他会员</button>
+    <button class="tab-btn" data-tab="tab8">🎁 优惠活动</button>
+    <button class="tab-btn" data-tab="tab9">号卡</button>
+    <button class="tab-btn" data-tab="tab10">好物分享</button>
+  </nav>
+
+  <!-- Tab 内容 -->
       <!-- Tab 内容 -->
       <div class="tab-content active" id="tab1">
         <h2 class="cat-title">👑 影视会员</h2>
@@ -519,55 +824,6 @@
           <li class="article-item"><a href="./三只松鼠.html"><h3>三只松鼠会员省钱攻略</h3><p>三只松鼠会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./coco都可.html"><h3>Coco都可会员省钱攻略</h3><p>Coco都可会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
           <li class="article-item"><a href="./一鸣真鲜奶.html"><h3>一鸣真鲜奶会员省钱攻略</h3><p>一鸣真鲜奶会员优惠办理，券宝专属折扣，比官方便宜</p></a></li>
-          <li class="article-item"><a href="./guangxiu-card.html"><h3>中国联通广绣卡套餐详情</h3><p>中国联通广绣卡39元月租享155G全国通用流量+100分钟，无合约可发广东</p></a></li>
-          <li class="article-item"><a href="./minnan-card.html"><h3>中国广电闽南卡套餐详情</h3><p>闽南卡39元月租享180G全国通用+150分钟，仅发福建，12个月合约</p></a></li>
-          <li class="article-item"><a href="./dingci-card.html"><h3>联通定瓷卡套餐详情</h3><p>定瓷卡39元月租享200G流量+200分钟，可发全国，18-30周岁办理</p></a></li>
-          <li class="article-item"><a href="./huanma-card.html"><h3>广电欢马卡套餐详情</h3><p>欢马卡29元月租享192G通用流量，首月免费，18-65周岁全国可发</p></a></li>
-          <li class="article-item"><a href="./tianma-card.html"><h3>中国广电天马卡套餐详情</h3><p>天马卡29元月租享192G通用流量，首月免费，18-65周岁全国可发</p></a></li>
-          <li class="article-item"><a href="./hanxiu-card.html"><h3>中国电信汉绣卡套餐详情</h3><p>汉绣卡39元月租享130G通用+30G定向+200分钟，仅限湖北四城办理</p></a></li>
-          <li class="article-item"><a href="./kangding-card.html"><h3>中国联通康定卡套餐详情</h3><p>康定卡首月1元500G，第2-48个月39元550G+300分钟，四川专属</p></a></li>
-          <li class="article-item"><a href="./changting-card.html"><h3>中国联通长汀卡套餐详情</h3><p>长汀卡首月49元370G，2-12月39元，江西专属6个月合约</p></a></li>
-          <li class="article-item"><a href="./nankai-card.html"><h3>中国联通南开卡套餐详情</h3><p>南开卡29元月租享100G全国通用+200分钟，重庆专属18-60周岁</p></a></li>
-          <li class="article-item"><a href="./shangkan-card.html"><h3>中国联通上坎卡套餐详情</h3><p>上坎卡39元月租享190G全国通用+200分钟，重庆专属18-60周岁</p></a></li>
-          <li class="article-item"><a href="./dengying-card.html"><h3>中国联通灯影卡套餐详情</h3><p>灯影卡首月免费，次月39元享240G通用+50分钟，四川专属6个月合约</p></a></li>
-          <li class="article-item"><a href="./feichi-card.html"><h3>中国联通飞翅卡套餐详情</h3><p>飞翅卡39元享300G超大流量+100分钟，首月半价半量，需搭配路由器设备</p></a></li>
-          <li class="article-item"><a href="./feichen-card.html"><h3>中国联通飞辰卡套餐详情</h3><p>飞辰卡39元享155G通用+100分钟，赠360G/年通用，18-28周岁全国可发</p></a></li>
-          <li class="article-item"><a href="./feishi-card.html"><h3>中国广电飞狮卡套餐详情</h3><p>飞狮卡29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
-          <li class="article-item"><a href="./feitang-card.html"><h3>中国联通飞塘卡套餐详情</h3><p>飞塘卡39元享200G全国通用+300分钟，前12个月大流量，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./feishi-v4-card.html"><h3>中国广电飞狮卡4.0套餐详情</h3><p>飞狮卡4.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
-          <li class="article-item"><a href="./feiji-card.html"><h3>中国联通飞继卡套餐详情</h3><p>飞继卡29元享280G通用+200分钟，首月全量全价，首充200元立即到账</p></a></li>
-          <li class="article-item"><a href="./feishi-v3-card.html"><h3>中国广电飞狮卡3.0套餐详情</h3><p>飞狮卡3.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
-          <li class="article-item"><a href="./feixiao-card.html"><h3>中国联通飞霄卡套餐详情</h3><p>飞霄卡29元享150G全国通用+200分钟，赠4年视频会员N选1</p></a></li>
-          <li class="article-item"><a href="./feixi-card.html"><h3>中国联通飞希卡套餐详情</h3><p>飞希卡29元享180G全国通用+100分钟，首月半量半价，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./feiyan-card.html"><h3>中国联通飞焱卡套餐详情</h3><p>飞焱卡29元享180G全国通用+100分钟，首月半量半价，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./feishi-v2-card.html"><h3>中国广电飞狮卡2.0套餐详情</h3><p>飞狮卡2.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
-          <li class="article-item"><a href="./feiqin-card.html"><h3>中国联通飞倾卡套餐详情</h3><p>飞倾卡39元享300G国内流量+100分钟，468元包年，需搭配路由器设备</p></a></li>
-          <li class="article-item"><a href="./feisu-card.html"><h3>中国联通飞素卡套餐详情</h3><p>飞素卡39元享240G通用+200分钟，首月全量全价，首充300元</p></a></li>
-          <li class="article-item"><a href="./feique-card.html"><h3>中国联通飞雀卡套餐详情</h3><p>飞雀卡39元享150G通用+200分钟，赠4年会员N选1，无合约</p></a></li>
-          <li class="article-item"><a href="./feichi2-card.html"><h3>中国联通飞驰卡套餐详情</h3><p>飞驰卡39元享200G全国通用+300分钟，前12个月大流量，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./feifen-card.html"><h3>中国联通飞芬卡套餐详情</h3><p>飞芬卡39元享200G+200分钟，600元流量封顶，首充100元</p></a></li>
-          <li class="article-item"><a href="./feishi-v5-card.html"><h3>中国广电飞狮卡5.0套餐详情</h3><p>飞狮卡5.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
-          <li class="article-item"><a href="./luzhou-card.html"><h3>中国移动庐州卡套餐详情</h3><p>庐州卡39元享160G通用+100分钟+100条短信，48个月优惠期，首充100元</p></a></li>
-          <li class="article-item"><a href="./fuqi-card.html"><h3>中国移动福气卡套餐详情</h3><p>福气卡39元享240G+2000分钟，首充200送100，仅发福建五城</p></a></li>
-          <li class="article-item"><a href="./shuixian-card.html"><h3>中国移动水仙卡套餐详情</h3><p>水仙卡29元享230G+500分钟，首充200送100，仅发福建五城</p></a></li>
-          <li class="article-item"><a href="./huanghe-card.html"><h3>中国移动黄鹤卡套餐详情</h3><p>黄鹤卡39元享150G流量，首充100元，仅发湖北七城，36个月自动续约</p></a></li>
-          <li class="article-item"><a href="./zhiyi-card.html"><h3>中国移动知意卡套餐详情</h3><p>知意卡39元享55G通用流量，首充100送960，48个月合约，18-70周岁</p></a></li>
-          <li class="article-item"><a href="./yunmeng-card.html"><h3>中国电信云梦卡套餐详情</h3><p>云梦卡39元享160G+200分钟，首充200元，仅发湖北七城，24个月自动续约</p></a></li>
-          <li class="article-item"><a href="./taishan-card.html"><h3>中国电信泰山卡套餐详情</h3><p>泰山卡38元享190G+300分钟，首充100元，无合约期，省内流量为主</p></a></li>
-          <li class="article-item"><a href="./jingting-card.html"><h3>中国电信敬亭卡套餐详情</h3><p>敬亭卡39元享150G通用+100分钟，首充100元，48个月优惠期，全国接听免费</p></a></li>
-          <li class="article-item"><a href="./yunduo-card.html"><h3>中国电信云朵卡套餐详情</h3><p>云朵卡39元享180G+200分钟，首充100元，无合约期，24个月自动续约</p></a></li>
-          <li class="article-item"><a href="./zhixin-card.html"><h3>中国电信知信卡套餐详情</h3><p>知信卡39元享60G通用，通话按0.1元/分钟，首充100元，只发广东，无合约期</p></a></li>
-          <li class="article-item"><a href="./benma-card.html"><h3>中国广电奔马卡套餐详情</h3><p>奔马卡39元享60G通用，首月免费，可办2张副卡，再充100元再赠40G/月持续5年</p></a></li>
-          <li class="article-item"><a href="./fuling-card.html"><h3>中国广电茯苓卡套餐详情</h3><p>茯苓卡29元享200G全国通用，首充200元，首月免月租，可办副卡，36个月优惠期</p></a></li>
-          <li class="article-item"><a href="./junma-card.html"><h3>中国广电骏马卡套餐详情</h3><p>骏马卡29元享192G通用，首充100元，首月免月租，全国接听免费，流量延长至60个月</p></a></li>
-          <li class="article-item"><a href="./qinfeng-card.html"><h3>中国广电秦风卡套餐详情</h3><p>秦风卡38元享190G+300分钟，首充100元，无合约期，只发陕西四城，通用流量可结转</p></a></li>
-          <li class="article-item"><a href="./changan-card.html"><h3>中国广电长安卡套餐详情</h3><p>长安卡29元享100G+100分钟，流量可结转一个月，可办2张副卡，仅限陕西</p></a></li>
-          <li class="article-item"><a href="./juliang-card.html"><h3>中国广电巨量卡套餐详情</h3><p>巨量卡29元享192G通用，长期套餐，可办2张副卡+亲情网，全国接听免费</p></a></li>
-          <li class="article-item"><a href="./huoli-card.html"><h3>中国联通活力卡套餐详情</h3><p>活力卡39元享150G+200分钟，赠爱优腾会员每月N选1，无合约期，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./dayao-card.html"><h3>中国联通大尧卡套餐详情</h3><p>大尧卡39元享180G+200分钟，首充100元，12个月优惠期，全国接听免费，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./fangyuan-card.html"><h3>中国联通方圆卡套餐详情</h3><p>方圆卡39元享240G+200分钟，首充300元，长期套餐，先激活后发货</p></a></li>
-          <li class="article-item"><a href="./hongya-card.html"><h3>中国联通洪崖卡套餐详情</h3><p>洪崖卡19元享100G+200分钟，首充100元，12个月优惠期，上门激活</p></a></li>
-          <li class="article-item"><a href="./jisu-card.html"><h3>中国联通极速卡套餐详情</h3><p>极速卡39元享550G+300分钟，首充100元，4年优惠期，赠会员N选1，仅发四川</p></a></li>
           <li class="article-item"><a href="./iqiyi-vip-guide.html"><h3>爱奇艺会员怎么买最便宜？2025年爱奇会员省钱攻略</h3><p>爱奇艺黄金VIP/星钻会员优惠购买渠道，教你用最少的钱开通爱奇艺会员</p></a></li>
           <li class="article-item"><a href="./tencent-video-vip.html"><h3>腾讯视频VIP会员优惠购买渠道汇总 2025</h3><p>腾讯视频VIP、超级影视VIP优惠购买渠道，教你低价开通腾讯视频会员</p></a></li>
           <li class="article-item"><a href="./netease-music-vip.html"><h3>网易云音乐黑胶会员怎么开通最划算？2025攻略</h3><p>网易云音乐黑胶VIP、家庭组优惠购买渠道，教你低价开通网易云会员</p></a></li>
@@ -581,52 +837,13 @@
           <li class="article-item"><a href="./wechat-read-vip.html"><h3>微信读书会员怎么开通最划算？2025无限卡省钱攻略</h3><p>微信读书无限卡优惠购买渠道，教你低价开通微信读书会员</p></a></li>
           <li class="article-item"><a href="./wps-super-vip.html"><h3>WPS超级会员便宜开通方法 2025</h3><p>WPS超级会员、普通会员优惠购买渠道，教你低价开通WPS会员</p></a></li>
           <li class="article-item"><a href="./ximalaya-vip.html"><h3>喜马拉雅会员优惠购买攻略 2025</h3><p>喜马拉雅VIP会员优惠购买渠道，教你低价开通喜马拉雅会员</p></a></li>
-                    <li class="article-item"><a href="./keep-vip.html"><h3>Keep会员怎么开通最划算？2025省钱攻略</h3><p>Keep会员优惠购买渠道，教你低价开通Keep健身会员</p></a></li>
+          <li class="article-item"><a href="./keep-vip.html"><h3>Keep会员怎么开通最划算？2025省钱攻略</h3><p>Keep会员优惠购买渠道，教你低价开通Keep健身会员</p></a></li>
           <li class="article-item"><a href="./jd-plus-vip.html"><h3>京东PLUS会员怎么买最便宜？2025攻略</h3><p>京东PLUS会员优惠购买渠道，教你低价开通京东PLUS会员</p></a></li>
-                                        <li class="article-item"><a href="./open-cloud-vip.html"><h3>阿里云盘超级会员便宜开通方法 2025</h3><p>阿里云盘SVIP优惠购买渠道，教你低价开通阿里云盘会员</p></a></li>
+          <li class="article-item"><a href="./open-cloud-vip.html"><h3>阿里云盘超级会员便宜开通方法 2025</h3><p>阿里云盘SVIP优惠购买渠道，教你低价开通阿里云盘会员</p></a></li>
           <li class="article-item"><a href="./kugou-music-vip.html"><h3>酷狗音乐豪华VIP会员怎么买便宜？2025攻略</h3><p>酷狗音乐豪华VIP优惠购买渠道，教你低价开通酷狗音乐会员</p></a></li>
           <li class="article-item"><a href="./tianyi-cloud-vip.html"><h3>天翼云盘超级会员便宜开通方法 2025</h3><p>天翼云盘SVIP优惠购买渠道，教你低价开通天翼云盘会员</p></a></li>
           <li class="article-item"><a href="./kuwo-music-vip.html"><h3>酷我音乐会员怎么开通最划算？2025攻略</h3><p>酷我音乐豪华VIP优惠购买渠道，教你低价开通酷我音乐会员</p></a></li>
           <li class="article-item"><a href="./he-cloud-vip.html"><h3>和彩云网盘会员便宜开通方法 2025</h3><p>和彩云SVIP优惠购买渠道，教你低价开通和彩云网盘会员</p></a></li>
-          <li class="article-item"><a href="./camel-backpack.html"><h3>骆驼轻便双肩背包怎么样？36元折叠户外背包测评</h3><p>骆驼CAMEL轻便双肩背包，36元入手，16L容量，可折叠随身带，仿荷拒水防潮</p></a></li>
-          <li class="article-item"><a href="./zespri-kiwi.html"><h3>佳沛新西兰金奇异果怎么样？69.99元12粒特大果中秋礼盒推荐</h3><p>佳沛zespri新西兰金奇异果12粒特大果，维C小金矿，中秋节送礼优选，领券更便宜</p></a></li>
-          <li class="article-item"><a href="./banmuhuatian-shampoo.html"><h3>半亩花田控油蓬松洗发水怎么样？59.9元孙颖莎同款测评</h3><p>半亩花田控油持久蓬松升级款洗发水，孙颖莎同款，半瓶鲜花纯露，72h控油蓬松，28天养头皮</p></a></li>
-          <li class="article-item"><a href="./luzhou-laojiao.html"><h3>泸州老窖泸州老酒坊红耀怎么样？199元2瓶52度浓香型白酒送礼推荐</h3><p>泸州老窖泸州老酒坊红耀，52度浓香型白酒，500mL*2瓶送手提袋，婚宴喜宴节日送礼优选</p></a></li>
-          <li class="article-item"><a href="./yuanqi-xiaoshu-vitamin.html"><h3>元气小树复合B族维生素怎么样？91.1元5瓶一家人的补充量</h3><p>元气小树复合B族维生素片，8种B族+牛磺酸，专利配方，5瓶装一家人的补充量</p></a></li>
-          <li class="article-item"><a href="./deli-pencil-sharpener.html"><h3>得力电动卷笔刀怎么样？18.9元3秒快削小学生开学必备</h3><p>得力电动削笔器，3秒快削，单指按压，大容量可视屑盒，小学生开学必备</p></a></li>
-          <li class="article-item"><a href="./haixiansheng-krill.html"><h3>海狸先生南极磷虾虾仁怎么样？29.89元100g*5袋高蛋白零食</h3><p>海狸先生南极磷虾虾仁，深海纯肉，100g*5袋，肉紧味鲜高蛋白</p></a></li>
-          <li class="article-item"><a href="./canban-toothpaste.html"><h3>参半牙膏怎么样？39.9元3支装去渍美白清新口气</h3><p>参半去渍美白含氟成人牙膏，180g*3支，茉莉茶爽+海风薄荷，清新口气</p></a></li>
-          <li class="article-item"><a href="./boxiangyue-mooncake.html"><h3>伯香村酥皮月饼怎么样？57.9元1320g中秋礼盒4口味</h3><p>伯香村黄庄酥皮月饼，蛋黄/板栗/山楂/五仁各一包，1320g中秋礼盒</p></a></li>
-          <li class="article-item"><a href="./shuiweishi-toilet-cleaner.html"><h3>水卫仕强效洁厕灵怎么样？18.8元3瓶强效去垢</h3><p>水卫仕强效洁厕灵，480g*3瓶，强效去垢，植萃清新，不伤釉面</p></a></li>
-          <li class="article-item"><a href="./panxiangji-mooncake.html"><h3>潘祥记云腿月饼怎么样？33.7元4味16枚云南特色</h3><p>潘祥记云腿月饼，4味16枚500g，云南特色滇式火腿月饼，精美礼盒</p></a></li>
-          <li class="article-item"><a href="./laodingfeng-mooncake.html"><h3>老鼎丰真心如意月饼怎么样？19.9元广式月饼礼盒</h3><p>老鼎丰真心如意月饼，五仁百果葡萄干广式，顺丰包邮，19.9元</p></a></li>
-          <li class="article-item"><a href="./hushang-ayi-bread.html"><h3>沪上阿姨黄油海盐面包怎么样？12.9元45g*7袋</h3><p>沪上阿姨黄油海盐面包，手撕早餐休闲零食，45g*7袋，松软好吃</p></a></li>
-          <li class="article-item"><a href="./tianyuanzhiji-corn.html"><h3>田园知己五寨黄糯玉米怎么样？19.8元真空装非转基因</h3><p>田园知己五寨黄糯玉米段真空装，26年新玉米，非转基因，国企品质，包邮</p></a></li>
-          <li class="article-item"><a href="./xuetian-salt.html"><h3>雪天盐业精制食用盐怎么样？9.9元400g*7袋家用井矿细盐</h3><p>雪天盐业精制食用盐，家用井矿细盐巴，400g*7袋，加碘/无碘可选，包邮</p></a></li>
-          <li class="article-item"><a href="./qinlingzui-kaobo.html"><h3>亲零嘴风干烤脖怎么样？9.9元黑鸭味湖南风味休闲零食</h3><p>亲零嘴风干烤脖黑鸭味，湖南风味，网红休闲零食，非鸭脖子，包邮</p></a></li>
-          <li class="article-item"><a href="./kangenbai-protein.html"><h3>康恩贝蛋白粉怎么样？76元乳清蛋白质粉增强免疫力</h3><p>康恩贝乳清蛋白质粉，有助于增强免疫力，健身老人术后恢复补充蛋白质，包邮</p></a></li>
-          <li class="article-item"><a href="./laoguanjia-cleaner.html"><h3>老管家重油污清洁剂怎么样？17.9元厨房油污净抽油烟机清洁剂</h3><p>老管家重油污清洁剂，厨房油污净，洗抽油烟机灶台，回头客超1百，包邮</p></a></li>
-          <li class="article-item"><a href="./mingliu-condom.html"><h3>名流003玻尿酸避孕套怎么样？34.9元超薄延时囤货装</h3><p>名流003超薄玻尿酸避孕套，正品官方旗舰店，延时安全套，回头客超4千，包邮</p></a></li>
-          <li class="article-item"><a href="./sizhimao-coffee.html"><h3>四只猫云南高山美式黑咖啡怎么样？10.71元无蔗糖0脂肪</h3><p>四只猫云南高山美式黑咖啡，无蔗糖0脂肪纯速溶咖啡粉，盒装，包邮</p></a></li>
-          <li class="article-item"><a href="./jiadebao-diaper.html"><h3>家得宝蚕丝蛋白纸尿裤怎么样？44.56元透气拉拉裤</h3><p>家得宝蚕丝蛋白婴儿纸尿裤拉拉裤，XXL透气面膜裤，男女宝宝尿不湿，回头客超1万，包邮</p></a></li>
-          <li class="article-item"><a href="./yili-elaonian-milk.html"><h3>伊利中老年奶粉怎么样？79元700g*2罐富硒高钙中秋送长辈</h3><p>伊利中老年富硒高钙多维高蛋白奶粉，700g*2罐礼盒装，中秋送长辈首选</p></a></li>
-          <li class="article-item"><a href="./pmpm-mask.html"><h3>PMPM白松露面膜怎么样？20元提亮补水维稳褪红贴片面膜</h3><p>PMPM白松露贴片面膜，提亮肤色补水，玫瑰面膜维稳褪红舒缓，券后20元</p></a></li>
-          <li class="article-item"><a href="./qinmi9-passionfruit.html"><h3>钦蜜9号黄金百香果怎么样？17.3元应季新鲜水果孕妇可吃</h3><p>钦蜜9号黄金百香果，正宗应季当季新鲜水果，孕妇可吃，比普通紫皮更甜</p></a></li>
-          <li class="article-item"><a href="./miniso-towel.html"><h3>名创优品一次性浴巾怎么样？21.9元加厚吸水旅行便携不掉毛</h3><p>名创优品一次性浴巾，加厚吸水，旅行便携，酒店旅游独立包装不掉毛</p></a></li>
-          <li class="article-item"><a href="./freeplus-cleanser.html"><h3>芙丽芳丝洗面奶怎么样？79.9元氨基酸敏感肌温和洁面</h3><p>芙丽芳丝洗面奶，敏感肌氨基酸洁面，温和清洁不刺激，官方正品</p></a></li>
-          <li class="article-item"><a href="./coca-sprite.html"><h3>可口可乐雪碧1.25L*12瓶怎么样？43.9元家庭装整箱包邮</h3><p>可口可乐雪碧1.25L*12瓶柠檬味汽水，大瓶碳酸饮料家庭装整箱包邮</p></a></li>
-          <li class="article-item"><a href="./linbaobao-sausage.html"><h3>林饱饱火山石烤肠怎么样？39.9元儿童早餐台式小香肠</h3><p>林饱饱烤肠火山石地道烤肠，250g，儿童香肠拇指肠亲亲肠，早餐台式小肠</p></a></li>
-          <li class="article-item"><a href="./woodpecker-pipe-repair.html"><h3>啄木鸟水管维修怎么样？9.9元同城上门修水管安装服务</h3><p>啄木鸟水管维修，同城上门维修水管安装服务，洗衣机水管厨房水管维修</p></a></li>
-          <li class="article-item"><a href="./woodpecker-pc-repair.html"><h3>啄木鸟电脑上门维修怎么样？9.9元数据修复杀毒装机升级</h3><p>啄木鸟电脑上门维修服务，数据修复、电脑杀毒、安装硬盘内存升级装机</p></a></li>
-          <li class="article-item"><a href="./jieting-sleep-pants.html"><h3>洁婷安睡裤怎么样？27.99元25条夜用高腰透气经期安心裤</h3><p>洁婷安睡裤，夜用高腰大码透气，大姨妈经期安心裤，量大也不怕侧漏</p></a></li>
-          <li class="article-item"><a href="./pigeon-bottle.html"><h3>贝亲3代玻璃奶瓶怎么样？79元宽口径新生儿防胀气奶瓶</h3><p>贝亲3代玻璃奶瓶，自然实感宽口径，新生儿防胀气玻璃奶瓶，正品保障</p></a></li>
-          <li class="article-item"><a href="./curel-lotion.html"><h3>珂润保湿化妆水怎么样？115元敏感肌改善干燥补水爽肤水</h3><p>Curel珂润保湿化妆水150ml，敏感肌改善干燥，温和补水不刺激</p></a></li>
-          <li class="article-item"><a href="./oatmeal-yogurt.html"><h3>谷物酸奶燕麦片怎么样？11.94元即食早餐营养饱腹代餐</h3><p>谷物酸奶燕麦片，早餐即食营养混合，饱腹上班族学生懒人代餐食品</p></a></li>
-          <li class="article-item"><a href="./zhengmiao-shelf.html"><h3>正妙书包置物架怎么样？67.99元免安装可移动书本收纳小推车</h3><p>正妙免安装书包置物架，可移动小推车，书本收纳架家用多功能滑轮架子</p></a></li>
-          <li class="article-item"><a href="./trash-bags.html"><h3>家用加厚垃圾袋怎么样？20.96元50×60点断式整箱批发</h3><p>垃圾袋50×60家用点断式整箱批发，酒店餐饮宿舍加厚厨房垃圾塑料袋</p></a></li>
-          <li class="article-item"><a href="./crisps-fries.html"><h3>脆升升香脆薯条怎么样？13.9元200g小袋装办公休闲零食</h3><p>脆升升香脆薯条200g(20g*10包)，小袋散装办公零食休闲薯脆，经典原味</p></a></li>
-          <li class="article-item"><a href="./kaletian-immunity.html"><h3>卡乐田儿童乳铁蛋白怎么样？44元牛初乳免疫球增强宝宝抵抗力</h3><p>卡乐田儿童免疫球乳铁蛋白牛初乳，增强提高宝宝抵抗力，送婴幼儿童食谱</p></a></li>
-          <li class="article-item"><a href="./minayo-iron.html"><h3>Minayo美那有富铁软糖怎么样？55元补气血女性孕妇铁剂</h3><p>Minayo美那有富铁营养软糖，青少年气血女性铁剂，孕期孕妇也能吃</p></a></li>
         </ul>
         <div class="pagination"></div>
       </div>
@@ -767,109 +984,219 @@
         <div class="pagination"></div>
       </div>
 
-      <a href="../index.html" class="back-link">&larr; 返回券宝首页</a>
+      <!-- 号卡 -->
+      <div class="tab-content" id="tab9">
+        <h2 class="cat-title">号卡</h2>
+        <ul class="article-list">
+          <li class="article-item"><a href="./guangxiu-card.html"><h3>中国联通广绣卡套餐详情</h3><p>中国联通广绣卡39元月租享155G全国通用流量+100分钟，无合约可发广东</p></a></li>
+          <li class="article-item"><a href="./minnan-card.html"><h3>中国广电闽南卡套餐详情</h3><p>闽南卡39元月租享180G全国通用+150分钟，仅发福建，12个月合约</p></a></li>
+          <li class="article-item"><a href="./dingci-card.html"><h3>联通定瓷卡套餐详情</h3><p>定瓷卡39元月租享200G流量+200分钟，可发全国，18-30周岁办理</p></a></li>
+          <li class="article-item"><a href="./huanma-card.html"><h3>广电欢马卡套餐详情</h3><p>欢马卡29元月租享192G通用流量，首月免费，18-65周岁全国可发</p></a></li>
+          <li class="article-item"><a href="./tianma-card.html"><h3>中国广电天马卡套餐详情</h3><p>天马卡29元月租享192G通用流量，首月免费，18-65周岁全国可发</p></a></li>
+          <li class="article-item"><a href="./hanxiu-card.html"><h3>中国电信汉绣卡套餐详情</h3><p>汉绣卡39元月租享130G通用+30G定向+200分钟，仅限湖北四城办理</p></a></li>
+          <li class="article-item"><a href="./kangding-card.html"><h3>中国联通康定卡套餐详情</h3><p>康定卡首月1元500G，第2-48个月39元550G+300分钟，四川专属</p></a></li>
+          <li class="article-item"><a href="./changting-card.html"><h3>中国联通长汀卡套餐详情</h3><p>长汀卡首月49元370G，2-12月39元，江西专属6个月合约</p></a></li>
+          <li class="article-item"><a href="./nankai-card.html"><h3>中国联通南开卡套餐详情</h3><p>南开卡29元月租享100G全国通用+200分钟，重庆专属18-60周岁</p></a></li>
+          <li class="article-item"><a href="./shangkan-card.html"><h3>中国联通上坎卡套餐详情</h3><p>上坎卡39元月租享190G全国通用+200分钟，重庆专属18-60周岁</p></a></li>
+          <li class="article-item"><a href="./dengying-card.html"><h3>中国联通灯影卡套餐详情</h3><p>灯影卡首月免费，次月39元享240G通用+50分钟，四川专属6个月合约</p></a></li>
+          <li class="article-item"><a href="./feichi-card.html"><h3>中国联通飞翅卡套餐详情</h3><p>飞翅卡39元享300G超大流量+100分钟，首月半价半量，需搭配路由器设备</p></a></li>
+          <li class="article-item"><a href="./feichen-card.html"><h3>中国联通飞辰卡套餐详情</h3><p>飞辰卡39元享155G通用+100分钟，赠360G/年通用，18-28周岁全国可发</p></a></li>
+          <li class="article-item"><a href="./feishi-card.html"><h3>中国广电飞狮卡套餐详情</h3><p>飞狮卡29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
+          <li class="article-item"><a href="./feitang-card.html"><h3>中国联通飞塘卡套餐详情</h3><p>飞塘卡39元享200G全国通用+300分钟，前12个月大流量，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./feishi-v4-card.html"><h3>中国广电飞狮卡4.0套餐详情</h3><p>飞狮卡4.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
+          <li class="article-item"><a href="./feiji-card.html"><h3>中国联通飞继卡套餐详情</h3><p>飞继卡29元享280G通用+200分钟，首月全量全价，首充200元立即到账</p></a></li>
+          <li class="article-item"><a href="./feishi-v3-card.html"><h3>中国广电飞狮卡3.0套餐详情</h3><p>飞狮卡3.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
+          <li class="article-item"><a href="./feixiao-card.html"><h3>中国联通飞霄卡套餐详情</h3><p>飞霄卡29元享150G全国通用+200分钟，赠4年视频会员N选1</p></a></li>
+          <li class="article-item"><a href="./feixi-card.html"><h3>中国联通飞希卡套餐详情</h3><p>飞希卡29元享180G全国通用+100分钟，首月半量半价，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./feiyan-card.html"><h3>中国联通飞焱卡套餐详情</h3><p>飞焱卡29元享180G全国通用+100分钟，首月半量半价，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./feishi-v2-card.html"><h3>中国广电飞狮卡2.0套餐详情</h3><p>飞狮卡2.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
+          <li class="article-item"><a href="./feiqin-card.html"><h3>中国联通飞倾卡套餐详情</h3><p>飞倾卡39元享300G国内流量+100分钟，468元包年，需搭配路由器设备</p></a></li>
+          <li class="article-item"><a href="./feisu-card.html"><h3>中国联通飞素卡套餐详情</h3><p>飞素卡39元享240G通用+200分钟，首月全量全价，首充300元</p></a></li>
+          <li class="article-item"><a href="./feique-card.html"><h3>中国联通飞雀卡套餐详情</h3><p>飞雀卡39元享150G通用+200分钟，赠4年会员N选1，无合约</p></a></li>
+          <li class="article-item"><a href="./feichi2-card.html"><h3>中国联通飞驰卡套餐详情</h3><p>飞驰卡39元享200G全国通用+300分钟，前12个月大流量，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./feifen-card.html"><h3>中国联通飞芬卡套餐详情</h3><p>飞芬卡39元享200G+200分钟，600元流量封顶，首充100元</p></a></li>
+          <li class="article-item"><a href="./feishi-v5-card.html"><h3>中国广电飞狮卡5.0套餐详情</h3><p>飞狮卡5.0 29元享192G通用流量，首月免费，最长60个月合约，多用多送</p></a></li>
+          <li class="article-item"><a href="./luzhou-card.html"><h3>中国移动庐州卡套餐详情</h3><p>庐州卡39元享160G通用+100分钟+100条短信，48个月优惠期，首充100元</p></a></li>
+          <li class="article-item"><a href="./fuqi-card.html"><h3>中国移动福气卡套餐详情</h3><p>福气卡39元享240G+2000分钟，首充200送100，仅发福建五城</p></a></li>
+          <li class="article-item"><a href="./shuixian-card.html"><h3>中国移动水仙卡套餐详情</h3><p>水仙卡29元享230G+500分钟，首充200送100，仅发福建五城</p></a></li>
+          <li class="article-item"><a href="./huanghe-card.html"><h3>中国移动黄鹤卡套餐详情</h3><p>黄鹤卡39元享150G流量，首充100元，仅发湖北七城，36个月自动续约</p></a></li>
+          <li class="article-item"><a href="./zhiyi-card.html"><h3>中国移动知意卡套餐详情</h3><p>知意卡39元享55G通用流量，首充100送960，48个月合约，18-70周岁</p></a></li>
+          <li class="article-item"><a href="./yunmeng-card.html"><h3>中国电信云梦卡套餐详情</h3><p>云梦卡39元享160G+200分钟，首充200元，仅发湖北七城，24个月自动续约</p></a></li>
+          <li class="article-item"><a href="./taishan-card.html"><h3>中国电信泰山卡套餐详情</h3><p>泰山卡38元享190G+300分钟，首充100元，无合约期，省内流量为主</p></a></li>
+          <li class="article-item"><a href="./jingting-card.html"><h3>中国电信敬亭卡套餐详情</h3><p>敬亭卡39元享150G通用+100分钟，首充100元，48个月优惠期，全国接听免费</p></a></li>
+          <li class="article-item"><a href="./yunduo-card.html"><h3>中国电信云朵卡套餐详情</h3><p>云朵卡39元享180G+200分钟，首充100元，无合约期，24个月自动续约</p></a></li>
+          <li class="article-item"><a href="./zhixin-card.html"><h3>中国电信知信卡套餐详情</h3><p>知信卡39元享60G通用，通话按0.1元/分钟，首充100元，只发广东，无合约期</p></a></li>
+          <li class="article-item"><a href="./benma-card.html"><h3>中国广电奔马卡套餐详情</h3><p>奔马卡39元享60G通用，首月免费，可办2张副卡，再充100元再赠40G/月持续5年</p></a></li>
+          <li class="article-item"><a href="./fuling-card.html"><h3>中国广电茯苓卡套餐详情</h3><p>茯苓卡29元享200G全国通用，首充200元，首月免月租，可办副卡，36个月优惠期</p></a></li>
+          <li class="article-item"><a href="./junma-card.html"><h3>中国广电骏马卡套餐详情</h3><p>骏马卡29元享192G通用，首充100元，首月免月租，全国接听免费，流量延长至60个月</p></a></li>
+          <li class="article-item"><a href="./qinfeng-card.html"><h3>中国广电秦风卡套餐详情</h3><p>秦风卡38元享190G+300分钟，首充100元，无合约期，只发陕西四城，通用流量可结转</p></a></li>
+          <li class="article-item"><a href="./changan-card.html"><h3>中国广电长安卡套餐详情</h3><p>长安卡29元享100G+100分钟，流量可结转一个月，可办2张副卡，仅限陕西</p></a></li>
+          <li class="article-item"><a href="./juliang-card.html"><h3>中国广电巨量卡套餐详情</h3><p>巨量卡29元享192G通用，长期套餐，可办2张副卡+亲情网，全国接听免费</p></a></li>
+          <li class="article-item"><a href="./huoli-card.html"><h3>中国联通活力卡套餐详情</h3><p>活力卡39元享150G+200分钟，赠爱优腾会员每月N选1，无合约期，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./dayao-card.html"><h3>中国联通大尧卡套餐详情</h3><p>大尧卡39元享180G+200分钟，首充100元，12个月优惠期，全国接听免费，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./fangyuan-card.html"><h3>中国联通方圆卡套餐详情</h3><p>方圆卡39元享240G+200分钟，首充300元，长期套餐，先激活后发货</p></a></li>
+          <li class="article-item"><a href="./hongya-card.html"><h3>中国联通洪崖卡套餐详情</h3><p>洪崖卡19元享100G+200分钟，首充100元，12个月优惠期，上门激活</p></a></li>
+          <li class="article-item"><a href="./jisu-card.html"><h3>中国联通极速卡套餐详情</h3><p>极速卡39元享550G+300分钟，首充100元，4年优惠期，赠会员N选1，仅发四川</p></a></li>
+        </ul>
+        <div class="pagination"></div>
+      </div>
+
+      <!-- 好物分享 -->
+      <div class="tab-content" id="tab10">
+        <h2 class="cat-title">好物分享</h2>
+        <ul class="article-list">
+          <li class="article-item"><a href="./camel-backpack.html"><h3>骆驼轻便双肩背包怎么样？36元折叠户外背包测评</h3><p>骆驼CAMEL轻便双肩背包，36元入手，16L容量，可折叠随身带，仿荷拒水防潮</p></a></li>
+          <li class="article-item"><a href="./zespri-kiwi.html"><h3>佳沛新西兰金奇异果怎么样？69.99元12粒特大果中秋礼盒推荐</h3><p>佳沛zespri新西兰金奇异果12粒特大果，维C小金矿，中秋节送礼优选，领券更便宜</p></a></li>
+          <li class="article-item"><a href="./banmuhuatian-shampoo.html"><h3>半亩花田控油蓬松洗发水怎么样？59.9元孙颖莎同款测评</h3><p>半亩花田控油持久蓬松升级款洗发水，孙颖莎同款，半瓶鲜花纯露，72h控油蓬松，28天养头皮</p></a></li>
+          <li class="article-item"><a href="./luzhou-laojiao.html"><h3>泸州老窖泸州老酒坊红耀怎么样？199元2瓶52度浓香型白酒送礼推荐</h3><p>泸州老窖泸州老酒坊红耀，52度浓香型白酒，500mL*2瓶送手提袋，婚宴喜宴节日送礼优选</p></a></li>
+          <li class="article-item"><a href="./yuanqi-xiaoshu-vitamin.html"><h3>元气小树复合B族维生素怎么样？91.1元5瓶一家人的补充量</h3><p>元气小树复合B族维生素片，8种B族+牛磺酸，专利配方，5瓶装一家人的补充量</p></a></li>
+          <li class="article-item"><a href="./deli-pencil-sharpener.html"><h3>得力电动卷笔刀怎么样？18.9元3秒快削小学生开学必备</h3><p>得力电动削笔器，3秒快削，单指按压，大容量可视屑盒，小学生开学必备</p></a></li>
+          <li class="article-item"><a href="./haixiansheng-krill.html"><h3>海狸先生南极磷虾虾仁怎么样？29.89元100g*5袋高蛋白零食</h3><p>海狸先生南极磷虾虾仁，深海纯肉，100g*5袋，肉紧味鲜高蛋白</p></a></li>
+          <li class="article-item"><a href="./canban-toothpaste.html"><h3>参半牙膏怎么样？39.9元3支装去渍美白清新口气</h3><p>参半去渍美白含氟成人牙膏，180g*3支，茉莉茶爽+海风薄荷，清新口气</p></a></li>
+          <li class="article-item"><a href="./boxiangyue-mooncake.html"><h3>伯香村酥皮月饼怎么样？57.9元1320g中秋礼盒4口味</h3><p>伯香村黄庄酥皮月饼，蛋黄/板栗/山楂/五仁各一包，1320g中秋礼盒</p></a></li>
+          <li class="article-item"><a href="./shuiweishi-toilet-cleaner.html"><h3>水卫仕强效洁厕灵怎么样？18.8元3瓶强效去垢</h3><p>水卫仕强效洁厕灵，480g*3瓶，强效去垢，植萃清新，不伤釉面</p></a></li>
+          <li class="article-item"><a href="./panxiangji-mooncake.html"><h3>潘祥记云腿月饼怎么样？33.7元4味16枚云南特色</h3><p>潘祥记云腿月饼，4味16枚500g，云南特色滇式火腿月饼，精美礼盒</p></a></li>
+          <li class="article-item"><a href="./laodingfeng-mooncake.html"><h3>老鼎丰真心如意月饼怎么样？19.9元广式月饼礼盒</h3><p>老鼎丰真心如意月饼，五仁百果葡萄干广式，顺丰包邮，19.9元</p></a></li>
+          <li class="article-item"><a href="./hushang-ayi-bread.html"><h3>沪上阿姨黄油海盐面包怎么样？12.9元45g*7袋</h3><p>沪上阿姨黄油海盐面包，手撕早餐休闲零食，45g*7袋，松软好吃</p></a></li>
+          <li class="article-item"><a href="./tianyuanzhiji-corn.html"><h3>田园知己五寨黄糯玉米怎么样？19.8元真空装非转基因</h3><p>田园知己五寨黄糯玉米段真空装，26年新玉米，非转基因，国企品质，包邮</p></a></li>
+          <li class="article-item"><a href="./xuetian-salt.html"><h3>雪天盐业精制食用盐怎么样？9.9元400g*7袋家用井矿细盐</h3><p>雪天盐业精制食用盐，家用井矿细盐巴，400g*7袋，加碘/无碘可选，包邮</p></a></li>
+          <li class="article-item"><a href="./qinlingzui-kaobo.html"><h3>亲零嘴风干烤脖怎么样？9.9元黑鸭味湖南风味休闲零食</h3><p>亲零嘴风干烤脖黑鸭味，湖南风味，网红休闲零食，非鸭脖子，包邮</p></a></li>
+          <li class="article-item"><a href="./kangenbai-protein.html"><h3>康恩贝蛋白粉怎么样？76元乳清蛋白质粉增强免疫力</h3><p>康恩贝乳清蛋白质粉，有助于增强免疫力，健身老人术后恢复补充蛋白质，包邮</p></a></li>
+          <li class="article-item"><a href="./laoguanjia-cleaner.html"><h3>老管家重油污清洁剂怎么样？17.9元厨房油污净抽油烟机清洁剂</h3><p>老管家重油污清洁剂，厨房油污净，洗抽油烟机灶台，回头客超1百，包邮</p></a></li>
+          <li class="article-item"><a href="./mingliu-condom.html"><h3>名流003玻尿酸避孕套怎么样？34.9元超薄延时囤货装</h3><p>名流003超薄玻尿酸避孕套，正品官方旗舰店，延时安全套，回头客超4千，包邮</p></a></li>
+          <li class="article-item"><a href="./sizhimao-coffee.html"><h3>四只猫云南高山美式黑咖啡怎么样？10.71元无蔗糖0脂肪</h3><p>四只猫云南高山美式黑咖啡，无蔗糖0脂肪纯速溶咖啡粉，盒装，包邮</p></a></li>
+          <li class="article-item"><a href="./jiadebao-diaper.html"><h3>家得宝蚕丝蛋白纸尿裤怎么样？44.56元透气拉拉裤</h3><p>家得宝蚕丝蛋白婴儿纸尿裤拉拉裤，XXL透气面膜裤，男女宝宝尿不湿，回头客超1万，包邮</p></a></li>
+          <li class="article-item"><a href="./yili-elaonian-milk.html"><h3>伊利中老年奶粉怎么样？79元700g*2罐富硒高钙中秋送长辈</h3><p>伊利中老年富硒高钙多维高蛋白奶粉，700g*2罐礼盒装，中秋送长辈首选</p></a></li>
+          <li class="article-item"><a href="./pmpm-mask.html"><h3>PMPM白松露面膜怎么样？20元提亮补水维稳褪红贴片面膜</h3><p>PMPM白松露贴片面膜，提亮肤色补水，玫瑰面膜维稳褪红舒缓，券后20元</p></a></li>
+          <li class="article-item"><a href="./qinmi9-passionfruit.html"><h3>钦蜜9号黄金百香果怎么样？17.3元应季新鲜水果孕妇可吃</h3><p>钦蜜9号黄金百香果，正宗应季当季新鲜水果，孕妇可吃，比普通紫皮更甜</p></a></li>
+          <li class="article-item"><a href="./miniso-towel.html"><h3>名创优品一次性浴巾怎么样？21.9元加厚吸水旅行便携不掉毛</h3><p>名创优品一次性浴巾，加厚吸水，旅行便携，酒店旅游独立包装不掉毛</p></a></li>
+          <li class="article-item"><a href="./freeplus-cleanser.html"><h3>芙丽芳丝洗面奶怎么样？79.9元氨基酸敏感肌温和洁面</h3><p>芙丽芳丝洗面奶，敏感肌氨基酸洁面，温和清洁不刺激，官方正品</p></a></li>
+          <li class="article-item"><a href="./coca-sprite.html"><h3>可口可乐雪碧1.25L*12瓶怎么样？43.9元家庭装整箱包邮</h3><p>可口可乐雪碧1.25L*12瓶柠檬味汽水，大瓶碳酸饮料家庭装整箱包邮</p></a></li>
+          <li class="article-item"><a href="./linbaobao-sausage.html"><h3>林饱饱火山石烤肠怎么样？39.9元儿童早餐台式小香肠</h3><p>林饱饱烤肠火山石地道烤肠，250g，儿童香肠拇指肠亲亲肠，早餐台式小肠</p></a></li>
+          <li class="article-item"><a href="./woodpecker-pipe-repair.html"><h3>啄木鸟水管维修怎么样？9.9元同城上门修水管安装服务</h3><p>啄木鸟水管维修，同城上门维修水管安装服务，洗衣机水管厨房水管维修</p></a></li>
+          <li class="article-item"><a href="./woodpecker-pc-repair.html"><h3>啄木鸟电脑上门维修怎么样？9.9元数据修复杀毒装机升级</h3><p>啄木鸟电脑上门维修服务，数据修复、电脑杀毒、安装硬盘内存升级装机</p></a></li>
+          <li class="article-item"><a href="./jieting-sleep-pants.html"><h3>洁婷安睡裤怎么样？27.99元25条夜用高腰透气经期安心裤</h3><p>洁婷安睡裤，夜用高腰大码透气，大姨妈经期安心裤，量大也不怕侧漏</p></a></li>
+          <li class="article-item"><a href="./pigeon-bottle.html"><h3>贝亲3代玻璃奶瓶怎么样？79元宽口径新生儿防胀气奶瓶</h3><p>贝亲3代玻璃奶瓶，自然实感宽口径，新生儿防胀气玻璃奶瓶，正品保障</p></a></li>
+          <li class="article-item"><a href="./curel-lotion.html"><h3>珂润保湿化妆水怎么样？115元敏感肌改善干燥补水爽肤水</h3><p>Curel珂润保湿化妆水150ml，敏感肌改善干燥，温和补水不刺激</p></a></li>
+          <li class="article-item"><a href="./oatmeal-yogurt.html"><h3>谷物酸奶燕麦片怎么样？11.94元即食早餐营养饱腹代餐</h3><p>谷物酸奶燕麦片，早餐即食营养混合，饱腹上班族学生懒人代餐食品</p></a></li>
+          <li class="article-item"><a href="./zhengmiao-shelf.html"><h3>正妙书包置物架怎么样？67.99元免安装可移动书本收纳小推车</h3><p>正妙免安装书包置物架，可移动小推车，书本收纳架家用多功能滑轮架子</p></a></li>
+          <li class="article-item"><a href="./trash-bags.html"><h3>家用加厚垃圾袋怎么样？20.96元50×60点断式整箱批发</h3><p>垃圾袋50×60家用点断式整箱批发，酒店餐饮宿舍加厚厨房垃圾塑料袋</p></a></li>
+          <li class="article-item"><a href="./crisps-fries.html"><h3>脆升升香脆薯条怎么样？13.9元200g小袋装办公休闲零食</h3><p>脆升升香脆薯条200g(20g*10包)，小袋散装办公零食休闲薯脆，经典原味</p></a></li>
+          <li class="article-item"><a href="./kaletian-immunity.html"><h3>卡乐田儿童乳铁蛋白怎么样？44元牛初乳免疫球增强宝宝抵抗力</h3><p>卡乐田儿童免疫球乳铁蛋白牛初乳，增强提高宝宝抵抗力，送婴幼儿童食谱</p></a></li>
+          <li class="article-item"><a href="./minayo-iron.html"><h3>Minayo美那有富铁软糖怎么样？55元补气血女性孕妇铁剂</h3><p>Minayo美那有富铁营养软糖，青少年气血女性铁剂，孕期孕妇也能吃</p></a></li>
+        </ul>
+        <div class="pagination"></div>
+      </div>
+
+  <!-- 底部 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="../index.html">返回首页</a>
+        <a href="https://jdjdndn.github.io/about.html">关于我们</a>
+      </div>
+      <p class="footer-copy">© 2026 券宝省钱攻略 · 帮你花少钱过好生活</p>
     </div>
+  </footer>
 
-    <script>
-      // Tab 切换功能
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          // 移除所有 active 类
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+</div>
 
-          // 添加 active 类到当前 tab
-          this.classList.add('active');
-          const tabId = this.getAttribute('data-tab');
-          document.getElementById(tabId).classList.add('active');
+<script>
+  // Tab 切换功能
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const tabId = this.getAttribute('data-tab');
+      document.getElementById(tabId).classList.add('active');
+      initPagination(document.getElementById(tabId));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
 
-          // 初始化分页
-          initPagination(document.getElementById(tabId));
-        });
+  // 分页功能
+  const PAGE_SIZE = 12;
+
+  function initPagination(tabContent) {
+    const list = tabContent.querySelector('.article-list');
+    const pagination = tabContent.querySelector('.pagination');
+    if (!list || !pagination) return;
+    const items = list.querySelectorAll('.article-item');
+    const totalItems = items.length;
+    const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+
+    if (totalPages <= 1) {
+      pagination.style.display = 'none';
+      items.forEach(item => item.style.display = '');
+      return;
+    }
+
+    pagination.style.display = 'flex';
+    let currentPage = 1;
+
+    function showPage(page) {
+      currentPage = page;
+      const start = (page - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      items.forEach((item, index) => {
+        item.style.display = (index >= start && index < end) ? '' : 'none';
       });
+      renderPagination();
+    }
 
-      // 分页功能
-      const PAGE_SIZE = 15;
+    function renderPagination() {
+      let html = '';
+      html += '<button class="page-btn" ' + (currentPage === 1 ? 'disabled' : '') + ' data-page="' + (currentPage - 1) + '">上一页</button>';
 
-      function initPagination(tabContent) {
-        const list = tabContent.querySelector('.article-list');
-        const pagination = tabContent.querySelector('.pagination');
-        const items = list.querySelectorAll('.article-item');
-        const totalItems = items.length;
-        const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+      const maxVisible = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisible - 1);
 
-        if (totalPages <= 1) {
-          pagination.style.display = 'none';
-          items.forEach(item => item.style.display = '');
-          return;
-        }
-
-        pagination.style.display = 'flex';
-        let currentPage = 1;
-
-        function showPage(page) {
-          currentPage = page;
-          const start = (page - 1) * PAGE_SIZE;
-          const end = start + PAGE_SIZE;
-
-          items.forEach((item, index) => {
-            item.style.display = (index >= start && index < end) ? '' : 'none';
-          });
-
-          renderPagination();
-        }
-
-        function renderPagination() {
-          let html = '';
-          html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">上一页</button>`;
-
-          // 显示页码
-          const maxVisible = 5;
-          let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-          let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
-          if (endPage - startPage < maxVisible - 1) {
-            startPage = Math.max(1, endPage - maxVisible + 1);
-          }
-
-          if (startPage > 1) {
-            html += `<button class="page-btn" data-page="1">1</button>`;
-            if (startPage > 2) html += `<span class="page-info">...</span>`;
-          }
-
-          for (let i = startPage; i <= endPage; i++) {
-            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
-          }
-
-          if (endPage < totalPages) {
-            if (endPage < totalPages - 1) html += `<span class="page-info">...</span>`;
-            html += `<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
-          }
-
-          html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">下一页</button>`;
-          html += `<span class="page-info">共 ${totalItems} 项</span>`;
-
-          pagination.innerHTML = html;
-
-          // 绑定分页按钮事件
-          pagination.querySelectorAll('.page-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-              if (!this.disabled) {
-                showPage(parseInt(this.getAttribute('data-page')));
-              }
-            });
-          });
-        }
-
-        showPage(1);
+      if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
       }
 
-      // 初始化第一个 tab 的分页
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        if (tab.classList.contains('active')) {
-          initPagination(tab);
-        }
+      if (startPage > 1) {
+        html += '<button class="page-btn" data-page="1">1</button>';
+        if (startPage > 2) html += '<span class="page-info">...</span>';
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" data-page="' + i + '">' + i + '</button>';
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) html += '<span class="page-info">...</span>';
+        html += '<button class="page-btn" data-page="' + totalPages + '">' + totalPages + '</button>';
+      }
+
+      html += '<button class="page-btn" ' + (currentPage === totalPages ? 'disabled' : '') + ' data-page="' + (currentPage + 1) + '">下一页</button>';
+      html += '<span class="page-info">共 ' + totalItems + ' 篇</span>';
+
+      pagination.innerHTML = html;
+      pagination.querySelectorAll('.page-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          if (!this.disabled) {
+            showPage(parseInt(this.getAttribute('data-page')));
+          }
+        });
       });
-    </script>
-  </body>
+    }
+
+    showPage(1);
+  }
+
+  // 初始化第一个 tab 的分页
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    if (tab.classList.contains('active')) {
+      initPagination(tab);
+    }
+  });
+</script>
+
+<friend-links></friend-links>
+<script src="../friend-links.js"></script>
+
+</body>
 </html>
