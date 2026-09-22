@@ -73,6 +73,19 @@
       this._renderText();
       this._initDark();
 
+      // 首页（/ 或 /index.html）时"返回首页"指向自身无意义，替换为品牌名
+      var path = (window.location.pathname || '').replace(/\/+$/, '');
+      if (path === '' || path.endsWith('/index.html')) {
+        var back = shadow.querySelector('.ph-back');
+        if (back) {
+          var brand = document.createElement('span');
+          brand.className = 'ph-back';
+          brand.setAttribute('aria-label', '券宝');
+          brand.textContent = '券宝';
+          back.parentNode.replaceChild(brand, back);
+        }
+      }
+
       // 无障碍
       var ariaLabel = this.getAttribute('aria');
       if (ariaLabel) this.setAttribute('aria-label', ariaLabel);

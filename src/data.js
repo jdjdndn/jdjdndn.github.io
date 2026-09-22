@@ -44,9 +44,6 @@ export const tabs = [
         items: [
           { name: '美团本地生活集合页', link: 'https://kurl07.cn/te2qe9',deadline:"2026.12.31" },
           { name: '京东外卖集合页', link: 'https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4',deadline:"2026.12.31" },
-          { name: '千问新用户免费喝奶茶（复制口令打开千问App，对话框中粘贴口令即可）', code: '千问新用户红包198867', deadline: '2026.12.31' },
-          { name: '千问新用户免费喝奶茶（复制口令打开千问App，对话框中粘贴口令即可）', code: '千问新用户红包198867', deadline: '2026.12.31' },
-          { name: '百度搭子', link: 'https://www.dumate.cn/?track=yqyl',description:' AI自动化任务，咱俩各领 2000 积分，我的邀请码是：2WG27D4。' },
         ],
       },
     ],
@@ -190,6 +187,21 @@ export const tabs = [
           { name: 'WorkBuddy 全场景 AI 办公工作台', link: 'https://cloud.tencent.com/act/cps/redirect?redirect=6871&cps_key=e1a339fa804f2f1f68cb6f3a74ee7da5&from=console', description: '腾讯云服务器' },
           { name: '阿里云新客户', link: 'https://www.aliyun.com/minisite/goods?userCode=9iwd9zzb', description: '阿里云' },
           { name: '阿里云OPC产品套餐', link: 'https://opc.aliyun.com/products?utm_content=g_1000413977&userCode=9iwd9zzb', description: '阿里云' },
+        ],
+      },
+    ],
+  },
+  // 新用户
+  {
+    id: 'xinyonghu',
+    label: '新用户',
+    name: '新用户',
+    sections: [
+      {
+        title: '新用户',
+        items: [
+          { name: '千问新用户免费喝奶茶（复制口令打开千问App，对话框中粘贴口令即可）', code: '千问新用户红包198867', deadline: '2026.12.31' },
+          { name: '百度系App：百度搭子', link: 'https://www.dumate.cn/?track=yqyl',description:' AI自动化做任务，邀请码：2WG27D4。' },
         ],
       },
     ],

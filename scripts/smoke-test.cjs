@@ -8,7 +8,7 @@ const BASE = `http://localhost:${PORT}`;
 
 const PAGES = [
   { url: '/', name: '首页', checks: ['#app'] },
-  { url: '/huodong.html', name: '活动大厅', checks: ['#tab-content', '#search-input'] },
+  { url: '/huodong.html', name: '活动大厅', checks: ['.cat-card', '.home-links-panel'] },
   { url: '/haoka.html', name: '号卡', checks: ['main', 'h1'] },
   { url: '/article/爱奇艺.html', name: '文章页', checks: ['main', '.faq', '相关攻略'] },
   { url: '/article/index.html', name: '文章索引', checks: ['.tab-btn', '#tab1'] },
