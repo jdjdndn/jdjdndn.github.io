@@ -1836,3 +1836,149 @@ body.dark-mode .onboard-tooltip {
   .card-deadline { color: #666; }
   .card-badges { display: none; }
 }
+
+/* ========== 活动卡片视觉美化增强 ========== */
+/* 图标徽章：emoji 加白底圆角底托 */
+.card-icon-badge {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 11px;
+  box-shadow: 0 2px 8px rgba(31, 41, 55, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+}
+body.dark-mode .card-icon-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* 标题：加粗、微调字号 */
+.card-name {
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: 0.015em;
+}
+
+/* 描述：品牌色左竖条，弱化底噪 */
+.card-desc {
+  position: relative;
+  padding-left: 10px;
+  border-left: 3px solid color-mix(in srgb, var(--card-accent, var(--primary)) 55%, transparent);
+  border-radius: 2px;
+  color: #5b6472;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), transparent);
+}
+body.dark-mode .card-desc {
+  color: rgba(255, 255, 255, 0.62);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent);
+}
+
+/* 域名链接：胶囊标签 */
+.card-link {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: auto;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.card-link:hover {
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 前往活动按钮：渐变 + 箭头动效 */
+.btn-go {
+  background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 75%, #ff9a5c));
+  position: relative;
+}
+.btn-go::after {
+  content: '→';
+  margin-left: 5px;
+  transition: transform 0.2s ease;
+  font-size: 14px;
+}
+.btn-go:hover::after {
+  transform: translateX(3px);
+}
+
+/* 二维码按钮：更轻的悬浮感 */
+.btn-qr {
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 10px;
+}
+.btn-qr:hover {
+  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.18);
+}
+
+/* 徽章：胶囊化 + 细边 */
+.card-badge {
+  border-radius: 999px;
+  padding: 2.5px 9px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+.badge-new {
+  border-color: rgba(22, 163, 74, 0.2);
+}
+.badge-hot {
+  border-color: rgba(220, 38, 38, 0.2);
+}
+.badge-expiring {
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+/* 渐变顶条：加高、更顺滑 */
+.card-gradient-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--card-accent, var(--primary)), color-mix(in srgb, var(--card-accent, var(--primary)) 45%, transparent) 70%, transparent);
+  opacity: 0.95;
+}
+
+/* 截止时间：胶囊化 */
+.card-deadline {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid var(--border-light, var(--border));
+}
+
+/* 即将过期卡片：红边提醒 */
+.expiring-soon {
+  border-color: rgba(220, 38, 38, 0.35) !important;
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.12), var(--shadow);
+}
+
+/* 卡片间距与 hover 层次 */
+.card-grid {
+  gap: 16px;
+}
+.activity-card {
+  padding: 18px 18px 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 18px -8px rgba(15, 23, 42, 0.08);
+}
+.activity-card:hover {
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06), 0 18px 34px -14px color-mix(in srgb, var(--card-accent, var(--primary)) 30%, transparent);
+}
+
+/* 代码卡片的口令区：圆角与内部留白微调 */
+.card-code {
+  border-radius: 10px;
+  padding: 11px 13px;
+}
