@@ -268,6 +268,7 @@ export const renderTabContent = (tabId) => {
 // ========== Tab 切换 ==========
 let _activeTab = tabs[0].id;
 export const getActiveTab = () => _activeTab;
+export const setActiveTab = (id) => { _activeTab = id; };
 
 export const switchTab = (tabId) => {
   const oldSubTab = activeSubTab[_activeTab] || '';

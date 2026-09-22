@@ -1878,3 +1878,26 @@ body.dark-mode .share-panel-tip {
 .share-option-copied .share-option-label {
   color: #16A34A;
 }
+
+
+/* ===== 页脚法律链接（隐私政策 / 纠错反馈） ===== */
+.legal-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 16px 10px;
+  font-size: 13px;
+  color: var(--muted, #64748b);
+  text-align: center;
+}
+.legal-links a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.legal-links a:hover { color: var(--brand, #ff6b35); border-bottom-color: currentColor; }
+.legal-sep { opacity: 0.5; }
+body.dark-mode .legal-links { color: #94a3b8; }

@@ -194,6 +194,9 @@ li {
   padding-top:16px;
   font-size:12.5px;
 }
+.footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.footer a:hover { color: var(--accent, #ff6b35); }
+body.dark-mode .footer a { color: inherit; }
 
 @media(max-width:480px) {
   .hero h1 {
@@ -275,4 +278,27 @@ li {
   cursor: not-allowed;
   text-decoration: line-through;
   pointer-events: none;
+}
+
+
+/* ===== 返回优惠活动大厅（商品文 → 活动页互链） ===== */
+.back-activity {
+  text-align: center;
+  margin: 14px 0 4px;
+}
+.back-activity a {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent, #ff6b35);
+  text-decoration: none;
+  padding: 8px 18px;
+  border: 1px solid color-mix(in srgb, var(--accent, #ff6b35) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent, #ff6b35) 8%, transparent);
+  transition: background .2s, transform .15s;
+}
+.back-activity a:hover {
+  background: color-mix(in srgb, var(--accent, #ff6b35) 16%, transparent);
+  transform: translateY(-1px);
 }

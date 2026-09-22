@@ -18,7 +18,9 @@ export const renderCodeCard = (item, query) => {
   const displayCode = query ? highlightText(item.code, query) : item.code;
 
   let badges = '';
-  if (!expired) {
+  if (expired) {
+    badges = '<span class="card-badge badge-expired">⏳ 已过期</span>';
+  } else {
     const badgeList = [];
     if (isNewActivity(item)) badgeList.push('<span class="card-badge badge-new">🆕 新</span>');
     if (isHotActivity(item)) badgeList.push('<span class="card-badge badge-hot">🔥 热门</span>');
@@ -68,7 +70,9 @@ export const renderLinkCard = (item, query) => {
   const displayName = query ? highlightText(item.name, query) : item.name;
 
   let badges = '';
-  if (!expired) {
+  if (expired) {
+    badges = '<span class="card-badge badge-expired">⏳ 已过期</span>';
+  } else {
     const badgeList = [];
     if (isNewActivity(item)) badgeList.push('<span class="card-badge badge-new">🆕 新</span>');
     if (isHotActivity(item)) badgeList.push('<span class="card-badge badge-hot">🔥 热门</span>');
