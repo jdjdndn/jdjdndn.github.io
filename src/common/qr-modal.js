@@ -11,7 +11,7 @@ const createQrModal = () => {
   el.setAttribute('role', 'dialog');
   el.setAttribute('aria-modal', 'true');
   el.setAttribute('aria-label', '手机扫码访问');
-  el.innerHTML = `<div class="qr-modal"><div class="qr-header"><span class="qr-title">手机扫码访问</span><button id="qr-close" class="qr-close" aria-label="关闭弹窗">✕</button></div><div class="qr-body"><div id="qr-loading" class="qr-loading"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>生成中…</span></div><img id="qr-img" class="qr-img hidden" alt="QR Code" /><p id="qr-name" class="qr-name"></p><p class="qr-hint">打开浏览器或微信扫一扫</p></div></div>`;
+  el.innerHTML = `<div class="qr-modal"><div class="qr-header"><span class="qr-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>手机扫码访问</span><button id="qr-close" class="qr-close" aria-label="关闭弹窗">✕</button></div><div class="qr-body"><div id="qr-loading" class="qr-loading"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>生成中…</span></div><img id="qr-img" class="qr-img hidden" alt="QR Code" /><p id="qr-name" class="qr-name"></p><p class="qr-hint">打开浏览器或微信扫一扫</p></div></div>`;
   document.body.appendChild(el);
 };
 
@@ -102,7 +102,14 @@ const setupQrShare = () => {
   shareEl.innerHTML = `<button class="qr-share-copy" aria-label="复制链接">复制链接</button><button class="qr-share-native" aria-label="分享给朋友">分享给朋友</button><button class="qr-share-download" aria-label="保存二维码">保存二维码</button>`;
   qrBody.appendChild(shareEl);
   shareEl.querySelector('.qr-share-copy').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(_qrCurrentUrl); showToast('链接已复制'); } catch { showToast('复制失败'); }
+    const btn = shareEl.querySelector('.qr-share-copy');
+    try {
+      await navigator.clipboard.writeText(_qrCurrentUrl);
+      btn.textContent = '已复制 ✓';
+      btn.classList.add('qr-share-copied');
+      showToast('链接已复制');
+      setTimeout(() => { btn.textContent = '复制链接'; btn.classList.remove('qr-share-copied'); }, 1800);
+    } catch { showToast('复制失败'); }
   });
   shareEl.querySelector('.qr-share-native').addEventListener('click', () => {
     shareItem(qrName.textContent, _qrCurrentUrl);

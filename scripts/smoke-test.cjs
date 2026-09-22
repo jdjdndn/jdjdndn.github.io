@@ -47,7 +47,13 @@ function waitForServer(timeoutMs = 20000) {
   const results = [];
   try {
     await waitForServer();
-    const browser = await chromium.launch();
+    // CI（ubuntu runner 容器）下 chromium 需要 --no-sandbox；--disable-dev-shm-usage 防共享内存不足
+    const isCI = !!process.env.CI;
+    const browser = await chromium.launch({
+      args: isCI
+        ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+        : [],
+    });
     const page = await browser.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(`pageerror: ${e.message.slice(0, 120)}`));

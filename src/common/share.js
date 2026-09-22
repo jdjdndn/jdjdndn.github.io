@@ -1,4 +1,4 @@
-import { $, showToast, vibrate, robustCopy } from './base.js';
+import { $, vibrate, robustCopy } from './base.js';
 import 'social-share.js/dist/css/share.min.css';
 
 // ---------- 分享 ----------
@@ -29,51 +29,26 @@ const getShareUrl = (site, { url, title, description, image }) => {
   return renderTemplate(shareTemplates[site], data);
 };
 
-/** 尝试调起微信分享 */
+/** 尝试调起微信分享（网页端无法直接调起微信 App，成功则返回状态） */
 const shareToWechat = async (name, url, text) => {
   const content = text || `${name} ${url}`;
-  // 优先尝试系统分享面板（部分系统可直接分享到微信）
+  // 优先尝试系统分享面板（移动端部分系统可直接分享到微信）
   if (navigator.share) {
     try {
       await navigator.share({ title: name, text: content, url });
-      return;
+      return 'native';
     } catch {}
   }
   // 回退到复制：普通网页无法直接调起微信 App
-  await robustCopy(content, '已复制，打开微信粘贴发送给朋友');
+  await robustCopy(content, '已复制，请打开微信粘贴给好友');
+  return 'copied';
 };
 
-/** 尝试调起 QQ 分享 */
-const shareToQQ = (name, url, text) => {
-  const webUrl = getShareUrl('qq', {
-    url,
-    title: name,
-    description: text || name,
-  });
-  if (isMobile()) {
-    // 用 window.open 打开 scheme URL（iframe 会被浏览器拦截）
-    const qqScheme = `mqqapi://share/to_fri?src_type=web&share_type=5&url=${encodeURIComponent(url)}&title=${encodeURIComponent(name)}&desc=${encodeURIComponent(text || name)}`;
-    const newTab = window.open('about:blank');
-    if (newTab) {
-      newTab.location.href = qqScheme;
-      // 3 秒后检测：若 QQ 未安装，页面会停留在 about:blank，回退到网页版
-      setTimeout(() => {
-        try {
-          if (newTab.location.href === 'about:blank') {
-            newTab.location.href = webUrl;
-          }
-        } catch {
-          // 跨域异常说明 QQ 已打开（scheme 生效），忽略
-        }
-      }, 3000);
-    } else {
-      // 弹窗被阻止，直接打开网页版
-      window.open(webUrl, '_blank', 'noopener');
-    }
-    showToast('正在打开 QQ…');
-  } else {
-    window.open(webUrl, '_blank', 'noopener,width=600,height=500');
-  }
+/** 分享到 QQ：网页端无法直接调起 QQ App，统一复制内容后由用户粘贴发送 */
+const shareToQQ = async (name, url, text) => {
+  const content = text || `${name} ${url}`;
+  await robustCopy(content, '已复制，请打开QQ粘贴给好友');
+  return 'copied';
 };
 
 /** 创建分享面板 DOM（仅创建一次） */
@@ -94,6 +69,7 @@ const createSharePanel = (trackFn) => {
       </div>
       <div class="share-panel-content">
         <p class="share-panel-name" id="share-panel-name"></p>
+        <p class="share-panel-tip">💡 网页无法直接调起微信/QQ，点击对应按钮即复制内容，粘贴到聊天窗口即可发送</p>
         <div class="share-panel-options">
           <button class="share-option share-option-wechat" data-action="wechat">
             <span class="share-option-icon">
@@ -171,14 +147,29 @@ const createSharePanel = (trackFn) => {
     const shareName = panel.dataset.shareName || '';
     const shareText = panel.dataset.shareText || '';
 
+    // 按钮短暂反馈"已复制"
+    const flashCopied = (label) => {
+      const labelEl = option.querySelector('.share-option-label');
+      const old = labelEl.textContent;
+      labelEl.textContent = `已复制 ✓`;
+      option.classList.add('share-option-copied');
+      setTimeout(() => {
+        labelEl.textContent = old;
+        option.classList.remove('share-option-copied');
+      }, 1800);
+    };
+
     if (action === 'copy-link') {
       await robustCopy(shareUrl, '链接已复制');
+      flashCopied('链接');
     } else if (action === 'copy-text') {
       const content = shareText || shareUrl;
       await robustCopy(content, shareText ? '口令已复制' : '链接已复制');
+      flashCopied(shareText ? '口令' : '链接');
     } else if (action === 'wechat') {
       if (trackFn) trackFn('share_wechat', { name: shareName });
-      await shareToWechat(shareName, shareUrl, shareText);
+      const res = await shareToWechat(shareName, shareUrl, shareText);
+      if (res === 'copied') flashCopied('微信');
     } else if (action === 'weibo') {
       if (trackFn) trackFn('share_weibo', { name: shareName });
       const wbUrl = getShareUrl('weibo', {
@@ -189,7 +180,8 @@ const createSharePanel = (trackFn) => {
       window.open(wbUrl, '_blank', 'noopener,width=600,height=500');
     } else if (action === 'qq') {
       if (trackFn) trackFn('share_qq', { name: shareName });
-      shareToQQ(shareName, shareUrl, shareText);
+      const res = await shareToQQ(shareName, shareUrl, shareText);
+      if (res === 'copied') flashCopied('QQ');
     }
     closePanel();
   });

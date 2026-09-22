@@ -1772,3 +1772,109 @@ body.dark-mode .page-hero::after {
   .page-hero-icon { width: 60px; height: 60px; border-radius: 18px; margin-bottom: 16px; }
   .page-hero-icon svg { width: 28px; height: 28px; }
 }
+
+/* ========== 二维码弹窗 & 分享面板 视觉增强 ========== */
+/* 二维码弹窗：顶部品牌渐变条 */
+.qr-modal {
+  position: relative;
+}
+.qr-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 40%, transparent));
+  z-index: 1;
+}
+.qr-header {
+  padding-top: 16px;
+}
+.qr-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.qr-title svg {
+  flex-shrink: 0;
+}
+
+/* 二维码图片：白底码片样式 */
+.qr-img {
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  background: #fff;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12), 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+/* 名称与提示层级 */
+.qr-name {
+  margin: 16px 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.qr-hint {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--hover-bg);
+  border-radius: 999px;
+}
+
+/* 二维码弹窗底部按钮：统一层级 */
+.qr-share {
+  gap: 10px;
+}
+.qr-share-copy,
+.qr-share-download {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+.qr-share-copy:hover,
+.qr-share-download:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.qr-share-native {
+  background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 75%, #ff9a5c));
+  border: none;
+}
+.qr-share-copied {
+  border-color: #16A34A !important;
+  color: #16A34A !important;
+}
+
+/* 分享面板：引导文案 */
+.share-panel-tip {
+  margin: -8px 0 14px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--hover-bg);
+  border-radius: 10px;
+  padding: 8px 12px;
+  text-align: center;
+}
+body.dark-mode .share-panel-tip {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 分享选项：已复制反馈态 */
+.share-option-copied {
+  border-color: #16A34A !important;
+  background: color-mix(in srgb, #16A34A 8%, var(--card));
+  box-shadow: none;
+  transform: none;
+}
+.share-option-copied .share-option-label {
+  color: #16A34A;
+}
