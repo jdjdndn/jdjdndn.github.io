@@ -199,12 +199,14 @@ router.beforeEach((to, from, next) => {
   // 1. 处理 /article/ 目录下的路由 - 重定向到静态 HTML 文件
   if (to.path.startsWith('/article/')) {
     const articlePath = to.path.replace('/article/', '')
-    // 使用绝对路径避免相对路径计算错误导致无限循环
+    // 构建绝对路径，避免相对路径计算错误导致无限循环
     const baseUrl = import.meta.env.BASE_URL || '/'
-    // 确保baseUrl以/结尾，避免双重斜杠
     const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
     const articleUrl = `${normalizedBase}article/${articlePath}`
-    window.location.href = articleUrl
+    // 防止重定向到自身导致无限循环
+    if (articleUrl !== window.location.pathname + window.location.search) {
+      window.location.href = articleUrl
+    }
     return
   }
 
