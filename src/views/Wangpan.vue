@@ -162,7 +162,8 @@ function closeQrModal() {
 
 .resource-card {
   overflow: hidden;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .resource-card:hover {
@@ -212,7 +213,24 @@ function closeQrModal() {
 }
 
 .card-actions {
-  display: flex;
-  gap: 8px;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  width: 100%;
+}
+.card-actions .n-button {
+  width: 100% !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.card-actions .n-button .n-button__content {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 100% !important;
+  justify-content: center !important;
 }
 </style>

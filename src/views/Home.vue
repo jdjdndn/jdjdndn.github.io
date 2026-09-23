@@ -290,16 +290,16 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 10px 16px;
   background: var(--card, #ffffff);
   border: 1px solid var(--border, #e5e2dd);
-  border-radius: var(--radius, 12px);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 999px;
+  transition: border-color 0.2s ease, box-shadow 0.3s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .search-bar:focus-within {
   border-color: var(--primary, #FF6B35);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
 }
 
 .search-icon {
@@ -357,12 +357,15 @@ onUnmounted(() => {
   border-radius: var(--radius, 12px);
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .article-entry-banner:hover {
   border-color: var(--primary, #FF6B35);
   box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
 }
 
 .article-entry-icon {
@@ -423,11 +426,11 @@ onUnmounted(() => {
   background: transparent;
   border-radius: var(--radius-sm, 8px);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-secondary, #4a5568);
   white-space: nowrap;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .tab-btn:hover:not(.active) {
@@ -435,21 +438,22 @@ onUnmounted(() => {
 }
 
 .tab-btn.active {
-  background: var(--primary-light, #FFF4ED);
-  color: var(--primary, #FF6B35);
+  background: var(--primary, #FF6B35);
+  color: #fff;
 }
 
 .tab-count {
-  font-size: 12px;
+  font-size: 11px;
   padding: 2px 6px;
   background: var(--border-light, #f0eeeb);
   border-radius: 10px;
   color: var(--muted, #6b7280);
+  font-weight: 600;
 }
 
 .tab-btn.active .tab-count {
-  background: rgba(255, 107, 53, 0.15);
-  color: var(--primary, #FF6B35);
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
 }
 
 /* 子 Tab 导航 */
@@ -500,11 +504,13 @@ onUnmounted(() => {
 
 /* 活动卡片 */
 .activity-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: var(--card, #ffffff);
   border: 1px solid var(--border, #e5e2dd);
   border-radius: var(--radius, 12px);
-  padding: 16px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 18px;
+  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   display: flex;
   flex-direction: column;
 }
@@ -512,6 +518,7 @@ onUnmounted(() => {
 .activity-card:hover {
   border-color: var(--primary, #FF6B35);
   box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
 }
 
 .card-header {
@@ -522,9 +529,10 @@ onUnmounted(() => {
 }
 
 .card-name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   color: var(--text, #1a1a2e);
+  letter-spacing: 0.01em;
 }
 
 .card-deadline {
@@ -563,13 +571,20 @@ onUnmounted(() => {
   border-radius: var(--radius-sm, 8px);
   cursor: pointer;
   font-size: 13px;
-  font-weight: 500;
-  transition: background-color 0.2s, color 0.2s;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 .btn-copy {
@@ -633,17 +648,17 @@ onUnmounted(() => {
 
 /* 暗色模式 */
 [data-theme="dark"] .search-bar {
-  background: var(--card, #1e1e35);
+  background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
 [data-theme="dark"] .article-entry-banner {
-  background: var(--card, #1e1e35);
+  background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
 [data-theme="dark"] .tab-nav {
-  background: var(--card, #1e1e35);
+  background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
@@ -652,15 +667,15 @@ onUnmounted(() => {
 }
 
 [data-theme="dark"] .sub-tab-btn:hover:not(.active) {
-  background: var(--card, #1e1e35);
+  background: var(--card, #1a1f36);
 }
 
 [data-theme="dark"] .sub-tab-btn.active {
-  background: var(--card, #1e1e35);
+  background: var(--card, #1a1f36);
 }
 
 [data-theme="dark"] .activity-card {
-  background: linear-gradient(135deg, rgba(30, 30, 53, 0.9) 0%, rgba(40, 40, 65, 0.9) 100%);
+  background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 

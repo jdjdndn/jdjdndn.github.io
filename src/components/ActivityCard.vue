@@ -281,6 +281,9 @@ const handleShare = async () => {
   transition: all 0.2s ease;
   text-align: center;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .btn-copy {

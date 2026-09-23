@@ -374,7 +374,8 @@ async function handleShare(device) {
 /* 产品卡片 */
 .product-card {
   overflow: hidden;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 /* 卡片操作按钮：三个按钮等宽一行，避免换行错位 */
@@ -391,6 +392,16 @@ async function handleShare(device) {
   width: 100% !important;
   margin: 0 !important;
   min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.card-actions .n-button .n-button__content {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 100% !important;
+  justify-content: center !important;
 }
 
 .product-card:hover {
