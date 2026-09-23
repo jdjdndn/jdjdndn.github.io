@@ -8,24 +8,45 @@
  * 特性：
  * - 导航项集中定义，新增/删除页面只改一处
  * - 自动检测当前页并设置 active
- * - Shadow DOM 样式隔离
+ * - Shadow DOM 样式隔离 + CSS 变量穿透
  * - 自动同步父页面暗色模式（body.dark-mode）
  * - 当前页链接点击回顶部，不刷新
+ * - 支持 slot 自定义内容（nav-top / nav-bottom）
+ *
+ * 主题色覆盖：
+ *   site-nav {
+ *     --nav-primary: #004E89;        // 主题色
+ *     --nav-primary-hover: #003D6B;  // 悬停色
+ *     --nav-primary-light: #EBF5FF;  // 浅色背景
+ *   }
  */
 (function () {
   'use strict';
 
   // ========== 导航项配置（唯一数据源） ==========
+  // subdir: 子目录路径，该目录下的页面激活此导航项
   var NAV_ITEMS = [
     { href: './index.html',   label: '活动', icon: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>' },
     { href: './huodong.html', label: '外卖', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
-    { href: './gouwu.html',   label: '购物', icon: '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>' },
     { href: './haoka.html',   label: '号卡', icon: '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>' },
     { href: './wifi.html',    label: 'WiFi', icon: '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>' },
-    { href: './wangpan.html', label: '网盘', icon: '<path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>' },
     { href: './huiyuan.html', label: '会员', icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
+    { href: './fuye.html',    label: '副业', icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>', subdir: 'fuye' },
+    { href: './qunliao.html', label: '群聊', icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' },
     { href: './about.html',   label: '关于', icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>' },
   ];
+
+  // 根据当前路径计算导航链接的基础路径
+  function getBasePath() {
+    var path = location.pathname || '';
+    // 子目录下的页面需要返回上一级
+    for (var i = 0; i < NAV_ITEMS.length; i++) {
+      if (NAV_ITEMS[i].subdir && path.includes('/' + NAV_ITEMS[i].subdir + '/')) {
+        return '../';
+      }
+    }
+    return './';
+  }
 
   // ========== CSS 路径 ==========
   var CSS_URL = (function () {
@@ -41,7 +62,16 @@
 
   // ========== 当前页检测 ==========
   function getCurrentPage() {
-    return (location.pathname.split('/').pop() || 'index.html');
+    var path = location.pathname || '';
+    var page = path.split('/').pop() || 'index.html';
+    // 检查是否在子目录下，匹配对应导航项
+    for (var i = 0; i < NAV_ITEMS.length; i++) {
+      var item = NAV_ITEMS[i];
+      if (item.subdir && path.includes('/' + item.subdir + '/')) {
+        return item.href.split('/').pop();
+      }
+    }
+    return page;
   }
 
   // ========== SVG 生成 ==========
@@ -51,6 +81,7 @@
 
   // ========== 导航 HTML 生成 ==========
   function buildNavHTML(currentPage) {
+    var basePath = getBasePath();
     var html = '';
     for (var i = 0; i < NAV_ITEMS.length; i++) {
       var item = NAV_ITEMS[i];
@@ -58,7 +89,9 @@
       var active = page === currentPage;
       var cls = active ? ' class="nav-link active"' : ' class="nav-link"';
       var aria = active ? ' aria-current="page"' : '';
-      html += '<li><a href="' + item.href + '"' + cls + aria + '>' +
+      // 子目录下的页面使用上一级路径
+      var href = item.href.startsWith('./') ? basePath + item.href.slice(2) : item.href;
+      html += '<li><a href="' + href + '"' + cls + aria + '>' +
               makeSvg(item.icon) + '<span>' + item.label + '</span></a></li>';
     }
     return html;
@@ -96,7 +129,16 @@
       var nav = document.createElement('nav');
       nav.className = position === 'side' ? 'side-bar' : 'footer-bar';
       nav.setAttribute('aria-label', '页面导航');
-      nav.innerHTML = '<ul class="nav-list">' + buildNavHTML(this._currentPage) + '</ul>';
+
+      // 构建导航内容，支持 slot
+      var navHTML = '<ul class="nav-list">' + buildNavHTML(this._currentPage) + '</ul>';
+
+      // 添加 slot 容器（顶部和底部）
+      nav.innerHTML =
+        '<slot name="nav-top"></slot>' +
+        navHTML +
+        '<slot name="nav-bottom"></slot>';
+
       shadow.appendChild(nav);
 
       // 当前页点击回顶部

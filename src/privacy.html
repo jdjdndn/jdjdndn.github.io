@@ -8,7 +8,7 @@
     <title>隐私政策 — 优惠活动聚合</title>
     <meta name="description" content="优惠活动聚合（券宝）隐私政策：说明本站信息收集与使用方式、Cookie 与本地存储、第三方链接跳转与推广链接说明、未成年人保护及联系方式。" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
+    <meta name="theme-color" content="#6b7280" />
     <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://jdjdndn.github.io/privacy.html" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/privacy.html" />
@@ -50,7 +50,138 @@
     <script src="./dark-toggle.js"></script>
     <script src="./site-nav.js"></script>
 
+    <!-- 隐私页专属样式（不影响 about 页） -->
+    <style>
+      .privacy-wrap { max-width: 760px; margin: 0 auto; }
+      .privacy-toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: -4px 0 28px;
+      }
+      .privacy-toc a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 13px;
+        border-radius: 999px;
+        border: 1px solid var(--border, rgba(120, 120, 120, 0.22));
+        background: var(--card, #fff);
+        color: var(--text-secondary, #475569);
+        font-size: 12.5px;
+        text-decoration: none;
+        transition: all .2s ease;
+      }
+      .privacy-toc a:hover {
+        border-color: var(--primary, #ff6b35);
+        color: var(--primary, #ff6b35);
+        transform: translateY(-1px);
+      }
+      .privacy-card {
+        background: var(--card, #fff);
+        border: 1px solid var(--border, rgba(120, 120, 120, 0.14));
+        border-radius: 16px;
+        padding: 22px 24px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 20px -12px rgba(15, 23, 42, 0.10);
+        transition: box-shadow .25s ease;
+        scroll-margin-top: 20px;
+      }
+      .privacy-card .about-section-title { margin-bottom: 14px; }
+      .privacy-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--primary, #ff6b35), #ff8f4f);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px -1px rgba(255, 107, 53, 0.5);
+      }
+      .privacy-highlight {
+        border-left: 4px solid #10b981;
+        background: rgba(16, 185, 129, 0.07);
+        border-radius: 0 10px 10px 0;
+        padding: 12px 14px;
+        font-weight: 600;
+        color: var(--text, #1e293b);
+      }
+      .privacy-highlight-brand {
+        border-left: 4px solid var(--primary, #ff6b35);
+        background: rgba(255, 107, 53, 0.07);
+        border-radius: 0 10px 10px 0;
+        padding: 14px;
+      }
+      .privacy-highlight-brand strong { color: #d9581f; }
+      .privacy-back {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin: 24px 0 8px;
+      }
+      .privacy-back a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 20px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all .2s ease;
+      }
+      .privacy-back a.primary {
+        background: linear-gradient(135deg, var(--primary, #ff6b35), #ff8f4f);
+        color: #fff;
+        box-shadow: 0 4px 12px -2px rgba(255, 107, 53, 0.45);
+      }
+      .privacy-back a.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px -2px rgba(255, 107, 53, 0.55); }
+      .privacy-back a.ghost {
+        border: 1px solid var(--border, rgba(120, 120, 120, 0.25));
+        color: var(--text-secondary, #475569);
+      }
+      .privacy-back a.ghost:hover { border-color: var(--primary, #ff6b35); color: var(--primary, #ff6b35); }
+      body.dark-mode .privacy-card {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.10);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 10px 24px -12px rgba(0, 0, 0, 0.5);
+      }
+      body.dark-mode .privacy-highlight {
+        background: rgba(16, 185, 129, 0.12);
+        border-left-color: #34d399;
+      }
+      body.dark-mode .privacy-highlight-brand {
+        background: rgba(255, 107, 53, 0.12);
+      }
+      body.dark-mode .privacy-highlight-brand strong { color: #ff9a5a; }
+      body.dark-mode .privacy-toc a {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.14);
+        color: #94a3b8;
+      }
+      body.dark-mode .privacy-toc a:hover { border-color: var(--primary, #ff6b35); color: var(--primary, #ff6b35); }
+      /* 移动端 */
+      @media (max-width: 767px) {
+        .privacy-card { padding: 16px 14px; border-radius: 14px; }
+        .privacy-toc { margin-bottom: 18px; }
+        .privacy-toc a { padding: 5px 10px; font-size: 12px; }
+        .privacy-back { gap: 8px; }
+        .privacy-back a { padding: 8px 16px; font-size: 13px; }
+      }
+    </style>
+
     <meta name="google" content="notranslate" />
+
+    <style>
+      /* ===== 隐私页：灰色主题 ===== */
+      :root { --primary: #6b7280; --primary-hover: #4b5563; --primary-light: #f9fafb; }
+      page-hero { --hero-gradient: linear-gradient(155deg, #111827 0%, #374151 30%, #6b7280 55%, #9ca3af 80%, #d1d5db 100%); }
+    </style>
 
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
@@ -66,72 +197,85 @@
           aria="隐私政策"
         ></page-hero>
 
-        <section class="about-section">
-          <h2 class="about-section-title">1. 我们收集哪些信息</h2>
-          <p class="about-section-desc">
-            本站（优惠活动聚合，下称"本站"）是优惠信息导航平台，<strong>不要求注册、不要求登录，不收集您的姓名、手机号、邮箱、收货地址等任何可识别个人身份的信息</strong>。
-          </p>
-          <p class="about-section-desc">您访问本站时，以下信息可能会被收集：</p>
-          <ul class="about-features">
-            <li class="about-feature-item"><span class="about-feature-icon">🖥️</span><strong>访问统计</strong>：本站使用 Umami Analytics 进行匿名访问统计（页面浏览数、来源、设备类型、大致地区）。Umami 为隐私友好型统计工具，不设置跟踪 Cookie，不采集您的个人身份信息。</li>
-            <li class="about-feature-item"><span class="about-feature-icon">💾</span><strong>浏览器本地存储（localStorage）</strong>：用于记住您的界面偏好与浏览状态，包括暗色模式选择、上次浏览的分类页、文章列表页码、已读引导提示等。这些数据仅保存在您的设备上，不会被上传。</li>
-          </ul>
-        </section>
+        <div class="privacy-wrap">
 
-        <section class="about-section">
-          <h2 class="about-section-title">2. Cookie 与本地存储</h2>
-          <p class="about-section-desc">
-            本站本身不设置广告跟踪 Cookie。上述本地存储数据仅用于改善您的浏览体验，您随时可以通过浏览器设置清除站点数据。清除后，界面偏好与浏览记录将被重置，但不影响任何正常功能。
-          </p>
-        </section>
+          <!-- 目录（桌面端可见，移动端自动换行显示） -->
+          <nav class="privacy-toc" aria-label="隐私政策目录">
+            <a href="#p1"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">1</span>信息收集</a>
+            <a href="#p2"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">2</span>Cookie 与本地存储</a>
+            <a href="#p3"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">3</span>第三方链接与推广</a>
+            <a href="#p4"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">4</span>信息安全</a>
+            <a href="#p5"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">5</span>未成年人保护</a>
+            <a href="#p6"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">6</span>政策更新</a>
+            <a href="#p7"><span class="privacy-num" style="width:18px;height:18px;border-radius:6px;font-size:11px">7</span>联系我们</a>
+          </nav>
 
-        <section class="about-section">
-          <h2 class="about-section-title">3. 第三方链接与推广说明</h2>
-          <p class="about-section-desc">
-            本站收录的优惠活动均跳转至京东、淘宝、拼多多、美团、携程、同程、飞猪等第三方平台。您点击跳转后，将由对应平台收集和使用您的信息，其处理方式请以各平台的隐私政策为准，本站对此不承担控制或责任。
-          </p>
-          <!-- <p class="about-section-desc">
-            <strong>推广链接披露</strong>：本站部分优惠链接为电商联盟/推广链接。当您通过此类链接跳转并完成下单，本站运营方可能获得推广佣金，该佣金由平台方支付，<strong>不影响您实际支付的价格</strong>。我们始终优先推荐真实有效的优惠，佣金收入用于维持网站运营与持续更新。
-          </p> -->
-        </section>
-
-        <section class="about-section">
-          <h2 class="about-section-title">4. 信息安全</h2>
-          <p class="about-section-desc">
-            由于本站不收集个人身份信息，不存在存储个人数据的场景。建议您通过本站跳转至第三方平台时，注意甄别页面真实性，不在可疑页面输入个人信息。
-          </p>
-        </section>
-
-        <section class="about-section">
-          <h2 class="about-section-title">5. 未成年人保护</h2>
-          <p class="about-section-desc">
-            本站内容面向一般公众。若您为未成年人，请在监护人陪同下浏览本站，并谨慎进行任何线上消费。
-          </p>
-        </section>
-
-        <section class="about-section">
-          <h2 class="about-section-title">6. 政策的更新</h2>
-          <p class="about-section-desc">
-            本隐私政策可能随网站功能或法规要求进行调整，更新后的政策将在本页面发布并更新生效日期。重大变更我们会通过站内提示告知。
-          </p>
-          <p class="about-section-desc">生效日期：2026年9月22日。</p>
-        </section>
-
-        <section class="about-section">
-          <h2 class="about-section-title">7. 联系我们</h2>
-          <p class="about-section-desc">
-            如对本隐私政策、优惠信息准确性或任何内容有疑问、建议，或发现链接失效、信息有误，欢迎通过
-            <a href="./about.html#contact">关于我们页面的联系方式</a>反馈，我们会在收到后尽快处理。
-          </p>
-        </section>
-
-        <section class="about-section">
-          <div class="feedback-section">
-            <p class="about-section-desc" style="margin:0">
-              <a href="./index.html">← 返回首页</a> · <a href="./about.html">关于我们</a> · <a href="./about.html#contact">纠错 / 失效反馈</a>
+          <section class="about-section privacy-card" id="p1">
+            <h2 class="about-section-title"><span class="privacy-num">1</span>我们收集哪些信息</h2>
+            <p class="about-section-desc privacy-highlight">
+              本站（优惠活动聚合，下称"本站"）是优惠信息导航平台，<strong>不要求注册、不要求登录，不收集您的姓名、手机号、邮箱、收货地址等任何可识别个人身份的信息</strong>。
             </p>
+            <p class="about-section-desc">您访问本站时，以下信息可能会被收集：</p>
+            <ul class="about-features">
+              <li class="about-feature-item"><span class="about-feature-icon">🖥️</span><span class="about-feature-body"><strong>访问统计</strong><span>本站使用 Umami Analytics 进行匿名访问统计（页面浏览数、来源、设备类型、大致地区）。Umami 为隐私友好型统计工具，不设置跟踪 Cookie，不采集您的个人身份信息。</span></span></li>
+              <li class="about-feature-item"><span class="about-feature-icon">💾</span><span class="about-feature-body"><strong>浏览器本地存储（localStorage）</strong><span>用于记住您的界面偏好与浏览状态，包括暗色模式选择、上次浏览的分类页、文章列表页码、已读引导提示等。这些数据仅保存在您的设备上，不会被上传。</span></span></li>
+            </ul>
+          </section>
+
+          <section class="about-section privacy-card" id="p2">
+            <h2 class="about-section-title"><span class="privacy-num">2</span>Cookie 与本地存储</h2>
+            <p class="about-section-desc">
+              本站本身不设置广告跟踪 Cookie。上述本地存储数据仅用于改善您的浏览体验，您随时可以通过浏览器设置清除站点数据。清除后，界面偏好与浏览记录将被重置，但不影响任何正常功能。
+            </p>
+          </section>
+
+          <section class="about-section privacy-card" id="p3">
+            <h2 class="about-section-title"><span class="privacy-num">3</span>第三方链接与推广说明</h2>
+            <p class="about-section-desc">
+              本站收录的优惠活动均跳转至京东、淘宝、拼多多、美团、携程、同程、飞猪等第三方平台。您点击跳转后，将由对应平台收集和使用您的信息，其处理方式请以各平台的隐私政策为准，本站对此不承担控制或责任。
+            </p>
+            <!-- <p class="about-section-desc privacy-highlight-brand">
+              <strong>c</strong>：本站部分优惠链接为电商联盟/推广链接。当您通过此类链接跳转并完成下单，本站运营方可能获得推广佣金，该佣金由平台方支付，<strong>不影响您实际支付的价格</strong>。我们始终优先推荐真实有效的优惠，佣金收入用于维持网站运营与持续更新。
+            </p> -->
+          </section>
+
+          <section class="about-section privacy-card" id="p4">
+            <h2 class="about-section-title"><span class="privacy-num">4</span>信息安全</h2>
+            <p class="about-section-desc">
+              由于本站不收集个人身份信息，不存在存储个人数据的场景。建议您通过本站跳转至第三方平台时，注意甄别页面真实性，不在可疑页面输入个人信息。
+            </p>
+          </section>
+
+          <section class="about-section privacy-card" id="p5">
+            <h2 class="about-section-title"><span class="privacy-num">5</span>未成年人保护</h2>
+            <p class="about-section-desc">
+              本站内容面向一般公众。若您为未成年人，请在监护人陪同下浏览本站，并谨慎进行任何线上消费。
+            </p>
+          </section>
+
+          <section class="about-section privacy-card" id="p6">
+            <h2 class="about-section-title"><span class="privacy-num">6</span>政策的更新</h2>
+            <p class="about-section-desc">
+              本隐私政策可能随网站功能或法规要求进行调整，更新后的政策将在本页面发布并更新生效日期。重大变更我们会通过站内提示告知。
+            </p>
+            <p class="about-section-desc">生效日期：2026年9月22日。</p>
+          </section>
+
+          <section class="about-section privacy-card" id="p7">
+            <h2 class="about-section-title"><span class="privacy-num">7</span>联系我们</h2>
+            <p class="about-section-desc">
+              如对本隐私政策、优惠信息准确性或任何内容有疑问、建议，或发现链接失效、信息有误，欢迎通过
+              <a href="./about.html#contact">关于我们页面的联系方式</a>反馈，我们会在收到后尽快处理。
+            </p>
+          </section>
+
+          <div class="privacy-back">
+            <a class="primary" href="./index.html">← 返回首页</a>
+            <a class="ghost" href="./about.html">关于我们</a>
+            <a class="ghost" href="./about.html#contact">📮 纠错 / 失效反馈</a>
           </div>
-        </section>
+
+        </div>
     </div></div>
 
     <site-nav position="footer"></site-nav>

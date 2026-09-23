@@ -10,11 +10,13 @@
   class PageProgress extends HTMLElement {
     connectedCallback() {
       var bar = document.createElement('div');
+      var primary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#FF6B35';
+      var primaryHover = getComputedStyle(document.documentElement).getPropertyValue('--primary-hover').trim() || primary;
       bar.style.cssText =
         'position:fixed;top:0;left:0;height:3px;width:0;' +
-        'background:linear-gradient(90deg,#FF6B35,#FF8F5E);' +
+        'background:linear-gradient(90deg,' + primary + ',' + primaryHover + ');' +
         'z-index:10001;transition:width 0.3s ease,opacity 0.3s ease;' +
-        'box-shadow:0 0 10px rgba(255,107,53,0.5);pointer-events:none;';
+        'box-shadow:0 0 10px ' + primary + ';pointer-events:none;';
       this.appendChild(bar);
 
       // 挂载后开始动画

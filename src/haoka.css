@@ -1,13 +1,5 @@
 /* ========== 号卡专区页面样式 ========== */
 
-/* ---------- Hero 颜色变量 ---------- */
-.haoka-hero {
-  --hero-gradient: linear-gradient(145deg, #E04A00 0%, #FF6B35 35%, #FF8F5E 65%, #FFB088 100%);
-  --hero-dark-gradient: linear-gradient(145deg, #4a1800 0%, #8b3000 35%, #a64d10 65%, #bf6a38 100%);
-  --hero-pulse: rgba(255, 107, 53, 0);
-  margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
-  padding-bottom: 32px;
-}
 /* ---------- Hero 统计徽章（基础样式在 shared.css）---------- */
 
 /* ---------- 信任徽章条（基础样式在 shared.css） ---------- */
@@ -189,8 +181,6 @@ body.dark-mode .recharge-btn:hover {
 
 @media (min-width: 1024px) {
 
-  .haoka-hero h1 { font-size: 36px; margin-bottom: 10px; }
-  .haoka-hero p { font-size: 15px; margin-bottom: 28px; }
   .agent-hook {
     padding: 48px 40px;
     margin-top: 48px;
@@ -204,11 +194,6 @@ body.dark-mode .recharge-btn:hover {
 }
 
 @media (max-width: 480px) {
-  .haoka-hero {
-    padding: 36px 16px 28px;
-  }
-  .haoka-hero h1 { font-size: 22px; }
-  .haoka-hero p { margin-bottom: 20px; }
   .agent-hook {
     padding: 24px 16px;
     margin-top: 32px;

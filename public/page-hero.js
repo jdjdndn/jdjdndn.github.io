@@ -30,24 +30,26 @@
   var TEMPLATE = document.createElement('template');
   TEMPLATE.innerHTML =
     '<link rel="stylesheet" href="' + CSS_URL + '">' +
-    '<div class="ph-deco" aria-hidden="true"></div>' +
-    '<div class="ph-nav">' +
-      '<a href="./" class="ph-back" aria-label="返回首页">' +
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
-        '返回首页' +
-      '</a>' +
-      '<div class="ph-controls">' +
-        '<button class="ph-dark-btn" aria-label="切换暗色模式">' +
-          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>' +
-          '<span class="ph-dark-text">暗色</span>' +
-        '</button>' +
+    '<div class="ph-wrapper" part="wrapper">' +
+      '<div class="ph-deco" aria-hidden="true"></div>' +
+      '<div class="ph-nav">' +
+        '<a href="./" class="ph-back" aria-label="返回首页">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
+          '返回首页' +
+        '</a>' +
+        '<div class="ph-controls">' +
+          '<button class="ph-dark-btn" aria-label="切换暗色模式">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>' +
+            '<span class="ph-dark-text">暗色</span>' +
+          '</button>' +
+        '</div>' +
       '</div>' +
-    '</div>' +
-    '<div class="ph-icon"></div>' +
-    '<h1 class="ph-title"></h1>' +
-    '<p class="ph-subtitle"></p>' +
-    '<div class="ph-stats"><slot></slot></div>' +
-    '<div class="ph-wave" aria-hidden="true">' + WAVE_SVG + '</div>';
+      '<div class="ph-icon"></div>' +
+      '<h1 class="ph-title"></h1>' +
+      '<p class="ph-subtitle"></p>' +
+      '<div class="ph-stats"><slot></slot></div>' +
+      '<div class="ph-wave" aria-hidden="true">' + WAVE_SVG + '</div>' +
+    '</div>';
 
   class PageHero extends HTMLElement {
 
@@ -73,16 +75,18 @@
       this._renderText();
       this._initDark();
 
-      // 首页（/ 或 /index.html）时"返回首页"指向自身无意义，替换为品牌名
-      var path = (window.location.pathname || '').replace(/\/+$/, '');
-      if (path === '' || path.endsWith('/index.html')) {
-        var back = shadow.querySelector('.ph-back');
-        if (back) {
-          var brand = document.createElement('span');
-          brand.className = 'ph-back';
-          brand.setAttribute('aria-label', '券宝');
-          brand.textContent = '券宝';
-          back.parentNode.replaceChild(brand, back);
+      // 修正"返回"链接：一级页面不显示，其他页面显示"返回上级"
+      var back = shadow.querySelector('.ph-back');
+      if (back) {
+        var path = (window.location.pathname || '').replace(/\/+$/, '');
+        var segments = path.split('/').filter(Boolean);
+        if (segments.length <= 1) {
+          // 一级页面：隐藏返回按钮
+          back.style.display = 'none';
+        } else {
+          // 二级及以上页面：显示"返回上级"，链接为 ../
+          back.setAttribute('href', '../');
+          back.querySelector('svg').nextSibling.textContent = '返回上级';
         }
       }
 
@@ -96,7 +100,7 @@
         this._darkObserver.disconnect();
         this._darkObserver = null;
       }
-      this._initialized = false;
+      // 不重置 _initialized，避免重新连接时闪烁
     }
 
     /**

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="google" content="notranslate" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f97316" />
+
+    <!-- SEO -->
+    <title>{{TITLE}} — 副业入口 | 券宝</title>
+    <meta name="description" content="{{DESCRIPTION}}" />
+    <meta name="keywords" content="{{KEYWORDS}}" />
+    <link rel="canonical" href="https://jdjdndn.github.io/fuye/{{SLUG}}.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{TITLE}} — 副业入口" />
+    <meta property="og:description" content="{{DESCRIPTION}}" />
+    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+
+    <!-- 公共资源 -->
+    <link rel="stylesheet" href="../shared.css" />
+    <script src="../page-hero.js"></script>
+    <script src="../page-progress.js"></script>
+    <script src="../dark-toggle.js"></script>
+    <script src="../site-nav.js"></script>
+    <script src="../product-card.js"></script>
+
+    <style>
+      /* ===== 副业中间页：橙金色主题 ===== */
+      :root { --primary: #f97316; --primary-hover: #ea580c; --primary-light: #fff7ed; }
+      page-hero { --hero-gradient: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%); }
+
+      /* 简介区 */
+      .intro-section {
+        max-width: 800px;
+        margin: 0 auto 32px;
+        padding: 0 20px;
+      }
+      .intro-card {
+        background: var(--card, #fff);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        border: 1px solid var(--border, #e5e7eb);
+      }
+      .intro-card h2 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text, #1a1a2e);
+      }
+      .intro-card p {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--text-secondary, #4a5568);
+      }
+
+      /* 入口网格 */
+      .entry-grid {
+        max-width: 800px;
+        margin: 0 auto 32px;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+      .entry-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--card, #fff);
+        border-radius: 10px;
+        border: 1px solid var(--border, #e5e7eb);
+        text-decoration: none;
+        color: var(--text, #1a1a2e);
+        transition: all 0.2s ease;
+      }
+      .entry-item:hover {
+        border-color: var(--primary, #f97316);
+        box-shadow: 0 4px 12px rgba(249,115,22,0.1);
+        transform: translateY(-1px);
+      }
+      .entry-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--primary-light, #fff7ed);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .entry-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .entry-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .entry-desc {
+        font-size: 12px;
+        color: var(--text-secondary, #6b7280);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* 详细指导区 */
+      .guide-section {
+        max-width: 800px;
+        margin: 0 auto 48px;
+        padding: 0 20px;
+      }
+      .guide-card {
+        background: linear-gradient(135deg, var(--primary-light, #fff7ed) 0%, #fff 100%);
+        border-radius: 12px;
+        padding: 24px;
+        border: 1px solid var(--border, #e5e7eb);
+      }
+      .guide-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text, #1a1a2e);
+      }
+      .guide-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .guide-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border-light, #f3f4f6);
+        font-size: 14px;
+        color: var(--text-secondary, #4a5568);
+      }
+      .guide-list li:last-child {
+        border-bottom: none;
+      }
+      .guide-list a {
+        color: var(--primary, #f97316);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .guide-list a:hover {
+        text-decoration: underline;
+      }
+
+      .f-note {
+        max-width: 800px;
+        margin: 0 auto 48px;
+        padding: 0 20px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--text-secondary, #6b7280);
+      }
+    </style>
+  </head>
+  <body>
+    <page-progress></page-progress>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">{{TITLE}} — 副业入口</h1>
+
+    <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
+
+      <!-- Hero -->
+      <page-hero
+        icon='{{ICON}}'
+        title="{{TITLE}}"
+        subtitle="{{SUBTITLE}}"
+        aria="{{TITLE}}"
+      >
+        <span class="stat-badge"><strong>{{STAT_NUM}}</strong> {{STAT_LABEL}}</span>
+      </page-hero>
+
+      <!-- 简介 -->
+      <div class="intro-section">
+        <div class="intro-card">
+          <h2>💡 什么是{{TITLE}}？</h2>
+          <p>{{INTRO}}</p>
+        </div>
+      </div>
+
+      <!-- 入口链接 -->
+      <div class="entry-grid">
+        {{ENTRIES}}
+      </div>
+
+      <!-- 详细指导 -->
+      <div class="guide-section">
+        <div class="guide-card">
+          <h3>📖 详细指导</h3>
+          <ul class="guide-list">
+            {{GUIDES}}
+          </ul>
+        </div>
+      </div>
+
+      <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
+
+    <legal-links></legal-links>
+    </div>
+
+    <site-nav position="footer"></site-nav>
+    <script type="module" src="../common/base.js"></script>
+  </body>
+</html>

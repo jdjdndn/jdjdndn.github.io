@@ -74,63 +74,67 @@ const getPlatformIcon = (url) => ICONS.platform[getPlatformKey(url)] || ICONS.pl
 const renderCards = () => {
   const main = $('#main-content');
   const clickCounts = getClickCounts();
+
   main.innerHTML = haokaLinks.map((item) => {
-    const badgeHtml = item.badge ? `<span class="haoka-badge ${BADGE_CLASS[item.badge] || ''}">${item.badge}</span>` : '';
     const clickCount = clickCounts[item.name] || 0;
+    const platformIcon = getPlatformIcon(item.url);
+
+    // 构建标签
+    const metaTags = [];
+    metaTags.push(`<span class="card-tag">${ICONS.check} 正规授权</span>`);
+    if (item.nationwide) {
+      metaTags.push(`<span class="card-tag">${ICONS.check} 全国配送</span>`);
+    }
+    if (clickCount > 0) {
+      metaTags.push(`<span class="card-tag">${ICONS.check} 已办理${formatCount(clickCount)}次</span>`);
+    }
+    if (getVisited().includes(item.url)) {
+      metaTags.push(`<span class="card-tag card-visited">✓ 已访问</span>`);
+    }
+
     return `
-      <article class="haoka-card">
-        <div class="haoka-card-top"></div>
-        <div class="haoka-card-body">
-          <div class="haoka-card-header">
-            <div class="haoka-card-platform-icon">${getPlatformIcon(item.url)}</div>
-            <div class="haoka-card-info">
-              <span class="haoka-card-name">${item.name}${badgeHtml}</span>
-            </div>
-            ${item.priceRange ? `<span class="haoka-card-price"><span class="haoka-price-text">${item.priceRange}</span></span>` : ''}
-          </div>
-          <p class="haoka-card-desc">${item.description || ''}</p>
-          <div class="haoka-card-meta">
-            <span class="haoka-tag">${ICONS.check} 正规授权</span>
-            ${item.nationwide ? `<span class="haoka-tag">${ICONS.check} 全国配送</span>` : ''}
-            ${clickCount > 0 ? `<span class="haoka-tag">${ICONS.check} 已办理${formatCount(clickCount)}次</span>` : ''}
-            ${getVisited().includes(item.url) ? `<span class="haoka-tag haoka-visited">✓ 已访问</span>` : ''}
-          </div>
-          <div class="haoka-card-actions">
-            <a class="btn-go" href="${item.url}" target="_blank" rel="noopener sponsored">
-              ${ICONS.external}
-              立即办理
-            </a>
-            <button class="btn-qr" data-link="${item.url}" data-name="${item.name.replace(/"/g, '&quot;')}">
-              ${ICONS.qr}
-              扫码
-            </button>
-          </div>
+      <product-card
+        name="${item.name.replace(/"/g, '&quot;')}"
+        description="${(item.description || '').replace(/"/g, '&quot;')}"
+        price="${(item.priceRange || '').replace(/"/g, '&quot;')}"
+        badge="${(item.badge || '').replace(/"/g, '&quot;')}"
+        url="${item.url}"
+        platform-icon="${platformIcon.replace(/"/g, '&quot;')}"
+        ${item.nationwide ? 'nationwide' : ''}
+      >
+        <div slot="card-meta" class="card-meta">
+          ${metaTags.join('')}
         </div>
-      </article>
+      </product-card>
     `;
   }).join('');
 };
 
 // ========== 事件委托 ==========
 document.addEventListener('click', (e) => {
-  const qrBtn = e.target.closest('.btn-qr');
-  if (qrBtn) {
-    track('haoka_qr', { name: qrBtn.dataset.name });
-    loadQrModal().then(m => m.showQrModal(qrBtn.dataset.link, qrBtn.dataset.name));
-    return;
-  }
-  const goBtn = e.target.closest('.btn-go');
-  if (goBtn) {
-    const card = goBtn.closest('.haoka-card');
-    if (card) {
-      const nameEl = card.querySelector('.haoka-card-name');
-      const name = nameEl?.childNodes?.[0]?.textContent?.trim() || nameEl?.textContent?.trim();
-      track('haoka_click', { name: name || '' });
-      if (name) trackClick(name);
-      markVisited(goBtn.href);
-    }
+  // product-card 组件的自定义事件
+  const card = e.target.closest('product-card');
+  if (card) {
+    // 处理自定义事件
+    card.addEventListener('qr-click', handleQrClick);
+    card.addEventListener('card-click', handleCardClick);
   }
 });
+
+// QR 码点击处理
+const handleQrClick = (e) => {
+  const { url, name } = e.detail;
+  track('haoka_qr', { name });
+  loadQrModal().then(m => m.showQrModal(url, name));
+};
+
+// 卡片点击处理
+const handleCardClick = (e) => {
+  const { url, name } = e.detail;
+  track('haoka_click', { name: name || '' });
+  if (name) trackClick(name);
+  markVisited(url);
+};
 
 createSharePanel(track);
 

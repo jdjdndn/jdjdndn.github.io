@@ -95,7 +95,13 @@
     <script src="./site-nav.js"></script>
 
     <meta name="google" content="notranslate" />
-  
+
+    <style>
+      /* ===== 网盘页：紫色主题 ===== */
+      :root { --primary: #7c3aed; --primary-hover: #6d28d9; --primary-light: #f5f3ff; }
+      page-hero { --hero-gradient: linear-gradient(150deg, #3b0764 0%, #5b21b6 25%, #7c3aed 50%, #a78bfa 75%, #c4b5fd 100%); }
+    </style>
+
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
@@ -153,9 +159,7 @@
 
 
     <!-- 底部导航栏（预置静态内容，JS 只更新 active 状态） -->
-    <div class="legal-links">
-      <a href="./privacy.html">隐私政策</a><span class="legal-sep">·</span><a href="./about.html#contact">纠错 / 失效反馈</a>
-    </div>
+    <legal-links></legal-links>
 
     <site-nav position="footer"></site-nav>
 

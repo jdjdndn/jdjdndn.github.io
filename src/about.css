@@ -1,34 +1,6 @@
 /* ========== 关于页样式 ========== */
 
 /* ---------- Hero 颜色变量（青绿渐变） ---------- */
-.about-hero {
-  --hero-gradient: linear-gradient(145deg, #047857 0%, #10b981 35%, #34d399 65%, #6ee7b7 100%);
-  --hero-dark-gradient: linear-gradient(145deg, #022c22 0%, #064e3b 35%, #065f46 65%, #047857 100%);
-  --hero-pulse: rgba(16, 185, 129, 0);
-  margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
-  background: var(--hero-gradient);
-  padding-bottom: 32px;
-}
-@media (prefers-color-scheme: dark) {
-  .about-hero {
-    background: var(--hero-dark-gradient);
-  }
-  .about-hero::before {
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-  }
-  .about-hero::after {
-    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-  }
-}
-body.dark-mode .about-hero {
-  background: var(--hero-dark-gradient);
-}
-body.dark-mode .about-hero::before {
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-}
-body.dark-mode .about-hero::after {
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-}
 
 /* ---------- 页面容器 ---------- */
 .about-page {
@@ -36,9 +8,6 @@ body.dark-mode .about-hero::after {
   margin: 0 auto;
   padding: 0 16px 100px;
   overflow-x: hidden;
-}
-.about-page .page-hero {
-  margin: -24px calc(-32px + var(--safe-area-inset-right)) 32px calc(-32px + var(--safe-area-inset-left));
 }
 
 /* ---------- 通用段落 ---------- */
@@ -119,39 +88,62 @@ body.dark-mode .about-hero::after {
   letter-spacing: 0.02em;
 }
 
-/* ---------- 功能特色列表 ---------- */
+/* ---------- 功能特色列表（卡片式） ---------- */
 .about-features {
   list-style: none;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 .about-feature-item {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
   font-size: 14px;
-  line-height: 1.8;
-  padding: 8px 12px;
-  border-radius: 10px;
+  line-height: 1.75;
+  padding: 13px 14px;
+  border-radius: 14px;
   color: var(--text-secondary);
-  transition: background 0.2s ease;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 .about-feature-item:hover {
+  border-color: var(--primary-light);
   background: var(--hover-bg);
 }
 .about-feature-icon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  flex: none;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  background: var(--primary-light);
-  color: var(--primary);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff6b35, #ffa63d);
+  color: #fff;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(255, 107, 53, 0.22);
+}
+/* 两行式（隐私页）：标签行 + 内容行 */
+.about-feature-item > :not(.about-feature-icon) {
+  flex: 1;
+  min-width: 0;
+}
+.about-feature-body strong {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text, #1a1a2e);
+  margin-bottom: 3px;
+  letter-spacing: 0.01em;
+}
+.about-feature-body span {
+  display: block;
   font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
 }
 
 /* ---------- 覆盖场景网格 ---------- */
@@ -389,9 +381,6 @@ body.dark-mode .friend-link-desc {
 
 /* ---------- 响应式：桌面端 ---------- */
 @media (min-width: 1024px) {
-  .about-page .page-hero {
-    margin: -40px calc(-48px + var(--safe-area-inset-right)) 0 calc(-48px + var(--safe-area-inset-left));
-  }
   .about-section-title { font-size: 22px; }
   .about-scenarios { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .about-stat-card { padding: 24px 16px; }
@@ -400,12 +389,101 @@ body.dark-mode .friend-link-desc {
 
 /* ---------- 响应式：手机小屏 ---------- */
 @media (max-width: 480px) {
-  .about-page .page-hero {
-    margin: -16px calc(-28px + var(--safe-area-inset-right)) 24px calc(-28px + var(--safe-area-inset-left));
-  }
   .about-stat-num { font-size: 26px; }
   .about-stat-card { padding: 16px 8px; }
   .about-scenario-card { padding: 14px 12px; }
   .feedback-section { padding: 20px 16px; }
   .about-link { padding: 8px 16px; font-size: 13px; }
+}
+
+
+/* ========== 隐私政策页 · 小屏阅读优化（about 页同步受益） ========== */
+@media (max-width: 767px) {
+  .about-section {
+    margin-bottom: 22px;
+  }
+  .about-section-title {
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+  .about-section-desc {
+    font-size: 13.5px;
+    line-height: 1.75;
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .about-disclaimer {
+    padding: 14px 16px;
+  }
+  .about-disclaimer p {
+    font-size: 12.5px;
+  }
+  .feedback-section {
+    padding: 18px 14px;
+  }
+  .about-feature-item {
+    font-size: 13.5px;
+    padding: 7px 10px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section-title {
+    font-size: 16px;
+  }
+  .about-section-desc {
+    font-size: 13px;
+  }
+  .about-disclaimer {
+    padding: 12px 14px;
+  }
+  .feedback-section {
+    padding: 16px 12px;
+  }
+  .feedback-section h3 {
+    font-size: 16px;
+  }
+}
+
+
+
+
+/* ========== 小节标题：主色竖线强调（隐私/关于页） ========== */
+.about-section-title {
+  position: relative;
+  padding-left: 12px;
+}
+.about-section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0.85em;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+/* ========== 小屏微调 ========== */
+@media (max-width: 480px) {
+  .about-feature-item {
+    gap: 10px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .about-feature-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 9px;
+  }
+  .about-feature-body strong {
+    font-size: 14px;
+  }
+  .about-feature-body span {
+    font-size: 12.5px;
+  }
 }

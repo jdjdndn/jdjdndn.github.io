@@ -8,7 +8,7 @@
     <title>关于我们 — 优惠活动聚合</title>
     <meta name="description" content="优惠活动聚合 — 一站式优惠券导航平台，聚合京东、淘宝、拼多多、携程、同程、飞猪等全网热门优惠。关于我们。" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
+    <meta name="theme-color" content="#004E89" />
     <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://jdjdndn.github.io/about.html" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/about.html" />
@@ -52,6 +52,12 @@
 
     <meta name="google" content="notranslate" />
 
+    <style>
+      /* ===== 关于页：蓝色主题 ===== */
+      :root { --primary: #004E89; --primary-hover: #003d6b; --primary-light: #eff6ff; }
+      page-hero { --hero-gradient: linear-gradient(155deg, #0a1628 0%, #1e3a5f 30%, #004E89 55%, #3b82f6 80%, #93c5fd 100%); }
+    </style>
+
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
@@ -59,7 +65,6 @@
     <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
 
         <page-hero
-          class="about-hero"
           icon='<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
           title="优惠活动聚合"
           subtitle="一站式优惠券导航平台"
@@ -184,12 +189,11 @@
             </div>
           </div>
         </section>
-    </div></div>
-
+        <legal-links></legal-links>
+    </div>
     <!-- Toast -->
     <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
 
-    <div class="legal-links"><a href="./privacy.html">隐私政策</a><span class="legal-sep">·</span><a href="./about.html#contact">纠错 / 失效反馈</a></div>
 
     <site-nav position="footer"></site-nav>
 

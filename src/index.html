@@ -158,18 +158,18 @@
     </script>
 
     <!-- CSS 同步加载，消除页面闪烁 -->
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 
     <meta name="google" content="notranslate" />
 
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
-  
+
     <link rel="stylesheet" href="./shared.css" />
     <link rel="stylesheet" href="./huodong.css" />
     <script src="./common-page.js"></script>
@@ -184,7 +184,6 @@
 
     <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
       <page-hero
-        class="index-hero"
         icon='<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
         title="券宝"
         subtitle="外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递"
@@ -205,10 +204,13 @@
       <!-- <nav class="quick-shortcuts" id="quick-shortcuts" aria-label="快捷入口"></nav> -->
 
       <!-- 好物推荐入口（活动页 → 文章索引互链） -->
-      <a class="article-entry-banner" href="./article/index.html#tab10" aria-label="好物推荐省钱攻略文章">
-        <span class="article-entry-icon">📖</span>
-        <span class="article-entry-text">好物推荐 · 亲测省钱攻略文章</span>
-        <span class="article-entry-arrow">→</span>
+      <a class="article-entry-banner" href="./article/haowu.html" aria-label="好物推荐省钱攻略文章">
+        <span class="article-entry-icon" aria-hidden="true">📖</span>
+        <span class="article-entry-body">
+          <span class="article-entry-title">好物推荐 · 省钱攻略</span>
+          <span class="article-entry-sub">美食 / 数码 / 日用 · 亲测真实优惠</span>
+        </span>
+        <span class="article-entry-arrow" aria-hidden="true">→</span>
       </a>
 
       <!-- Tab 导航 -->
@@ -216,22 +218,15 @@
 
       <!-- Tab 内容（SEO 预渲染内容由 vite 插件注入，JS 加载后替换为实际内容） -->
       <main id="tab-content" class="tab-content"></main>
-    </div></div>
 
-    <div class="legal-links">
-      <a href="./privacy.html">隐私政策</a><span class="legal-sep">·</span><a href="./about.html#contact">纠错 / 失效反馈</a><span class="legal-sep">·</span><span>部分链接为推广链接，不影响您的到手价</span>
+      <legal-links></legal-links>
     </div>
+
 
     <site-nav position="footer"></site-nav>
 
     <button id="back-to-top" class="back-to-top hidden" aria-label="回到顶部">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-    </button>
-
-    <!-- 暗色模式切换（桌面/移动端均显示） -->
-    <button id="dark-toggle" class="dark-toggle-btn" aria-label="切换暗色模式">
-      <svg class="dark-toggle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-      <span id="dark-toggle-text">暗色</span>
     </button>
 
     <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>

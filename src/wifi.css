@@ -5,51 +5,25 @@
   --page-accent: var(--accent);
 }
 
-/* ---------- Hero 颜色变量 ---------- */
-.wifi-hero {
-  --hero-gradient: linear-gradient(145deg, #003366 0%, #004E89 35%, #1A73E8 65%, #4DA8FF 100%);
-  --hero-dark-gradient: linear-gradient(145deg, #001a33 0%, #002d55 35%, #0d3d7a 65%, #1a4d8a 100%);
-  --hero-pulse: rgba(26, 115, 232, 0);
-  margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
-  padding-bottom: 32px;
+/* ---------- site-nav 主题色覆盖 ---------- */
+/* 让 site-nav 组件继承页面主题色 */
+site-nav {
+  --nav-primary: var(--accent, #004E89);
+  --nav-primary-hover: #003D6B;
+  --nav-primary-light: var(--accent-light, #EBF5FF);
 }
+
+/* ---------- product-card 主题色覆盖 ---------- */
+/* 让 product-card 组件继承页面主题色 */
+product-card {
+  --card-primary: var(--accent, #004E89);
+  --card-primary-hover: #003D6B;
+  --card-primary-light: var(--accent-light, #EBF5FF);
+}
+
 /* ---------- Hero 统计徽章（基础样式在 shared.css）---------- */
 
 /* ---------- 信任徽章条（基础样式在 shared.css） ---------- */
-
-/* ---------- WiFi 卡片颜色覆盖（基础样式在 shared.css） ---------- */
-.haoka-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 8px 32px rgba(0, 78, 137, 0.12);
-}
-.haoka-card-top {
-  background: linear-gradient(90deg, #004E89, #1A73E8);
-}
-.haoka-card-platform-icon {
-  background: var(--accent-light);
-}
-.haoka-card-platform-icon svg {
-  stroke: var(--accent);
-}
-.haoka-card-actions .btn-go {
-  background: linear-gradient(135deg, #004E89, #1A73E8);
-  box-shadow: 0 2px 8px rgba(0, 78, 137, 0.25);
-}
-.haoka-card-actions .btn-go:hover {
-  background: linear-gradient(135deg, #003D6B, #004E89);
-  box-shadow: 0 4px 16px rgba(0, 78, 137, 0.35);
-}
-.haoka-card-actions .btn-qr {
-  background: var(--accent-light);
-  color: var(--accent);
-}
-.haoka-card-actions .btn-qr:hover {
-  background: color-mix(in srgb, var(--accent) 12%, white);
-}
-.haoka-tag {
-  color: var(--accent);
-  background: var(--accent-light);
-}
 
 /* ---------- 对比表格（SEO/GEO） ---------- */
 .compare-section {
@@ -176,12 +150,6 @@
 }
 
 /* ---------- 代理招募（蓝色主题覆盖） ---------- */
-.wifi-hero ~ .agent-hook {
-  border-color: var(--accent);
-}
-.wifi-hero ~ .agent-hook::before {
-  background: var(--accent-light);
-}
 .agent-hook .agent-hook-icon svg {
   stroke: var(--accent);
 }
@@ -213,8 +181,6 @@
 
 @media (min-width: 1024px) {
 
-  .wifi-hero h1 { font-size: 36px; margin-bottom: 10px; }
-  .wifi-hero p { font-size: 15px; margin-bottom: 28px; }
   .compare-section-title,
   .scenario-section-title {
     font-size: 20px;
@@ -222,11 +188,6 @@
 }
 
 @media (max-width: 480px) {
-  .wifi-hero {
-    padding: 36px 16px 28px;
-  }
-  .wifi-hero h1 { font-size: 22px; }
-  .wifi-hero p { margin-bottom: 20px; }
   .agent-hook {
     padding: 24px 16px;
     margin-top: 32px;

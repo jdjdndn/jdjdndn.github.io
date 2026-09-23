@@ -229,9 +229,16 @@
     <script src="./page-progress.js"></script>
     <script src="./dark-toggle.js"></script>
     <script src="./site-nav.js"></script>
+    <script src="./product-card.js"></script>
 
     <meta name="google" content="notranslate" />
-  
+
+    <style>
+      /* ===== WiFi页：蓝色主题 ===== */
+      :root { --primary: #004E89; --primary-hover: #003d6b; --primary-light: #eff6ff; }
+      page-hero { --hero-gradient: linear-gradient(155deg, #0a1628 0%, #004E89 35%, #1A73E8 65%, #4DA3FF 100%); }
+    </style>
+
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
@@ -243,7 +250,6 @@
 
       <!-- Hero 区域 -->
       <page-hero
-        class="wifi-hero"
         icon='<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>'
         title="随身WiFi专区"
         subtitle="便携上网 · 出差旅行必备 · 多设备共享"
@@ -489,9 +495,7 @@
 
 
     <!-- 底部导航栏（预置静态内容，JS 只更新 active 状态） -->
-    <div class="legal-links">
-      <a href="./privacy.html">隐私政策</a><span class="legal-sep">·</span><a href="./about.html#contact">纠错 / 失效反馈</a>
-    </div>
+    <legal-links></legal-links>
 
     <site-nav position="footer"></site-nav>
 

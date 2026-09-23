@@ -70,4 +70,7 @@ const updateHeroTime = () => {
 };
 updateHeroTime();
 
+// ---------- Web Components ----------
+import './legal-links.js';
+
 export { $, showToast, vibrate, copyText, robustCopy, updateHeroTime };

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { readdirSync, statSync } from 'fs';
+import vue from '@vitejs/plugin-vue';
 import { ROOT, GENERATED_LANDING } from './scripts/vite-plugins/shared.js';
 
 import injectBuildDate from './scripts/vite-plugins/inject-build-date.js';
@@ -11,27 +12,31 @@ import generateLlms from './scripts/vite-plugins/generate-llms.js';
 import swHash from './scripts/vite-plugins/sw-hash.js';
 import verifyAssets from './scripts/vite-plugins/verify-assets.js';
 
-// ===== 页面发现（逻辑在 shared.js，这里只装配入口） =====
-function discoverLandingPages() {
+// ===== 递归扫描 src 目录下所有 HTML 页面 =====
+function discoverAllPages() {
   const srcDir = resolve(ROOT, 'src');
   const entries = {};
-  for (const file of readdirSync(srcDir)) {
-    if (!file.endsWith('.html') || file === 'index.html' || file.startsWith('llms')) continue;
-    const name = file.replace('.html', '');
-    if (GENERATED_LANDING.has(name)) continue;
-    try { statSync(resolve(srcDir, `${name}.js`)); continue; } catch {}
-    entries[name] = resolve(srcDir, file);
-  }
-  return entries;
-}
 
-function discoverArticlePages() {
-  const articleDir = resolve(ROOT, 'src/article');
-  const entries = {};
-  for (const file of readdirSync(articleDir)) {
-    if (!file.endsWith('.html')) continue;
-    entries[`article/${file.replace('.html', '')}`] = resolve(articleDir, file);
+  function scanDir(dir, prefix = '') {
+    for (const file of readdirSync(dir)) {
+      const fullPath = resolve(dir, file);
+      const stat = statSync(fullPath);
+      if (stat.isDirectory()) {
+        // 跳过 common 目录和以 _ 开头的目录
+        if (file === 'common' || file.startsWith('_')) continue;
+        scanDir(fullPath, prefix ? `${prefix}/${file}` : file);
+      } else if (file.endsWith('.html')) {
+        const name = file.replace('.html', '');
+        // 跳过 index.html、llms 文件、_ 开头的模板文件、已生成的页面
+        if (name === 'index' || name.startsWith('llms') || name.startsWith('_')) continue;
+        if (GENERATED_LANDING.has(name)) continue;
+        const entryKey = prefix ? `${prefix}/${name}` : name;
+        entries[entryKey] = fullPath;
+      }
+    }
   }
+
+  scanDir(srcDir);
   return entries;
 }
 
@@ -46,19 +51,14 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(ROOT, 'src/index.html'),
-        haoka: resolve(ROOT, 'src/haoka.html'),
-        wifi: resolve(ROOT, 'src/wifi.html'),
-        wangpan: resolve(ROOT, 'src/wangpan.html'),
-        huiyuan: resolve(ROOT, 'src/huiyuan.html'),
-        gouwu: resolve(ROOT, 'src/gouwu.html'),
-        about: resolve(ROOT, 'src/about.html'),
-        ...discoverLandingPages(),
-        ...discoverArticlePages(),
+        'index-vue': resolve(ROOT, 'src/index-vue.html'),
+        ...discoverAllPages(),
       },
     },
   },
   server: { open: true },
   plugins: [
+    vue(),
     injectBuildDate(),
     seoPrerender(),
     cacheControlMeta(),

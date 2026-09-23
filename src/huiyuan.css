@@ -1,20 +1,14 @@
 /* ========== 会员优惠页面样式（与主站风格对齐） ========== */
 
+/* ---------- product-card 主题色覆盖 ---------- */
+product-card {
+  --card-primary: #6366f1;
+  --card-primary-hover: #4f46e5;
+  --card-primary-light: #eef2ff;
+}
+
 /* ---------- Hero 颜色变量（蓝紫渐变） ---------- */
-.huiyuan-hero {
-  --hero-gradient: linear-gradient(145deg, #4a00e0 0%, #7c3aed 35%, #a78bfa 65%, #c4b5fd 100%);
-  --hero-dark-gradient: linear-gradient(145deg, #1a0050 0%, #2d1070 35%, #4a2090 65%, #5a30a0 100%);
-  --hero-pulse: rgba(124, 58, 237, 0);
-  margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
-  padding-bottom: 32px;
-}
-/* huiyuan 图标特殊 hover */
-.page-hero-icon.huiyuan-icon {
-  transition: transform 0.3s ease;
-}
-.page-hero-icon.huiyuan-icon:hover {
-  transform: scale(1.05) rotate(-2deg);
-}
+
 /* ---------- Hero 统计徽章（基础样式在 shared.css）---------- */
 .hero-stats .stat-badge {
   transition: transform 0.2s ease, background 0.2s ease;
@@ -25,38 +19,3 @@
 }
 
 /* ========== 卡片网格（基础样式在 shared.css） ========== */
-
-/* ========== 卡片按钮（蓝紫配色） ========== */
-.huiyuan-hero ~ .trust-bar ~ main .btn-go {
-  background: linear-gradient(135deg, #7c3aed, #a78bfa);
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
-}
-.huiyuan-hero ~ .trust-bar ~ main .btn-go:hover {
-  background: linear-gradient(135deg, #6d28d9, #7c3aed);
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
-}
-
-/* ========== 暗色模式（蓝紫渐变） ========== */
-.huiyuan-hero {
-  background: var(--hero-gradient);
-}
-@media (prefers-color-scheme: dark) {
-  .huiyuan-hero {
-    background: var(--hero-dark-gradient);
-  }
-  .huiyuan-hero::before {
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-  }
-  .huiyuan-hero::after {
-    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-  }
-}
-body.dark-mode .huiyuan-hero {
-  background: var(--hero-dark-gradient);
-}
-body.dark-mode .huiyuan-hero::before {
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-}
-body.dark-mode .huiyuan-hero::after {
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-}

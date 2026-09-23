@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="google" content="notranslate" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#6366f1" />
+
+    <title>办理流量卡 — 号卡攻略 | 券宝</title>
+    <meta name="description" content="流量卡办理攻略：低月租大流量套餐，移动联通电信广电四网可选，全国配送。" />
+    <meta name="keywords" content="流量卡,办理,手机卡,低月租,大流量" />
+    <link rel="canonical" href="https://jdjdndn.github.io/fuye/haoka-list.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="办理流量卡 — 号卡攻略" />
+    <meta property="og:description" content="流量卡办理攻略：低月租大流量套餐，四网可选。" />
+    <meta property="og:image" content="https://jdjdndn.github.io/og-image.png" />
+
+    <link rel="stylesheet" href="../shared.css" />
+    <script src="../page-hero.js"></script>
+    <script src="../page-progress.js"></script>
+    <script src="../dark-toggle.js"></script>
+    <script src="../site-nav.js"></script>
+
+    <style>
+      :root { --primary: #6366f1; --primary-hover: #4f46e5; --primary-light: #eef2ff; }
+      page-hero { --hero-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); }
+
+      .container { max-width: 1000px; margin: 0 auto; padding: 0 20px 48px; }
+
+      /* 搜索框 */
+      .search-box {
+        position: relative;
+        max-width: 480px;
+        margin: 24px auto 20px;
+      }
+      .search-box input {
+        width: 100%;
+        padding: 12px 16px 12px 44px;
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 10px;
+        font-size: 14px;
+        background: var(--card, #fff);
+        color: var(--text, #1a1a2e);
+        transition: all 0.2s ease;
+      }
+      .search-box input:focus {
+        outline: none;
+        border-color: var(--primary, #6366f1);
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+      }
+      .search-box input::placeholder {
+        color: var(--text-secondary, #9ca3af);
+      }
+      .search-box .search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary, #9ca3af);
+        pointer-events: none;
+      }
+
+      /* Tab 切换 */
+      .tab-nav {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .tab-nav::-webkit-scrollbar { display: none; }
+      .tab-btn {
+        flex-shrink: 0;
+        padding: 8px 20px;
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 20px;
+        background: var(--card, #fff);
+        color: var(--text, #1a1a2e);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+      .tab-btn:hover {
+        border-color: var(--primary, #6366f1);
+        color: var(--primary, #6366f1);
+      }
+      .tab-btn.active {
+        background: var(--primary, #6366f1);
+        color: #fff;
+        border-color: var(--primary, #6366f1);
+      }
+
+      /* 文章卡片 */
+      .article-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .article-card {
+        background: var(--card, #fff);
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 12px;
+        padding: 20px;
+        text-decoration: none;
+        color: var(--text, #1a1a2e);
+        transition: all 0.2s ease;
+      }
+      .article-card:hover {
+        border-color: var(--primary, #6366f1);
+        box-shadow: 0 4px 16px rgba(99,102,241,0.12);
+        transform: translateY(-2px);
+      }
+      .article-card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+      .article-card:hover h3 { color: var(--primary, #6366f1); }
+      .article-card p {
+        font-size: 13px;
+        color: var(--text-secondary, #6b7280);
+        line-height: 1.6;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .article-card .tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 6px;
+        background: var(--primary-light, #eef2ff);
+        color: var(--primary, #6366f1);
+        margin-top: 12px;
+      }
+
+      /* 空状态 */
+      .empty-state {
+        text-align: center;
+        padding: 48px 20px;
+        color: var(--text-secondary, #6b7280);
+      }
+      .empty-state svg {
+        margin-bottom: 16px;
+        opacity: 0.5;
+      }
+
+      /* 分页组件 */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 32px;
+      }
+      .pagination button {
+        padding: 8px 16px;
+        border: 1px solid var(--border, #e5e7eb);
+        border-radius: 8px;
+        background: var(--card, #fff);
+        color: var(--text, #1a1a2e);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .pagination button:hover:not(:disabled) {
+        border-color: var(--primary, #6366f1);
+        color: var(--primary, #6366f1);
+      }
+      .pagination button.active {
+        background: var(--primary, #6366f1);
+        color: #fff;
+        border-color: var(--primary, #6366f1);
+      }
+      .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .pagination .page-info {
+        font-size: 13px;
+        color: var(--text-secondary, #6b7280);
+        margin: 0 8px;
+      }
+
+      /* 小屏隐藏分页 */
+      @media (max-width: 640px) {
+        .pagination { display: none; }
+        .article-grid { grid-template-columns: 1fr; }
+      }
+
+      /* 返回顶部 */
+      .back-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--primary, #6366f1);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 100;
+      }
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .back-to-top:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(99,102,241,0.4);
+      }
+
+      /* 移动端返回顶部适配 */
+      @media (max-width: 768px) {
+        .back-to-top {
+          bottom: 80px;
+          right: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <page-progress></page-progress>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">办理流量卡 — 号卡攻略</h1>
+
+    <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
+
+      <page-hero
+        icon='<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>'
+        title="办理流量卡"
+        subtitle="低月租大流量 · 移动联通电信广电四网可选 · 全国配送"
+        aria="办理流量卡"
+      >
+        <span class="stat-badge"><strong>4</strong> 运营商</span>
+        <span class="stat-badge"><strong>19</strong> 元起/月</span>
+      </page-hero>
+
+      <div class="container">
+        <!-- 搜索框 -->
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="搜索文章标题或描述..." />
+        </div>
+
+        <!-- Tab 切换 -->
+        <div class="tab-nav" id="tabNav">
+          <button class="tab-btn active" data-carrier="all">全部</button>
+          <button class="tab-btn" data-carrier="移动">移动</button>
+          <button class="tab-btn" data-carrier="联通">联通</button>
+          <button class="tab-btn" data-carrier="电信">电信</button>
+          <button class="tab-btn" data-carrier="广电">广电</button>
+        </div>
+
+        <!-- 文章列表 -->
+        <div class="article-grid" id="articleGrid">
+          <!-- 文章卡片由JS动态生成 -->
+        </div>
+
+        <!-- 空状态 -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            <line x1="8" y1="11" x2="14" y2="11"/>
+          </svg>
+          <p>未找到相关文章</p>
+        </div>
+
+        <!-- 分页组件 -->
+        <div class="pagination" id="pagination">
+          <!-- 分页由JS动态生成 -->
+        </div>
+      </div>
+
+    <legal-links></legal-links>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+
+    <site-nav position="footer"></site-nav>
+
+    <script type="module" src="../common/base.js"></script>
+    <script>
+    // 电话卡文章数据（按运营商分类）
+    var articles = [
+      // 移动
+      { title: '中国移动福气卡', desc: '39元240G+2000分钟，福建五城专属。', url: '../article/card/fuqi-card.html', tag: '39元240G', carrier: '移动' },
+      { title: '中国移动黄鹤卡', desc: '39元150G流量，仅发湖北七城。', url: '../article/card/huanghe-card.html', tag: '39元150G', carrier: '移动' },
+      { title: '中国移动庐州卡', desc: '39��160G+100分钟+100短信。', url: '../article/card/luzhou-card.html', tag: '39元160G', carrier: '移动' },
+      { title: '中国移动水仙卡', desc: '29元230G+500分钟，福建五城专属。', url: '../article/card/shuixian-card.html', tag: '29元230G', carrier: '移动' },
+      { title: '中国移动知意卡', desc: '39元55G通用流量，48个月合约。', url: '../article/card/zhiyi-card.html', tag: '39元55G', carrier: '移动' },
+      // 联通
+      { title: '中国联通大尧卡', desc: '39元180G+200分钟，12个月优惠期。', url: '../article/card/dayao-card.html', tag: '39元180G', carrier: '联通' },
+      { title: '中国联通长汀卡', desc: '首月49元370G，江西专属。', url: '../article/card/changting-card.html', tag: '370G', carrier: '联通' },
+      { title: '中国联通飞驰卡', desc: '39元200G+300分钟，先激活后发货。', url: '../article/card/feichi2-card.html', tag: '39元200G', carrier: '联通' },
+      { title: '中国联通飞辰卡', desc: '39元155G+100分钟，赠360G/年。', url: '../article/card/feichen-card.html', tag: '39元155G', carrier: '联通' },
+      { title: '中国联通方圆卡', desc: '39元240G+200分钟，长期套餐。', url: '../article/card/fangyuan-card.html', tag: '39元240G', carrier: '联通' },
+      { title: '中国联通飞雀卡', desc: '39元150G+200分钟，赠4年会员。', url: '../article/card/feique-card.html', tag: '39元150G', carrier: '联通' },
+      { title: '联通定瓷卡', desc: '39元200G+200分钟，可发全国。', url: '../article/card/dingci-card.html', tag: '39元200G', carrier: '联通' },
+      { title: '中国联通飞霄卡', desc: '29元150G+200分钟，赠视频会员。', url: '../article/card/feixiao-card.html', tag: '29元150G', carrier: '联通' },
+      { title: '中国联通飞继卡', desc: '29元280G+200分钟，首月全量全价。', url: '../article/card/feiji-card.html', tag: '29元280G', carrier: '联通' },
+      { title: '中国联通飞芬卡', desc: '39元200G+200分钟，600元封顶。', url: '../article/card/feifen-card.html', tag: '39元200G', carrier: '联通' },
+      { title: '中国联通飞素卡', desc: '39元240G+200分钟，首月全量全价。', url: '../article/card/feisu-card.html', tag: '39元240G', carrier: '联通' },
+      { title: '中国联通飞希卡', desc: '29元180G+100分钟，首月半量半价。', url: '../article/card/feixi-card.html', tag: '29元180G', carrier: '联通' },
+      { title: '中国联通飞焱卡', desc: '29元180G+100分钟，首月半量半价。', url: '../article/card/feiyan-card.html', tag: '29元180G', carrier: '联通' },
+      { title: '中国联通活力卡', desc: '39元150G+200分钟，赠会员N选1。', url: '../article/card/huoli-card.html', tag: '39元150G', carrier: '联通' },
+      { title: '中国联通极速卡', desc: '39元550G+300分钟，仅发四川。', url: '../article/card/jisu-card.html', tag: '39元550G', carrier: '联通' },
+      { title: '中国联通康定卡', desc: '首月1元500G，四川专属。', url: '../article/card/kangding-card.html', tag: '500G', carrier: '联通' },
+      { title: '中国联通南开卡', desc: '29元100G+200分钟，重庆专属。', url: '../article/card/nankai-card.html', tag: '29元100G', carrier: '联通' },
+      { title: '中国联通上坎卡', desc: '39元190G+200分钟，重庆专属。', url: '../article/card/shangkan-card.html', tag: '39元190G', carrier: '联通' },
+      { title: '中国联通洪崖卡', desc: '19元100G+200分钟，12个月优惠。', url: '../article/card/hongya-card.html', tag: '19元100G', carrier: '联通' },
+      { title: '联通广绣卡', desc: '39元155G+100分钟，可发广东。', url: '../article/card/guangxiu-card.html', tag: '39元155G', carrier: '联通' },
+      // 电信
+      { title: '中国电信汉绣卡', desc: '39元130G+30G定向+200分钟，仅限湖北四城。', url: '../article/card/hanxiu-card.html', tag: '39元160G', carrier: '电信' },
+      { title: '中国电信敬亭卡', desc: '39元150G+100分钟，48个月优惠期。', url: '../article/card/jingting-card.html', tag: '39元150G', carrier: '电信' },
+      { title: '中国电信云朵卡', desc: '39元180G+200分钟，无合约期。', url: '../article/card/yunduo-card.html', tag: '39元180G', carrier: '电信' },
+      { title: '中国电信泰山卡', desc: '38元190G+300分钟，无合约期。', url: '../article/card/taishan-card.html', tag: '38元190G', carrier: '电信' },
+      { title: '中国电信云梦卡', desc: '39元160G+200分钟，仅发湖北七城。', url: '../article/card/yunmeng-card.html', tag: '39元160G', carrier: '电信' },
+      { title: '中国电信知信卡', desc: '39元60G通用，只发广东。', url: '../article/card/zhixin-card.html', tag: '39元60G', carrier: '电信' },
+      // 广电
+      { title: '中国广电飞狮卡', desc: '29元192G通用，首月免费。', url: '../article/card/feishi-card.html', tag: '29元192G', carrier: '广电' },
+      { title: '中国广电茯苓卡', desc: '29元200G通用，可办副卡。', url: '../article/card/fuling-card.html', tag: '29元200G', carrier: '广电' },
+      { title: '中国广电欢马卡', desc: '29元192G通用，首月免费。', url: '../article/card/huanma-card.html', tag: '29元192G', carrier: '广电' },
+      { title: '中国广电巨量卡', desc: '29元192G通用，长期套餐。', url: '../article/card/juliang-card.html', tag: '29元192G', carrier: '广电' },
+      { title: '中国广电骏马卡', desc: '29元192G通用，首月免月租。', url: '../article/card/junma-card.html', tag: '29元192G', carrier: '广电' },
+      { title: '中国广电天马卡', desc: '29元192G通用，可发全国。', url: '../article/card/tianma-card.html', tag: '29元192G', carrier: '广电' },
+      { title: '中国广电奔马卡', desc: '39元60G通用，可办副卡。', url: '../article/card/benma-card.html', tag: '39元60G', carrier: '广电' },
+      { title: '中国广电长安卡', desc: '29元100G+100分钟，仅限陕西。', url: '../article/card/changan-card.html', tag: '29元100G', carrier: '广电' },
+      { title: '中国广电秦风卡', desc: '38元190G+300分钟，只发陕西四城。', url: '../article/card/qinfeng-card.html', tag: '38元190G', carrier: '广电' },
+      { title: '中国广电闽南卡', desc: '39元180G+150分钟，仅发福建。', url: '../article/card/minnan-card.html', tag: '39元180G', carrier: '广电' },
+    ];
+
+    var pageSize = 9;
+    var currentPage = 1;
+    var currentTab = 'all';
+    var searchKeyword = '';
+    var filteredArticles = articles;
+
+    // 筛选文章
+    function filterArticles() {
+      filteredArticles = articles.filter(function(item) {
+        var matchTab = currentTab === 'all' || item.carrier === currentTab;
+        var matchSearch = !searchKeyword ||
+          item.title.toLowerCase().indexOf(searchKeyword.toLowerCase()) !== -1 ||
+          item.desc.toLowerCase().indexOf(searchKeyword.toLowerCase()) !== -1;
+        return matchTab && matchSearch;
+      });
+      currentPage = 1;
+    }
+
+    // 渲染文章
+    function renderArticles() {
+      var grid = document.getElementById('articleGrid');
+      var emptyState = document.getElementById('emptyState');
+      var start = (currentPage - 1) * pageSize;
+      var end = start + pageSize;
+      var pageArticles = filteredArticles.slice(start, end);
+
+      if (filteredArticles.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      grid.style.display = '';
+      emptyState.style.display = 'none';
+
+      var html = '';
+      pageArticles.forEach(function(item) {
+        html += '<a href="' + item.url + '" class="article-card">';
+        html += '<h3>' + item.title + '</h3>';
+        html += '<p>' + item.desc + '</p>';
+        html += '<span class="tag">' + item.tag + '</span>';
+        html += '</a>';
+      });
+      grid.innerHTML = html;
+    }
+
+    // 渲染分页
+    function renderPagination() {
+      var pagination = document.getElementById('pagination');
+      var totalPages = Math.ceil(filteredArticles.length / pageSize);
+
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      var html = '';
+      html += '<button onclick="goToPage(' + (currentPage - 1) + ')" ' + (currentPage === 1 ? 'disabled' : '') + '>上一页</button>';
+
+      for (var i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          html += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          html += '<span class="page-info">...</span>';
+        }
+      }
+
+      html += '<button onclick="goToPage(' + (currentPage + 1) + ')" ' + (currentPage === totalPages ? 'disabled' : '') + '>下一页</button>';
+      html += '<span class="page-info">共 ' + filteredArticles.length + ' 篇</span>';
+
+      pagination.innerHTML = html;
+    }
+
+    // 跳转页面
+    function goToPage(page) {
+      var totalPages = Math.ceil(filteredArticles.length / pageSize);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderArticles();
+      renderPagination();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Tab 切换
+    var tabNav = document.getElementById('tabNav');
+    tabNav.addEventListener('click', function(e) {
+      var btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+
+      // 更新 active 状态
+      tabNav.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      currentTab = btn.dataset.carrier;
+      filterArticles();
+      renderArticles();
+      renderPagination();
+    });
+
+    // 搜索功能
+    var searchInput = document.getElementById('searchInput');
+    var searchTimer = null;
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function() {
+        searchKeyword = searchInput.value.trim();
+        filterArticles();
+        renderArticles();
+        renderPagination();
+      }, 300);
+    });
+
+    // 返回顶部按钮
+    var backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 初始化
+    filterArticles();
+    renderArticles();
+    renderPagination();
+    </script>
+  </body>
+</html>

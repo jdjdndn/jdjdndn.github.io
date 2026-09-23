@@ -10,7 +10,7 @@
     <meta name="keywords" content="京东、淘宝、拼多多网购,优惠券,优惠聚合,省钱" />
     <meta name="author" content="jdjdndn" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FF6B35" />
+    <meta name="theme-color" content="#16a34a" />
     <meta name="application-name" content="京东、淘宝、拼多多网购" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="color-scheme" content="light dark" />
@@ -123,6 +123,12 @@
 
     <meta name="google" content="notranslate" />
 
+    <style>
+      /* ===== 购物页：绿色主题 ===== */
+      :root { --primary: #16a34a; --primary-hover: #15803d; --primary-light: #f0fdf4; }
+      page-hero { --hero-gradient: linear-gradient(155deg, #052e16 0%, #166534 30%, #16a34a 55%, #4ade80 80%, #bbf7d0 100%); }
+    </style>
+
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
   </head>
   <body>
@@ -143,15 +149,13 @@
         ></common-page>
       </div>
 
-    </div></div>
+      <!-- 底部导航栏（Web Component） -->
+      <legal-links></legal-links>
+    </div>
 
     <!-- 移动端暗色切换按钮 -->
     <dark-toggle></dark-toggle>
 
-    <!-- 底部导航栏（Web Component） -->
-    <div class="legal-links">
-      <a href="./privacy.html">隐私政策</a><span class="legal-sep">·</span><a href="./about.html#contact">纠错 / 失效反馈</a>
-    </div>
 
     <site-nav position="footer"></site-nav>
 

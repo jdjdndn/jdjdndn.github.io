@@ -4,3 +4,4 @@ export { updateDarkToggleText } from './dark-mode.js';
 export { isMobile, shareToWechat, shareToQQ, createSharePanel, shareItem } from './share.js';
 export { createQrModal, showQrModal, hideQrModal } from './qr-modal.js';
 export { initBackToTop } from './back-to-top.js';
+import './legal-links.js';

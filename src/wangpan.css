@@ -4,23 +4,8 @@
 .wangpan-hero {
   --hero-gradient: linear-gradient(150deg, #3b0764 0%, #5b21b6 25%, #7c3aed 50%, #a78bfa 75%, #c4b5fd 100%);
   --hero-dark-gradient: linear-gradient(150deg, #1e0338 0%, #2e1065 25%, #4c1d95 50%, #6d28d9 75%, #7c3aed 100%);
-  margin: -24px calc(-16px + var(--safe-area-inset-right)) 0 calc(-16px + var(--safe-area-inset-left));
   padding-bottom: 32px;
 }
-/* wangpan 导航入场动画（基础动画在 shared.css） */
-.page-hero-nav.wp-nav {
-  animation-name: heroNavIn;
-}
-/* ---------- Hero Icon（wangpan 脉冲颜色 + 阴影）---------- */
-.page-hero-icon.wangpan-icon {
-  --hero-pulse: rgba(167, 139, 250, 0);
-}
-.page-hero-icon.wangpan-icon svg {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-}
-/* wangpan 标题/段落入场动画（基础动画在 shared.css） */
-.wangpan-hero h1 { animation-name: heroTitleIn; }
-.wangpan-hero p { animation-name: heroSubIn; }
 /* ---------- Hero 统计徽章（基础动画在 shared.css）---------- */
 .hero-stats {
   animation-name: heroStatsIn;
