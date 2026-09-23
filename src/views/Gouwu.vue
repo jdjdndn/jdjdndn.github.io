@@ -1,12 +1,5 @@
 <template>
   <div class="gouwu-page">
-    <PageHero
-      icon='<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>'
-      title="网购聚合平台"
-      subtitle="淘宝 · 京东 · 拼多多 · 电商优惠一站式聚合"
-      aria="网购聚合平台"
-    />
-
     <!-- iframe 内容区 -->
     <div class="iframe-container">
       <div v-if="loading" class="iframe-loading">
@@ -34,7 +27,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 
 const iframeRef = ref(null)

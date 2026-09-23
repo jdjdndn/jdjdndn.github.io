@@ -27,8 +27,8 @@ function discoverAllPages() {
         scanDir(fullPath, prefix ? `${prefix}/${file}` : file);
       } else if (file.endsWith('.html')) {
         const name = file.replace('.html', '');
-        // 跳过 index.html、llms 文件、_ 开头的模板文件、已生成的页面
-        if (name === 'index' || name.startsWith('llms') || name.startsWith('_')) continue;
+        // 跳过 llms 文件、_ 开头的模板文件、已生成的页面
+        if (name.startsWith('llms') || name.startsWith('_')) continue;
         if (GENERATED_LANDING.has(name)) continue;
         const entryKey = prefix ? `${prefix}/${name}` : name;
         entries[entryKey] = fullPath;

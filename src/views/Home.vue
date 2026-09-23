@@ -127,6 +127,9 @@
       数据更新于 {{ currentDate }}
     </div>
 
+    <!-- SEO 内链：省钱攻略汇总页 -->
+    <a href="./article/index.html" class="seo-hidden-link" aria-hidden="true" tabindex="-1">省钱攻略大全</a>
+
     <!-- 法律链接 -->
     <LegalLinks />
 
@@ -288,6 +291,7 @@ onUnmounted(() => {
 <style scoped>
 .home-page {
   padding: 0;
+  position: relative;
 }
 
 /* 搜索栏 */
@@ -676,5 +680,18 @@ onUnmounted(() => {
   .card-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* SEO 隐藏链接：对用户不可见，但搜索引擎可爬取 */
+.seo-hidden-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
