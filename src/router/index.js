@@ -168,6 +168,17 @@ const routes = [
       }
       next()
     }
+  },
+
+  // 兜底路由：未知路径不匹配任何路由（由拦截器处理 404）
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue'),
+    meta: {
+      title: '页面未找到 — 券宝',
+      description: '您访问的页面不存在或已被移除。',
+      robots: 'noindex, follow'
+    }
   }
 ]
 
@@ -183,14 +194,25 @@ const router = createRouter({
   }
 })
 
-// 路由守卫 - 更新 SEO meta
+// 通用路由拦截器
 router.beforeEach((to, from, next) => {
-  // 更新页面标题
+  // 1. 处理 /article/ 目录下的路由 - 重定向到静态 HTML 文件
+  if (to.path.startsWith('/article/')) {
+    const articlePath = to.path.replace('/article/', '')
+    // 使用绝对路径避免相对路径计算错误导致无限循环
+    const baseUrl = import.meta.env.BASE_URL || '/'
+    // 确保baseUrl以/结尾，避免双重斜杠
+    const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
+    const articleUrl = `${normalizedBase}article/${articlePath}`
+    window.location.href = articleUrl
+    return
+  }
+
+  // 2. 更新 SEO meta
   if (to.meta.title) {
     document.title = to.meta.title
   }
 
-  // 更新 meta description
   if (to.meta.description) {
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
@@ -198,12 +220,21 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  // 更新 meta keywords
   if (to.meta.keywords) {
     const metaKeywords = document.querySelector('meta[name="keywords"]')
     if (metaKeywords) {
       metaKeywords.setAttribute('content', to.meta.keywords)
     }
+  }
+
+  if (to.meta.robots) {
+    let robotsMeta = document.querySelector('meta[name="robots"]')
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta')
+      robotsMeta.setAttribute('name', 'robots')
+      document.head.appendChild(robotsMeta)
+    }
+    robotsMeta.setAttribute('content', to.meta.robots)
   }
 
   next()
