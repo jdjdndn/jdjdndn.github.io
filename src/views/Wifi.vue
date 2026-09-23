@@ -382,19 +382,36 @@ async function handleShare(device) {
 :deep(.product-card .n-card__action) {
   padding: 12px 16px;
 }
+
+/* 让所有卡片等高，按钮对齐 */
+:deep(.n-grid .n-gi) {
+  display: flex !important;
+}
+:deep(.n-card.product-card) {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+:deep(.n-card.product-card .n-card__content) {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 .card-actions {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 8px !important;
   width: 100%;
+  margin-top: auto !important;
 }
 .card-actions .n-button {
   width: 100% !important;
   margin: 0 !important;
   min-width: 0 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
+  max-width: 100% !important;
+  padding: 0 8px !important;
+  font-size: 13px !important;
 }
 .card-actions .n-button .n-button__content {
   overflow: hidden !important;
@@ -402,6 +419,11 @@ async function handleShare(device) {
   white-space: nowrap !important;
   width: 100% !important;
   justify-content: center !important;
+  gap: 4px !important;
+}
+.card-actions .n-button .n-button__icon {
+  margin-right: 2px !important;
+  flex-shrink: 0 !important;
 }
 
 .product-card:hover {
