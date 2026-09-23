@@ -1,7 +1,5 @@
 <template>
-  <div class="app-wrapper">
-    <SiteNav position="side" />
-    <div id="app">
+  <div class="about-page">
       <PageHero
         icon='<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
         title="关于我们"
@@ -67,15 +65,12 @@
       </n-card>
 
       <LegalLinks />
-    </div>
-    <SiteNav position="footer" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useMessage } from 'naive-ui'
-import SiteNav from '../components/SiteNav.vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 
@@ -113,18 +108,6 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
-.app-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
-#app {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .faq-header {
   font-size: 1.25rem;
   font-weight: 600;

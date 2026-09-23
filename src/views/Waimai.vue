@@ -1,13 +1,5 @@
 <template>
-  <div class="gouwu-page">
-    <PageHero
-      icon='<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>'
-      title="网购聚合平台"
-      subtitle="淘宝 · 京东 · 拼多多 · 电商优惠一站式聚合"
-      aria="网购聚合平台"
-    />
-
-    <!-- iframe 内容区 -->
+  <div class="waimai-page">
     <div class="iframe-container">
       <div v-if="loading" class="iframe-loading">
         <div class="loading-spinner"></div>
@@ -20,38 +12,37 @@
       <iframe
         ref="iframeRef"
         :src="iframeSrc"
-        class="shop-iframe"
+        class="waimai-iframe"
         title="优惠券平台"
         sandbox="allow-scripts allow-same-origin allow-popups"
         @load="onLoad"
         @error="onError"
       ></iframe>
     </div>
-
-    <LegalLinks />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import PageHero from '../components/PageHero.vue'
-import LegalLinks from '../components/LegalLinks.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const iframeRef = ref(null)
 const loading = ref(true)
 const loadError = ref(false)
-const iframeSrc = 'http://yh.kdje3.cn/wechat/#/master/0cf6962f0eadc3974b06fcd79dab0af5/home?ucode=jPj0Gxx9ko'
+const iframeSrc = 'https://kzurl18.cn/tHj1ww'
 
 let timeout = null
 
 onMounted(() => {
-  // 15 秒超时检测
   timeout = setTimeout(() => {
     if (loading.value) {
       loadError.value = true
       loading.value = false
     }
   }, 15000)
+})
+
+onUnmounted(() => {
+  if (timeout) clearTimeout(timeout)
 })
 
 function onLoad() {
@@ -72,7 +63,6 @@ function retryLoad() {
   if (iframeRef.value) {
     iframeRef.value.src = iframeSrc
   }
-  // 重新设置超时
   if (timeout) clearTimeout(timeout)
   timeout = setTimeout(() => {
     if (loading.value) {
@@ -84,26 +74,26 @@ function retryLoad() {
 </script>
 
 <style scoped>
+.waimai-page {
+  width: 100%;
+}
+
 .iframe-container {
   position: relative;
   width: 100%;
-  min-height: 600px;
-  margin: 0 auto;
-  max-width: 1100px;
-  padding: 0 16px;
+  min-height: 80vh;
 }
 
-.shop-iframe {
+.waimai-iframe {
   width: 100%;
   height: 80vh;
   min-height: 600px;
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: 12px;
+  border: none;
   background: var(--card, #fff);
 }
 
-/* 加载状态 */
-.iframe-loading {
+.iframe-loading,
+.iframe-error {
   position: absolute;
   inset: 0;
   display: flex;
@@ -112,7 +102,6 @@ function retryLoad() {
   justify-content: center;
   gap: 16px;
   background: var(--card, #fff);
-  border-radius: 12px;
   z-index: 1;
 }
 
@@ -129,25 +118,7 @@ function retryLoad() {
   to { transform: rotate(360deg); }
 }
 
-.iframe-loading p {
-  font-size: 14px;
-  color: var(--muted, #6b7280);
-}
-
-/* 错误状态 */
-.iframe-error {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  background: var(--card, #fff);
-  border-radius: 12px;
-  z-index: 1;
-}
-
+.iframe-loading p,
 .iframe-error p {
   font-size: 14px;
   color: var(--muted, #6b7280);
@@ -161,20 +132,9 @@ function retryLoad() {
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .retry-btn:hover {
   background: var(--primary-hover, #E55A2B);
-}
-
-/* 暗色模式 */
-[data-theme="dark"] .shop-iframe {
-  border-color: var(--border, #2d2d45);
-}
-
-[data-theme="dark"] .iframe-loading,
-[data-theme="dark"] .iframe-error {
-  background: var(--card, #1e1e35);
 }
 </style>

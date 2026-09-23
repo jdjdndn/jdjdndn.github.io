@@ -1,7 +1,5 @@
 <template>
-  <div class="app-wrapper">
-    <SiteNav position="side" />
-    <div id="app">
+  <div class="huodong-page">
       <PageHero
         icon='<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
         title="优惠活动聚合"
@@ -72,15 +70,12 @@
       </n-card>
 
       <LegalLinks />
-    </div>
-    <SiteNav position="footer" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useMessage } from 'naive-ui'
-import SiteNav from '../components/SiteNav.vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 
@@ -121,18 +116,6 @@ function handleJoin(activity) {
 </script>
 
 <style scoped>
-.app-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
-#app {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .filter-header {
   display: flex;
   justify-content: space-between;

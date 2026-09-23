@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { getFuyePageConfig, getAllFuyePaths } from '../views/fuye-data'
 
 // 路由配置 - 保持与现有 URL 结构兼容
 const routes = [
@@ -23,9 +24,19 @@ const routes = [
     }
   },
   {
+    path: '/haoka-hero.html',
+    name: 'HaokaHero',
+    component: () => import('../views/haoka/HaokaHero.vue'),
+    meta: {
+      title: '号卡选卡指南 — 选卡攻略 · 运营商对比 · FAQ',
+      description: '号卡选卡指南：如何选对号卡、四大运营商对比、常见问题解答，帮你找到最合适的流量卡。',
+      keywords: '号卡选卡,流量卡指南,运营商对比,号卡FAQ'
+    }
+  },
+  {
     path: '/haoka-agent.html',
     name: 'HaokaAgent',
-    component: () => import('../views/HaokaAgent.vue'),
+    component: () => import('../views/haoka/HaokaAgent.vue'),
     meta: {
       title: '号卡代理合伙人招募 — 高佣推广 · 零成本加入',
       description: '号卡代理合伙人招募：高佣推广、一件代发、专业培训、持续售后。',
@@ -40,6 +51,16 @@ const routes = [
       title: '优惠活动聚合 — 全网热门优惠',
       description: '优惠活动聚合，汇集全网热门优惠活动，省钱利器。',
       keywords: '优惠活动,省钱,优惠券'
+    }
+  },
+  {
+    path: '/waimai.html',
+    name: 'Waimai',
+    component: () => import('../views/Waimai.vue'),
+    meta: {
+      title: '外卖优惠 — 美团外卖红包',
+      description: '美团外卖天天领红包，新客立减，吃喝玩乐福利。',
+      keywords: '外卖优惠,美团外卖,外卖红包'
     }
   },
   {
@@ -120,6 +141,32 @@ const routes = [
       title: '群聊优惠 — 社群优惠分享',
       description: '群聊优惠，社群优惠分享，优惠信息交流。',
       keywords: '群聊优惠,社群优惠,优惠分享'
+    }
+  },
+
+  // 副业二级页面
+  {
+    path: '/fuye/:slug.html',
+    name: 'FuyePage',
+    component: () => import('../views/FuyePage.vue'),
+    props: route => {
+      const slug = route.params.slug
+      const config = getFuyePageConfig(`fuye/${slug}`)
+      return { config }
+    },
+    beforeEnter: (to, from, next) => {
+      const slug = to.params.slug
+      const config = getFuyePageConfig(`fuye/${slug}`)
+      if (!config) {
+        next('/fuye.html')
+        return
+      }
+      // 更新 meta 信息
+      to.meta = {
+        ...to.meta,
+        ...config.meta
+      }
+      next()
     }
   }
 ]

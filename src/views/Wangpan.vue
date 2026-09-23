@@ -1,117 +1,146 @@
 <template>
-  <div class="app-wrapper">
-    <SiteNav position="side" />
-    <div id="app">
+  <div class="wangpan-page">
       <PageHero
         icon='<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/>'
         title="网盘资源"
-        subtitle="免费网盘推荐"
+        subtitle="百度网盘 · 夸克网盘 · 资源分享"
         aria="网盘资源"
       />
+
+      <!-- 信任徽章 -->
+      <div class="trust-bar" role="list" aria-label="服务保障">
+        <span class="trust-item" role="listitem">✓ 正规渠道</span>
+        <span class="trust-item" role="listitem">✓ 安全可靠</span>
+        <span class="trust-item" role="listitem">✓ 持续更新</span>
+      </div>
 
       <n-card :bordered="false">
         <template #header>
           <div class="section-header">
-            <span>网盘平台</span>
-            <n-space>
-              <n-input
-                v-model:value="searchQuery"
-                placeholder="搜索网盘..."
-                clearable
-                size="small"
-              >
-                <template #prefix>
-                  <span>🔍</span>
-                </template>
-              </n-input>
-            </n-space>
+            <span>网盘资源</span>
+            <n-text depth="3" style="font-size: 14px">
+              共 {{ resources.length }} 个资源
+            </n-text>
           </div>
         </template>
 
         <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-          <n-gi v-for="disk in filteredDisks" :key="disk.id" span="3 m:1">
-            <n-card hoverable>
-              <template #header>
-                <div class="disk-header">
-                  <span class="disk-icon">{{ disk.icon }}</span>
-                  <span>{{ disk.name }}</span>
+          <n-gi v-for="resource in resources" :key="resource.id" span="3 m:1">
+            <n-card class="resource-card" hoverable>
+              <div class="card-top" :style="{ background: getResourceColor(resource.url) }"></div>
+              <div class="card-body">
+                <div class="card-header">
+                  <div class="platform-icon">
+                    <span v-html="getResourceIcon(resource.url)"></span>
+                  </div>
+                  <div class="resource-info">
+                    <span class="resource-name">{{ resource.name }}</span>
+                  </div>
+                  <n-tag size="small" :type="getPlatformType(resource.url)">
+                    {{ getPlatformName(resource.url) }}
+                  </n-tag>
                 </div>
-              </template>
-              <template #header-extra>
-                <n-tag :type="disk.tagType" size="small">
-                  {{ disk.tag }}
-                </n-tag>
-              </template>
-              <p class="disk-desc">{{ disk.desc }}</p>
-              <n-space vertical :size="4">
-                <n-text depth="3" style="font-size: 12px">
-                  空间大小：{{ disk.space }}
-                </n-text>
-                <n-text depth="3" style="font-size: 12px">
-                  下载速度：{{ disk.speed }}
-                </n-text>
-              </n-space>
-              <template #action>
-                <n-button type="primary" block @click="handleGet(disk)">
-                  立即注册
-                </n-button>
-              </template>
+                <div class="card-actions">
+                  <n-button
+                    type="primary"
+                    size="small"
+                    tag="a"
+                    :href="resource.url"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <template #icon>
+                      <span>↗</span>
+                    </template>
+                    前往访问
+                  </n-button>
+                  <n-button size="small" @click="showQR(resource)">
+                    <template #icon>
+                      <span>⊞</span>
+                    </template>
+                    扫码
+                  </n-button>
+                </div>
+              </div>
             </n-card>
           </n-gi>
         </n-grid>
-
-        <n-empty v-if="filteredDisks.length === 0" description="暂无网盘" />
       </n-card>
 
       <LegalLinks />
-    </div>
-    <SiteNav position="footer" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useMessage } from 'naive-ui'
-import SiteNav from '../components/SiteNav.vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 
 const message = useMessage()
-const searchQuery = ref('')
 
-const disks = ref([
-  { id: 1, icon: '☁️', name: '百度网盘', desc: '国内最大的网盘平台', space: '1024GB', speed: '普通', tag: '推荐', tagType: 'success' },
-  { id: 2, icon: '📁', name: '阿里云盘', desc: '不限速，体验流畅', space: '2048GB', speed: '不限速', tag: '热门', tagType: 'error' },
-  { id: 3, icon: '💾', name: '腾讯微云', desc: '与微信QQ深度整合', space: '10GB', speed: '普通', tag: '便捷', tagType: 'info' },
-  { id: 4, icon: '📦', name: '115网盘', desc: '大容量，适合存储', space: '15TB', speed: '普通', tag: '大容量', tagType: 'warning' },
-  { id: 5, icon: '🔐', name: '坚果云', desc: '同步盘，办公必备', space: '1GB/月', speed: '不限速', tag: '办公', tagType: 'success' },
-  { id: 6, icon: '🌐', name: 'OneDrive', desc: '微软官方云存储', space: '5GB', speed: '不限速', tag: '国际', tagType: 'info' }
+const resources = ref([
+  { id: 1, name: '《亚马逊原版电子书》7000本', url: 'https://pan.quark.cn/s/88272c47ef63' },
+  { id: 2, name: '咸鱼实战运营教程', url: 'https://pan.quark.cn/s/8ad27c109e4e' },
+  { id: 3, name: '闲鱼爆单', url: 'https://pan.quark.cn/s/ec53dfa113f5' },
+  { id: 4, name: '闲鱼教程', url: 'https://pan.baidu.com/s/1WTEoO76WeSWOXoX6sGjLBg?pwd=e95h' },
+  { id: 5, name: '微信公众号', url: 'https://pan.baidu.com/s/1hmTYESwt4oD-JzaVrgAU1Q?pwd=y48u' },
+  { id: 6, name: '天诺老吴TikTok出海计划', url: 'https://pan.baidu.com/s/17W0lTYyKqJwBGwnGxY5qDA?pwd=3dm3' },
+  { id: 7, name: 'AIGC课程合集', url: 'https://pan.baidu.com/s/1QEOUa8twpSxut5_DX4LOMg?pwd=63fh' },
+  { id: 8, name: '2026AI女装短视频带货教程', url: 'https://pan.baidu.com/s/1OqX6FdufSQZymuNJF0TsEg?pwd=ygt2' },
+  { id: 9, name: '2026自媒体运营教程', url: 'https://pan.baidu.com/s/13Xt8KNDzFWdX8Ock8wyBeA?pwd=xkqq' },
+  { id: 10, name: '99套小吃配方+创业落地指南', url: 'https://pan.quark.cn/s/fe9df038e605' },
+  { id: 11, name: '引流变现课程', url: 'https://pan.baidu.com/s/1b7m9OYjLAZKEcvCASKQwpw?pwd=ndje' },
+  { id: 12, name: '车载MV资源', url: 'https://pan.quark.cn/s/eaf8e764baeb' },
+  { id: 13, name: '490张音乐专辑', url: 'https://pan.quark.cn/s/e5a0db5fb51e' },
+  { id: 14, name: '网络套图', url: 'https://pan.quark.cn/s/1b69157e8677' },
+  { id: 15, name: '街拍买家秀', url: 'https://pan.quark.cn/s/defad2b3ddd5' },
+  { id: 16, name: '美女博主舞蹈', url: 'https://pan.quark.cn/s/b257fb2c8aef' }
 ])
 
-const filteredDisks = computed(() => {
-  return disks.value.filter(disk => {
-    return !searchQuery.value ||
-      disk.name.includes(searchQuery.value) ||
-      disk.desc.includes(searchQuery.value)
-  })
-})
+function getResourceIcon(url) {
+  if (url.includes('quark')) {
+    return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>'
+  }
+  return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>'
+}
 
-function handleGet(disk) {
-  message.success(`正在跳转到 ${disk.name}...`)
+function getPlatformName(url) {
+  if (url.includes('quark')) return '夸克网盘'
+  if (url.includes('baidu')) return '百度网盘'
+  return '网盘'
+}
+
+function getPlatformType(url) {
+  if (url.includes('quark')) return 'success'
+  if (url.includes('baidu')) return 'info'
+  return 'default'
+}
+
+function getResourceColor(url) {
+  if (url.includes('quark')) return 'linear-gradient(90deg, #7C3AED, #A78BFA)'
+  if (url.includes('baidu')) return 'linear-gradient(90deg, #3B82F6, #60A5FA)'
+  return 'linear-gradient(90deg, #6B7280, #9CA3AF)'
+}
+
+function showQR(resource) {
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(resource.url)}`
+  message.info(`二维码：${resource.name}`)
 }
 </script>
 
 <style scoped>
-.app-wrapper {
+.trust-bar {
   display: flex;
-  min-height: 100vh;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
 }
 
-#app {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.trust-item {
+  font-size: 13px;
+  color: var(--success, #16a34a);
 }
 
 .section-header {
@@ -120,18 +149,59 @@ function handleGet(disk) {
   align-items: center;
 }
 
-.disk-header {
+.resource-card {
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+  border-color: #7C3AED;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
+}
+
+.card-top {
+  height: 8px;
+  margin: -16px -16px 12px -16px;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
-.disk-icon {
-  font-size: 1.5rem;
+.platform-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(124, 58, 237, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7C3AED;
 }
 
-.disk-desc {
-  color: var(--text-secondary, #666);
-  margin: 0 0 0.5rem 0;
+.resource-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.resource-name {
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
 }
 </style>

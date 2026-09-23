@@ -119,6 +119,18 @@
   - Depends on: Task 6.1
   - Completed: 2026-09-23
 
+### Phase 6.5: 副业二级页面迁移
+
+- [x] Task 6.5.1 — 创建通用副业页面组件（FuyePage.vue）
+  - Depends on: Phase 4
+  - Completed: 2026-09-23
+- [x] Task 6.5.2 — 创建副业页面数据配置（fuye-data.js）
+  - Depends on: Task 6.5.1
+  - Completed: 2026-09-23
+- [x] Task 6.5.3 — 配置副业页面路由（动态路由 /fuye/:slug.html）
+  - Depends on: Task 6.5.2
+  - Completed: 2026-09-23
+
 ### Phase 7: SEO 和 GEO 优化
 
 - [ ] Task 7.1 — 配置路由 meta 信息（title, description, keywords）
@@ -241,3 +253,6 @@
 | 2026-09-23 | 安装 Naive UI 组件库 |
 | 2026-09-23 | 完成所有页面 Naive UI 组件替换 |
 | 2026-09-23 | 构建成功验证通过 |
+| 2026-09-23 | Phase 6.5: 完成副业二级页面迁移（FuyePage.vue + 动态路由） |
+| 2026-09-23 | 完成 CSS/JS 文件整合：Haoka.vue、Wangpan.vue、Wifi.vue、Huiyuan.vue、Gouwu.vue |
+| 2026-09-23 | 删除已整合的原始 CSS/JS 文件：haoka.css/js、wangpan.css/js、wifi.css/js、huiyuan.css/js、gouwu.css/js |

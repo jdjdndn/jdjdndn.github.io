@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { readdirSync, statSync } from 'fs';
+import { readdirSync, statSync, readFileSync, writeFileSync } from 'fs';
 import vue from '@vitejs/plugin-vue';
 import { ROOT, GENERATED_LANDING } from './scripts/vite-plugins/shared.js';
 
@@ -58,6 +58,38 @@ export default defineConfig({
   },
   server: { open: true },
   plugins: [
+    // 开发时将页面路由重定向到 Vue SPA 入口
+    {
+      name: 'redirect-to-vue-spa',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          // 需要重定向的页面路径
+          const vuePages = [
+            '/',
+            '/index.html',
+            '/haoka.html',
+            '/huodong.html',
+            '/huiyuan.html',
+            '/wangpan.html',
+            '/wifi.html',
+            '/about.html',
+            '/fuye.html',
+            '/gouwu.html',
+            '/privacy.html',
+            '/qunliao.html',
+            '/haoka-agent.html',
+          ];
+
+          // 检查是否是 Vue 页面路由
+          const path = req.url.split('?')[0].split('#')[0];
+          if (vuePages.includes(path)) {
+            req.url = '/index-vue.html';
+          }
+
+          next();
+        });
+      }
+    },
     vue(),
     injectBuildDate(),
     seoPrerender(),

@@ -22,7 +22,6 @@ if (darkToggle) {
     localStorage.setItem('darkMode', isDark);
     updateDarkToggleText();
     updateIframeDarkToggleText();
-    // 可选 analytics 回调：页面设置 window.__darkModeOnToggle(isDark) 即可
     if (typeof window.__darkModeOnToggle === 'function') window.__darkModeOnToggle(isDark);
     setTimeout(() => document.body.classList.remove('dark-mode-transition'), 400);
   });

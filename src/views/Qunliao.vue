@@ -1,125 +1,216 @@
 <template>
-  <div class="app-wrapper">
-    <SiteNav position="side" />
-    <div id="app">
-      <PageHero
-        icon='<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>'
-        title="群聊优惠"
-        subtitle="社群优惠分享"
-        aria="群聊优惠"
-      />
+  <div class="qunliao-page">
+    <PageHero
+      icon='<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
+      title="群聊社区"
+      subtitle="一起领福利聊攻略 · 外卖 / 闪购 / 好物 / 副业"
+      aria="群聊社区"
+    />
 
-      <n-card :bordered="false">
-        <template #header>
-          <div class="section-header">
-            <span>优惠群聊</span>
-            <n-text depth="3" style="font-size: 14px">
-              共 {{ groups.length }} 个群聊
-            </n-text>
-          </div>
-        </template>
-
-        <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-          <n-gi v-for="group in groups" :key="group.id" span="3 m:1">
-            <n-card hoverable>
-              <template #header>
-                <div class="group-header">
-                  <span class="group-icon">{{ group.icon }}</span>
-                  <span>{{ group.name }}</span>
-                </div>
-              </template>
-              <template #header-extra>
-                <n-tag :type="group.tagType" size="small">
-                  {{ group.tag }}
-                </n-tag>
-              </template>
-              <p class="group-desc">{{ group.desc }}</p>
-              <n-space vertical :size="4">
-                <n-text depth="3" style="font-size: 12px">
-                  成员数：{{ group.members }}
-                </n-text>
-                <n-text depth="3" style="font-size: 12px">
-                  更新频率：{{ group.frequency }}
-                </n-text>
-              </n-space>
-              <template #action>
-                <n-button type="primary" block @click="handleJoin(group)">
-                  加入群聊
-                </n-button>
-              </template>
-            </n-card>
-          </n-gi>
-        </n-grid>
-      </n-card>
-
-      <n-card title="如何加入群聊？" :bordered="false">
-        <n-steps :current="1" vertical>
-          <n-step title="选择群聊" description="根据您的兴趣选择合适的优惠群聊" />
-          <n-step title="扫码加入" description="扫描群聊二维码或点击链接加入" />
-          <n-step title="获取优惠" description="在群内获取最新优惠信息和口令码" />
-        </n-steps>
-      </n-card>
-
-      <LegalLinks />
+    <!-- 搜索框 -->
+    <div class="q-search-wrap">
+      <div class="q-search-bar" role="search">
+        <span class="q-search-icon" aria-hidden="true">🔍</span>
+        <input
+          v-model="searchQuery"
+          type="search"
+          placeholder="搜索群聊名称 / 关键词..."
+          aria-label="搜索群聊"
+          autocomplete="off"
+        />
+        <button v-if="searchQuery" class="q-clear" aria-label="清除搜索" @click="searchQuery = ''">✕</button>
+      </div>
     </div>
-    <SiteNav position="footer" />
+    <div v-if="searchQuery" class="q-count" aria-live="polite">
+      {{ filteredGroups.length ? `找到 ${filteredGroups.length} 个群聊` : '未找到相关群聊' }}
+    </div>
+
+    <!-- 群卡片 -->
+    <div class="group-grid">
+      <div v-for="group in filteredGroups" :key="group.name" class="group-card" :class="{ disabled: group.disabled }">
+        <div class="group-icon">{{ group.icon }}</div>
+        <div class="group-info">
+          <div class="group-name">{{ group.name }}</div>
+          <div class="group-desc">{{ group.desc }}</div>
+        </div>
+        <n-tag size="small" :type="group.disabled ? 'default' : 'success'">
+          {{ group.tag }}
+        </n-tag>
+      </div>
+    </div>
+
+    <p class="f-note">💡 输入关键词筛选群聊 · 群聊入口持续更新，敬请期待</p>
+
+    <LegalLinks />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useMessage } from 'naive-ui'
-import SiteNav from '../components/SiteNav.vue'
+import { ref, computed } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 
-const message = useMessage()
+const searchQuery = ref('')
 
-const groups = ref([
-  { id: 1, icon: '🍔', name: '外卖优惠群', desc: '美团/饿了么红包分享', members: 500, frequency: '每日更新', tag: '热门', tagType: 'error' },
-  { id: 2, icon: '🛒', name: '电商优惠群', desc: '淘宝/京东/拼多多优惠', members: 800, frequency: '实时更新', tag: '活跃', tagType: 'success' },
-  { id: 3, icon: '🚗', name: '出行优惠群', desc: '滴滴/高德打车券分享', members: 300, frequency: '每周更新', tag: '出行', tagType: 'info' },
-  { id: 4, icon: '☕', name: '咖啡茶饮群', desc: '瑞幸/星巴克优惠分享', members: 450, frequency: '每日更新', tag: '饮品', tagType: 'warning' },
-  { id: 5, icon: '🎬', name: '娱乐优惠群', desc: '电影/游戏/会员优惠', members: 350, frequency: '每周更新', tag: '娱乐', tagType: 'info' },
-  { id: 6, icon: '📦', name: '快递优惠群', desc: '快递寄件折扣分享', members: 280, frequency: '每周更新', tag: '寄件', tagType: 'success' }
-])
+const groups = [
+  {
+    name: '官方交流群',
+    desc: '每日好价推送 · 攻略答疑 · 筹备中',
+    icon: '💬',
+    tag: '筹备中',
+    disabled: true
+  },
+  {
+    name: '副业交流群',
+    desc: '号卡代理 · 推广经验交流 · 筹备中',
+    icon: '📈',
+    tag: '筹备中',
+    disabled: true
+  },
+  {
+    name: '好物分享群',
+    desc: '每日好物推荐 · 亲测优惠 · 筹备中',
+    icon: '📦',
+    tag: '筹备中',
+    disabled: true
+  },
+  {
+    name: '会员福利交流群',
+    desc: '影视/音乐会员优惠分享 · 筹备中',
+    icon: '👑',
+    tag: '筹备中',
+    disabled: true
+  }
+]
 
-function handleJoin(group) {
-  message.success(`正在跳转到 ${group.name} 加入页面...`)
-}
+const filteredGroups = computed(() => {
+  if (!searchQuery.value) return groups
+  const q = searchQuery.value.toLowerCase()
+  return groups.filter(g =>
+    g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q)
+  )
+})
 </script>
 
 <style scoped>
-.app-wrapper {
-  display: flex;
-  min-height: 100vh;
+.q-search-wrap {
+  max-width: 800px;
+  margin: 0 auto 16px;
+  padding: 0 16px;
 }
 
-#app {
+.q-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.q-search-bar:focus-within {
+  border-color: var(--primary, #FF6B35);
+}
+
+.q-search-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.q-search-bar input {
   flex: 1;
-  max-width: 1200px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text, #1a1a2e);
+}
+
+.q-search-bar input::placeholder {
+  color: var(--placeholder, #b0aaa0);
+}
+
+.q-clear {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--muted, #6b7280);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.q-count {
+  max-width: 800px;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+  font-size: 13px;
+  color: var(--muted, #6b7280);
+}
+
+.group-grid {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
 }
 
-.section-header {
+.group-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
+  transition: all 0.2s;
 }
 
-.group-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.group-card:not(.disabled):hover {
+  border-color: var(--primary, #FF6B35);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
+}
+
+.group-card.disabled {
+  opacity: 0.6;
 }
 
 .group-icon {
-  font-size: 1.5rem;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.group-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.group-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .group-desc {
-  color: var(--text-secondary, #666);
-  margin: 0 0 0.5rem 0;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.f-note {
+  max-width: 800px;
+  margin: 24px auto 48px;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+}
+
+[data-theme="dark"] .q-search-bar,
+[data-theme="dark"] .group-card {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
 }
 </style>

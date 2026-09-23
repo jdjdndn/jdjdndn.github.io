@@ -14,6 +14,7 @@ export const debounce = (fn, ms = 150) => {
 
 export const showToast = (msg = '已复制') => {
   const t = $('#toast');
+  if (!t) return;
   t.textContent = msg;
   t.classList.remove('hidden');
   setTimeout(() => t.classList.add('hidden'), 2500);
@@ -70,7 +71,6 @@ export const highlightText = (text, query) => {
 // ========== sections 规范化 ==========
 export const normalizeSections = (sections) => {
   if (!sections || !Array.isArray(sections)) {
-    console.warn('[normalizeSections] sections is not an array:', sections);
     return [];
   }
   return sections.filter(s => s != null).map((s) => {
@@ -117,6 +117,5 @@ export const getIconForName = (name) => {
   if (/话费|流量|充值/.test(name)) return '📱';
   if (/优惠|红包|券|折扣|补贴/.test(name)) return '🎁';
   if (/会员|VIP/.test(name)) return '👑';
-  if (/优惠|红包|券/.test(name)) return '🎁';
   return '🎫';
 };

@@ -1,4 +1,4 @@
-// ---------- DOM 快捷 ----------
+// ========== DOM 快捷 ----------
 const $ = (sel) => document.querySelector(sel);
 
 // ---------- Toast ----------
@@ -60,7 +60,6 @@ const robustCopy = async (text, successMsg) => {
 };
 
 // ---------- Hero 时间自动更新 ----------
-// 找到所有带 data-update-time 属性的元素，填入当前年月
 const updateHeroTime = () => {
   const now = new Date();
   const text = `${now.getFullYear()}年${now.getMonth() + 1}月`;
@@ -69,8 +68,5 @@ const updateHeroTime = () => {
   });
 };
 updateHeroTime();
-
-// ---------- Web Components ----------
-import './legal-links.js';
 
 export { $, showToast, vibrate, copyText, robustCopy, updateHeroTime };
