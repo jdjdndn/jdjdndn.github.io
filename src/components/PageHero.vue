@@ -52,7 +52,7 @@ onMounted(() => {
   margin-bottom: 2rem;
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #FF6B35 0%, #E8552D 55%, #C2410C 100%);
   color: white;
   text-align: center;
 }

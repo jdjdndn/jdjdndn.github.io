@@ -4,11 +4,11 @@
       <div class="qr-modal">
         <div class="qr-modal-header">
           <span class="qr-modal-title">{{ title }}</span>
-          <button class="qr-modal-close" aria-label="关闭" @click="close">✕</button>
+          <button ref="closeBtnRef" class="qr-modal-close" aria-label="关闭" @click="close">✕</button>
         </div>
         <div class="qr-modal-body">
           <div class="qr-code">
-            <img :src="qrUrl" :alt="title" />
+            <img v-if="qrDataUrl" :src="qrDataUrl" :alt="title" />
           </div>
           <p class="qr-tip">扫码访问</p>
         </div>
@@ -18,7 +18,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
+import QRCode from 'qrcode'
 
 const props = defineProps({
   visible: {
@@ -37,14 +38,45 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-const qrUrl = computed(() => {
-  if (!props.url) return ''
-  return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(props.url)}`
-})
+const qrDataUrl = ref('')
+const closeBtnRef = ref(null)
+let triggerElement = null
+
+async function generateQr(url) {
+  if (!url) { qrDataUrl.value = ''; return }
+  try {
+    qrDataUrl.value = await QRCode.toDataURL(url, {
+      width: 200,
+      margin: 2,
+      color: { dark: '#000000', light: '#ffffff' }
+    })
+  } catch {
+    qrDataUrl.value = ''
+  }
+}
+
+function handleKeydown(e) {
+  if (e.key === 'Escape') close()
+}
 
 const close = () => {
   emit('close')
 }
+
+watch(() => props.url, (url) => generateQr(url), { immediate: true })
+
+watch(() => props.visible, async (val) => {
+  if (val) {
+    triggerElement = document.activeElement
+    document.addEventListener('keydown', handleKeydown)
+    await nextTick()
+    closeBtnRef.value?.focus()
+  } else {
+    document.removeEventListener('keydown', handleKeydown)
+    triggerElement?.focus()
+    triggerElement = null
+  }
+})
 </script>
 
 <style scoped>

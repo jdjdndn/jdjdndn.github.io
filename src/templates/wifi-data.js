@@ -13,7 +13,7 @@ export const wifiLinks = [
   {
     name: '飞利猫随身WiFi',
     url: 'https://h5.feilimao.cn/#/index/9cd45bdffaa18d79/1',
-    description: '飞利猫随身WiFi，移动上网便携解决方案，出差旅行必备。信号稳定、资费实惠，支持多设备同时连接。',
+    description: '飞利猫随身WiFi，免插卡即用，资费低至39元/月。信号稳定，支持多设备同时连接，出差旅行必备。',
     tags: ['便携上网', '出差旅行', '多设备'],
     badge: '热门',
     priceRange: '39元/月起',
@@ -21,7 +21,7 @@ export const wifiLinks = [
   {
     name: '格行随身WiFi',
     url: 'http://2.0.gexing.cn/m/shopList?userId=27519',
-    description: '格行随身WiFi，移动上网便携解决方案，出差旅行必备。信号稳定、资费实惠，支持多设备同时连接。',
+    description: '格行随身WiFi，全国通用流量，三网可选信号稳。轻巧便携随开随用，出差旅行办公皆宜。',
     tags: ['便携上网', '出差旅行', '多设备'],
     badge: '热门',
     priceRange: '59元/月起',

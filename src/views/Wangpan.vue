@@ -3,7 +3,7 @@
       <PageHero
         icon='<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/>'
         title="网盘资源"
-        subtitle="百度网盘 · 夸克网盘 · 资源分享"
+        subtitle="精选资源 · 百度 / 夸克网盘免费分享"
         aria="网盘资源"
       />
 
@@ -68,16 +68,25 @@
       </n-card>
 
       <LegalLinks />
+      <QrModal
+        :visible="showQr"
+        :url="qrResource?.url || ''"
+        :title="qrResource?.name || ''"
+        @close="closeQrModal"
+      />
+      <BackToTop />
   </main>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useMessage } from 'naive-ui'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
+import QrModal from '../components/QrModal.vue'
 
-const message = useMessage()
+const showQr = ref(false)
+const qrResource = ref(null)
 
 const resources = ref([
   { id: 1, name: '《亚马逊原版电子书》7000本', url: 'https://pan.quark.cn/s/88272c47ef63' },
@@ -93,9 +102,6 @@ const resources = ref([
   { id: 11, name: '引流变现课程', url: 'https://pan.baidu.com/s/1b7m9OYjLAZKEcvCASKQwpw?pwd=ndje' },
   { id: 12, name: '车载MV资源', url: 'https://pan.quark.cn/s/eaf8e764baeb' },
   { id: 13, name: '490张音乐专辑', url: 'https://pan.quark.cn/s/e5a0db5fb51e' },
-  { id: 14, name: '网络套图', url: 'https://pan.quark.cn/s/1b69157e8677' },
-  { id: 15, name: '街拍买家秀', url: 'https://pan.quark.cn/s/defad2b3ddd5' },
-  { id: 16, name: '美女博主舞蹈', url: 'https://pan.quark.cn/s/b257fb2c8aef' }
 ])
 
 function getResourceIcon(url) {
@@ -124,8 +130,13 @@ function getResourceColor(url) {
 }
 
 function showQR(resource) {
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(resource.url)}`
-  message.info(`二维码：${resource.name}`)
+  qrResource.value = resource
+  showQr.value = true
+}
+
+function closeQrModal() {
+  showQr.value = false
+  qrResource.value = null
 }
 </script>
 

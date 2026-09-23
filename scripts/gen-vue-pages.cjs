@@ -1,5 +1,5 @@
 // 生成 Vue 路由壳页：为每个 vue-router 路由生成独立 HTML（GitHub Pages 无 SPA fallback，每路由需真实文件）
-// 模板基于 src/index-vue.html，SEO meta 取自 src/router/index.js 的 route.meta
+// 模板基于 src/index.html（Vue SPA 入口），SEO meta 取自 src/router/index.js 的 route.meta
 // 用法：node scripts/gen-vue-pages.cjs（build 前执行）
 const fs = require('fs');
 const path = require('path');
@@ -26,7 +26,7 @@ function parseRouter() {
     if (p.includes(':')) continue;
     routes.push({
       path: p,
-      file: p === '/' ? 'index-vue.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html',
+      file: p === '/' ? 'index.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html',
       title: get('title'),
       description: get('description'),
       keywords: get('keywords'),
@@ -126,10 +126,10 @@ function buildPage(route, isHome) {
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="../icons/icon-192.png" />
 
     <!-- PWA -->
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="../manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="优惠券" />
@@ -141,8 +141,8 @@ ${jsonLdHtml}
 
     <link rel="alternate" type="text/plain" href="${SITE}/llms.txt" title="站点摘要（供 AI 阅读）" />
 
-    <link rel="stylesheet" href="./shared.css" />
-    <link rel="stylesheet" href="./vue-app.css" />
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="../vue-app.css" />
   </head>
   <body>
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">${route.title}</h1>
@@ -152,10 +152,10 @@ ${jsonLdHtml}
         <h2>券宝 — 一站式优惠券中心</h2>
         <p>本站聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠。</p>
         <p>本站需要 JavaScript 才能正常显示完整优惠内容。请启用 JavaScript 后访问。</p>
-        <p>完整优惠列表请查看 <a href="./llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="./llms.txt">llms.txt</a>。</p>
+        <p>完整优惠列表请查看 <a href="../llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="../llms.txt">llms.txt</a>。</p>
       </div>
     </noscript>
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="../main.js"></script>
   </body>
 </html>
 `;
@@ -167,15 +167,16 @@ function main() {
   console.log(`解析到 ${routes.length} 条路由`);
   let generated = 0;
   for (const route of routes) {
-    // 首页壳已有 src/index-vue.html，不再覆盖；生成其余路由壳
+    // 首页壳已有 src/index.html（Vue SPA 入口），不再覆盖；生成其余路由壳
     if (route.path === '/') continue;
-    const out = path.join(SRC, route.file);
+    // 输出到 templates 目录
+    const out = path.join(SRC, 'templates', route.file);
     const html = buildPage(route, false);
     fs.writeFileSync(out, html, 'utf8');
     generated++;
-    console.log(`  ✓ ${route.file} (${route.title})`);
+    console.log(`  ✓ templates/${route.file} (${route.title})`);
   }
-  console.log(`\n生成 ${generated} 个 Vue 路由壳页到 src/`);
+  console.log(`\n生成 ${generated} 个 Vue 路由壳页到 src/templates/`);
 }
 
 main();

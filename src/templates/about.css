@@ -341,33 +341,33 @@
 }
 
 /* ---------- 暗色模式适配 ---------- */
-body.dark-mode .about-stat-card {
+[data-theme="dark"] .about-stat-card {
   background: rgba(30, 30, 46, 0.6);
   border-color: rgba(255, 255, 255, 0.06);
 }
-body.dark-mode .about-stat-card::before {
+[data-theme="dark"] .about-stat-card::before {
   background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white));
 }
-body.dark-mode .about-scenario-card {
+[data-theme="dark"] .about-scenario-card {
   background: rgba(30, 30, 46, 0.6);
   border-color: rgba(255, 255, 255, 0.06);
 }
-body.dark-mode .about-scenario-card:hover {
+[data-theme="dark"] .about-scenario-card:hover {
   border-color: var(--primary);
 }
-body.dark-mode .about-disclaimer {
+[data-theme="dark"] .about-disclaimer {
   background: rgba(30, 30, 46, 0.4);
   border-left-color: rgba(255, 255, 255, 0.1);
 }
-body.dark-mode .friend-link {
+[data-theme="dark"] .friend-link {
   background: rgba(30, 30, 46, 0.6);
   border-color: rgba(255, 255, 255, 0.06);
 }
-body.dark-mode .friend-link:hover {
+[data-theme="dark"] .friend-link:hover {
   border-color: var(--primary);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);
 }
-body.dark-mode .friend-link-desc {
+[data-theme="dark"] .friend-link-desc {
   color: rgba(255, 255, 255, 0.45);
 }
 

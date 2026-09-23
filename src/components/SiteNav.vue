@@ -87,11 +87,6 @@ const navItems = [
     icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'
   },
   {
-    path: '/qunliao.html',
-    label: '群聊',
-    icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
-  },
-  {
     path: '/about.html',
     label: '关于',
     icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
@@ -122,16 +117,18 @@ function isActive(item) {
 </script>
 
 <style scoped>
-/* 隐藏导航防闪烁 */
-.site-nav-side,
-.site-nav-footer {
-  animation: navReveal 0.3s ease-out forwards;
-  animation-delay: 0.5s;
-}
+/* 隐藏导航防闪烁 - 仅在非 reduced-motion 时动画 */
+@media (prefers-reduced-motion: no-preference) {
+  .site-nav-side,
+  .site-nav-footer {
+    animation: navReveal 0.3s ease-out forwards;
+    animation-delay: 0.5s;
+  }
 
-@keyframes navReveal {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  @keyframes navReveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }
 
 /* ====== 底部导航栏 (position="footer") ====== */
@@ -319,7 +316,7 @@ function isActive(item) {
 /* ====== 暗色模式 ====== */
 [data-theme="dark"] .site-nav-footer {
   background: var(--nav-bg-dark, #1a1a2e);
-  border-color: var(--nav-border, #e5e2dd);
+  border-color: var(--border, #2d2d45);
 }
 
 [data-theme="dark"] .site-nav-footer .nav-link.active :deep(svg) {
@@ -328,7 +325,7 @@ function isActive(item) {
 
 [data-theme="dark"] .site-nav-side {
   background: var(--card, #1a1a2e);
-  border-color: var(--nav-border, #e5e2dd);
+  border-color: var(--border, #2d2d45);
 }
 
 [data-theme="dark"] .site-nav-side .nav-link.active {

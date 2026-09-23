@@ -233,8 +233,7 @@ const friendLinksData = [
   }
 }
 
-:global([data-theme="dark"]) .friend-links-wrapper,
-:global(body.dark-mode) .friend-links-wrapper {
+:global([data-theme="dark"]) .friend-links-wrapper {
   --card-bg: #1e293b;
   --border: #334155;
   --text: #f1f5f9;
@@ -242,8 +241,7 @@ const friendLinksData = [
   --primary-light: #312e81;
 }
 
-:global([data-theme="dark"]) .friend-links-wrapper,
-:global(body.dark-mode) .friend-links-wrapper {
+:global([data-theme="dark"]) .friend-links-wrapper {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 </style>

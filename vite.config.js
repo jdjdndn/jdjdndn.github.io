@@ -24,8 +24,8 @@ function discoverAllPages() {
       const fullPath = resolve(dir, file);
       const stat = statSync(fullPath);
       if (stat.isDirectory()) {
-        // 跳过 common 目录和以 _ 开头的目录
-        if (file === 'common' || file.startsWith('_')) continue;
+        // 跳过 common、templates 目录和以 _ 开头的目录
+        if (file === 'common' || file === 'templates' || file.startsWith('_')) continue;
         scanDir(fullPath, prefix ? `${prefix}/${file}` : file);
       } else if (file.endsWith('.html')) {
         const name = file.replace('.html', '');
@@ -42,6 +42,29 @@ function discoverAllPages() {
   return entries;
 }
 
+// ===== 扫描 templates 目录下的 HTML 页面（输出到 dist 根目录） =====
+function discoverTemplatePages() {
+  const templatesDir = resolve(ROOT, 'src/templates');
+  const entries = {};
+
+  // 检查 templates 目录是否存在
+  try {
+    for (const file of readdirSync(templatesDir)) {
+      if (file.endsWith('.html')) {
+        const name = file.replace('.html', '');
+        // 跳过 _ 开头的模板文件
+        if (name.startsWith('_')) continue;
+        // 映射到根目录：templates/about.html → dist/about.html
+        entries[name] = resolve(templatesDir, file);
+      }
+    }
+  } catch (e) {
+    // templates 目录不存在，忽略
+  }
+
+  return entries;
+}
+
 export default defineConfig({
   root: 'src',
   publicDir: '../public',
@@ -53,45 +76,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(ROOT, 'src/index.html'),
-        'index-vue': resolve(ROOT, 'src/index-vue.html'),
         ...discoverAllPages(),
+        ...discoverTemplatePages(),
       },
     },
   },
   server: { open: true },
   plugins: [
-    // 开发时将页面路由重定向到 Vue SPA 入口
-    {
-      name: 'redirect-to-vue-spa',
-      configureServer(server) {
-        server.middlewares.use((req, res, next) => {
-          // 需要重定向的页面路径
-          const vuePages = [
-            '/',
-            '/index.html',
-            '/haoka.html',
-            '/huodong.html',
-            '/huiyuan.html',
-            '/wangpan.html',
-            '/wifi.html',
-            '/about.html',
-            '/fuye.html',
-            '/gouwu.html',
-            '/privacy.html',
-            '/qunliao.html',
-            '/haoka-agent.html',
-          ];
-
-          // 检查是否是 Vue 页面路由
-          const path = req.url.split('?')[0].split('#')[0];
-          if (vuePages.includes(path)) {
-            req.url = '/index-vue.html';
-          }
-
-          next();
-        });
-      }
-    },
     vue(),
     // Naive UI 按需引入（模板中 n-* 组件自动导入，大幅减小主包体积）
     Components({

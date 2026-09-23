@@ -3,7 +3,7 @@
     <PageHero
       icon='<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>'
       title="会员优惠"
-      subtitle="影视会员 · 音乐会员 · 流量站 — 优惠价格享受高品质服务"
+      subtitle="影视 / 音乐 / 流量会员 · 官方渠道优惠价"
       aria="会员优惠"
     >
       <template #badge>
@@ -42,12 +42,14 @@
     </div>
 
     <LegalLinks />
+    <BackToTop />
   </main>
 </template>
 
 <script setup>
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const members = [
   {
@@ -93,8 +95,14 @@ const members = [
   margin: 0 auto;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .member-card {
@@ -105,17 +113,17 @@ const members = [
   padding: 32px 24px;
   background: var(--card, #fff);
   border: 1px solid var(--border, #e5e2dd);
-  border-radius: 16px;
+  border-radius: 12px;
   text-decoration: none;
   color: var(--text, #1a1a2e);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   text-align: center;
 }
 
 .member-card:hover {
   border-color: var(--primary, #FF6B35);
-  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
+  transform: translateY(-1px);
 }
 
 .member-icon {

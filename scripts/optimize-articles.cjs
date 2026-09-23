@@ -97,10 +97,12 @@ function extractBrandColor(style) {
   return m[1].trim().toUpperCase();
 }
 
-function processArticle(fileName) {
-  const filePath = path.join(ARTICLE_DIR, fileName);
+function processArticle(fileName, subDir = '') {
+  const filePath = path.join(ARTICLE_DIR, subDir, fileName);
   let html = fs.readFileSync(filePath, 'utf-8');
-  const absUrl = `${SITE}/article/${encodeURI(fileName)}`;
+  const absUrl = subDir
+    ? `${SITE}/article/${subDir}/${encodeURI(fileName)}`
+    : `${SITE}/article/${encodeURI(fileName)}`;
   const absOgp = `${SITE}/og-image.png`;
   const stats = { style: 0, date: 0, url: 0, og: 0, geo: 0 };
 
@@ -219,10 +221,12 @@ function buildFaqJsonLd(html) {
 </script>`;
 }
 
-function enhanceArticle(fileName) {
-  const filePath = path.join(ARTICLE_DIR, fileName);
+function enhanceArticle(fileName, subDir = '') {
+  const filePath = path.join(ARTICLE_DIR, subDir, fileName);
   let html = fs.readFileSync(filePath, 'utf-8');
-  const absUrl = `${SITE}/article/${encodeURI(fileName)}`;
+  const absUrl = subDir
+    ? `${SITE}/article/${subDir}/${encodeURI(fileName)}`
+    : `${SITE}/article/${encodeURI(fileName)}`;
   const absOgp = `${SITE}/og-image.png`;
   let changed = false;
 
@@ -304,18 +308,40 @@ function enhanceArticle(fileName) {
   return changed ? { file: fileName } : null;
 }
 
+// 递归收集文章文件
+function collectArticleFiles(dir, subDir = '') {
+  const files = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      // 递归处理子目录
+      const subFiles = collectArticleFiles(
+        path.join(dir, entry.name),
+        subDir ? `${subDir}/${entry.name}` : entry.name
+      );
+      files.push(...subFiles);
+    } else if (entry.name.endsWith('.html')) {
+      files.push({ name: entry.name, subDir });
+    }
+  }
+
+  return files;
+}
+
 function main() {
   console.log(`🔧 文章页批量优化 ${DRY_RUN ? '(dry-run)' : ''}`);
   writeSharedCss();
 
-  const files = fs.readdirSync(ARTICLE_DIR).filter((f) => f.endsWith('.html'));
+  // 递归收集所有文章文件（包括子目录）
+  const allFiles = collectArticleFiles(ARTICLE_DIR);
   const results = [];
-  for (const f of files) {
-    const r = processArticle(f);
+  for (const { name, subDir } of allFiles) {
+    const r = processArticle(name, subDir);
     if (r) results.push(r);
   }
   const sum = (k) => results.reduce((a, r) => a + (r[k] || 0), 0);
-  console.log(`\n📄 处理 ${files.length} 篇文章`);
+  console.log(`\n📄 处理 ${allFiles.length} 篇文章`);
   console.log(`  样式提取: ${sum('style')} 页`);
   console.log(`  日期替换: ${sum('date')} 处`);
   console.log(`  URL 绝对化: ${sum('url')} 处`);
@@ -325,8 +351,8 @@ function main() {
   // 第二阶段：GEO/SEO 增强
   console.log(`\n🔍 GEO/SEO 增强（hreflang/twitter/speakable/FAQPage）`);
   const enhanced = [];
-  for (const f of files) {
-    const r = enhanceArticle(f);
+  for (const { name, subDir } of allFiles) {
+    const r = enhanceArticle(name, subDir);
     if (r) enhanced.push(r);
   }
   console.log(`  增强: ${enhanced.length} 页`);

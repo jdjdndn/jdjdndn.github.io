@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/landing-pages.js');
+const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/templates/landing-pages.js');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
@@ -112,6 +112,8 @@ function generateHTML(page) {
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#FF6B35" />
     <link rel="canonical" href="https://jdjdndn.github.io/${page.slug}.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg" />
     <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/${page.slug}.html" />
     <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/" />
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />

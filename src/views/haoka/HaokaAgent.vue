@@ -3,7 +3,7 @@
     <PageHero
       icon='<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'
       title="号卡代理合伙人"
-      subtitle="高佣推广 · 一件代发 · 专业培训 · 持续售后"
+      subtitle="高佣推广 · 零成本加入 · 专业培训 · 持续售后"
       aria="号卡代理合伙人招募"
     >
       <template #badge>
@@ -15,7 +15,7 @@
     <!-- 代理招募 -->
     <section v-if="haokaProxyLinks.length" class="agent-section">
       <h2 class="seo-title">招募代理合伙人</h2>
-      <p class="agent-desc">高佣推广 · 一件代发 · 专业培训 · 持续售后 · 已帮助 <strong>2000+</strong> 代理月入过万</p>
+      <p class="agent-desc">一件代发免囤货 · 专业客服全程带教 · 已帮助 <strong>2000+</strong> 代理月入过万</p>
       <div class="agent-tags">
         <span class="agent-tag">佣金高达50%+</span>
         <span class="agent-tag">无需囤货</span>
@@ -88,7 +88,7 @@ import { ref } from 'vue'
 import { useMessage } from 'naive-ui'
 import PageHero from '../../components/PageHero.vue'
 import LegalLinks from '../../components/LegalLinks.vue'
-import { haokaProxyLinks } from '../../haoka-data.js'
+import { haokaProxyLinks } from '../../templates/haoka-data.js'
 
 const message = useMessage()
 const formRef = ref(null)

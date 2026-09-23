@@ -3,7 +3,7 @@
       <PageHero
         icon='<path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>'
         title="随身WiFi专区"
-        subtitle="便携WiFi设备 · 多网可选 · 出行必备"
+        subtitle="便携WiFi · 多网可选 · 出行必备"
         aria="随身WiFi专区"
       />
 
@@ -72,7 +72,7 @@
                 </n-text>
               </n-space>
               <template #action>
-                <n-space>
+                <div class="card-actions">
                   <n-button type="primary" @click="handleVisit(device)">
                     <template #icon>
                       <span v-html="ICONS.external"></span>
@@ -88,7 +88,7 @@
                   <n-button @click="handleShare(device)">
                     分享
                   </n-button>
-                </n-space>
+                </div>
               </template>
             </n-card>
           </n-gi>
@@ -176,7 +176,7 @@ import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
 import QrModal from '../components/QrModal.vue'
 import { useClipboard, useShare } from '../composables'
-import { wifiLinks } from '../wifi-data.js'
+import { wifiLinks } from '../templates/wifi-data.js'
 
 const message = useMessage()
 const { copy } = useClipboard()
@@ -330,7 +330,7 @@ async function handleShare(device) {
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   padding: 12px 16px;
 }
 
@@ -375,6 +375,22 @@ async function handleShare(device) {
 .product-card {
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 卡片操作按钮：三个按钮等宽一行，避免换行错位 */
+:deep(.product-card .n-card__action) {
+  padding: 12px 16px;
+}
+.card-actions {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  width: 100%;
+}
+.card-actions .n-button {
+  width: 100% !important;
+  margin: 0 !important;
+  min-width: 0 !important;
 }
 
 .product-card:hover {
@@ -520,38 +536,6 @@ async function handleShare(device) {
 }
 
 /* 代理招募 */
-.agent-hook {
-  margin-top: 40px;
-}
-
-.agent-register-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.agent-register-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  background: var(--accent, #004E89);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 78, 137, 0.15);
-}
-
-.agent-register-btn:hover {
-  background: #003D6B;
-  box-shadow: 0 4px 16px rgba(0, 78, 137, 0.25);
-}
-
-.agent-register-name {
-  font-size: 14px;
-}
 
 /* 响应式 */
 @media (min-width: 640px) {
@@ -560,28 +544,7 @@ async function handleShare(device) {
   }
 }
 
-@media (min-width: 1024px) {
-  .compare-section-title,
-  .scenario-section-title {
-    font-size: 20px;
-  }
-}
-
 @media (max-width: 480px) {
-  .agent-hook {
-    padding: 24px 16px;
-    margin-top: 32px;
-    border-radius: 16px;
-  }
-
-  .agent-register-btn {
-    padding: 12px 16px;
-  }
-
-  .agent-register-name {
-    font-size: 13px;
-  }
-
   .compare-section,
   .scenario-section {
     margin-top: 32px;
@@ -611,5 +574,15 @@ async function handleShare(device) {
 [data-theme="dark"] .compare-table-wrap {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
+}
+
+[data-theme="dark"] .cross-link-banner {
+  background: rgba(0, 78, 137, 0.15);
+  border-color: rgba(0, 78, 137, 0.4);
+}
+
+[data-theme="dark"] .device-desc,
+[data-theme="dark"] .scenario-content {
+  color: var(--text-secondary, #a0aec0);
 }
 </style>

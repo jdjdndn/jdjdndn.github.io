@@ -13,17 +13,22 @@
         ref="iframeRef"
         :src="iframeSrc"
         class="waimai-iframe"
-        title="优惠券平台"
+        title="外卖优惠"
         sandbox="allow-scripts allow-same-origin allow-popups"
         @load="onLoad"
         @error="onError"
       ></iframe>
     </div>
+
+    <LegalLinks />
+    <BackToTop />
   </main>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const iframeRef = ref(null)
 const loading = ref(true)
@@ -81,6 +86,9 @@ function retryLoad() {
 .iframe-container {
   position: relative;
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
   min-height: 80vh;
 }
 
@@ -88,7 +96,8 @@ function retryLoad() {
   width: 100%;
   height: 80vh;
   min-height: 600px;
-  border: none;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
   background: var(--card, #fff);
 }
 
@@ -102,6 +111,7 @@ function retryLoad() {
   justify-content: center;
   gap: 16px;
   background: var(--card, #fff);
+  border-radius: 12px;
   z-index: 1;
 }
 
@@ -132,9 +142,20 @@ function retryLoad() {
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
 .retry-btn:hover {
   background: var(--primary-hover, #E55A2B);
+}
+
+/* 暗色模式 */
+[data-theme="dark"] .waimai-iframe {
+  border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .iframe-loading,
+[data-theme="dark"] .iframe-error {
+  background: var(--card, #1a1a2e);
 }
 </style>

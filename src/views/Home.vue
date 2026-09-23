@@ -8,7 +8,7 @@
       aria="券宝"
     >
       <div class="hero-stats">
-        <span class="stat-badge">📊 已收录 <strong>{{ totalCount }}</strong> 个活动</span>
+        <span class="stat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 精选 <strong>{{ totalCount }}</strong> 个优惠</span>
         <span class="stat-badge">覆盖 <strong>{{ tabs.length }}</strong> 大平台</span>
         <span class="stat-badge freshness-badge"><span class="dot"></span> 每日更新</span>
       </div>
@@ -22,8 +22,9 @@
           type="text"
           class="search-input"
           v-model="searchQuery"
-          placeholder="搜索入口名称..."
+          placeholder="搜优惠 / 平台 / 关键词..."
           aria-label="搜索优惠"
+          inputmode="search"
         />
         <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''" aria-label="清除搜索">✕</button>
       </div>
@@ -34,7 +35,7 @@
 
     <!-- 好物推荐入口 -->
     <a class="article-entry-banner" href="./article/haowu.html" aria-label="好物推荐省钱攻略文章">
-      <span class="article-entry-icon" aria-hidden="true">📖</span>
+      <span class="article-entry-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
       <span class="article-entry-body">
         <span class="article-entry-title">好物推荐 · 省钱攻略</span>
         <span class="article-entry-sub">美食 / 数码 / 日用 · 亲测真实优惠</span>
@@ -153,12 +154,14 @@ import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import { tabs } from '../data.js'
 import { isExpired } from '../common/utils.js'
+import { useToast } from '../composables'
 
 // 数据
 const activeTab = ref(0)
 const activeSubTab = ref('')
 const searchQuery = ref('')
 const showBackToTop = ref(false)
+const toast = useToast()
 
 // 计算属性
 const currentTab = computed(() => tabs[activeTab.value])
@@ -236,25 +239,9 @@ async function handleCopy(item) {
 
   try {
     await navigator.clipboard.writeText(text)
-    // 显示成功提示
-    const toast = document.createElement('div')
-    toast.className = 'toast'
-    toast.textContent = '✓ 已复制'
-    toast.setAttribute('role', 'status')
-    toast.setAttribute('aria-live', 'polite')
-    document.body.appendChild(toast)
-
-    // 动画显示
-    requestAnimationFrame(() => {
-      toast.classList.add('show')
-    })
-
-    // 1.5秒后隐藏
-    setTimeout(() => {
-      toast.classList.remove('show')
-      setTimeout(() => toast.remove(), 300)
-    }, 1500)
+    toast.show('已复制')
   } catch (err) {
+    toast.show('复制失败')
     console.error('复制失败:', err)
   }
 }
@@ -403,6 +390,13 @@ onUnmounted(() => {
   color: var(--muted, #6b7280);
 }
 
+.hero-stats{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
 /* Tab 导航 */
 .tab-nav {
   display: flex;
@@ -506,11 +500,13 @@ onUnmounted(() => {
 
 /* 活动卡片 */
 .activity-card {
-  background: var(--card, #ffffff);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border: 1px solid var(--border, #e5e2dd);
   border-radius: var(--radius, 12px);
   padding: 16px;
   transition: border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .activity-card:hover {
@@ -551,6 +547,14 @@ onUnmounted(() => {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light, #f0eeeb);
+}
+
+.card-actions button {
+  flex: 1;
+  min-width: 0;
 }
 
 .btn {
@@ -561,6 +565,11 @@ onUnmounted(() => {
   font-size: 13px;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .btn-copy {
@@ -651,7 +660,7 @@ onUnmounted(() => {
 }
 
 [data-theme="dark"] .activity-card {
-  background: var(--card, #1e1e35);
+  background: linear-gradient(135deg, rgba(30, 30, 53, 0.9) 0%, rgba(40, 40, 65, 0.9) 100%);
   border-color: var(--border, #2d2d45);
 }
 

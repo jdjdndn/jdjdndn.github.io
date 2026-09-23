@@ -99,20 +99,10 @@ const deadlineDisplay = computed(() => {
   return expiringSoon.value ? formatCountdown(props.item.deadline) : `截止 ${props.item.deadline}`
 })
 
-const cardStyle = computed(() => {
-  const hash = [...(props.item.name || '')].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0)
-  const hue1 = Math.abs(hash) % 360
-  const hue2 = props.type === 'code' ? (hue1 + 40) % 360 : (hue1 + 30) % 360
-  const saturation1 = props.type === 'code' ? 75 : 80
-  const lightness1 = props.type === 'code' ? 94 : 95
-  const saturation2 = props.type === 'code' ? 65 : 70
-  const lightness2 = props.type === 'code' ? 90 : 92
-
-  return {
-    '--card-gradient': `linear-gradient(135deg, hsl(${hue1}, ${saturation1}%, ${lightness1}%), hsl(${hue2}, ${saturation2}%, ${lightness2}%))`,
-    '--card-accent': `hsl(${hue1}, ${props.type === 'code' ? 65 : 70}%, ${props.type === 'code' ? 45 : 50}%)`
-  }
-})
+const cardStyle = computed(() => ({
+  '--card-gradient': 'linear-gradient(135deg, #FFF4ED 0%, #FFE8DB 100%)',
+  '--card-accent': '#FF6B35'
+}))
 
 const handleCopy = async () => {
   await copy(props.item.code, '口令已复制')
@@ -131,6 +121,8 @@ const handleShare = async () => {
 
 <style scoped>
 .activity-card {
+  display: flex;
+  flex-direction: column;
   background: var(--card-gradient, linear-gradient(135deg, #f8f9fa, #e9ecef));
   border-radius: 12px;
   padding: 16px;
@@ -138,6 +130,7 @@ const handleShare = async () => {
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease;
+  height: 100%;
 }
 
 .activity-card:hover {
@@ -165,7 +158,7 @@ const handleShare = async () => {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .card-icon-badge {
@@ -185,6 +178,7 @@ const handleShare = async () => {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 .card-badge {
@@ -192,6 +186,7 @@ const handleShare = async () => {
   padding: 2px 6px;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
 }
 
 .badge-expired {
@@ -225,8 +220,9 @@ const handleShare = async () => {
 .card-desc {
   font-size: 13px;
   color: var(--text-secondary, #6b7280);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   line-height: 1.5;
+  flex: 1;
 }
 
 .card-deadline-wrapper {
@@ -268,17 +264,19 @@ const handleShare = async () => {
 .card-actions {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light, #f0eeeb);
 }
 
 .card-actions button,
 .card-actions a {
   flex: 1;
   min-width: 0;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
@@ -317,14 +315,16 @@ const handleShare = async () => {
 
 .btn-qr,
 .btn-share {
-  background: transparent;
-  color: var(--text-secondary, #6b7280);
+  background: var(--card, #fff);
+  color: var(--text, #1f2937);
   border: 1px solid var(--border, #e5e7eb);
 }
 
 .btn-qr:hover,
 .btn-share:hover {
   background: var(--hover-bg, #f3f4f6);
+  border-color: var(--primary, #FF6B35);
+  color: var(--primary, #FF6B35);
 }
 
 /* 暗色模式 */
@@ -340,5 +340,15 @@ const handleShare = async () => {
 
 [data-theme="dark"] .card-badge {
   background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .card-actions {
+  border-top-color: rgba(75, 85, 99, 0.5);
+}
+
+[data-theme="dark"] .btn-qr,
+[data-theme="dark"] .btn-share {
+  background: rgba(31, 41, 55, 0.8);
+  border-color: rgba(75, 85, 99, 0.5);
 }
 </style>

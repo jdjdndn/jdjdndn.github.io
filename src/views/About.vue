@@ -3,7 +3,7 @@
       <PageHero
         icon='<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
         title="关于我们"
-        subtitle="券宝平台介绍"
+        subtitle="关于券宝 · 优惠聚合平台"
         aria="关于我们"
       />
 
@@ -19,27 +19,15 @@
       </n-card>
 
       <n-card title="联系我们" :bordered="false">
-        <n-form ref="formRef" :model="formData" :rules="rules">
-          <n-form-item label="您的邮箱" path="email">
-            <n-input v-model:value="formData.email" placeholder="请输入您的邮箱" />
-          </n-form-item>
-          <n-form-item label="问题类型" path="type">
-            <n-select v-model:value="formData.type" :options="typeOptions" placeholder="请选择问题类型" />
-          </n-form-item>
-          <n-form-item label="问题描述" path="message">
-            <n-input
-              v-model:value="formData.message"
-              type="textarea"
-              placeholder="请详细描述您的问题"
-              :rows="4"
-            />
-          </n-form-item>
-          <n-form-item>
-            <n-button type="primary" @click="handleSubmit">
-              提交反馈
-            </n-button>
-          </n-form-item>
-        </n-form>
+        <n-space vertical :size="16">
+          <n-text>
+            如有疑问或合作意向，欢迎通过以下方式联系我们：
+          </n-text>
+          <n-space vertical :size="12">
+            <n-text strong>QQ：2667389861</n-text>
+            <n-text strong>微信：wcbblll</n-text>
+          </n-space>
+        </n-space>
       </n-card>
 
       <n-card :bordered="false">
@@ -69,42 +57,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useMessage } from 'naive-ui'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
-
-const message = useMessage()
-const formRef = ref(null)
-
-const formData = ref({
-  email: '',
-  type: null,
-  message: ''
-})
-
-const rules = {
-  email: { required: true, message: '请输入邮箱', trigger: 'blur' },
-  type: { required: true, message: '请选择问题类型', trigger: 'change' },
-  message: { required: true, message: '请输入问题描述', trigger: 'blur' }
-}
-
-const typeOptions = [
-  { label: '优惠信息错误', value: 'error' },
-  { label: '功能建议', value: 'suggestion' },
-  { label: '合作咨询', value: 'cooperation' },
-  { label: '其他问题', value: 'other' }
-]
-
-async function handleSubmit() {
-  try {
-    await formRef.value?.validate()
-    message.success('反馈提交成功，我们会尽快处理！')
-    formData.value = { email: '', type: null, message: '' }
-  } catch (errors) {
-    message.error('请填写完整信息')
-  }
-}
 </script>
 
 <style scoped>

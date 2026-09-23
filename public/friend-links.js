@@ -110,7 +110,7 @@ class FriendLinks extends HTMLElement {
           text-align: center;
           margin-bottom: 24px;
           padding-bottom: 16px;
-          border-bottom: 2px solid var(--primary, #6366f1);
+          border-bottom: 2px solid var(--primary, #FF6B35);
         }
         .fl-header h3 {
           font-size: 18px;
@@ -131,7 +131,7 @@ class FriendLinks extends HTMLElement {
         .fl-section {
           background: var(--card-bg, #f8fafc);
           border: 1px solid var(--border, #e2e8f0);
-          border-left: 3px solid var(--primary, #6366f1);
+          border-left: 3px solid var(--primary, #FF6B35);
           border-radius: 8px;
           padding: 16px;
         }
@@ -162,17 +162,17 @@ class FriendLinks extends HTMLElement {
           text-align: center;
         }
         .fl-link:hover {
-          background: var(--primary-light, #eef2ff);
-          border-color: var(--primary, #6366f1);
+          background: var(--primary-light, #FFF4ED);
+          border-color: var(--primary, #FF6B35);
           transform: translateY(-1px);
-          box-shadow: 0 2px 8px rgba(99,102,241,0.15);
+          box-shadow: 0 2px 8px rgba(255,107,53,0.15);
         }
         .fl-name {
           font-size: 13px;
           font-weight: 600;
           color: var(--text, #1e293b);
         }
-        .fl-link:hover .fl-name { color: var(--primary, #6366f1); }
+        .fl-link:hover .fl-name { color: var(--primary, #FF6B35); }
         .fl-desc {
           font-size: 11px;
           color: var(--muted, #64748b);
@@ -192,7 +192,7 @@ class FriendLinks extends HTMLElement {
             --border: #334155;
             --text: #f1f5f9;
             --muted: #94a3b8;
-            --primary-light: #312e81;
+            --primary-light: #5a2e1a;
           }
           .fl-wrapper { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
         }
@@ -223,7 +223,7 @@ class FriendLinks extends HTMLElement {
           `).join('')}
         </div>
         <div class="fl-footer">
-          © 券宝省钱攻略 · 帮你花少钱过好生活
+          © 券宝 · 帮你花少钱过好生活
         </div>
       </div>
     `;

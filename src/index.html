@@ -14,9 +14,9 @@
     <meta name="application-name" content="券宝" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="color-scheme" content="light dark" />
-    <link rel="canonical" href="https://jdjdndn.github.io/index.html" />
-    <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/index.html" />
-    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/index.html" />
+    <link rel="canonical" href="https://jdjdndn.github.io/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://jdjdndn.github.io/" />
+    <link rel="alternate" hreflang="x-default" href="https://jdjdndn.github.io/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -51,10 +51,10 @@
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": "优惠券",
-      "description": "优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器",
+      "description": "优惠券聚合平台，汇聚全网热门优惠活动，一站式省钱利器",
       "datePublished": "2025-01-01",
       "dateModified": "__BUILD_DATE__",
-      "url": "https://jdjdndn.github.io/index.html",
+      "url": "https://jdjdndn.github.io/",
       "isPartOf": {
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website",
@@ -86,37 +86,16 @@
       "@id": "https://jdjdndn.github.io/#website",
       "name": "券宝",
       "url": "https://jdjdndn.github.io/",
-      "description": "券宝优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器",
+      "description": "券宝优惠券聚合平台，汇聚全网热门优惠活动，一站式省钱利器",
       "inLanguage": "zh-CN",
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://jdjdndn.github.io/index.html?q={search_term_string}"
+          "urlTemplate": "https://jdjdndn.github.io/?q={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "首页",
-          "item": "https://jdjdndn.github.io/index.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "活动",
-          "item": "https://jdjdndn.github.io/huodong.html"
-        }
-      ]
     }
     </script>
 
@@ -157,122 +136,25 @@
     }
     </script>
 
-    <!-- CSS 同步加载，消除页面闪烁 -->
-
-
-
-
-
-
-
-
     <meta name="google" content="notranslate" />
 
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
 
     <link rel="stylesheet" href="./shared.css" />
-    <link rel="stylesheet" href="./huodong.css" />
-    <script src="./common-page.js"></script>
-    <script src="./page-hero.js"></script>
-    <script src="./page-progress.js"></script>
-    <script src="./dark-toggle.js"></script>
-    <script src="./site-nav.js"></script>
+    <link rel="stylesheet" href="./vue-app.css" />
   </head>
   <body>
+    <!-- <a href="#tab-content" class="skip-link">跳转到主要内容</a> -->
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">券宝 — 优惠活动聚合 外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递</h1>
-    <page-progress></page-progress>
-
-    <div class="app-wrapper"><site-nav position="side"></site-nav><div id="app">
-      <page-hero
-        icon='<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
-        title="券宝"
-        subtitle="外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递"
-        aria="券宝"
-      ><div id="header-stats"></div></page-hero>
-
-      <!-- 搜索栏 -->
-      <div class="search-wrapper">
-        <div class="search-bar" role="search">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" class="search-input" id="search-input" placeholder="搜索入口名称..." aria-label="搜索优惠" />
-          <button class="search-clear" id="search-clear" aria-label="清除搜索">✕</button>
-        </div>
-        <div class="search-count" id="search-count" aria-live="polite"></div>
-      </div>
-
-      <!-- 快捷入口 -->
-      <!-- <nav class="quick-shortcuts" id="quick-shortcuts" aria-label="快捷入口"></nav> -->
-
-      <!-- 好物推荐入口（活动页 → 文章索引互链） -->
-      <a class="article-entry-banner" href="./article/haowu.html" aria-label="好物推荐省钱攻略文章">
-        <span class="article-entry-icon" aria-hidden="true">📖</span>
-        <span class="article-entry-body">
-          <span class="article-entry-title">好物推荐 · 省钱攻略</span>
-          <span class="article-entry-sub">美食 / 数码 / 日用 · 亲测真实优惠</span>
-        </span>
-        <span class="article-entry-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <!-- Tab 导航 -->
-      <nav id="tab-nav" class="tab-nav" role="tablist" aria-label="优惠分类"></nav>
-
-      <!-- Tab 内容（SEO 预渲染内容由 vite 插件注入，JS 加载后替换为实际内容） -->
-      <main id="tab-content" class="tab-content"></main>
-
-      <legal-links></legal-links>
-    </div>
-
-
-    <site-nav position="footer"></site-nav>
-
-    <button id="back-to-top" class="back-to-top hidden" aria-label="回到顶部">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-    </button>
-
-    <div id="toast" class="toast hidden" aria-live="polite" role="status">已复制</div>
-
+    <div id="app"></div>
     <noscript>
       <div style="text-align:center;padding:2rem;color:#333;max-width:800px;margin:0 auto;">
         <h2>券宝 — 一站式优惠券中心</h2>
         <p>本站聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠。</p>
         <p>本站需要 JavaScript 才能正常显示完整优惠内容。请启用 JavaScript 后访问。</p>
         <p>完整优惠列表请查看 <a href="./llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="./llms.txt">llms.txt</a>。</p>
-
-        <h3>🍜 美团外卖红包</h3>
-        <p>美团外卖天天领红包、吃喝玩乐福利、大牌饮品券、超市便利店专场、零食水果优惠、品质会场、爆款团低至1折。酒旅出行：全国爆款酒店3折起、大额出行券包。健康买药、美妆个护、母婴数码、限时特惠等。</p>
-
-        <h3>🛒 淘宝闪购优惠</h3>
-        <p>闪购天天领红包、消费日专享城市大额红包、新客专享最高20元红包、品牌日单单有福利最高22元、夜宵专享免单红包、果蔬日日鲜、零售会场一键领红包。</p>
-
-        <h3>🛒 电商优惠</h3>
-        <p>京东秒杀、自营热卖、实时热销、京喜秒杀、热门清单榜、优惠雷达。淘宝领券中心、好货快抢、天猫超市福利、百亿补贴、淘金币、手机以旧换新、超级满减。拼多多福利券、地区购物补贴。</p>
-
-        <h3>🏨 酒店旅行</h3>
-        <p>携程酒店/门票/美食/机票/火车票/签证/租车/跟团游。同程酒店/国际酒店/门票/民宿/机票/火车票/打车券。飞猪酒店特惠/机票/门票/政府文旅补贴/88会员优惠。</p>
-
-        <h3>🚗 出行优惠</h3>
-        <p>滴滴打车红包天天领、8折打车券、代驾立减券、酒店抵扣券、南航机票立减券。花小猪新客/老客最高100元券包。</p>
-
-        <h3>🎯 连锁餐饮</h3>
-        <p>肯德基、瑞幸咖啡、库迪咖啡、奈雪的茶、星巴克、必胜客、百果园、喜茶、汉堡王、华莱士等大牌餐券。</p>
-
-        <h3>🎬 电影票 · 快递</h3>
-        <p>电影票在线预订最低19.9元。快递寄件享4折起优惠，低至5元寄快递。</p>
       </div>
     </noscript>
-
-    <!-- Umami Analytics (免费版 https://umami.is) — 替换 YOUR_WEBSITE_ID -->
-    <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script> -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="6d07bd00-c044-47d9-99ce-a833e6358390"></script>
-
-    <script type="module" src="./common/dark-mode.js"></script>
-    <script type="module" src="./app.js"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(() => {});
-        });
-      }
-    </script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

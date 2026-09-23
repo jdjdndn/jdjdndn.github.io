@@ -196,7 +196,7 @@ li {
 }
 .footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .footer a:hover { color: var(--accent, #ff6b35); }
-body.dark-mode .footer a { color: inherit; }
+[data-theme="dark"] .footer a { color: inherit; }
 
 @media(max-width:480px) {
   .hero h1 {

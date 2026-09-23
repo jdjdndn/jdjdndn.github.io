@@ -3,7 +3,7 @@
     <PageHero
       icon='<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
       title="副业专区"
-      subtitle="零成本多一份收入 · 号卡代理 / 外卖推广 / 电商带货 / 会员分销"
+      subtitle="副业机会梳理 · 电商带货 / 会员分销 / App拉新 / 号卡现状"
       aria="副业专区"
     >
       <template #badge>
@@ -15,7 +15,7 @@
 
     <!-- 副业分类入口 -->
     <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive class="entry-grid">
-      <n-gi v-for="entry in entries" :key="entry.name" span="3 m:1">
+      <n-gi v-for="(entry, idx) in entries" :key="entry.name" :span="idx === entries.length - 1 ? '3' : '3 m:1'" class="entry-grid-item">
         <router-link :to="entry.url" class="entry-card">
           <div class="entry-icon">{{ entry.icon }}</div>
           <div class="entry-info">
@@ -27,23 +27,25 @@
       </n-gi>
     </n-grid>
 
-    <p class="f-note">💡 选择副业方向，查看对应攻略 · 零成本起步，多一份收入</p>
+    <p class="f-note">💡 选择副业方向，查看对应攻略 · 按需投入，量力而行</p>
 
     <LegalLinks />
+    <BackToTop />
   </main>
 </template>
 
 <script setup>
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const entries = [
   {
-    name: '号卡代理',
-    desc: '零成本副业 · 月入过万攻略',
+    name: '号卡业务',
+    desc: '号卡新规后现状 · 合规与防骗',
     icon: '📱',
     url: '/fuye/haoka.html',
-    tag: '7 篇攻略',
+    tag: '5 篇指南',
     tagType: 'success'
   },
   {
@@ -80,7 +82,7 @@ const entries = [
   },
   {
     name: '随身WiFi代理',
-    desc: '便携WiFi设备代理 · 高佣推广',
+    desc: '便携WiFi设备代理 · 收益以实际为准',
     icon: '📶',
     url: '/fuye/wifi-agent.html',
     tag: '代理',
@@ -102,6 +104,14 @@ const entries = [
   max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+/* 最后一项（更多副业）整行通栏展示 */
+:deep(.entry-grid-item:last-child .entry-card) {
+  border-style: dashed;
+  background: var(--card, #fff);
+  justify-content: center;
+  text-align: center;
 }
 
 .entry-card {

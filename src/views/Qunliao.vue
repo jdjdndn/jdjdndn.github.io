@@ -3,7 +3,7 @@
     <PageHero
       icon='<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
       title="群聊社区"
-      subtitle="一起领福利聊攻略 · 外卖 / 闪购 / 好物 / 副业"
+      subtitle="一起聊省钱 · 一起领福利"
       aria="群聊社区"
     />
 
@@ -41,7 +41,23 @@
 
     <p class="f-note">💡 输入关键词筛选群聊 · 群聊入口持续更新，敬请期待</p>
 
+    <!-- 群聊说明（充实内容，避免长屏底部空白） -->
+    <div class="q-faq">
+      <n-collapse :bordered="false">
+        <n-collapse-item title="群聊是免费加入的吗？" name="1">
+          是的，所有交流群均免费加入。入群后可以第一时间获取每日好价推送、优惠攻略答疑。
+        </n-collapse-item>
+        <n-collapse-item title="如何加入群聊？" name="2">
+          群聊正式开放后，点击对应群聊卡片即可扫码入群。目前各群正在筹备中，请耐心等待。
+        </n-collapse-item>
+        <n-collapse-item title="群聊里可以发广告吗？" name="3">
+          为维护群内体验，请勿在群内发布广告或刷屏。违规内容将被移出群聊，感谢理解。
+        </n-collapse-item>
+      </n-collapse>
+    </div>
+
     <LegalLinks />
+    <BackToTop />
   </main>
 </template>
 
@@ -49,6 +65,7 @@
 import { ref, computed } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const searchQuery = ref('')
 
@@ -208,9 +225,39 @@ const filteredGroups = computed(() => {
   color: var(--text-secondary, #6b7280);
 }
 
+/* 群聊说明区 */
+.q-faq {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  padding: 0 16px;
+}
+.q-faq :deep(.n-collapse) {
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
+  padding: 4px 16px;
+}
+.q-faq :deep(.n-collapse-item__header-main) {
+  font-size: 14px;
+  font-weight: 600;
+}
+.q-faq :deep(.n-collapse-item__content-inner) {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+}
+
 [data-theme="dark"] .q-search-bar,
 [data-theme="dark"] .group-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .q-faq :deep(.n-collapse) {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .f-note {
+  color: var(--text-secondary, #a0aec0);
 }
 </style>

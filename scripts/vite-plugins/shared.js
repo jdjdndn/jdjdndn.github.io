@@ -1,12 +1,12 @@
 // 构建插件共享工具：路径、站点常量、页面发现、数据加载（真实 ESM 导入）
-import { resolve, dirname, basename } from 'path';
+import { resolve, dirname, basename, relative } from 'path';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { fileURLToPath, pathToFileURL } from 'url';
 
 export const ROOT = resolve(fileURLToPath(new URL('../../', import.meta.url)));
 export const SITE_URL = 'https://jdjdndn.github.io';
 
-// 着陆页由 scripts/gen-landing-pages.cjs 从 src/landing-pages.js 生成，
+// 着陆页由 scripts/gen-landing-pages.cjs 从 src/templates/landing-pages.js 生成，
 // 即使 src 下出现同名手写文件也一律排除（单一事实源）
 export const GENERATED_LANDING = new Set([
   'meituan-waimai', 'meituan-jiuLv', 'taobao-shangou',
@@ -35,11 +35,17 @@ export function discoverLandingPages() {
 export function discoverArticlePages() {
   const dir = resolve(ROOT, 'src/article');
   const entries = {};
-  for (const file of readdirSync(dir)) {
-    if (!file.endsWith('.html')) continue;
-    const name = file.replace('.html', '');
-    entries[`article/${name}`] = resolve(dir, file);
-  }
+  const walk = (cur) => {
+    for (const file of readdirSync(cur)) {
+      const full = resolve(cur, file);
+      if (statSync(full).isDirectory()) walk(full);
+      else if (file.endsWith('.html')) {
+        const rel = relative(dir, full).replace(/\\/g, '/').replace('.html', '');
+        entries[`article/${rel}`] = full;
+      }
+    }
+  };
+  walk(dir);
   return entries;
 }
 
@@ -61,7 +67,7 @@ export async function loadTabs() {
 }
 
 export async function loadLandingSlugs() {
-  const mod = await import(pathToFileURL(resolve(ROOT, 'src/landing-pages.js')).href);
+  const mod = await import(pathToFileURL(resolve(ROOT, 'src/templates/landing-pages.js')).href);
   return (mod.landingPages || []).map(p => p.slug);
 }
 

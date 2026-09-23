@@ -207,3 +207,22 @@ export const tabs = [
     ],
   },
 ]
+
+// ========== 精选活动（Huodong.vue 使用） ==========
+export const featuredActivities = tabs.flatMap((tab, tabIndex) =>
+  (tab.sections || []).flatMap((section, sectionIndex) =>
+    (section.items || []).map((item, itemIndex) => ({
+      id: `${tabIndex}-${sectionIndex}-${itemIndex}`,
+      name: item.name,
+      desc: item.description || '',
+      icon: tab.label.replace(/[^\w一-鿿]/g, '').charAt(0) || '🎯',
+      tag: section.title,
+      tagType: 'info',
+      time: item.deadline || '长期有效',
+      link: item.link || '',
+      category: tab.id === 'bendishenghuo' ? 'food' :
+                tab.id === 'ecommerce' ? 'shopping' :
+                tab.id === 'chuxing' ? 'travel' : 'entertainment',
+    }))
+  )
+)

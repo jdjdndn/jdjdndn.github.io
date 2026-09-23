@@ -2,7 +2,7 @@
     <PageHero
       icon='<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>'
       title="号卡办理专区"
-      subtitle="流量卡 · 四网可选 · 正规运营商授权"
+      subtitle="流量卡 / 随身WiFi · 四网可选 · 正规授权"
       aria="号卡办理专区"
     >
       <template #badge>

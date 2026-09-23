@@ -126,7 +126,7 @@ async function handleCopyCoupon() {
 
 .price-original {
   font-size: 13px;
-  color: #999;
+  color: var(--muted, #999);
   text-decoration: line-through;
 }
 

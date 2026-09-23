@@ -170,7 +170,7 @@
   background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.35);
 }
-body.dark-mode .iframe-dark-toggle {
+[data-theme="dark"] .iframe-dark-toggle {
   background: rgba(26, 26, 46, 0.9);
   border-color: rgba(255, 255, 255, 0.12);
 }

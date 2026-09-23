@@ -24,8 +24,7 @@ function checkMobile() {
 
 function toggleDarkMode() {
   isDark.value = !isDark.value
-  document.body.classList.toggle('dark-mode', isDark.value)
-  document.documentElement.classList.toggle('dark-mode', isDark.value)
+  document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
   try {
     localStorage.setItem('darkMode', isDark.value)
   } catch (_) {}
@@ -35,12 +34,11 @@ function toggleDarkMode() {
 }
 
 function syncDarkMode() {
-  isDark.value = document.body.classList.contains('dark-mode') ||
-                 document.documentElement.classList.contains('dark-mode')
+  isDark.value = document.documentElement.getAttribute('data-theme') === 'dark'
 }
 
 onMounted(() => {
-  checkMobileMode()
+  checkMobile()
   syncDarkMode()
   window.addEventListener('resize', checkMobile)
 })
@@ -77,7 +75,7 @@ onUnmounted(() => {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
-:global(body.dark-mode) .dark-toggle-btn {
+:global([data-theme="dark"]) .dark-toggle-btn {
   background: rgba(26, 26, 46, 0.9);
   border-color: rgba(255, 255, 255, 0.12);
 }

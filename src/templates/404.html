@@ -9,7 +9,7 @@
     <meta name="description" content="券宝优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器。" />
     <meta name="keywords" content="券宝,优惠券,优惠聚合,省钱" />
     <meta name="author" content="jdjdndn" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#FF6B35" />
     <meta name="application-name" content="券宝" />
     <meta name="format-detection" content="telephone=no" />
@@ -37,10 +37,10 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="../icons/icon-192.png" />
 
     <!-- PWA -->
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="../manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="优惠券" />
@@ -99,27 +99,7 @@
     }
     </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "首页",
-          "item": "https://jdjdndn.github.io/index.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "活动",
-          "item": "https://jdjdndn.github.io/huodong.html"
-        }
-      ]
-    }
-    </script>
-
+    
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -161,11 +141,20 @@
 
     <link rel="alternate" type="text/plain" href="https://jdjdndn.github.io/llms.txt" title="站点摘要（供 AI 阅读）" />
 
-    <link rel="stylesheet" href="./shared.css" />
-    <link rel="stylesheet" href="./vue-app.css" />
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="../vue-app.css" />
   </head>
   <body>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">券宝 — 优惠活动聚合 外卖 · 出行 · 购物 · 酒旅 · 电影票 · 快递</h1>
     <div id="app"></div>
-    <script type="module" src="./main.js"></script>
+    <noscript>
+      <div style="text-align:center;padding:2rem;color:#333;max-width:800px;margin:0 auto;">
+        <h2>券宝 — 一站式优惠券中心</h2>
+        <p>本站聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠。</p>
+        <p>本站需要 JavaScript 才能正常显示完整优惠内容。请启用 JavaScript 后访问。</p>
+        <p>完整优惠列表请查看 <a href="../llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="../llms.txt">llms.txt</a>。</p>
+      </div>
+    </noscript>
+    <script type="module" src="../main.js"></script>
   </body>
 </html>

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://jdjdndn.github.io/og-image.png" />
 <meta name="google" content="notranslate">
 <title>省钱攻略大全 — 券宝优惠指南 | 会员折扣·好物推荐·号卡办理</title>
-<meta name="description" content="券宝省钱攻略文章合集：影视会员、音乐会员、网盘会员、好物分享、教育学习、效率工具、生活服务、优惠活动、号卡办理等全方位省钱指南，帮你花少钱过好生活。">
+<meta name="description" content="券宝文章合集：影视会员、音乐会员、网盘会员、好物分享、教育学习、效率工具、生活服务、优惠活动、号卡办理等全方位省钱指南，帮你花少钱过好生活。">
 <meta name="keywords" content="省钱攻略,优惠指南,会员折扣,影视会员,音乐会员,网盘会员,好物分享,教育学习,效率工具,生活服务,号卡办理">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://jdjdndn.github.io/article/index.html">
@@ -34,9 +36,9 @@
 <style>
 
 :root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #eef2ff;
+  --primary: #FF6B35;
+  --primary-dark: #E55A2B;
+  --primary-light: #FFF4ED;
   --bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1e293b;
@@ -55,7 +57,7 @@
     --text: #f1f5f9;
     --text-secondary: #94a3b8;
     --border: #334155;
-    --primary-light: #312e81;
+    --primary-light: #5a2e1a;
   }
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -110,7 +112,7 @@ body {
 
 /* Hero区域 */
 .hero {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8A4C 50%, #E8552D 100%);
   color: #fff;
   padding: 60px 20px;
   text-align: center;
@@ -190,7 +192,7 @@ body {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+  box-shadow: 0 2px 8px rgba(255,107,53,0.3);
 }
 
 /* Tab内容区 */
@@ -431,16 +433,33 @@ friend-links {
   .entry-card { padding: 14px 16px; border-radius: 14px; }
 }
 
+
+/* 无障碍：键盘焦点可见 */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 </style>
+<meta name="theme-color" content="#FF6B35">
 </head>
 <body>
 
-<div class="page-wrap">
+<main class="page-wrap">
 
 <nav class="top-nav">
   <div class="top-nav-inner">
     <a href="../index.html" class="nav-logo">
-      <span>💰</span> 券宝省钱攻略
+      <span>💰</span> 券宝
     </a>
     <div class="nav-links">
       <a href="../index.html">首页</a>
@@ -558,6 +577,16 @@ friend-links {
   <p class="entry-note">💡 选择分类，直达对应省钱攻略 · 帮你花少钱过好生活</p>
 
   <!-- 底部 -->
+  <section class="card promo-links" aria-label="更多省钱入口">
+    <h2>🔥 更多省钱入口</h2>
+    <div class="related-links">
+      <a href="https://kurl07.cn/te2qe9" target="_blank" rel="noopener sponsored">美团外卖红包</a>
+      <a href="https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4" target="_blank" rel="noopener sponsored">京东外卖红包</a>
+      <a href="https://s.ly.com/xscLym6Jj" target="_blank" rel="noopener sponsored">同程出行购票</a>
+      <a href="../index.html" rel="nofollow">返回首页看全部</a>
+    </div>
+  </section>
+
 <footer class="footer">
     <div class="footer-inner">
       <div class="footer-links">
@@ -565,14 +594,15 @@ friend-links {
         <a href="../privacy.html">隐私政策</a>
         <a href="https://jdjdndn.github.io/about.html">关于我们</a>
       </div>
-      <p class="footer-copy">© 2026 券宝省钱攻略 · 帮你花少钱过好生活</p>
+      <p class="footer-copy">© 2026 券宝 · 帮你花少钱过好生活</footer>
     </div>
   </footer>
 
-</div>
+</main>
 
 <friend-links></friend-links>
 <script src="../friend-links.js"></script>
 
+<script src="../back-top.js" defer></script>
 </body>
 </html>

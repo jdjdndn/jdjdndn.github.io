@@ -56,33 +56,43 @@
 
       <!-- 详细指导 -->
       <div class="guide-section">
-        <n-card title="📖 详细指导" :bordered="false">
-          <n-list hoverable clickable>
-            <n-list-item v-for="guide in config.guides" :key="guide.id">
-              <n-thing>
-                <template #header>
-                  <n-a :href="guide.url" target="_blank" rel="noopener">
-                    {{ guide.title }}
-                  </n-a>
-                </template>
-                <template #description>
-                  {{ guide.desc }}
-                </template>
-              </n-thing>
-            </n-list-item>
-          </n-list>
+        <n-card title="📖 详细指导 · 实操步骤" :bordered="false">
+          <div v-for="guide in config.guides" :key="guide.id" class="guide-item">
+            <div class="guide-head">
+              <div class="guide-no">{{ guide.id }}</div>
+              <div>
+                <div class="guide-title">{{ guide.title }}</div>
+                <div class="guide-desc">{{ guide.desc }}</div>
+              </div>
+            </div>
+            <ol v-if="guide.steps && guide.steps.length" class="guide-steps">
+              <li v-for="(step, i) in guide.steps" :key="i">{{ step }}</li>
+            </ol>
+            <a
+              v-if="guide.url"
+              :href="guide.url"
+              class="guide-link"
+              :target="guide.url.startsWith('http') ? '_blank' : '_self'"
+              :rel="guide.url.startsWith('http') ? 'noopener' : undefined"
+            >
+              查看完整实操指南 →
+            </a>
+          </div>
         </n-card>
       </div>
 
       <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
 
       <LegalLinks />
+      <BackToTop />
   </main>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const props = defineProps({
   config: {
@@ -91,12 +101,18 @@ const props = defineProps({
   }
 })
 
+const router = useRouter()
+
 function handleEntryClick(entry) {
   if (entry.url) {
     if (entry.url.startsWith('http')) {
       window.open(entry.url, '_blank', 'noopener')
-    } else {
+    } else if (entry.url.startsWith('/article/')) {
+      // 文章页是静态文件，需要硬跳转
       window.location.href = entry.url
+    } else {
+      // Vue 路由页，用 router.push
+      router.push(entry.url)
     }
   }
 }
@@ -127,10 +143,12 @@ function handleEntryClick(entry) {
 
 /* 入口网格 */
 .entry-grid {
+  max-width: 800px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
-  margin-bottom: 32px;
 }
 
 .entry-card {
@@ -151,14 +169,14 @@ function handleEntryClick(entry) {
 }
 
 .entry-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: var(--primary-light, #fff7ed);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 22px;
   flex-shrink: 0;
 }
 
@@ -168,7 +186,7 @@ function handleEntryClick(entry) {
 }
 
 .entry-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   margin-bottom: 2px;
 }
@@ -245,8 +263,86 @@ function handleEntryClick(entry) {
   margin-bottom: 48px;
 }
 
-.guide-section :deep(.n-list) {
-  background: transparent;
+.guide-section :deep(.n-card__header) {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.guide-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light, #f0eeeb);
+}
+
+.guide-item:last-child {
+  border-bottom: none;
+}
+
+.guide-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.guide-no {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-light, #fff7ed);
+  color: var(--primary, #f97316);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guide-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text, #1a1a2e);
+}
+
+.guide-desc {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  margin-top: 2px;
+}
+
+.guide-steps {
+  margin: 10px 0 8px 40px;
+  padding: 0;
+  counter-reset: step;
+}
+
+.guide-steps li {
+  list-style: none;
+  position: relative;
+  padding-left: 28px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary, #4a5568);
+  counter-increment: step;
+}
+
+/* 移除了 ::before 伪元素，因为 step 数据已包含 "第N步" 前缀 */
+
+.guide-link {
+  display: inline-block;
+  margin-left: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary, #f97316);
+  text-decoration: none;
+}
+
+.guide-link:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .guide-item {
+  border-color: var(--border, #2d2d45);
 }
 
 /* 底部提示 */
@@ -260,5 +356,18 @@ function handleEntryClick(entry) {
 /* 暗色模式 */
 [data-theme="dark"] .entry-icon {
   background: rgba(249, 115, 22, 0.15);
+}
+
+[data-theme="dark"] .banner-card {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.08));
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+[data-theme="dark"] .guide-no {
+  background: rgba(249, 115, 22, 0.15);
+}
+
+[data-theme="dark"] .guide-item {
+  border-color: var(--border, #2d2d45);
 }
 </style>

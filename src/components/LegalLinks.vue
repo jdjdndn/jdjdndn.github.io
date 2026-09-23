@@ -46,10 +46,10 @@ const currentYear = computed(() => new Date().getFullYear())
 
 <style scoped>
 .legal-links {
-  background: var(--bg-secondary, #f5f5f5);
+  background: var(--bg-elevated, #f5f5f5);
   padding: 2rem 1rem;
   margin-top: 3rem;
-  border-top: 1px solid var(--border-color, #e5e5e5);
+  border-top: 1px solid var(--border, #e5e5e5);
 }
 
 .legal-content {
@@ -64,7 +64,7 @@ const currentYear = computed(() => new Date().getFullYear())
   font-size: 1rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
-  color: var(--text-primary, #333);
+  color: var(--text, #333);
 }
 
 .legal-section ul {

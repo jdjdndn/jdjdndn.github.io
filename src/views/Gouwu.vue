@@ -14,7 +14,7 @@
         ref="iframeRef"
         :src="iframeSrc"
         class="shop-iframe"
-        title="优惠券平台"
+        title="购物优惠"
         sandbox="allow-scripts allow-same-origin allow-popups"
         @load="onLoad"
         @error="onError"

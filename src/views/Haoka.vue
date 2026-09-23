@@ -2,26 +2,27 @@
   <main class="haoka-page">
     <PageHero
       icon='<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>'
-      title="号卡办理专区"
-      subtitle="流量卡 · 四网可选 · 正规运营商授权"
-      aria="号卡办理专区"
+      title="号卡业务专区"
+      subtitle="官方渠道办理 · 卡品信息仅供了解"
+      aria="号卡业务专区"
     >
       <template #badge>
-        <span class="stat-badge">已收录 <strong>7</strong> 个平台</span>
-        <span class="stat-badge">已服务 <strong>1万+</strong> 用户</span>
+        <span class="stat-badge"><strong>2026.8.1</strong> 起第三方渠道停办</span>
+        <span class="stat-badge">办理请走运营商官方渠道</span>
       </template>
     </PageHero>
 
-    <!-- 信任徽章 -->
+    <!-- 新规提示 -->  <div class="haoka-notice" role="alert"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 2026年8月1日起，第三方互联网渠道号卡办理还存在，但不能在公域大肆宣传，且号卡少了很多，依然可放心办理。</div> <!-- 信任徽章 -->
     <div class="trust-bar" role="list" aria-label="服务保障">
       <span class="trust-item" role="listitem">✓ 运营商授权</span>
       <span class="trust-item" role="listitem">✓ 多地区可选</span>
       <span class="trust-item" role="listitem">✓ 正规实名办理</span>
+      <span class="trust-item" role="listitem">✓ 需年满18周岁</span>
     </div>
 
     <!-- 充话费提示 -->
     <div class="recharge-banner" role="alert">
-      <span class="recharge-icon">💰</span>
+      <span class="recharge-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
       <div class="recharge-text">
         <strong>充话费 95 折</strong>
         <span>微信咨询 · 不到账全额退</span>
@@ -38,7 +39,7 @@
     <!-- 选卡指南入口 -->
     <div class="hero-entry-banner">
       <div class="hero-entry-text">
-        <span class="hero-entry-icon">📖</span>
+        <span class="hero-entry-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
         <div>
           <strong>选卡指南 · 运营商对比 · 常见问题</strong>
           <span>帮你选到最合适的号卡</span>
@@ -259,6 +260,18 @@ function copyWechat() {
 </script>
 
 <style scoped>
+
+.haoka-notice {
+  max-width: 960px;
+  margin: 14px auto 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #FFF3E6;
+  color: #8A4B0A;
+  font-size: 13px;
+  line-height: 1.6;
+  border: 1px solid #FFD9A8;
+}
 .trust-bar {
   display: flex;
   justify-content: center;
@@ -277,7 +290,8 @@ function copyWechat() {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 16px 24px;
+  max-width: 1100px;
+  margin: 24px auto;
   padding: 14px 20px;
   background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
   border: 1px solid #f59e0b;
@@ -306,89 +320,10 @@ function copyWechat() {
   cursor: pointer;
 }
 
-/* 卡片网格 */
-.card-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.product-card {
-  background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.product-card:hover {
-  border-color: var(--primary, #FF6B35);
-  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
-}
-
-.card-top { height: 6px; }
-
-.card-body { padding: 16px; }
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.platform-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--hover-bg, #f5f4f1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary, #FF6B35);
-  flex-shrink: 0;
-}
-
-.card-info { flex: 1; min-width: 0; }
-
-.card-name { display: block; font-size: 15px; font-weight: 600; }
-
-.card-desc {
-  display: block;
-  font-size: 12px;
-  color: var(--text-secondary, #6b7280);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.meta-tag {
-  font-size: 12px;
-  color: var(--success, #16a34a);
-  padding: 2px 8px;
-  background: var(--success-light, #f0fdf4);
-  border-radius: 6px;
-}
-
-.card-actions {
-  display: flex;
-  gap: 8px;
-}
-
 /* 跨页面推荐 */
 .cross-link-banner {
   max-width: 1100px;
-  margin: 32px auto;
+  margin: 24px auto;
   padding: 14px 20px;
   background: var(--accent-light, #EBF5FF);
   border: 1px solid var(--accent, #004E89);
@@ -517,7 +452,6 @@ function copyWechat() {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .product-card,
 [data-theme="dark"] .guide-card,
 [data-theme="dark"] .faq-item {
   background: var(--card, #1e1e35);
