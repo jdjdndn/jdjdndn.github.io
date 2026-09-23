@@ -1,5 +1,5 @@
 <template>
-  <div class="waimai-page">
+  <main class="waimai-page">
     <div class="iframe-container">
       <div v-if="loading" class="iframe-loading">
         <div class="loading-spinner"></div>
@@ -19,7 +19,7 @@
         @error="onError"
       ></iframe>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup>

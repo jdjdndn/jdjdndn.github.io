@@ -234,9 +234,9 @@ function checkJsonLd(filePath, content) {
     }
   }
 
-  // 非首页检查是否缺少 BreadcrumbList
+  // 非首页检查是否缺少 BreadcrumbList（index-vue.html 是首页 Vue 壳，与 index.html 同页，豁免）
   const name = path.basename(filePath);
-  if (name !== 'index.html' && !content.includes('"BreadcrumbList"')) {
+  if (name !== 'index.html' && name !== 'index-vue.html' && !content.includes('"BreadcrumbList"')) {
     report(filePath, 'WARN', 'jsonld', '缺少 BreadcrumbList 结构化数据', true);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="huodong-page">
+  <main class="huodong-page">
       <PageHero
         icon='<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
         title="优惠活动聚合"
@@ -70,7 +70,7 @@
       </n-card>
 
       <LegalLinks />
-  </div>
+  </main>
 </template>
 
 <script setup>

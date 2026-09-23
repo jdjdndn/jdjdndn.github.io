@@ -1,5 +1,5 @@
 <template>
-  <div class="haoka-page">
+  <main class="haoka-page">
     <PageHero
       icon='<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>'
       title="号卡办理专区"
@@ -113,7 +113,7 @@
 
     <LegalLinks />
     <BackToTop />
-  </div>
+  </main>
 </template>
 
 <script setup>

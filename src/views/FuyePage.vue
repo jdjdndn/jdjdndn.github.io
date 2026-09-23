@@ -1,5 +1,5 @@
 <template>
-  <div class="fuye-page">
+  <main class="fuye-page">
       <PageHero
         :icon="config.icon"
         :title="config.title"
@@ -77,7 +77,7 @@
       <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
 
       <LegalLinks />
-  </div>
+  </main>
 </template>
 
 <script setup>

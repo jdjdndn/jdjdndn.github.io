@@ -11,6 +11,8 @@ import generateSitemap from './scripts/vite-plugins/generate-sitemap.js';
 import generateLlms from './scripts/vite-plugins/generate-llms.js';
 import swHash from './scripts/vite-plugins/sw-hash.js';
 import verifyAssets from './scripts/vite-plugins/verify-assets.js';
+import Components from 'unplugin-vue-components/vite';
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 
 // ===== 递归扫描 src 目录下所有 HTML 页面 =====
 function discoverAllPages() {
@@ -91,6 +93,11 @@ export default defineConfig({
       }
     },
     vue(),
+    // Naive UI 按需引入（模板中 n-* 组件自动导入，大幅减小主包体积）
+    Components({
+      resolvers: [NaiveUiResolver()],
+      dts: false,
+    }),
     injectBuildDate(),
     seoPrerender(),
     cacheControlMeta(),

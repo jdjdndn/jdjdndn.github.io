@@ -1,5 +1,5 @@
 <template>
-  <div class="gouwu-page">
+  <main class="gouwu-page">
     <!-- iframe 内容区 -->
     <div class="iframe-container">
       <div v-if="loading" class="iframe-loading">
@@ -22,7 +22,7 @@
     </div>
 
     <LegalLinks />
-  </div>
+  </main>
 </template>
 
 <script setup>

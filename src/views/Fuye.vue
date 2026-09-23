@@ -1,5 +1,5 @@
 <template>
-  <div class="fuye-page">
+  <main class="fuye-page">
     <PageHero
       icon='<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
       title="副业专区"
@@ -30,7 +30,7 @@
     <p class="f-note">💡 选择副业方向，查看对应攻略 · 零成本起步，多一份收入</p>
 
     <LegalLinks />
-  </div>
+  </main>
 </template>
 
 <script setup>
