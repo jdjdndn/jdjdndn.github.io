@@ -41,7 +41,7 @@
                 {{ device.badge }}
               </span>
             </div>
-            <p class="device-desc">{{ device.description }}</p>
+            <p class="device-desc text-ellipsis-2">{{ device.description }}</p>
             <div class="card-meta">
               <span v-for="tag in (device.tags || [])" :key="tag" class="meta-tag info">{{ tag }}</span>
               <span v-if="getClickCount(device.name) > 0" class="meta-tag">已购买{{ formatCount(getClickCount(device.name)) }}次</span>
@@ -455,10 +455,6 @@ async function handleShare(device) {
   margin: 0 0 8px 0;
   font-size: 13px;
   line-height: 1.6;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
 }
 
 .card-meta {

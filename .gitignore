@@ -9,3 +9,34 @@ src/jutuike-data.js
 yincang/
 tmp.md
 .playwright-mcp/
+
+# 生成的 Vue 路由壳页（gen-vue-pages.cjs 产出，build 时自动生成）
+src/templates/*.html
+!src/templates/404.html
+!src/templates/common-page.html
+src/templates/fuye/
+
+# gen-fuye-guides.cjs 生成的项目实操文章（内容硬编码在脚本中，build 时重新生成）
+src/article/haoka-agent-guide.html
+src/article/haoka-commission.html
+src/article/haoka-promote.html
+src/article/haoka-withdraw.html
+src/article/haoka-faq.html
+src/article/laxin-guide.html
+src/article/laxin-taobao.html
+src/article/laxin-jd.html
+src/article/wifi-agent-guide.html
+src/article/wifi-agent-register.html
+src/article/wifi-agent-promote.html
+src/article/wifi-agent-faq.html
+src/article/huiyuan-guide.html
+src/article/huiyuan-promote.html
+src/article/huiyuan-faq.html
+
+# gen-og-image.cjs / gen-icons.cjs 生成的资源
+public/og-image.png
+public/icons/icon-192.png
+public/icons/icon-512.png
+
+# 构建残留
+public/69381b8dab7a3c1e281d0ff617324953.txt

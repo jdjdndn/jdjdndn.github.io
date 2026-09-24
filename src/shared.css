@@ -1791,3 +1791,27 @@ page-hero::part(wrapper) {
     font-size: 11.5px;
   }
 }
+
+/* ========== 文本省略号工具类 ========== */
+/* 单行省略号 */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 多行省略号（默认2行） */
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 多行省略号（3行） */
+.text-ellipsis-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
