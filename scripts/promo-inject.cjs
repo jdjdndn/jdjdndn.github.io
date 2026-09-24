@@ -2,16 +2,21 @@
 const fs = require('fs');
 const path = require('path');
 const root = path.resolve('src/article');
-const PROMO = (prefix) => `  <section class="card promo-links" aria-label="更多省钱入口">
-    <h2>🔥 更多省钱入口</h2>
-    <div class="related-links">
-      <a href="https://kurl07.cn/te2qe9" target="_blank" rel="noopener sponsored">美团外卖红包</a>
-      <a href="https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4" target="_blank" rel="noopener sponsored">京东外卖红包</a>
-      <a href="https://s.ly.com/xscLym6Jj" target="_blank" rel="noopener sponsored">同程出行购票</a>
-      <a href="${prefix}index.html" rel="nofollow">返回首页看全部</a>
+const PROMO = (prefix) => `  <section class="promo-banner" aria-label="更多省钱入口">
+    <div class="promo-title">🔥 更多省钱入口</div>
+    <div class="promo-grid">
+      <a class="promo-btn" href="https://kurl07.cn/te2qe9" target="_blank" rel="noopener sponsored">
+        <span class="promo-icon">🍱</span><span class="promo-label">美团外卖红包</span>
+      </a>
+      <a class="promo-btn" href="https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4" target="_blank" rel="noopener sponsored">
+        <span class="promo-icon">🛍️</span><span class="promo-label">京东外卖红包</span>
+      </a>
+      <a class="promo-btn" href="https://s.ly.com/xscLym6Jj" target="_blank" rel="noopener sponsored">
+        <span class="promo-icon">🚄</span><span class="promo-label">同程出行购票</span>
+      </a>
     </div>
+    <a class="promo-home" href="${prefix}index.html" rel="nofollow">返回首页看全部 →</a>
   </section>
-
 `;
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
