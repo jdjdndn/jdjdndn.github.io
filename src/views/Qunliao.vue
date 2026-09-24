@@ -113,6 +113,9 @@ const filteredGroups = computed(() => {
 </script>
 
 <style scoped>
+.qunliao-page{
+  width: 100%;
+}
 .q-search-wrap {
   max-width: 800px;
   margin: 0 auto 16px;
