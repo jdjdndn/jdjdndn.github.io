@@ -50,7 +50,7 @@
       <!-- 搜索框 -->
       <SearchBox
         v-model="searchKeyword"
-        placeholder="搜索文章标题或描述..."
+        placeholder="搜索号卡标题或描述..."
         class="haoka-search"
       />
 
