@@ -254,7 +254,6 @@ function isActive(item) {
     z-index: 100;
     padding: 12px 0;
     gap: 4px;
-    overflow-y: auto;
     scrollbar-width: none;
     transition: background 0.2s ease, border-color 0.2s ease;
   }
