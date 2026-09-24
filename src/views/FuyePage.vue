@@ -199,7 +199,8 @@ function handleEntryClick(entry) {
 <style scoped>
 /* 页面容器 */
 .fuye-page {
-  max-width: 960px;
+  /* max-width: 960px; */
+  width: 100%;
   margin: 0 auto;
   padding: 0 16px;
 }

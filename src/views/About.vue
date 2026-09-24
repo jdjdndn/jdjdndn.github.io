@@ -63,12 +63,14 @@
       </div>
 
       <LegalLinks />
+      <FriendLinks />
   </main>
 </template>
 
 <script setup>
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import FriendLinks from '../components/FriendLinks.vue'
 </script>
 
 <style scoped>
