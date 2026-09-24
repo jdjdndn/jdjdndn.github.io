@@ -880,10 +880,10 @@ html.dark-mode {
   padding: 16px;
   transition: all 0.2s ease;
 }
-.card--hoverable {
+.card.hoverable {
   cursor: pointer;
 }
-.card--hoverable:hover {
+.card.hoverable:hover {
   border-color: var(--primary, #FF6B35);
   box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
   transform: translateY(-1px);

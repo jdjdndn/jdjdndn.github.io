@@ -14,8 +14,8 @@
     </PageHero>
 
     <!-- 副业分类入口 -->
-    <div class="entry-grid">
-      <div v-for="(entry, idx) in entries" :key="entry.name" :class="['entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']">
+    <div class="grid-3 entry-grid">
+      <div v-for="(entry, idx) in entries" :key="entry.name" :class="['grid-item', 'entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']">
         <router-link :to="entry.url" class="entry-card">
           <div class="entry-icon">{{ entry.icon }}</div>
           <div class="entry-info">
@@ -101,18 +101,9 @@ const entries = [
 
 <style scoped>
 .entry-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
-}
-@media (min-width: 640px) {
-  .entry-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1024px) {
-  .entry-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* 最后一项（更多副业）整行通栏展示 */

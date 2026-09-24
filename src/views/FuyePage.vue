@@ -13,8 +13,8 @@
 
       <!-- 简介区 -->
       <div class="intro-section">
-        <div class="card">
-          <h3 class="card-title">💡 什么是{{ config.title }}？</h3>
+        <div class="card card--no-border">
+          <div class="card-header">💡 什么是{{ config.title }}？</div>
           <p>{{ config.intro }}</p>
         </div>
       </div>
@@ -53,8 +53,8 @@
 
       <!-- 详细指导 -->
       <div class="guide-section">
-        <h3 class="card-title">📖 详细指导 · 实操步骤</h3>
-        <div class="card">
+        <div class="card card--no-border">
+          <div class="card-header">📖 详细指导 · 实操步骤</div>
           <div v-for="guide in config.guides" :key="guide.id" class="guide-item">
             <div class="guide-head">
               <div class="guide-no">{{ guide.id }}</div>
