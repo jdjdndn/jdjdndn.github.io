@@ -46,7 +46,7 @@ for (const f of files) {
   const prefix = depth === 0 ? '../' : '../../';
   let c = fs.readFileSync(f, 'utf8');
   if (c.includes('promo-banner')) {
-    c = c.replace(/<style>[\s\S]*?<\/style>\s*<section class="promo-banner"[\s\S]*?<\/section>/, PROMO(prefix));
+    c = c.replace(/(?:<style>[\s\S]*?<\/style>\s*)?<section class="promo-banner"[\s\S]*?<\/section>/, PROMO(prefix));
     fs.writeFileSync(f, c, 'utf8');
     done++;
     continue;

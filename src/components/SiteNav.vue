@@ -241,13 +241,12 @@ function isActive(item) {
   .site-nav-side {
     display: flex;
     flex-direction: column;
-    position: sticky;
+    position: fixed;
     top: 24px;
-    align-self: flex-start;
+    left: calc(50% - 580px);
     width: 64px;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 48px);
     flex-shrink: 0;
-    margin-right: 30px;
     background: var(--nav-bg, #ffffff);
     border: 1px solid var(--nav-border, #e5e2dd);
     border-radius: var(--radius-lg, 16px);
