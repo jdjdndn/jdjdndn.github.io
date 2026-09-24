@@ -1,14 +1,13 @@
 <template>
+  <main class="haoka-hero-page">
     <PageHero
       icon='<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>'
       title="号卡办理专区"
       subtitle="流量卡 / 随身WiFi · 四网可选 · 正规授权"
       aria="号卡办理专区"
     >
-      <template #badge>
-        <span class="stat-badge">已收录 <strong>7</strong> 个平台</span>
-        <span class="stat-badge">已服务 <strong>1万+</strong> 用户</span>
-      </template>
+      <span class="stat-badge">已收录 <strong>7</strong> 个平台</span>
+      <span class="stat-badge">已服务 <strong>1万+</strong> 用户</span>
     </PageHero>
 
   <section class="haoka-hero">
@@ -52,9 +51,12 @@
       </div>
     </div>
   </section>
+  </main>
 </template>
 
 <script setup>
+import PageHero from '../../components/PageHero.vue'
+
 const 选卡指南 = [
   { title: '看运营商信号', desc: '先确认你所在地区哪个运营商信号好。移动覆盖最广，联通城市网速快，电信南方覆盖强，广电压高省份有优势。' },
   { title: '算流量够不够', desc: '日常刷视频选 100G+，轻度使用 30-50G 够用。注意区分"通用流量"和"定向流量"，通用流量才是真金白银。' },
@@ -79,6 +81,13 @@ const faqs = [
 </script>
 
 <style scoped>
+/* 页面容器：与其他页面 main 一致，避免多根组件被 app-wrapper flex 压窄 */
+.haoka-hero-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 .haoka-hero {
   max-width: 1100px;
   margin: 0 auto;
@@ -130,34 +139,7 @@ const faqs = [
 .hero-note { font-size: 12px; color: var(--muted, #6b7280); margin-top: 10px; }
 
 /* FAQ */
-.faq-list { display: flex; flex-direction: column; gap: 8px; }
-
-.faq-item {
-  background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.faq-question {
-  padding: 14px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  list-style: none;
-}
-
-.faq-question::-webkit-details-marker { display: none; }
-
-.faq-answer {
-  padding: 0 16px 14px;
-  font-size: 13px;
-  color: var(--text-secondary, #6b7280);
-  line-height: 1.7;
-}
-
-[data-theme="dark"] .guide-card,
-[data-theme="dark"] .faq-item {
+[data-theme="dark"] .guide-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }

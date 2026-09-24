@@ -83,10 +83,35 @@
 
       <LegalLinks />
       <BackToTop />
+
+    <!-- 信息弹窗（用于无 url 的入口，展示操作指引） -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div v-if="infoModal.visible" class="info-modal-mask" @click.self="closeInfoModal">
+          <div class="info-modal">
+            <div class="info-modal-header">
+              <span class="info-modal-title">{{ infoModal.title }}</span>
+              <button class="info-modal-close" aria-label="关闭" @click="closeInfoModal">✕</button>
+            </div>
+            <div class="info-modal-body">
+              <p class="info-modal-desc">{{ infoModal.desc }}</p>
+              <div v-if="infoModal.copyText" class="info-modal-copy-section">
+                <span class="info-modal-label">{{ infoModal.copyLabel }}</span>
+                <span class="info-modal-copy-value">{{ infoModal.copyText }}</span>
+                <button class="info-modal-copy-btn" @click="copyToClipboard(infoModal.copyText)">
+                  {{ copied ? '✓ 已复制' : '复制' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </main>
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
@@ -101,22 +126,84 @@ const props = defineProps({
 
 const router = useRouter()
 
+// 信息弹窗状态
+const infoModal = reactive({
+  visible: false,
+  title: '',
+  desc: '',
+  copyText: '',
+  copyLabel: ''
+})
+const copied = ref(false)
+
+function openInfoModal(entry) {
+  // 从 desc 中提取公众号名称和邀请码
+  const desc = entry.desc || ''
+  const accountMatch = desc.match(/【(.+?)】/)
+  const codeMatch = desc.match(/邀请码[：:]\s*(\S+)/)
+
+  infoModal.title = entry.name
+  infoModal.desc = desc
+  infoModal.copyText = accountMatch ? accountMatch[1] : ''
+  infoModal.copyLabel = '公众号名称'
+  infoModal.visible = true
+  copied.value = false
+}
+
+function closeInfoModal() {
+  infoModal.visible = false
+}
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text)
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  } catch {
+    // 降级方案
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.style.position = 'fixed'
+    ta.style.left = '-9999px'
+    document.body.appendChild(ta)
+    ta.select()
+    document.execCommand('copy')
+    document.body.removeChild(ta)
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  }
+}
+
 function handleEntryClick(entry) {
-  if (entry.url) {
-    if (entry.url.startsWith('http')) {
-      window.open(entry.url, '_blank', 'noopener')
-    } else if (entry.url.startsWith('/article/')) {
-      // 文章页是静态文件，需要硬跳转
+  // 无 url 时弹窗展示指引
+  if (!entry.url) {
+    openInfoModal(entry)
+    return
+  }
+  if (entry.url.startsWith('weixin://')) {
+    if (/MicroMessenger/i.test(navigator.userAgent)) {
       window.location.href = entry.url
     } else {
-      // Vue 路由页，用 router.push
-      router.push(entry.url)
+      alert('请在微信中打开此链接')
     }
+  } else if (entry.url.startsWith('http')) {
+    window.open(entry.url, '_blank', 'noopener')
+  } else if (entry.url.startsWith('/article/')) {
+    window.location.href = entry.url
+  } else {
+    router.push(entry.url)
   }
 }
 </script>
 
 <style scoped>
+/* 页面容器 */
+.fuye-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 /* 简介区 */
 .intro-section {
   margin-bottom: 32px;
@@ -142,12 +229,20 @@ function handleEntryClick(entry) {
 .entry-card {
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--primary-light, #fff7ed) 0%, var(--card, #fff) 100%);
 }
 
 .entry-card:hover {
   border-color: var(--primary, #f97316);
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.18);
+  transform: translateY(-2px);
+}
+
+/* 移动端增大点击区域 */
+@media (max-width: 640px) {
+  .entry-card { padding: 22px 16px; }
+  .entry-icon { width: 48px; height: 48px; font-size: 24px; }
 }
 
 .entry-item {
@@ -312,16 +407,27 @@ function handleEntryClick(entry) {
 /* 移除了 ::before 伪元素，因为 step 数据已包含 "第N步" 前缀 */
 
 .guide-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-left: 40px;
+  margin-top: 8px;
+  padding: 6px 14px;
   font-size: 13px;
   font-weight: 600;
   color: var(--primary, #f97316);
   text-decoration: none;
+  background: var(--primary-light, #fff7ed);
+  border-radius: 8px;
+  transition: background .2s, transform .1s;
 }
 
 .guide-link:hover {
-  text-decoration: underline;
+  background: rgba(249, 115, 22, 0.15);
+}
+
+.guide-link:active {
+  transform: scale(0.97);
 }
 
 [data-theme="dark"] .guide-item {
@@ -337,20 +443,169 @@ function handleEntryClick(entry) {
 }
 
 /* 暗色模式 */
+[data-theme="dark"] .entry-card {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), var(--card, #1e1e35));
+}
 [data-theme="dark"] .entry-icon {
   background: rgba(249, 115, 22, 0.15);
 }
-
 [data-theme="dark"] .banner-card {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.08));
   border-color: rgba(249, 115, 22, 0.4);
 }
-
 [data-theme="dark"] .guide-no {
   background: rgba(249, 115, 22, 0.15);
 }
-
+[data-theme="dark"] .guide-link {
+  background: rgba(249, 115, 22, 0.15);
+}
+[data-theme="dark"] .guide-link:hover {
+  background: rgba(249, 115, 22, 0.25);
+}
 [data-theme="dark"] .guide-item {
   border-color: var(--border, #2d2d45);
+}
+
+/* 信息弹窗 */
+.info-modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.info-modal {
+  background: var(--card, #fff);
+  border-radius: 16px;
+  max-width: 360px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.info-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+.info-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text, #1f2937);
+}
+
+.info-modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--hover-bg, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.info-modal-close:hover {
+  background: var(--border, #e5e7eb);
+  color: var(--text, #1f2937);
+}
+
+.info-modal-body {
+  padding: 20px;
+}
+
+.info-modal-desc {
+  font-size: 14px;
+  color: var(--text-secondary, #4a5568);
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.info-modal-copy-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--hover-bg, #f5f4f1);
+  border-radius: 10px;
+}
+
+.info-modal-label {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  white-space: nowrap;
+}
+
+.info-modal-copy-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary, #FF6B35);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.info-modal-copy-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary, #FF6B35);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.info-modal-copy-btn:hover {
+  background: var(--primary-hover, #E55A2B);
+}
+
+/* 弹窗过渡动画 */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-enter-active .info-modal,
+.modal-leave-active .info-modal {
+  transition: transform 0.3s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+.modal-enter-from .info-modal,
+.modal-leave-to .info-modal {
+  transform: scale(0.9);
+}
+
+/* 暗色模式 */
+[data-theme="dark"] .info-modal {
+  background: var(--card, #1a1a2e);
+}
+[data-theme="dark"] .info-modal-header {
+  border-color: var(--border, #2d2d45);
+}
+[data-theme="dark"] .info-modal-desc {
+  color: var(--text-secondary, #a0a0b8);
+}
+[data-theme="dark"] .info-modal-copy-section {
+  background: rgba(255, 107, 53, 0.08);
 }
 </style>

@@ -28,14 +28,14 @@
       {{ deadlineDisplay }}
     </div>
     <div v-if="type === 'code'" class="card-code" v-html="displayCode"></div>
-    <a v-if="type === 'link'" class="card-link" :href="item.link" target="_blank" rel="noopener" :title="item.link">
+    <a v-if="type === 'link'" class="card-link" :href="item.link" target="_blank" rel="noopener" :title="item.link" @click="handleLinkClick($event)">
       {{ host || '前往活动' }}
     </a>
     <div class="card-actions">
       <button v-if="type === 'code'" class="btn-copy" :disabled="expired" @click="handleCopy">
         复制口令
       </button>
-      <a v-if="type === 'link'" class="btn-go" :href="item.link" target="_blank" rel="noopener" :class="{ 'tabindex-disabled': expired }">
+      <a v-if="type === 'link'" class="btn-go" :href="item.link" target="_blank" rel="noopener" :class="{ 'tabindex-disabled': expired }" @click="handleLinkClick($event)">
         前往活动
       </a>
       <button class="btn-qr" @click="handleQr">二维码</button>
@@ -75,6 +75,15 @@ const expiringSoon = computed(() => isExpiringSoon(props.item.deadline))
 const isNew = computed(() => isNewActivity(props.item))
 const isHot = computed(() => isHotActivity(props.item))
 const isMiniApp = computed(() => props.item.code && (props.item.code.startsWith('mp://') || props.item.code.startsWith('weixin://')))
+
+const isWeixinEnv = () => /MicroMessenger/i.test(navigator.userAgent)
+
+const handleLinkClick = (e) => {
+  if (props.item.link?.startsWith('weixin://') && !isWeixinEnv()) {
+    e.preventDefault()
+    alert('请在微信中打开此链接')
+  }
+}
 
 const icon = computed(() => getIconForName(props.item.name))
 

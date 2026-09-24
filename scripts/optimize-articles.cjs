@@ -108,18 +108,21 @@ function processArticle(fileName, subDir = '') {
 
   // ---- 1. 样式提取（排除独立设计的 article/index.html）----
   if (fileName !== 'index.html') {
-    const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/);
-    if (styleMatch) {
-      const style = styleMatch[1];
-      const brand = extractBrandColor(style);
-      let replacement = `<link rel="stylesheet" href="../article-shared.css" />`;
-      // 品牌色非默认时，保留 :root 覆盖（颜色随页面差异）
-      if (brand && brand !== BASE_COLOR) {
-        replacement += `\n    <style>:root{--primary:${brand};--primary2:${brand};--dark:${brand};}</style>`;
-      }
-      if (html.includes(styleMatch[0])) {
-        html = html.replace(styleMatch[0], replacement);
-        stats.style++;
+    // 幂等：已有 article-shared.css 链接则跳过，避免重复运行导致多次注入
+    if (!html.includes('article-shared.css')) {
+      const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/);
+      if (styleMatch) {
+        const style = styleMatch[1];
+        const brand = extractBrandColor(style);
+        let replacement = `<link rel="stylesheet" href="../article-shared.css" />`;
+        // 品牌色非默认时，保留 :root 覆盖（颜色随页面差异）
+        if (brand && brand !== BASE_COLOR) {
+          replacement += `\n    <style>:root{--primary:${brand};--primary2:${brand};--dark:${brand};}</style>`;
+        }
+        if (html.includes(styleMatch[0])) {
+          html = html.replace(styleMatch[0], replacement);
+          stats.style++;
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-// 副业页面数据配置
+// 项目页面数据配置
 import { wifiProxyLinks } from '../templates/wifi-data.js'
 
 export const fuyePages = {
@@ -8,22 +8,22 @@ export const fuyePages = {
     subtitle: '号卡业务现状 · 合规路径与防骗',
     statNum: '5',
     statLabel: '篇指南',
-    intro: '2026年8月1日起，三大运营商全面停止第三方互联网渠道号卡办理，线上号卡代理模式已终结。本页梳理号卡业务真实现状、线下授权合规路径与假代理骗局识别，帮你认清行业情况。',
+    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页梳理号卡业务现状、合规路径与防骗指南，帮你认清行业情况。',
     banner: { icon: '📱', name: '号卡办理渠道', desc: '官方渠道办理 · 线下授权合规路径', url: '/haoka.html' },
     entries: [
       { id: 1, icon: '📋', name: '号卡业务现状', desc: '新规后现状与合规路径指南', url: '/article/haoka-agent-guide.html' }
     ],
     guides: [
-      { id: 1, title: '号卡代理现状与合规路径', desc: '2026新规后还有哪些路', url: '/article/haoka-agent-guide.html', steps: ['了解2026年8月1日新规：第三方互联网渠道号卡办理全面停止', '想办卡走运营商官方App/官网或线下营业厅', '想入行只剩线下授权渠道（需资质），谨防假代理骗局'] },
-      { id: 2, title: '佣金现状与结算', desc: '线上佣金模式已停，看清现状', url: '/article/haoka-commission.html', steps: ['线上代理分佣体系已随新规关闭', '线下授权渠道按运营商合同结算', '警惕「高佣代理」「缴保证金提现」骗局'] },
+      { id: 1, title: '号卡代理现状与合规路径', desc: '2026新规后还有哪些路', url: '/article/haoka-agent-guide.html', steps: ['号卡代理通过官方渠道推广，用户在官方渠道申请办理', '想办卡走运营商官方App/官网或线下营业厅', '想入行需了解官方授权渠道（需资质），谨防假代理骗局'] },
+      { id: 2, title: '佣金现状与结算', desc: '官方渠道佣金结算方式', url: '/article/haoka-commission.html', steps: ['号卡代理通过官方渠道推广，佣金按运营商合同结算', '线下授权渠道按运营商合同结算', '警惕「高佣代理」「缴保证金提现」骗局'] },
       { id: 3, title: '推广合规方法', desc: '哪些推广已禁止，合规边界在哪', url: '/article/haoka-promote.html', steps: ['禁止公域宣传：短视频/直播/电商/闲鱼/公域发帖全停', '禁止私域分销与二维码裂变', '合规路径只有官方渠道与线下授权场景'] },
-      { id: 4, title: '结算与提现', desc: '结算路径与提现骗局识别', url: '/article/haoka-withdraw.html', steps: ['线上提现体系已关闭，以平台公告为准', '线下授权渠道按合同结算', '识别「缴保证金才能提现」等二次诈骗'] },
-      { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡只能走官方App/官网或线下营业厅', '线上代理招募基本是违规或骗局', '已办卡不受影响，实名制要求不变'] }
+      { id: 4, title: '结算与提现', desc: '结算路径与提现骗局识别', url: '/article/haoka-withdraw.html', steps: ['号卡代理佣金通过官方渠道结算，以平台公告为准', '线下授权渠道按合同结算', '识别「缴保证金才能提现」等二次诈骗'] },
+      { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡走运营商官方App/官网或线下营业厅', '警惕非官方渠道的代理招募，谨防骗局', '已办卡不受影响，实名制要求不变'] }
     ],
     meta: {
-      title: '号卡业务现状 — 副业入口 | 券宝',
+      title: '号卡业务现状 — 项目入口 | 券宝',
       description: '2026号卡新规后现状梳理：官方渠道办理、线下授权合规路径、假代理骗局识别。',
-      keywords: '号卡,号卡新规,流量卡,办卡渠道,副业'
+      keywords: '号卡,号卡新规,流量卡,办卡渠道,项目'
     }
   },
 
@@ -33,22 +33,22 @@ export const fuyePages = {
     subtitle: '现状梳理 · 合规路径 · 防骗指南',
     statNum: '新规',
     statLabel: '2026.8.1',
-    intro: '2026年8月1日三大运营商新规后，线上号卡代理已全面停止。本页是号卡业务最真实的现状：正规办卡渠道、线下授权路径，以及必须避开的代理骗局。',
+    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页是号卡业务最真实的现状：正规办卡渠道、官方授权路径，以及必须避开的代理骗局。',
     entries: [
       { id: 1, icon: '📋', name: '号卡业务现状', desc: '新规后现状与合规路径', url: '/article/haoka-agent-guide.html' },
       { id: 2, icon: '🛡️', name: '防骗指南', desc: '识别假代理与提现骗局', url: '/article/haoka-faq.html' }
     ],
     guides: [
-      { id: 1, title: '号卡代理现状与合规路径', desc: '2026新规后还有哪些路', url: '/article/haoka-agent-guide.html', steps: ['了解2026年8月1日新规：第三方互联网渠道号卡办理全面停止', '想办卡走运营商官方App/官网或线下营业厅', '想入行只剩线下授权渠道（需资质），谨防假代理骗局'] },
-      { id: 2, title: '佣金现状与结算', desc: '线上佣金模式已停，看清现状', url: '/article/haoka-commission.html', steps: ['线上代理分佣体系已随新规关闭', '线下授权渠道按运营商合同结算', '警惕「高佣代理」「缴保证金提现」骗局'] },
+      { id: 1, title: '号卡代理现状与合规路径', desc: '2026新规后还有哪些路', url: '/article/haoka-agent-guide.html', steps: ['号卡代理通过官方渠道推广，用户在官方渠道申请办理', '想办卡走运营商官方App/官网或线下营业厅', '想入行需了解官方授权渠道（需资质），谨防假代理骗局'] },
+      { id: 2, title: '佣金现状与结算', desc: '官方渠道佣金结算方式', url: '/article/haoka-commission.html', steps: ['号卡代理通过官方渠道推广，佣金按运营商合同结算', '线下授权渠道按运营商合同结算', '警惕「高佣代理」「缴保证金提现」骗局'] },
       { id: 3, title: '推广合规方法', desc: '哪些推广已禁止，合规边界在哪', url: '/article/haoka-promote.html', steps: ['禁止公域宣传：短视频/直播/电商/闲鱼/公域发帖全停', '禁止私域分销与二维码裂变', '合规路径只有官方渠道与线下授权场景'] },
-      { id: 4, title: '结算与提现', desc: '结算路径与提现骗局识别', url: '/article/haoka-withdraw.html', steps: ['线上提现体系已关闭，以平台公告为准', '线下授权渠道按合同结算', '识别「缴保证金才能提现」等二次诈骗'] },
-      { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡只能走官方App/官网或线下营业厅', '线上代理招募基本是违规或骗局', '已办卡不受影响，实名制要求不变'] }
+      { id: 4, title: '结算与提现', desc: '结算路径与提现骗局识别', url: '/article/haoka-withdraw.html', steps: ['号卡代理佣金通过官方渠道结算，以平台公告为准', '线下授权渠道按合同结算', '识别「缴保证金才能提现」等二次诈骗'] },
+      { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡走运营商官方App/官网或线下营业厅', '警惕非官方渠道的代理招募，谨防骗局', '已办卡不受影响，实名制要求不变'] }
     ],
     meta: {
       title: '号卡业务指南 — 现状与合规 | 券宝',
       description: '2026号卡新规后现状梳理：官方渠道办理、线下授权合规路径、假代理骗局识别。',
-      keywords: '号卡,号卡新规,流量卡,办卡渠道,副业'
+      keywords: '号卡,号卡新规,流量卡,办卡渠道,项目'
     }
   },
 
@@ -58,7 +58,7 @@ export const fuyePages = {
     subtitle: '京东/淘宝/拼多多/携程优惠推广 · 赚取佣金',
     statNum: '5+',
     statLabel: '平台',
-    intro: '电商带货是指通过推广京东、淘宝、拼多多、携程等电商平台的商品或优惠券，用户通过你的链接购买后你获得佣金。适合有社交资源、愿意分享好物的人，可以是微信群、朋友圈、社群等渠道推广。',
+    intro: '通过推广京东、淘宝、拼多多、携程等平台的商品或优惠券，用户下单后你赚佣金。适合有微信群、朋友圈、社群等社交资源的人。',
     entries: [
       { id: 1, icon: '🛒', name: '网购聚合平台', desc: '京东/淘宝/拼多多优惠券', url: 'https://kjndsaf2.kzurl01.cn/28/87/p69305960721c8b?keycode=92a874ddcd4466e76127d3589016a29b&is_new=1' },
     ],
@@ -85,9 +85,9 @@ export const fuyePages = {
       }
     ],
     meta: {
-      title: '电商带货 — 副业入口 | 券宝',
-      description: '电商带货副业：京东/淘宝/拼多多/携程优惠推广，赚取佣金。',
-      keywords: '电商带货,京东推广,淘宝推广,拼多多推广,副业,赚钱'
+      title: '电商带货 — 项目入口 | 券宝',
+      description: '电商带货项目：京东/淘宝/拼多多/携程优惠推广，赚取佣金。',
+      keywords: '电商带货,京东推广,淘宝推广,拼多多推广,项目,赚钱'
     }
   },
 
@@ -96,7 +96,7 @@ export const fuyePages = {
     title: '上门回收',
     subtitle: '回收旧衣服、旧手机、家电 · 赚取差价或佣金',
     statNum: '环保',
-    statLabel: '副业',
+    statLabel: '项目',
     intro: '上门回收是指通过平台接单，上门回收用户的旧衣服、旧手机、旧家电等物品。平台提供回收渠道和定价，你负责上门取件，赚取差价或佣金。适合时间灵活、愿意跑动的人。',
     entries: [
       { id: 1, icon: '👕', name: '旧衣服回收', desc: '上门回收旧衣物赚佣金', url: 'weixin://dl/business/?appid=wx3f0209cc35a953a4&path=wjyk_recycle/pages/index/index&query=scene%3D23542300' },
@@ -107,9 +107,9 @@ export const fuyePages = {
       { id: 3, title: '快递上门取件', desc: '成为快递取件员的方法', url: '/article/express-guide.html', steps: ['联系当地快递网点（顺丰、京东、中通等），询问是否招兼职取件员', '下载快递员APP，注册并绑定银行卡', '在指定区域接单，上门取件并寄出', '按单结算佣金，多劳多得'] }
     ],
     meta: {
-      title: '上门回收 — 副业入口 | 券宝',
-      description: '上门回收副业：回收旧衣服、旧手机、家电，赚取差价或佣金。',
-      keywords: '上门回收,旧衣服回收,旧手机回收,副业,赚钱'
+      title: '上门回收 — 项目入口 | 券宝',
+      description: '上门回收项目：回收旧衣服、旧手机、家电，赚取差价或佣金。',
+      keywords: '上门回收,旧衣服回收,旧手机回收,项目,赚钱'
     }
   },
 
@@ -119,7 +119,7 @@ export const fuyePages = {
     subtitle: '影视/音乐会员推广赚佣金 · 收益以实际为准',
     statNum: '高',
     statLabel: '佣金比例',
-    intro: '会员分销是指推广各大平台（爱奇艺、腾讯视频、网易云音乐等）的VIP会员，用户通过你的链接购买后你获得佣金。单价高、复购率高，适合有社交资源的人作为副业。',
+    intro: '会员分销是指推广各大平台（爱奇艺、腾讯视频、网易云音乐等）的VIP会员，用户通过你的链接购买后你获得佣金。单价高、复购率高，适合有社交资源的人作为项目。',
     entries: [
       { id: 1, icon: '🎬', name: '影视VIP会员优惠办理', desc: '爱奇艺/腾讯/优酷会员推广', url: 'https://wcbblll.99kami.com' },
       { id: 2, icon: '🎵', name: '音乐VIP会员优惠办理', desc: '网易云/QQ音乐会员推广', url: 'https://wcbblll.im01.cn' },
@@ -131,9 +131,9 @@ export const fuyePages = {
       { id: 3, title: '常见问题解答', desc: '货源、交付、售后、合规答疑', url: '/article/huiyuan-faq.html', steps: ['货源：平台直接对接官方，会员充值有保障', '交付：用户下单后系统自动充值，无需手动操作', '售后：遇到充值问题联系平台客服处理'] }
     ],
     meta: {
-      title: '会员分销 — 副业入口 | 券宝',
-      description: '会员分销副业：影视/音乐会员推广赚佣金，收益以实际为准。',
-      keywords: '会员分销,影视会员,音乐会员,副业,赚钱'
+      title: '会员分销 — 项目入口 | 券宝',
+      description: '会员分销项目：影视/音乐会员推广赚佣金，收益以实际为准。',
+      keywords: '会员分销,影视会员,音乐会员,项目,赚钱'
     }
   },
 
@@ -143,10 +143,10 @@ export const fuyePages = {
     subtitle: '帮APP推广拉新用户 · 赚取推广佣金',
     statNum: '多',
     statLabel: '平台可选',
-    intro: 'App拉新是指帮各大APP（如百度网盘、夸克网盘、迅雷网盘、百度小说、知乎等）推广拉新用户。每成功邀请一个新用户注册并完成指定任务，即可获得几元到几十元不等的佣金。适合有社交资源、愿意分享的人。',
+    intro: '帮百度网盘、夸克、知乎等APP推广拉新用户，每成功邀请一人注册并完成指定任务，获得几元到几十元佣金。适合有社交资源的人。',
     entries: [
-      { id: 1, icon: '📁', name: '百度/夸克/迅雷网盘拉新', desc: '网盘注册转存拉新', url: 'https://docs.qq.com/doc/DTnVHV1RuVHZWVVRC?nlc=1' },
-      { id: 2, icon: '📖', name: '百度小说/知乎拉新', desc: '内容类App拉新', url: '/article/laxin-content.html' },
+      { id: 1, icon: '📁', name: '网盘拉新（1号入口）', desc: '加入达人服务助手，优质任务等你来！ VX搜公众号：【达人服务助手】，邀请码：G04WBs25', url: '' },
+      { id: 2, icon: '📖', name: '网盘拉新（2号入口）', desc: '内容类App拉新', url: 'https://tg.bd.cn/#/pages/login/register?invite_code=698182&qd=self_team_android' },
     ],
     guides: [
       { id: 1, title: 'App拉新完整攻略', desc: '网盘/小说/社区类平台通用流程', url: '/article/laxin-guide.html', steps: ['找官方推广渠道接单', '生成专属推广链接并自测', '发资源/内容引流，跟踪达标结算'] },
@@ -154,9 +154,9 @@ export const fuyePages = {
       { id: 3, title: '百度小说/知乎拉新', desc: '内容类App拉新实操', url: '/article/laxin-content.html', steps: ['申请内容平台推广资格', '发书单/干货内容种草引流', '用户下载注册完成阅读动作即达标'] }
     ],
     meta: {
-      title: 'App拉新 — 副业入口 | 券宝',
-      description: 'App拉新副业：帮APP推广拉新用户，赚取推广佣金。',
-      keywords: 'App拉新,APP推广,拉新赚钱,副业,赚钱'
+      title: 'App拉新 — 项目入口 | 券宝',
+      description: 'App拉新项目：帮APP推广拉新用户，赚取推广佣金。',
+      keywords: 'App拉新,APP推广,拉新赚钱,项目,赚钱'
     }
   },
 
@@ -183,7 +183,7 @@ export const fuyePages = {
     meta: {
       title: '随身WiFi代理 — 便携WiFi设备代理 | 券宝',
       description: '随身WiFi代理：代理销售便携WiFi设备，收益以平台实际展示为准。',
-      keywords: '随身WiFi代理,便携WiFi,代理推广,副业'
+      keywords: '随身WiFi代理,便携WiFi,代理推广,项目'
     }
   }
 }
@@ -193,7 +193,7 @@ export function getFuyePageConfig(slug) {
   return fuyePages[slug] || null
 }
 
-// 获取所有副业页面路径
+// 获取所有项目页面路径
 export function getAllFuyePaths() {
   return Object.keys(fuyePages)
 }

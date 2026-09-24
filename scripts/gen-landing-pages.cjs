@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/templates/landing-pages.js');
+const SRC = path.resolve(__dirname, '../src');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
@@ -357,7 +358,47 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
 </html>`;
 }
 
+// ============================================================
+//  将 Vue 路由壳页从 dist/templates/ 提升到 dist 根
+//  vite 对 HTML 入口按相对 root 的路径输出（src/templates/x.html → dist/templates/x.html），
+//  但线上路由是 /x.html（GitHub Pages 无 SPA fallback），构建后需移动并改写 ../ 相对引用
+// ============================================================
+function promoteShellPages() {
+  const templatesDir = path.join(DIST_DIR, 'templates');
+  let moved = 0;
+
+  // 顶层壳页：从 dist/templates/ 提升到 dist/（vite 已处理）
+  if (fs.existsSync(templatesDir)) {
+    for (const file of fs.readdirSync(templatesDir)) {
+      if (!file.endsWith('.html')) continue;
+      if (file === 'index.html') continue;
+      const src = path.join(templatesDir, file);
+      let html = fs.readFileSync(src, 'utf8');
+      html = html.replace(/(href|src)="\.\.\//g, '$1="./');
+      fs.writeFileSync(path.join(DIST_DIR, file), html, 'utf8');
+      fs.unlinkSync(src);
+      moved++;
+    }
+    if (fs.readdirSync(templatesDir).length === 0) fs.rmdirSync(templatesDir);
+  }
+
+  // fuye/ 子目录壳页：从 src/templates/fuye/ 复制（未经 vite 处理，路径已正确）
+  const fuyeSrcDir = path.join(SRC, 'templates', 'fuye');
+  if (fs.existsSync(fuyeSrcDir)) {
+    const fuyeDestDir = path.join(DIST_DIR, 'fuye');
+    fs.mkdirSync(fuyeDestDir, { recursive: true });
+    for (const file of fs.readdirSync(fuyeSrcDir)) {
+      if (!file.endsWith('.html')) continue;
+      fs.copyFileSync(path.join(fuyeSrcDir, file), path.join(fuyeDestDir, file));
+      moved++;
+    }
+  }
+
+  if (moved) console.log(`已提升 ${moved} 个 Vue 路由壳页到 dist`);
+}
+
 function main() {
+  promoteShellPages();
   const pages = parseConfig(LANDING_PAGES_CONFIG);
   let generated = 0;
 

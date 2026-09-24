@@ -24,7 +24,10 @@ if (el) {
     const titleAttr = f.description
       ? ` title="${f.description.replace(/"/g, '&quot;')}"`
       : '';
-    return `<a href="${href}" target="_blank" rel="noopener sponsored" class="friend-link"${titleAttr}>
+    const onclick = href.startsWith('weixin://')
+      ? ` onclick="if(!/MicroMessenger/i.test(navigator.userAgent)){alert('请在微信中打开此链接');return false;}"`
+      : '';
+    return `<a href="${href}" target="_blank" rel="noopener sponsored" class="friend-link"${titleAttr}${onclick}>
       <span class="friend-link-name">
         <span class="link-icon">${icon}</span>
         ${f.name}

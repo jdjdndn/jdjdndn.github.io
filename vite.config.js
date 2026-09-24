@@ -41,26 +41,33 @@ function discoverAllPages() {
   return entries;
 }
 
-// ===== 扫描 templates 目录下的 HTML 页面（输出到 dist 根目录） =====
+// ===== 扫描 templates 目录下的 HTML 页面（输出到 dist 对应路径） =====
 function discoverTemplatePages() {
   const templatesDir = resolve(ROOT, 'src/templates');
   const entries = {};
 
-  // 检查 templates 目录是否存在
-  try {
-    for (const file of readdirSync(templatesDir)) {
-      if (file.endsWith('.html')) {
-        const name = file.replace('.html', '');
-        // 跳过 _ 开头的模板文件
-        if (name.startsWith('_')) continue;
-        // 映射到根目录：templates/about.html → dist/about.html
-        entries[name] = resolve(templatesDir, file);
+  function scanDir(dir, prefix = '') {
+    try {
+      for (const file of readdirSync(dir)) {
+        const fullPath = resolve(dir, file);
+        const stat = statSync(fullPath);
+        if (stat.isDirectory()) {
+          scanDir(fullPath, prefix ? `${prefix}/${file}` : file);
+        } else if (file.endsWith('.html')) {
+          const name = file.replace('.html', '');
+          if (name.startsWith('_')) continue;
+          // fuye/ 子目录由 gen-landing-pages 直接复制（不经过 vite 处理）
+          if (prefix === 'fuye') continue;
+          const entryKey = prefix ? `${prefix}/${name}` : name;
+          entries[entryKey] = fullPath;
+        }
       }
+    } catch (e) {
+      // 目录不存在，忽略
     }
-  } catch (e) {
-    // templates 目录不存在，忽略
   }
 
+  scanDir(templatesDir);
   return entries;
 }
 

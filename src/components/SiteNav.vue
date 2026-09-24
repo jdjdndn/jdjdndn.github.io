@@ -83,8 +83,13 @@ const navItems = [
   },
   {
     path: '/fuye.html',
-    label: '副业',
+    label: '项目',
     icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'
+  },
+  {
+    path: '/qunliao.html',
+    label: '群聊',
+    icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
   },
   {
     path: '/about.html',
@@ -107,7 +112,7 @@ function isActive(item) {
     return true
   }
 
-  // 处理副业子目录
+  // 处理项目子目录
   if (item.path === '/fuye.html' && currentPath.startsWith('/fuye/')) {
     return true
   }

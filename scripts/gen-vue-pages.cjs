@@ -22,11 +22,15 @@ function parseRouter() {
       const km = metaBlock.match(new RegExp(`${key}:\\s*'([^']*)'`));
       return km ? km[1] : '';
     };
-    // 跳过动态路由 /fuye/:slug.html（由 FuyePage 处理，不生成壳）
+    // 跳过动态路由（如 /fuye/:slug.html，由下方 parseFuyePages 单独生成壳）
     if (p.includes(':')) continue;
+    const file = p === '/' ? 'index.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html';
+    // 跳过首页壳：由 src/index.html（Vue SPA 入口）提供。
+    // 注意 '/index.html' 是 redirect 路由（无 component），正则会跨块借用下一路由的 meta，需一并拦截
+    if (file === 'index.html') continue;
     routes.push({
       path: p,
-      file: p === '/' ? 'index.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html',
+      file,
       title: get('title'),
       description: get('description'),
       keywords: get('keywords'),
@@ -35,8 +39,35 @@ function parseRouter() {
   return routes;
 }
 
+// ========== 解析项目动态路由 /fuye/:slug.html（meta 取自 src/views/fuye-data.js） ==========
+function parseFuyePages() {
+  const code = fs.readFileSync(path.join(SRC, 'views/fuye-data.js'), 'utf8');
+  const slugPositions = [];
+  const slugRe = /'(fuye\/[a-z0-9-]+)':\s*\{/g;
+  let m;
+  while ((m = slugRe.exec(code)) !== null) slugPositions.push({ slug: m[1], pos: m.index });
+
+  const pages = [];
+  for (let i = 0; i < slugPositions.length; i++) {
+    const end = i + 1 < slugPositions.length ? slugPositions[i + 1].pos : code.length;
+    const meta = code.slice(slugPositions[i].pos, end).match(
+      /meta:\s*\{\s*title:\s*'([^']*)',\s*description:\s*'([^']*)',\s*keywords:\s*'([^']*)'/s,
+    );
+    if (!meta) continue;
+    pages.push({
+      path: `/${slugPositions[i].slug}.html`,
+      file: `${slugPositions[i].slug}.html`,
+      title: meta[1],
+      description: meta[2],
+      keywords: meta[3],
+    });
+  }
+  return pages;
+}
+
 // ========== 生成单个壳页 ==========
-function buildPage(route, isHome) {
+function buildPage(route, isHome, depth = 1) {
+  const prefix = '../'.repeat(depth);
   const url = isHome ? `${SITE}/` : `${SITE}/${route.file}`;
   const name = route.title.split('—')[0].trim() || route.title;
   const jsonLd = [
@@ -126,10 +157,10 @@ function buildPage(route, isHome) {
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E" />
-    <link rel="apple-touch-icon" href="../icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="${prefix}icons/icon-192.png" />
 
     <!-- PWA -->
-    <link rel="manifest" href="../manifest.json" />
+    <link rel="manifest" href="${prefix}manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="优惠券" />
@@ -141,8 +172,8 @@ ${jsonLdHtml}
 
     <link rel="alternate" type="text/plain" href="${SITE}/llms.txt" title="站点摘要（供 AI 阅读）" />
 
-    <link rel="stylesheet" href="../shared.css" />
-    <link rel="stylesheet" href="../vue-app.css" />
+    <link rel="stylesheet" href="${prefix}shared.css" />
+    <link rel="stylesheet" href="${prefix}vue-app.css" />
   </head>
   <body>
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">${route.title}</h1>
@@ -152,10 +183,10 @@ ${jsonLdHtml}
         <h2>券宝 — 一站式优惠券中心</h2>
         <p>本站聚合美团外卖红包、淘宝闪购券、京东优惠、携程/同程/飞猪酒店旅行券、滴滴出行券、连锁餐饮优惠、电影票折扣、快递寄件折扣等全网热门优惠。</p>
         <p>本站需要 JavaScript 才能正常显示完整优惠内容。请启用 JavaScript 后访问。</p>
-        <p>完整优惠列表请查看 <a href="../llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="../llms.txt">llms.txt</a>。</p>
+        <p>完整优惠列表请查看 <a href="${prefix}llms-full.txt">llms-full.txt</a>，站点说明请查看 <a href="${prefix}llms.txt">llms.txt</a>。</p>
       </div>
     </noscript>
-    <script type="module" src="../main.js"></script>
+    <script type="module" src="${prefix}main.js"></script>
   </body>
 </html>
 `;
@@ -167,12 +198,20 @@ function main() {
   console.log(`解析到 ${routes.length} 条路由`);
   let generated = 0;
   for (const route of routes) {
-    // 首页壳已有 src/index.html（Vue SPA 入口），不再覆盖；生成其余路由壳
-    if (route.path === '/') continue;
     // 输出到 templates 目录
     const out = path.join(SRC, 'templates', route.file);
     const html = buildPage(route, false);
     fs.writeFileSync(out, html, 'utf8');
+    generated++;
+    console.log(`  ✓ templates/${route.file} (${route.title})`);
+  }
+
+  // 项目动态路由：输出到 src/templates/fuye/<slug>.html（嵌套结构保持路由兼容）
+  const fuyeRoutes = parseFuyePages();
+  for (const route of fuyeRoutes) {
+    const out = path.join(SRC, 'templates', route.file);
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.writeFileSync(out, buildPage(route, false, 2), 'utf8');
     generated++;
     console.log(`  ✓ templates/${route.file} (${route.title})`);
   }

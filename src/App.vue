@@ -27,6 +27,12 @@ onMounted(() => {
 <style>
 /* 全局样式和 CSS 变量统一定义在 shared.css */
 
+/* router-view 基础：自定义元素默认 inline，强制 block + 全宽 */
+router-view {
+  display: block;
+  width: 100%;
+}
+
 /* app-wrapper 布局 */
 .app-wrapper {
   min-height: 100vh;
@@ -52,10 +58,7 @@ onMounted(() => {
     position: relative;
   }
 
-  .app-wrapper #app {
-    padding: 0;
-    margin: 0;
-    max-width: 1100px;
+  .app-wrapper router-view {
     flex: 1;
     min-width: 0;
   }
@@ -73,10 +76,7 @@ onMounted(() => {
     position: relative;
   }
 
-  .app-wrapper #app {
-    padding: 0;
-    margin: 0;
-    max-width: 1100px;
+  .app-wrapper router-view {
     flex: 1;
     min-width: 0;
   }

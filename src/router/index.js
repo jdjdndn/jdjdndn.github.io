@@ -4,6 +4,10 @@ import { getFuyePageConfig, getAllFuyePaths } from '../views/fuye-data'
 // 路由配置 - 保持与现有 URL 结构兼容
 const routes = [
   {
+    path: '/index.html',
+    redirect: '/'
+  },
+  {
     path: '/',
     name: 'Home',
     component: () => import('../views/Home.vue'),
@@ -40,7 +44,7 @@ const routes = [
     meta: {
       title: '号卡代理合伙人招募 — 高佣推广 · 零成本加入',
       description: '号卡代理合伙人招募：高佣推广、一件代发、专业培训、持续售后。',
-      keywords: '号卡代理,流量卡代理,副业,高佣推广'
+      keywords: '号卡代理,流量卡代理,项目,高佣推广'
     }
   },
   {
@@ -108,9 +112,9 @@ const routes = [
     name: 'Fuye',
     component: () => import('../views/Fuye.vue'),
     meta: {
-      title: '副业赚钱 — 网络副业项目',
-      description: '副业赚钱，网络副业项目推荐，轻松赚取额外收入。',
-      keywords: '副业,赚钱,网络副业'
+      title: '项目赚钱 — 网络项目项目',
+      description: '项目赚钱，网络项目项目推荐，轻松赚取额外收入。',
+      keywords: '项目,赚钱,网络项目'
     }
   },
   {
@@ -144,7 +148,7 @@ const routes = [
     }
   },
 
-  // 副业二级页面
+  // 项目二级页面
   {
     path: '/fuye/:slug.html',
     name: 'FuyePage',
@@ -210,7 +214,11 @@ router.beforeEach((to, from, next) => {
     return
   }
 
-  // 2. 更新 SEO meta
+  next()
+})
+
+// 2. 更新 SEO meta（用 afterEach：动态路由 /fuye/:slug.html 的 meta 在 beforeEnter 中才合并进 to.meta）
+router.afterEach((to) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
@@ -238,8 +246,6 @@ router.beforeEach((to, from, next) => {
     }
     robotsMeta.setAttribute('content', to.meta.robots)
   }
-
-  next()
 })
 
 export default router

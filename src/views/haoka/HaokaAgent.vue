@@ -6,10 +6,8 @@
       subtitle="高佣推广 · 零成本加入 · 专业培训 · 持续售后"
       aria="号卡代理合伙人招募"
     >
-      <template #badge>
-        <span class="stat-badge">已帮助 <strong>2000+</strong> 代理</span>
-        <span class="stat-badge">佣金高达 <strong>50%+</strong></span>
-      </template>
+      <span class="stat-badge">已帮助 <strong>2000+</strong> 代理</span>
+      <span class="stat-badge">佣金高达 <strong>50%+</strong></span>
     </PageHero>
 
     <!-- 代理招募 -->
@@ -88,12 +86,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { inject } from 'vue'
+import { useToast } from '../../composables'
 import PageHero from '../../components/PageHero.vue'
 import LegalLinks from '../../components/LegalLinks.vue'
 import { haokaProxyLinks } from '../../templates/haoka-data.js'
 
-const toast = inject('toast')
+const toast = useToast()
 const currentStep = ref(1)
 
 const formData = ref({
@@ -125,10 +123,10 @@ const advantages = ref([
 
 function handleSubmit() {
   if (!formData.value.name || !formData.value.phone || !formData.value.channel) {
-    toast?.('请填写完整信息', 'error')
+    toast.show('请填写完整信息')
     return
   }
-  toast?.('申请提交成功，我们会尽快联系您！', 'success')
+  toast.show('申请提交成功，我们会尽快联系您！')
   formData.value = { name: '', phone: '', channel: null }
 }
 </script>

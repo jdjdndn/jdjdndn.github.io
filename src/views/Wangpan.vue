@@ -114,8 +114,8 @@ function getPlatformType(url) {
 }
 
 function getResourceColor(url) {
-  if (url.includes('quark')) return 'linear-gradient(90deg, #7C3AED, #A78BFA)'
-  if (url.includes('baidu')) return 'linear-gradient(90deg, #3B82F6, #60A5FA)'
+  if (url.includes('quark')) return 'linear-gradient(90deg, #FF6B35, #FF8C5A)'
+  if (url.includes('baidu')) return 'linear-gradient(90deg, #E55A2B, #FF6B35)'
   return 'linear-gradient(90deg, #6B7280, #9CA3AF)'
 }
 
@@ -221,13 +221,13 @@ function closeQrModal() {
 }
 
 .btn:hover {
-  border-color: var(--primary-color, #7c3aed);
+  border-color: var(--primary-color, #FF6B35);
 }
 
 .btn-primary {
-  background: var(--primary-color, #7c3aed);
+  background: var(--primary-color, #FF6B35);
   color: #fff;
-  border-color: var(--primary-color, #7c3aed);
+  border-color: var(--primary-color, #FF6B35);
 }
 
 .btn-primary:hover {
@@ -264,7 +264,7 @@ function closeQrModal() {
 }
 
 .resource-card:hover {
-  border-color: var(--primary-color, #7C3AED);
+  border-color: var(--primary-color, #FF6B35);
   box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
 }
 
@@ -292,7 +292,7 @@ function closeQrModal() {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary-color, #7C3AED);
+  color: var(--primary-color, #FF6B35);
 }
 
 .resource-info {

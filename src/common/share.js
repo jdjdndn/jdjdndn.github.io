@@ -1,4 +1,4 @@
-﻿import { $, showToast, vibrate, robustCopy } from './base.js';
+﻿import { $, showToast, vibrate, robustCopy } from './utils.js';
 import 'social-share.js/dist/css/share.min.css';
 
 // ---------- 分享 ----------

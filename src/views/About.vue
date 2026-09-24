@@ -86,35 +86,5 @@ import LegalLinks from '../components/LegalLinks.vue'
 }
 .space-v { display: flex; flex-direction: column; gap: 16px; }
 .space-v-sm { display: flex; flex-direction: column; gap: 12px; }
-.faq-list { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; }
-.faq-item {
-  background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: var(--radius, 12px);
-  overflow: hidden;
-}
-.faq-question {
-  width: 100%;
-  padding: 14px 16px;
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text, #1a1a2e);
-  cursor: pointer;
-  text-align: left;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.faq-question::-webkit-details-marker { display: none; }
-.faq-question::after { content: '▸'; font-size: 12px; color: var(--muted); transition: transform 0.2s; }
-.faq-item[open] .faq-question::after { transform: rotate(90deg); }
-.faq-answer {
-  padding: 0 16px 14px;
-  font-size: 13px;
-  color: var(--muted, #6b7280);
-  line-height: 1.8;
-}
+.faq-list { margin-top: 24px; }
 </style>

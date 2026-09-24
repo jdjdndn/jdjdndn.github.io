@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { inject } from 'vue'
+import { useToast } from '../composables'
 
 const props = defineProps({
   product: {
@@ -53,15 +53,15 @@ const props = defineProps({
   }
 })
 
-const toast = inject('toast')
+const toast = useToast()
 
 async function handleCopyCoupon() {
   if (!props.product.coupon) return
   try {
     await navigator.clipboard.writeText(props.product.coupon)
-    toast?.success('优惠券已复制')
+    toast.show('优惠券已复制')
   } catch {
-    message.error('复制失败')
+    toast.show('复制失败')
   }
 }
 </script>

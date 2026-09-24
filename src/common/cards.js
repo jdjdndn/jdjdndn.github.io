@@ -100,9 +100,9 @@ export const renderLinkCard = (item, query) => {
     </div>
     ${descHtml}
     ${deadlineDisplay ? `<div class="card-deadline-wrapper"${expiringSoon ? ' data-expiring' : ''}>${deadlineDisplay}</div>` : ''}
-    <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}">${host || '前往活动'}</a>
+    <a class="card-link" href="${item.link}" target="_blank" rel="noopener" title="${item.link}"${item.link?.startsWith('weixin://') ? ' onclick="if(!/MicroMessenger/i.test(navigator.userAgent)){alert(\'请在微信中打开此链接\');return false;}"' : ''}>${host || '前往活动'}</a>
     <div class="card-actions">
-      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${expired ? 'tabindex="-1"' : ''}>前往活动</a>
+      <a class="btn-go" href="${item.link}" target="_blank" rel="noopener" ${item.link?.startsWith('weixin://') ? 'data-weixin="true" onclick="if(!/MicroMessenger/i.test(navigator.userAgent)){alert(\'请在微信中打开此链接\');return false;}"' : ''} ${expired ? 'tabindex="-1"' : ''}>前往活动</a>
       <button class="btn-qr" data-link="${item.link}" data-name="${item.name.replace(/"/g, '&quot;')}">二维码</button>
       <button class="btn-share" data-share-name="${item.name.replace(/"/g, '&quot;')}" data-share-url="${item.link}">分享</button>
     </div>

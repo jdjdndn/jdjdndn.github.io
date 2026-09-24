@@ -112,8 +112,7 @@
               <button
                 v-if="item.link"
                 class="btn btn-qr"
-                :data-link="item.link"
-                :data-name="item.name"
+                @click="showQr(item)"
               >
                 二维码
               </button>
@@ -134,6 +133,15 @@
     <!-- 法律链接 -->
     <LegalLinks />
 
+    <!-- 二维码弹窗 -->
+    <QrModal
+      v-if="qrItem"
+      :visible="true"
+      :url="qrItem.link"
+      :title="qrItem.name"
+      @close="closeQr"
+    />
+
     <!-- 回到顶部按钮 -->
     <button
       v-show="showBackToTop"
@@ -149,9 +157,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
+import QrModal from '../components/QrModal.vue'
 import { tabs } from '../data.js'
 import { isExpired } from '../common/utils.js'
 import { useToast } from '../composables'
@@ -161,6 +170,7 @@ const activeTab = ref(0)
 const activeSubTab = ref('')
 const searchQuery = ref('')
 const showBackToTop = ref(false)
+const qrItem = ref(null)
 const toast = useToast()
 
 // 计算属性
@@ -223,10 +233,23 @@ function switchTab(index) {
   localStorage.setItem('activeTab', currentTab.value.id)
   // 滚动到顶部
   window.scrollTo({ top: 0, behavior: 'smooth' })
+  // 让激活的 tab 按钮滚入可视区
+  nextTick(() => {
+    const activeBtn = document.querySelector('.tab-btn.active')
+    if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  })
 }
 
 function openLink(url) {
   window.open(url, '_blank', 'noopener')
+}
+
+function showQr(item) {
+  qrItem.value = item
+}
+
+function closeQr() {
+  qrItem.value = null
 }
 
 function scrollToTop() {
@@ -277,6 +300,7 @@ onUnmounted(() => {
 
 <style scoped>
 .home-page {
+  width: 100%;
   padding: 0;
   position: relative;
 }

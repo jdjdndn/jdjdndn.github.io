@@ -70,12 +70,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { inject } from 'vue'
+import { useToast } from '../composables'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
 
-const toast = inject('toast')
+const toast = useToast()
 import { featuredActivities } from '../data.js'
 const searchQuery = ref('')
 const selectedCategory = ref(null)
@@ -310,12 +310,12 @@ function handleJoin(activity) {
 }
 
 .btn-primary {
-  background: var(--primary-color, #2563eb);
+  background: var(--primary-color, #FF6B35);
   color: #fff;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover, #1d4ed8);
+  background: var(--primary-hover, #E55A2B);
 }
 
 .btn-block {

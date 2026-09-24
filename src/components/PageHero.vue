@@ -8,7 +8,9 @@
       <div class="hero-icon" v-if="icon" v-html="icon" aria-hidden="true"></div>
       <h1 class="hero-title">{{ title }}</h1>
       <p class="hero-subtitle">{{ subtitle }}</p>
-      <slot></slot>
+      <div class="hero-extra">
+        <slot></slot>
+      </div>
     </div>
   </section>
 </template>
@@ -118,6 +120,26 @@ onMounted(() => {
   font-size: 1.25rem;
   margin: 0;
   opacity: 0.9;
+  max-height: 2.6em;
+  overflow: hidden;
+}
+
+/* 徽章/统计区：固定占位，保证各页面 hero 总高一致（无内容时也保留空间） */
+.hero-extra {
+  min-height: 42px;
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+
+.hero-extra::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 /* 动画 */
@@ -186,6 +208,11 @@ onMounted(() => {
 
   .hero-subtitle {
     font-size: 0.875rem;
+    max-height: 2.4em;
+  }
+
+  .hero-extra {
+    min-height: 36px;
   }
 }
 </style>

@@ -24,7 +24,7 @@
         <ul>
           <li><a href="/huiyuan.html">会员优惠</a></li>
           <li><a href="/wangpan.html">网盘资源</a></li>
-          <li><a href="/fuye.html">副业赚钱</a></li>
+          <li><a href="/fuye.html">项目赚钱</a></li>
         </ul>
       </div>
     </div>
@@ -47,7 +47,7 @@ const currentYear = computed(() => new Date().getFullYear())
 <style scoped>
 .legal-links {
   background: var(--bg-elevated, #f5f5f5);
-  padding: 2rem 1rem;
+  padding: 2.5rem 1.5rem;
   margin-top: 3rem;
   border-top: 1px solid var(--border, #e5e5e5);
 }
@@ -56,15 +56,17 @@ const currentYear = computed(() => new Date().getFullYear())
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
 .legal-section h3 {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
   color: var(--text, #333);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .legal-section ul {
@@ -74,43 +76,48 @@ const currentYear = computed(() => new Date().getFullYear())
 }
 
 .legal-section li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .legal-section a {
   color: var(--text-secondary, #666);
   text-decoration: none;
-  font-size: 0.875rem;
-  transition: color 0.2s;
+  font-size: 0.85rem;
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
 }
 
 .legal-section a:hover {
   color: var(--primary, #FF6B35);
+  transform: translateX(4px);
 }
 
 .legal-copyright {
   text-align: center;
   margin-top: 2rem;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border-color, #e5e5e5);
 }
 
 .legal-copyright p {
   margin: 0 0 0.5rem 0;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--text-secondary, #666);
 }
 
 .legal-disclaimer {
   font-size: 0.75rem;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 /* 响应式 */
 @media (max-width: 768px) {
   .legal-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     text-align: center;
+  }
+  .legal-section a:hover {
+    transform: none;
   }
 }
 </style>

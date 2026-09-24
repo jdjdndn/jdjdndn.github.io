@@ -142,7 +142,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { inject } from 'vue'
+import { useToast } from '../composables'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
@@ -150,7 +150,7 @@ import QrModal from '../components/QrModal.vue'
 import { useClipboard, useShare } from '../composables'
 import { wifiLinks } from '../templates/wifi-data.js'
 
-const toast = inject('toast')
+const toast = useToast()
 const { copy } = useClipboard()
 const { quickShare } = useShare()
 
@@ -327,7 +327,13 @@ async function handleShare(device) {
   color: var(--accent, #004E89);
   font-weight: 600;
   text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(0, 78, 137, 0.08);
+  transition: background .2s;
 }
+.cross-link-banner a:hover { background: rgba(0, 78, 137, 0.15); }
+.cross-link-banner a:active { transform: scale(0.97); }
 
 /* 统计徽章条 */
 .stats-badge-bar {
@@ -584,45 +590,6 @@ async function handleShare(device) {
 
 /* FAQ */
 .faq-section { margin-top: 40px; }
-.faq-list { display: flex; flex-direction: column; gap: 8px; }
-.faq-item {
-  background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: var(--radius, 12px);
-  overflow: hidden;
-}
-.faq-question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px;
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text, #1a1a2e);
-  cursor: pointer;
-  text-align: left;
-  line-height: 1.5;
-  list-style: none;
-}
-.faq-question::-webkit-details-marker { display: none; }
-.faq-question::after {
-  content: '▸';
-  font-size: 12px;
-  color: var(--muted, #6b7280);
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-.faq-item[open] .faq-question::after { transform: rotate(90deg); }
-.faq-answer {
-  padding: 0 16px 14px;
-  font-size: 13px;
-  color: var(--muted, #6b7280);
-  line-height: 1.8;
-}
 
 /* 响应式 */
 @media (min-width: 640px) {
@@ -660,10 +627,6 @@ async function handleShare(device) {
   border-color: rgba(75, 85, 99, 0.5);
 }
 [data-theme="dark"] .product-card {
-  background: rgba(31, 41, 55, 0.5);
-  border-color: rgba(75, 85, 99, 0.5);
-}
-[data-theme="dark"] .faq-item {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
 }

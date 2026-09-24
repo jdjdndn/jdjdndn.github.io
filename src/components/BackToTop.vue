@@ -78,10 +78,10 @@ onUnmounted(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* 小屏适配 */
+/* 小屏适配：避开底部导航栏 */
 @media (max-width: 640px) {
   .back-to-top {
-    bottom: 16px;
+    bottom: 64px;
     right: 16px;
     width: 40px;
     height: 40px;

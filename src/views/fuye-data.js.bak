@@ -1,29 +1,29 @@
-// 副业页面数据配置
+// 项目页面数据配置
 import { wifiProxyLinks } from '../wifi-data.js'
 
 export const fuyePages = {
   'fuye/haoka': {
     icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>',
     title: '号卡代理',
-    subtitle: '零成本副业 · 月入过万攻略 · 四网套餐全国配送',
+    subtitle: '零成本项目 · 月入过万攻略 · 四网套餐全国配送',
     statNum: '7',
     statLabel: '篇攻略',
-    intro: '号卡代理是指代理销售各大运营商（移动、联通、电信、广电）的手机卡/流量卡。每成功办理一张卡，即可获得几十到上百元佣金。零成本起步，无需囤货，适合有社交资源的人作为副业。',
+    intro: '号卡代理是指代理销售各大运营商（移动、联通、电信、广电）的手机卡/流量卡。每成功办理一张卡，即可获得几十到上百元佣金。零成本起步，无需囤货，适合有社交资源的人作为项目。',
     banner: { icon: '📱', name: '自用省钱？办理流量卡', desc: '低月租大流量 · 四网可选 · 正规授权', url: '/haoka.html' },
     entries: [
-      { id: 1, icon: '💰', name: '号卡代理', desc: '办卡赚佣金，零成本副业', url: '/haoka-agent.html' }
+      { id: 1, icon: '💰', name: '号卡代理', desc: '办卡赚佣金，零成本项目', url: '/haoka-agent.html' }
     ],
     guides: [
-      { id: 1, title: '如何成为号卡代理', desc: '3步开启你的副业之路', url: '/haoka-agent.html' },
+      { id: 1, title: '如何成为号卡代理', desc: '3步开启你的项目之路', url: '/haoka-agent.html' },
       { id: 2, title: '佣金规则详解', desc: '不同套餐佣金比例说明', url: '/haoka-agent.html' },
       { id: 3, title: '推广方法分享', desc: '朋友圈/社群/短视频推广技巧', url: '/haoka-agent.html' },
       { id: 4, title: '提现流程说明', desc: '佣金提现步骤和到账时间', url: '/haoka-agent.html' },
       { id: 5, title: '常见问题解答', desc: '代理常见问题汇总', url: '/haoka-agent.html' }
     ],
     meta: {
-      title: '号卡代理 — 副业入口 | 券宝',
-      description: '零成本号卡代理副业：办理流量卡赚佣金，四网套餐全国配送，月入过万攻略。',
-      keywords: '号卡代理,流量卡,副业,赚钱,佣金'
+      title: '号卡代理 — 项目入口 | 券宝',
+      description: '零成本号卡代理项目：办理流量卡赚佣金，四网套餐全国配送，月入过万攻略。',
+      keywords: '号卡代理,流量卡,项目,赚钱,佣金'
     }
   },
 
@@ -33,7 +33,7 @@ export const fuyePages = {
     subtitle: '高佣推广 · 一件代发 · 专业培训 · 持续售后',
     statNum: '40%',
     statLabel: '佣金比例',
-    intro: '号卡代理招募计划：零成本加入，享受高佣金推广。平台提供一件代发、专业培训、持续售后支持，助你快速开启副业之路。',
+    intro: '号卡代理招募计划：零成本加入，享受高佣金推广。平台提供一件代发、专业培训、持续售后支持，助你快速开启项目之路。',
     entries: [
       { id: 1, icon: '📋', name: '代理申请', desc: '立即申请成为代理', url: '' },
       { id: 2, icon: '📊', name: '佣金说明', desc: '了解佣金规则和提现流程', url: '' },
@@ -48,7 +48,7 @@ export const fuyePages = {
     meta: {
       title: '号卡代理招募 — 高佣推广 · 零成本加入 | 券宝',
       description: '号卡代理招募：高佣推广、一件代发、专业培训、持续售后。',
-      keywords: '号卡代理,流量卡代理,副业,高佣推广'
+      keywords: '号卡代理,流量卡代理,项目,高佣推广'
     }
   },
 
@@ -85,9 +85,9 @@ export const fuyePages = {
       }
     ],
     meta: {
-      title: '电商带货 — 副业入口 | 券宝',
-      description: '电商带货副业：京东/淘宝/拼多多/携程优惠推广，赚取佣金。',
-      keywords: '电商带货,京东推广,淘宝推广,拼多多推广,副业,赚钱'
+      title: '电商带货 — 项目入口 | 券宝',
+      description: '电商带货项目：京东/淘宝/拼多多/携程优惠推广，赚取佣金。',
+      keywords: '电商带货,京东推广,淘宝推广,拼多多推广,项目,赚钱'
     }
   },
 
@@ -96,7 +96,7 @@ export const fuyePages = {
     title: '上门回收',
     subtitle: '回收旧衣服、旧手机、家电 · 赚取差价或佣金',
     statNum: '环保',
-    statLabel: '副业',
+    statLabel: '项目',
     intro: '上门回收是指通过平台接单，上门回收用户的旧衣服、旧手机、旧家电等物品。平台提供回收渠道和定价，你负责上门取件，赚取差价或佣金。适合时间灵活、愿意跑动的人。',
     entries: [
       { id: 1, icon: '👕', name: '旧衣服回收', desc: '上门回收旧衣物赚佣金', url: 'weixin://dl/business/?appid=wx3f0209cc35a953a4&path=wjyk_recycle/pages/index/index&query=scene%3D23542300' },
@@ -107,9 +107,9 @@ export const fuyePages = {
       { id: 3, title: '快递上门取件', desc: '成为快递取件员的方法', url: '/article/express-guide.html' }
     ],
     meta: {
-      title: '上门回收 — 副业入口 | 券宝',
-      description: '上门回收副业：回收旧衣服、旧手机、家电，赚取差价或佣金。',
-      keywords: '上门回收,旧衣服回收,旧手机回收,副业,赚钱'
+      title: '上门回收 — 项目入口 | 券宝',
+      description: '上门回收项目：回收旧衣服、旧手机、家电，赚取差价或佣金。',
+      keywords: '上门回收,旧衣服回收,旧手机回收,项目,赚钱'
     }
   },
 
@@ -119,7 +119,7 @@ export const fuyePages = {
     subtitle: '影视/音乐会员推广赚佣金 · 零成本高回报',
     statNum: '高',
     statLabel: '佣金比例',
-    intro: '会员分销是指推广各大平台（爱奇艺、腾讯视频、网易云音乐等）的VIP会员，用户通过你的链接购买后你获得佣金。单价高、复购率高，适合有社交资源的人作为副业。',
+    intro: '会员分销是指推广各大平台（爱奇艺、腾讯视频、网易云音乐等）的VIP会员，用户通过你的链接购买后你获得佣金。单价高、复购率高，适合有社交资源的人作为项目。',
     entries: [
       { id: 1, icon: '🎬', name: '各大平台影视VIP会员优惠办理', desc: '爱奇艺/腾讯/优酷会员推广', url: 'https://wcbblll.99kami.com' },
       { id: 2, icon: '🎵', name: '各大平台影视VIP会员优惠办理', desc: '网易云/QQ音乐会员推广', url: 'https://wcbblll.im01.cn' },
@@ -131,9 +131,9 @@ export const fuyePages = {
       // { id: 3, title: '360 AI大会员推广', desc: '高佣金AI会员产品', url: '/article/360ai大会员.html' }
     ],
     meta: {
-      title: '会员分销 — 副业入口 | 券宝',
-      description: '会员分销副业：影视/音乐会员推广赚佣金，零成本高回报。',
-      keywords: '会员分销,影视会员,音乐会员,副业,赚钱'
+      title: '会员分销 — 项目入口 | 券宝',
+      description: '会员分销项目：影视/音乐会员推广赚佣金，零成本高回报。',
+      keywords: '会员分销,影视会员,音乐会员,项目,赚钱'
     }
   },
 
@@ -153,9 +153,9 @@ export const fuyePages = {
       // { id: 3, title: '京东拉新教程', desc: '京东APP推广技巧', url: '/article/taobao-eleme-community.html' }
     ],
     meta: {
-      title: 'App拉新 — 副业入口 | 券宝',
-      description: 'App拉新副业：帮APP推广拉新用户，赚取推广佣金。',
-      keywords: 'App拉新,APP推广,拉新赚钱,副业,赚钱'
+      title: 'App拉新 — 项目入口 | 券宝',
+      description: 'App拉新项目：帮APP推广拉新用户，赚取推广佣金。',
+      keywords: 'App拉新,APP推广,拉新赚钱,项目,赚钱'
     }
   },
 
@@ -182,7 +182,7 @@ export const fuyePages = {
     meta: {
       title: '随身WiFi代理 — 便携WiFi设备代理 · 高佣推广 | 券宝',
       description: '随身WiFi代理招募：代理销售便携WiFi设备，高佣金、一件代发、零成本起步。',
-      keywords: '随身WiFi代理,便携WiFi,代理推广,副业,赚钱'
+      keywords: '随身WiFi代理,便携WiFi,代理推广,项目,赚钱'
     }
   }
 }
@@ -192,7 +192,7 @@ export function getFuyePageConfig(slug) {
   return fuyePages[slug] || null
 }
 
-// 获取所有副业页面路径
+// 获取所有项目页面路径
 export function getAllFuyePaths() {
   return Object.keys(fuyePages)
 }

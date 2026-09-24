@@ -2,32 +2,30 @@
   <main class="fuye-page">
     <PageHero
       icon='<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
-      title="副业专区"
-      subtitle="副业机会梳理 · 电商带货 / 会员分销 / App拉新 / 号卡现状"
-      aria="副业专区"
+      title="项目专区"
+      subtitle="项目机会梳理 · 多方向攻略"
+      aria="项目专区"
     >
-      <template #badge>
-        <span class="stat-badge"><strong>4+</strong> 副业方向</span>
-        <span class="stat-badge"><strong>10+</strong> 篇攻略</span>
-        <span class="stat-badge"><strong>0</strong> 元成本起步</span>
-      </template>
+      <span class="stat-badge"><strong>4+</strong> 项目方向</span>
+      <span class="stat-badge"><strong>10+</strong> 篇攻略</span>
+      <span class="stat-badge"><strong>0</strong> 元成本起步</span>
     </PageHero>
 
-    <!-- 副业分类入口 -->
+    <!-- 项目分类入口 -->
     <div class="grid-3 entry-grid">
       <div v-for="(entry, idx) in entries" :key="entry.name" :class="['grid-item', 'entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']">
-        <router-link :to="entry.url" class="entry-card">
+        <component :is="entry.url ? 'router-link' : 'div'" :to="entry.url || undefined" class="entry-card">
           <div class="entry-icon">{{ entry.icon }}</div>
           <div class="entry-info">
             <div class="entry-name">{{ entry.name }}</div>
             <div class="entry-desc">{{ entry.desc }}</div>
           </div>
           <span :class="['tag', 'tag-' + (entry.tagType || 'default')]">{{ entry.tag }}</span>
-        </router-link>
+        </component>
       </div>
     </div>
 
-    <p class="f-note">💡 选择副业方向，查看对应攻略 · 按需投入，量力而行</p>
+    <p class="f-note">💡 选择项目方向，查看对应攻略 · 按需投入，量力而行</p>
 
     <LegalLinks />
     <BackToTop />
@@ -45,8 +43,8 @@ const entries = [
     desc: '号卡新规后现状 · 合规与防骗',
     icon: '📱',
     url: '/fuye/haoka.html',
-    tag: '5 篇指南',
-    tagType: 'success'
+    tag: '指南',
+    tagType: 'info'
   },
   {
     name: '会员分销',
@@ -54,7 +52,7 @@ const entries = [
     icon: '👑',
     url: '/fuye/huiyuan.html',
     tag: '分销',
-    tagType: 'warning'
+    tagType: 'info'
   },
   {
     name: '上门回收',
@@ -78,7 +76,7 @@ const entries = [
     icon: '🛒',
     url: '/fuye/dianshang.html',
     tag: '入口',
-    tagType: 'error'
+    tagType: 'info'
   },
   {
     name: '随身WiFi代理',
@@ -89,10 +87,10 @@ const entries = [
     tagType: 'info'
   },
   {
-    name: '更多副业',
-    desc: '更多副业方向持续更新中',
+    name: '更多项目',
+    desc: '更多项目方向持续更新中',
     icon: '💡',
-    url: '/article/index.html',
+    url: '',
     tag: '更新中',
     tagType: 'default'
   }
@@ -100,13 +98,16 @@ const entries = [
 </script>
 
 <style scoped>
+.fuye-page{
+  width: 100%;
+}
 .entry-grid {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
-/* 最后一项（更多副业）整行通栏展示 */
+/* 最后一项（更多项目）整行通栏展示 */
 .entry-grid-item.full-width {
   grid-column: 1 / -1;
 }
@@ -134,6 +135,9 @@ const entries = [
   border-color: var(--primary, #FF6B35);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
   transform: translateY(-1px);
+}
+.entry-card:active {
+  transform: scale(0.98);
 }
 
 .entry-icon {

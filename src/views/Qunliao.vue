@@ -81,7 +81,7 @@ const groups = [
     disabled: true
   },
   {
-    name: '副业交流群',
+    name: '项目交流群',
     desc: '号卡代理 · 推广经验交流 · 筹备中',
     icon: '📈',
     tag: '筹备中',
@@ -264,11 +264,12 @@ const filteredGroups = computed(() => {
   background: var(--card, #fff);
   border: 1px solid var(--border, #e5e2dd);
   border-radius: 12px;
-  padding: 4px 16px;
+  padding: 4px 0;
 }
 
 .q-faq .faq-item {
-  border-bottom: 1px solid var(--border, #e5e2dd);
+  border-bottom: 1px solid var(--border-light, #f0eeeb);
+  transition: background-color 0.15s ease;
 }
 
 .q-faq .faq-item:last-child {
@@ -279,18 +280,44 @@ const filteredGroups = computed(() => {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  padding: 12px 0;
+  padding: 14px 16px;
   list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text, #1a1a2e);
+  transition: color 0.15s ease, background-color 0.15s ease;
+  border-radius: 8px;
+  margin: 2px 8px;
+}
+
+.q-faq .faq-question:hover {
+  color: var(--primary, #FF6B35);
+  background: var(--hover-bg, #f5f4f1);
 }
 
 .q-faq .faq-question::-webkit-details-marker {
   display: none;
 }
 
+.q-faq .faq-question::after {
+  content: '▸';
+  font-size: 12px;
+  color: var(--muted, #6b7280);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.q-faq .faq-item[open] .faq-question::after {
+  transform: rotate(90deg);
+}
+
 .q-faq .faq-answer {
   font-size: 13px;
   color: var(--text-secondary, #6b7280);
-  padding-bottom: 12px;
+  padding: 0 16px 14px;
+  line-height: 1.7;
 }
 
 [data-theme="dark"] .q-search-bar,
@@ -317,6 +344,18 @@ const filteredGroups = computed(() => {
 [data-theme="dark"] .q-faq .faq-list {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .q-faq .faq-item {
+  border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .q-faq .faq-question:hover {
+  background: rgba(255, 107, 53, 0.08);
+}
+
+[data-theme="dark"] .q-faq .faq-question::after {
+  color: var(--muted, #707088);
 }
 
 [data-theme="dark"] .f-note {

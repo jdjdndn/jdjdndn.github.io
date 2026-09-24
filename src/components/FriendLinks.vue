@@ -15,6 +15,7 @@
             :href="link.url"
             target="_blank"
             rel="noopener"
+            @click="handleLinkClick($event, link)"
           >
             <span class="fl-name">{{ link.name }}</span>
             <span class="fl-desc">{{ link.desc }}</span>
@@ -29,6 +30,15 @@
 </template>
 
 <script setup>
+const isWeixin = () => /MicroMessenger/i.test(navigator.userAgent)
+
+const handleLinkClick = (e, link) => {
+  if (link.url?.startsWith('weixin://') && !isWeixin()) {
+    e.preventDefault()
+    alert('请在微信中打开此链接')
+  }
+}
+
 const friendLinksData = [
   {
     title: '🛒 电商优惠',
@@ -132,7 +142,7 @@ const friendLinksData = [
   text-align: center;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 2px solid var(--primary, #6366f1);
+  border-bottom: 2px solid var(--primary, #FF6B35);
 }
 
 .fl-header h3 {
@@ -157,7 +167,7 @@ const friendLinksData = [
 .fl-section {
   background: var(--card-bg, #f8fafc);
   border: 1px solid var(--border, #e2e8f0);
-  border-left: 3px solid var(--primary, #6366f1);
+  border-left: 3px solid var(--primary, #FF6B35);
   border-radius: 8px;
   padding: 16px;
 }
@@ -193,9 +203,9 @@ const friendLinksData = [
 
 .fl-link:hover {
   background: var(--primary-light, #eef2ff);
-  border-color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
 }
 
 .fl-name {
@@ -205,7 +215,7 @@ const friendLinksData = [
 }
 
 .fl-link:hover .fl-name {
-  color: var(--primary, #6366f1);
+  color: var(--primary, #FF6B35);
 }
 
 .fl-desc {

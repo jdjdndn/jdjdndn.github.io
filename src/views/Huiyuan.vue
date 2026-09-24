@@ -6,11 +6,9 @@
       subtitle="影视 / 音乐 / 流量会员 · 官方渠道优惠价"
       aria="会员优惠"
     >
-      <template #badge>
-        <span class="stat-badge">
-          已收录 <strong>3</strong> 个平台
-        </span>
-      </template>
+      <span class="stat-badge">
+        已收录 <strong>3</strong> 个平台
+      </span>
     </PageHero>
 
     <!-- 信任徽章 -->
@@ -74,6 +72,10 @@ const members = [
 </script>
 
 <style scoped>
+.huiyuan-page {
+  width: 100%;
+}
+
 .trust-bar {
   display: flex;
   justify-content: center;

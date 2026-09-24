@@ -1,4 +1,6 @@
 // ========== 通用工具函数 ==========
+// 注意：此文件是工具函数的唯一来源。vanilla JS 和 Vue 组件都从此导入。
+// 如需修改 $、showToast、vibrate、copyText 等函数，请在此处修改。
 
 export const $ = (sel) => document.querySelector(sel);
 export const $$ = (sel) => document.querySelectorAll(sel);
@@ -100,6 +102,55 @@ export const countUp = (el, target, duration = 800) => {
     if (progress < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
+};
+
+// ========== 触觉反馈 ==========
+export const vibrate = (ms = 50) => {
+  if (navigator.vibrate) navigator.vibrate(ms);
+};
+
+// ========== 剪贴板复制（含降级）==========
+export const copyText = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    vibrate();
+    showToast();
+  } catch {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast();
+    } catch {
+      showToast('复制失败，请长按手动复制');
+    }
+  }
+};
+
+// ========== 剪贴板写入（含降级，自定义提示）==========
+export const robustCopy = async (text, successMsg) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    vibrate();
+    showToast(successMsg);
+  } catch {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(successMsg);
+    } catch {
+      showToast('复制失败，请长按手动复制');
+    }
+  }
 };
 
 // ========== 根据名称判断图标（通用版） ==========

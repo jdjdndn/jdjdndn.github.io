@@ -1,5 +1,5 @@
 ﻿import QRCode from 'qrcode';
-import { $, showToast } from './base.js';
+import { $, showToast } from './utils.js';
 import { shareItem } from './share.js';
 
 // ---------- 二维码弹窗 ----------

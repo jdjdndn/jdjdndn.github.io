@@ -6,13 +6,10 @@
       subtitle="官方渠道办理 · 卡品信息仅供了解"
       aria="号卡业务专区"
     >
-      <template #badge>
-        <span class="stat-badge"><strong>2026.8.1</strong> 起第三方渠道停办</span>
-        <span class="stat-badge">办理请走运营商官方渠道</span>
-      </template>
+      <span class="stat-badge"><strong>官方渠道</strong> · 号卡在线办理</span>
     </PageHero>
 
-    <!-- 新规提示 -->  <div class="haoka-notice" role="alert"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 2026年8月1日起，第三方互联网渠道号卡办理还存在，但不能在公域大肆宣传，且号卡少了很多，依然可放心办理。</div> <!-- 信任徽章 -->
+    <!-- 新规提示 -->  <div class="haoka-notice" role="alert"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 官方渠道均可在线申请号卡，信息仅供参考，办理前请以运营商官方页面为准。</div> <!-- 信任徽章 -->
     <div class="trust-bar" role="list" aria-label="服务保障">
       <span class="trust-item" role="listitem">✓ 运营商授权</span>
       <span class="trust-item" role="listitem">✓ 多地区可选</span>
@@ -119,13 +116,13 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { inject } from 'vue'
+import { useToast } from '../composables'
 import PageHero from '../components/PageHero.vue'
 import SearchBox from '../components/SearchBox.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
 
-const toast = inject('toast')
+const toast = useToast()
 
 // 运营商 Tab
 const tabs = [
@@ -252,14 +249,17 @@ watch(searchKeyword, () => {
 
 function copyWechat() {
   navigator.clipboard.writeText('wcbblll').then(() => {
-    message.success('微信号 wcbblll 已复制，打开微信搜索添加')
+    toast.show('微信号 wcbblll 已复制，打开微信搜索添加')
   }).catch(() => {
-    message.error('复制失败，请手动搜索微信号：wcbblll')
+    toast.show('复制失败，请手动搜索微信号：wcbblll')
   })
 }
 </script>
 
 <style scoped>
+.haoka-page {
+  width: 100%;
+}
 
 .haoka-notice {
   max-width: 960px;
@@ -338,7 +338,13 @@ function copyWechat() {
   color: var(--accent, #004E89);
   font-weight: 600;
   text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(0, 78, 137, 0.08);
+  transition: background .2s;
 }
+.cross-link-banner a:hover { background: rgba(0, 78, 137, 0.15); }
+.cross-link-banner a:active { transform: scale(0.97); }
 
 /* 选卡指南入口 */
 .hero-entry-banner {
@@ -370,7 +376,13 @@ function copyWechat() {
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(194, 65, 12, 0.08);
+  transition: background .2s;
 }
+.hero-entry-link:hover { background: rgba(194, 65, 12, 0.15); }
+.hero-entry-link:active { transform: scale(0.97); }
 
 [data-theme="dark"] .hero-entry-banner {
   background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(251, 146, 60, 0.08));
@@ -424,36 +436,8 @@ function copyWechat() {
 
 .seo-note { font-size: 12px; color: var(--muted, #6b7280); margin-top: 10px; }
 
-/* FAQ */
-.faq-list { display: flex; flex-direction: column; gap: 8px; }
-
-.faq-item {
-  background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e2dd);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.faq-question {
-  padding: 14px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  list-style: none;
-}
-
-.faq-question::-webkit-details-marker { display: none; }
-
-.faq-answer {
-  padding: 0 16px 14px;
-  font-size: 13px;
-  color: var(--text-secondary, #6b7280);
-  line-height: 1.7;
-}
-
 /* 暗色模式 */
-[data-theme="dark"] .guide-card,
-[data-theme="dark"] .faq-item {
+[data-theme="dark"] .guide-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
@@ -501,14 +485,14 @@ function copyWechat() {
 }
 
 .tab-btn:hover {
-  border-color: var(--primary, #6366f1);
-  color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
+  color: var(--primary, #FF6B35);
 }
 
 .tab-btn.active {
-  background: var(--primary, #6366f1);
+  background: var(--primary, #FF6B35);
   color: #fff;
-  border-color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
 }
 
 /* 文章卡片 */
@@ -532,7 +516,7 @@ function copyWechat() {
 }
 
 .article-card:hover {
-  border-color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
   transform: translateY(-2px);
 }
@@ -556,7 +540,7 @@ function copyWechat() {
   display: inline-block;
   padding: 4px 10px;
   background: var(--primary-light, #eef2ff);
-  color: var(--primary, #6366f1);
+  color: var(--primary, #FF6B35);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -600,14 +584,14 @@ function copyWechat() {
 }
 
 .pagination button:hover:not(:disabled) {
-  border-color: var(--primary, #6366f1);
-  color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
+  color: var(--primary, #FF6B35);
 }
 
 .pagination button.active {
-  background: var(--primary, #6366f1);
+  background: var(--primary, #FF6B35);
   color: #fff;
-  border-color: var(--primary, #6366f1);
+  border-color: var(--primary, #FF6B35);
 }
 
 .pagination button:disabled {
@@ -628,7 +612,7 @@ function copyWechat() {
 }
 
 [data-theme="dark"] .article-card:hover {
-  border-color: var(--primary, #818cf8);
+  border-color: var(--primary, #FF6B35);
   box-shadow: 0 4px 12px rgba(129, 140, 248, 0.15);
 }
 
