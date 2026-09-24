@@ -34,9 +34,9 @@ src/article/huiyuan-promote.html
 src/article/huiyuan-faq.html
 
 # gen-og-image.cjs / gen-icons.cjs 生成的资源
-public/og-image.png
-public/icons/icon-192.png
-public/icons/icon-512.png
+# public/og-image.png
+# public/icons/icon-192.png
+# public/icons/icon-512.png
 
 # 构建残留
-public/69381b8dab7a3c1e281d0ff617324953.txt
+# public/69381b8dab7a3c1e281d0ff617324953.txt

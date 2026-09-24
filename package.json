@@ -9,7 +9,7 @@
     "fetch-api:all": "node api-data/fetch-data.mjs && node api-data/update-jingxuan.mjs",
     "update-jingxuan": "node api-data/update-jingxuan.mjs",
     "update-jingxuan:login": "node api-data/update-jingxuan.mjs --login",
-    "build": "node scripts/gen-vue-pages.cjs && node scripts/gen-fuye-guides.cjs && node scripts/gen-og-image.cjs && vite build && cp src/shared.css dist/shared.css && node scripts/gen-landing-pages.cjs",
+    "build": "node scripts/gen-vue-pages.cjs && node scripts/gen-fuye-guides.cjs && node scripts/gen-og-image.cjs && node scripts/gen-icons.cjs && vite build && cp src/shared.css dist/shared.css && node scripts/gen-landing-pages.cjs",
     "preview": "vite preview",
     "check-expired": "node scripts/check-expired.cjs",
     "seo": "node scripts/seo-audit.cjs",
