@@ -388,11 +388,27 @@ function promoteShellPages() {
   if (fs.existsSync(fuyeSrcDir)) {
     const fuyeDestDir = path.join(DIST_DIR, 'fuye');
     fs.mkdirSync(fuyeDestDir, { recursive: true });
+
+    // 从 dist/index.html 读取 Vite 构建后的实际文件名（带 hash）
+    const indexHtmlPath = path.join(DIST_DIR, 'index.html');
+    let mainJsFile = 'main.js';
+    let mainCssFile = 'vue-app.css';
+    if (fs.existsSync(indexHtmlPath)) {
+      const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
+      const jsMatch = indexHtml.match(/src="\.\/assets\/(main[^"]+\.js)"/);
+      const cssMatch = indexHtml.match(/href="\.\/assets\/(main[^"]+\.css)"/);
+      if (jsMatch) mainJsFile = `./assets/${jsMatch[1]}`;
+      if (cssMatch) mainCssFile = `./assets/${cssMatch[1]}`;
+    }
+
     for (const file of fs.readdirSync(fuyeSrcDir)) {
       if (!file.endsWith('.html')) continue;
       let html = fs.readFileSync(path.join(fuyeSrcDir, file), 'utf8');
       // 改写相对路径：从 ../../ 改为 ../（因为从 fuye/ 到根目录只需一层）
       html = html.replace(/"\.\.\/\.\.\//g, '"../');
+      // 替换 Vue 应用入口为 Vite 构建后的带 hash 文件
+      html = html.replace(/"\.\.\/main\.js"/, `"${mainJsFile}"`);
+      html = html.replace(/"\.\.\/vue-app\.css"/, `"${mainCssFile}"`);
       fs.writeFileSync(path.join(fuyeDestDir, file), html, 'utf8');
       moved++;
     }
