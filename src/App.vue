@@ -1,37 +1,17 @@
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
-    <n-message-provider>
-      <n-notification-provider>
-        <n-dialog-provider>
-          <div class="app-wrapper">
-            <SiteNav position="side" />
-            <router-view />
-            <SiteNav position="footer" />
-          </div>
-        </n-dialog-provider>
-      </n-notification-provider>
-    </n-message-provider>
-  </n-config-provider>
+  <div class="app-wrapper">
+    <SiteNav position="side" />
+    <router-view />
+    <SiteNav position="footer" />
+  </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { NConfigProvider, NMessageProvider, NNotificationProvider, NDialogProvider } from 'naive-ui'
 import SiteNav from './components/SiteNav.vue'
 import { useAppStore } from './stores/app'
 
 const appStore = useAppStore()
-
-// Naive UI 主题：品牌橙，替代默认绿色 primary
-const themeOverrides = {
-  common: {
-    primaryColor: '#FF6B35',
-    primaryColorHover: '#FF8A4C',
-    primaryColorPressed: '#E55A2B',
-    primaryColorSuppl: '#FF6B35',
-    borderRadius: '8px'
-  }
-}
 
 onMounted(() => {
   // 初始化暗色模式

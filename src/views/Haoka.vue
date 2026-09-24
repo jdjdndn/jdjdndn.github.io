@@ -119,13 +119,13 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useMessage } from 'naive-ui'
+import { inject } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import SearchBox from '../components/SearchBox.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
 
-const message = useMessage()
+const toast = inject('toast')
 
 // 运营商 Tab
 const tabs = [

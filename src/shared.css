@@ -18,7 +18,6 @@
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
   --shadow-hover: 0 8px 28px rgba(255, 107, 53, 0.1), 0 2px 8px rgba(255, 107, 53, 0.05);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.03);
   --radius: 12px;
   --radius-sm: 8px;
   --radius-lg: 16px;
@@ -270,20 +269,14 @@ button:disabled { cursor: not-allowed; opacity: 0.5; }
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-hover: 0 8px 28px rgba(255, 107, 53, 0.12), 0 2px 8px rgba(255, 107, 53, 0.06);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.15);
-  --hover-bg: #2a2a45;
-  --code-bg: #151528;
-  --code-border: #3d3d55;
-  --placeholder: #505068;
-  --primary-light-hover: #3d1f0e;
-  --danger-light: #2d0f0f;
-  --success-light: #0f2d1a;
-  --placeholder: #64748b;
   --hover-bg: #252540;
   --code-bg: #141428;
   --code-border: #2d2d55;
-  --toast-bg: #e2e8f0;
+  --placeholder: #64748b;
   --primary-light-hover: #3d1f0e;
+  --danger-light: #2d0f0f;
+  --success-light: #0f2d1a;
+  --toast-bg: #e2e8f0;
   --hero-gradient: linear-gradient(155deg, #0a0400 0%, #3d1200 20%, #5a2000 45%, #7a3520 70%, #8c4a30 100%);
   --hero-dark-gradient: linear-gradient(155deg, #0a0400 0%, #3d1200 20%, #5a2000 45%, #7a3520 70%, #8c4a30 100%);
 }
@@ -457,8 +450,6 @@ html.dark-mode {
   transition: opacity 0.3s, transform 0.3s;
   pointer-events: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   letter-spacing: 0.02em;
 }
 .toast.hidden { opacity: 0; transform: translateX(-50%) translateY(10px); }
@@ -830,8 +821,6 @@ html.dark-mode {
   box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 999;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 .back-to-top:hover { border-color: var(--primary); color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
 .back-to-top.hidden { display: none; }
@@ -1051,8 +1040,6 @@ a:focus-visible {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
 }
 .share-panel-body {
   position: relative;
@@ -1174,8 +1161,6 @@ a:focus-visible {
 @supports (-webkit-touch-callout: none) {
   /* 仅在 iOS Safari 上应用 */
   .qr-overlay {
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
   }
 
   /* QR 弹窗适配安全区域 */
@@ -1202,8 +1187,6 @@ a:focus-visible {
   background: rgba(248, 247, 244, 0.95);
   border-top: 1px solid var(--border);
   z-index: 100;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 .footer-nav {
@@ -1254,8 +1237,6 @@ a:focus-visible {
   align-items: center;
   gap: 5px;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 7px 14px;
   border-radius: 20px;
@@ -1303,8 +1284,6 @@ body { padding-bottom: calc(50px + var(--safe-area-inset-bottom, 0px)); }
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: all var(--transition);
 }
 .back-link:hover {
@@ -1323,8 +1302,6 @@ body { padding-bottom: calc(50px + var(--safe-area-inset-bottom, 0px)); }
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   letter-spacing: 0.3px;
 }
 
@@ -1372,9 +1349,9 @@ body { padding-bottom: calc(50px + var(--safe-area-inset-bottom, 0px)); }
   }
 }
 
-/* ========== 暗色模式 ========== */
+/* ========== 暗色模式（系统级 + 手动统一引用同一套变量） ========== */
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:not([data-theme="light"]) {
     --bg: #0f0f23;
     --bg-elevated: #1a1a2e;
     --card: #1a1f36;
@@ -1390,19 +1367,19 @@ body { padding-bottom: calc(50px + var(--safe-area-inset-bottom, 0px)); }
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-hover: 0 8px 28px rgba(255, 107, 53, 0.12), 0 2px 8px rgba(255, 107, 53, 0.06);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.15);
-    --hover-bg: #2a2a45;
-    --code-bg: #151528;
-    --code-border: #3d3d55;
-    --placeholder: #505068;
+    --hover-bg: #252540;
+    --code-bg: #141428;
+    --code-border: #2d2d55;
+    --placeholder: #64748b;
     --primary-light-hover: #3d1f0e;
     --danger-light: #2d0f0f;
     --success-light: #0f2d1a;
     --toast-bg: #e2e8f0;
     --hero-gradient: linear-gradient(155deg, #0a0400 0%, #3d1200 20%, #5a2000 45%, #7a3520 70%, #8c4a30 100%);
     --hero-dark-gradient: linear-gradient(155deg, #0a0400 0%, #3d1200 20%, #5a2000 45%, #7a3520 70%, #8c4a30 100%);
+    background: var(--bg);
+    color: var(--text);
   }
-  body { background: var(--bg); color: var(--text); }
   .card-code { color: #c4c9e0; }
   .toast { color: #0f0f23; }
   .search-clear:hover,

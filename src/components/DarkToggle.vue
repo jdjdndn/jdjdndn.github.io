@@ -57,8 +57,6 @@ onUnmounted(() => {
   border: 1.5px solid rgba(255, 255, 255, 0.18);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   color: #fff;
   font-size: 12px;
   font-weight: 500;

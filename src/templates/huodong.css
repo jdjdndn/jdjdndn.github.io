@@ -63,8 +63,6 @@
   color: #fff;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   padding: 6px 14px;
   border-radius: 20px;
 }
@@ -82,8 +80,6 @@
   align-items: center;
   gap: 5px;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 6px 14px;
   border-radius: 20px;
@@ -307,16 +303,12 @@
   max-width: fit-content;
   margin: 0 auto 16px;
   transition: box-shadow 0.3s ease;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 .tab-nav.is-stuck {
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   margin-bottom: 0;
   border-radius: 0;
   background: var(--card);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 .dark-mode .tab-nav.is-stuck {
   background: var(--bg-secondary);
@@ -1365,8 +1357,6 @@
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   animation: fadeIn 0.15s ease;
 }
 .shortcuts-overlay.hidden { display: none; }
@@ -1515,8 +1505,6 @@ kbd {
   font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 /* ========== 使用人数徽章 ========== */

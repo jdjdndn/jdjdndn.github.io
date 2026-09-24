@@ -74,12 +74,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useMessage } from 'naive-ui'
+import { inject } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
 
-const message = useMessage()
+const toast = inject('toast')
 import { featuredActivities } from '../data.js'
 const searchQuery = ref('')
 const selectedCategory = ref(null)

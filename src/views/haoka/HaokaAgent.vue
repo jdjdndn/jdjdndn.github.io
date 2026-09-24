@@ -85,12 +85,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useMessage } from 'naive-ui'
+import { inject } from 'vue'
 import PageHero from '../../components/PageHero.vue'
 import LegalLinks from '../../components/LegalLinks.vue'
 import { haokaProxyLinks } from '../../templates/haoka-data.js'
 
-const message = useMessage()
+const toast = inject('toast')
 const formRef = ref(null)
 const currentStep = ref(1)
 

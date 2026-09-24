@@ -1,16 +1,12 @@
 <template>
-  <n-card class="product-card" :bordered="false" hoverable>
-    <template #header>
-      <div class="product-header">
-        <span class="product-icon">{{ product.icon }}</span>
-        <span class="product-name">{{ product.name }}</span>
-      </div>
-    </template>
-    <template #header-extra>
-      <n-tag v-if="product.tag" :type="product.tagType || 'default'" size="small">
+  <div class="product-card">
+    <div class="product-header">
+      <span class="product-icon">{{ product.icon }}</span>
+      <span class="product-name">{{ product.name }}</span>
+      <span v-if="product.tag" :class="['product-tag', `tag-${product.tagType || 'default'}`]">
         {{ product.tag }}
-      </n-tag>
-    </template>
+      </span>
+    </div>
 
     <div class="product-body">
       <p class="product-desc">{{ product.desc }}</p>
@@ -21,37 +17,34 @@
       </div>
 
       <div v-if="product.features && product.features.length" class="product-features">
-        <n-tag v-for="feature in product.features" :key="feature" size="small" type="info">
+        <span v-for="feature in product.features" :key="feature" class="feature-tag">
           {{ feature }}
-        </n-tag>
+        </span>
       </div>
     </div>
 
-    <template #action>
-      <n-space>
-        <n-button
-          v-if="product.url"
-          type="primary"
-          tag="a"
-          :href="product.url"
-          target="_blank"
-          rel="noopener sponsored"
-        >
-          立即购买
-        </n-button>
-        <n-button v-if="product.coupon" @click="handleCopyCoupon">
-          领券
-        </n-button>
-        <n-button v-if="product.detailUrl" tag="a" :href="product.detailUrl" target="_blank">
-          详情
-        </n-button>
-      </n-space>
-    </template>
-  </n-card>
+    <div class="product-actions">
+      <a
+        v-if="product.url"
+        :href="product.url"
+        target="_blank"
+        rel="noopener sponsored"
+        class="btn btn-primary"
+      >
+        立即购买
+      </a>
+      <button v-if="product.coupon" class="btn" @click="handleCopyCoupon">
+        领券
+      </button>
+      <a v-if="product.detailUrl" :href="product.detailUrl" target="_blank" class="btn">
+        详情
+      </a>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { useMessage } from 'naive-ui'
+import { inject } from 'vue'
 
 const props = defineProps({
   product: {
@@ -60,13 +53,13 @@ const props = defineProps({
   }
 })
 
-const message = useMessage()
+const toast = inject('toast')
 
 async function handleCopyCoupon() {
   if (!props.product.coupon) return
   try {
     await navigator.clipboard.writeText(props.product.coupon)
-    message.success('优惠券已复制')
+    toast?.success('优惠券已复制')
   } catch {
     message.error('复制失败')
   }

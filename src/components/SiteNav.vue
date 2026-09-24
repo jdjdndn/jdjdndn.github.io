@@ -140,8 +140,6 @@ function isActive(item) {
   background: var(--nav-bg, #ffffff);
   border-top: 1px solid var(--nav-border, #e5e2dd);
   z-index: 100;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 

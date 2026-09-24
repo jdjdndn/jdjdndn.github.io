@@ -170,7 +170,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useMessage } from 'naive-ui'
+import { inject } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
@@ -178,7 +178,7 @@ import QrModal from '../components/QrModal.vue'
 import { useClipboard, useShare } from '../composables'
 import { wifiLinks } from '../templates/wifi-data.js'
 
-const message = useMessage()
+const toast = inject('toast')
 const { copy } = useClipboard()
 const { quickShare } = useShare()
 
