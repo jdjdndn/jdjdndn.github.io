@@ -121,9 +121,6 @@ html {
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
-body {
-  overflow-x: clip; /* 防止 hero 负 margin 导致水平滚动条，clip 不创建滚动容器 */
-}
 #app {
   width: 100%;
   max-width: 1100px;
