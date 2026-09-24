@@ -390,15 +390,16 @@ function promoteShellPages() {
     fs.mkdirSync(fuyeDestDir, { recursive: true });
 
     // 从 dist/index.html 读取 Vite 构建后的实际文件名（带 hash）
+    // fuye/ 在子目录，需要 ../assets/ 而不是 ./assets/
     const indexHtmlPath = path.join(DIST_DIR, 'index.html');
-    let mainJsFile = 'main.js';
-    let mainCssFile = 'vue-app.css';
+    let mainJsFile = '../main.js';
+    let mainCssFile = '../vue-app.css';
     if (fs.existsSync(indexHtmlPath)) {
       const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
       const jsMatch = indexHtml.match(/src="\.\/assets\/(main[^"]+\.js)"/);
       const cssMatch = indexHtml.match(/href="\.\/assets\/(main[^"]+\.css)"/);
-      if (jsMatch) mainJsFile = `./assets/${jsMatch[1]}`;
-      if (cssMatch) mainCssFile = `./assets/${cssMatch[1]}`;
+      if (jsMatch) mainJsFile = `../assets/${jsMatch[1]}`;
+      if (cssMatch) mainCssFile = `../assets/${cssMatch[1]}`;
     }
 
     for (const file of fs.readdirSync(fuyeSrcDir)) {
