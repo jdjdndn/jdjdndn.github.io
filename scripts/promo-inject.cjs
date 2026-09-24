@@ -26,6 +26,7 @@ function walk(dir, out = []) {
   }
   return out;
 }
+const OLD_PROMO_RE = /<section class="card promo-links"[\s\S]*?<\/section>\s*\n?/;
 const files = walk(root);
 let done = 0, skipped = 0;
 for (const f of files) {
@@ -33,7 +34,13 @@ for (const f of files) {
   const depth = rel.includes('/') ? 1 : 0;
   const prefix = depth === 0 ? '../' : '../../';
   let c = fs.readFileSync(f, 'utf8');
-  if (c.includes('promo-links')) { skipped++; continue; }
+  if (c.includes('promo-banner')) { skipped++; continue; }
+  if (c.includes('promo-links')) {
+    c = c.replace(OLD_PROMO_RE, PROMO(prefix));
+    fs.writeFileSync(f, c, 'utf8');
+    done++;
+    continue;
+  }
   const anchor = '<footer';
   const idx = c.indexOf(anchor);
   if (idx === -1) { skipped++; continue; }

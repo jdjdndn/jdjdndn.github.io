@@ -117,13 +117,12 @@ site-nav {
 
 /* ========== 滚动条样式 ========== */
 html {
-  /* 确保刘海屏/异形屏圆角区域也被背景色覆盖 */
   background: var(--bg);
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
 body {
-  overflow-x: hidden; /* 防止 hero 负 margin 导致水平滚动条 */
+  overflow-x: clip; /* 防止 hero 负 margin 导致水平滚动条，clip 不创建滚动容器 */
 }
 #app {
   width: 100%;

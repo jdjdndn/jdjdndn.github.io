@@ -281,6 +281,74 @@ li {
 }
 
 
+/* ===== 更多省钱入口（promo-banner） ===== */
+.promo-banner {
+  background: linear-gradient(135deg, #fff5f0 0%, #fff 50%, #fff8f3 100%);
+  border: 1px solid color-mix(in srgb, var(--primary, #FF6B35) 18%, transparent);
+  border-radius: 14px;
+  padding: 18px 16px;
+  margin: 18px 0;
+  text-align: center;
+}
+.promo-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary, #FF6B35);
+  margin-bottom: 12px;
+}
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.promo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--primary, #FF6B35) 22%, transparent);
+  border-radius: 10px;
+  color: var(--primary, #FF6B35);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(255,107,53,0.08);
+}
+.promo-btn:hover {
+  background: var(--primary, #FF6B35);
+  color: #fff;
+  border-color: var(--primary, #FF6B35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,107,53,0.25);
+}
+.promo-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+.promo-home {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--sub, #5b6472);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary, #FF6B35) 6%, transparent);
+  transition: all 0.2s ease;
+}
+.promo-home:hover {
+  color: var(--primary, #FF6B35);
+  background: color-mix(in srgb, var(--primary, #FF6B35) 12%, transparent);
+}
+@media(max-width:480px) {
+  .promo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* ===== 返回优惠活动大厅（商品文 → 活动页互链） ===== */
 .back-activity {
   text-align: center;
