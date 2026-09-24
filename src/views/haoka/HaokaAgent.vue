@@ -23,60 +23,63 @@
         <span class="agent-tag">推广素材</span>
       </div>
       <div class="agent-grid">
-        <n-button v-for="proxy in haokaProxyLinks" :key="proxy.name" type="primary" tag="a" :href="proxy.url" target="_blank" rel="noopener sponsored" block>
+        <a v-for="proxy in haokaProxyLinks" :key="proxy.name" class="btn btn-primary btn-block" :href="proxy.url" target="_blank" rel="noopener sponsored">
           {{ proxy.name }}
-        </n-button>
+        </a>
       </div>
     </section>
 
     <!-- 代理优势 -->
     <section class="agent-advantages">
       <h2 class="seo-title">代理优势</h2>
-      <n-grid :cols="2" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-        <n-gi v-for="advantage in advantages" :key="advantage.id" span="2 m:1">
-          <n-card hoverable>
-            <template #header>
-              <div class="advantage-header">
-                <span class="advantage-icon">{{ advantage.icon }}</span>
-                <span>{{ advantage.title }}</span>
-              </div>
-            </template>
+      <div class="grid-2">
+        <div v-for="advantage in advantages" :key="advantage.id" class="grid-item">
+          <div class="card hoverable">
+            <div class="advantage-header">
+              <span class="advantage-icon">{{ advantage.icon }}</span>
+              <span>{{ advantage.title }}</span>
+            </div>
             <p class="advantage-desc">{{ advantage.desc }}</p>
-          </n-card>
-        </n-gi>
-      </n-grid>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 代理流程 -->
     <section class="agent-process">
       <h2 class="seo-title">代理流程</h2>
-      <n-steps :current="currentStep" :status="currentStep === 3 ? 'success' : 'process'">
-        <n-step title="注册账号" description="填写基本信息，完成注册" />
-        <n-step title="获取推广链接" description="系统自动生成专属推广链接" />
-        <n-step title="开始推广" description="分享链接，邀请用户办卡" />
-        <n-step title="获得佣金" description="用户成功办卡，佣金到账" />
-      </n-steps>
+      <div class="steps">
+        <div v-for="(step, i) in processSteps" :key="i" class="step" :class="{ active: currentStep > i, success: currentStep === 4 }">
+          <div class="step-indicator">{{ currentStep > i ? '✓' : i + 1 }}</div>
+          <div class="step-content">
+            <div class="step-title">{{ step.title }}</div>
+            <div class="step-desc">{{ step.desc }}</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 立即加入 -->
     <section class="agent-register">
       <h2 class="seo-title">立即加入</h2>
-      <n-form ref="formRef" :model="formData" :rules="rules">
-        <n-form-item label="姓名" path="name">
-          <n-input v-model:value="formData.name" placeholder="请输入您的姓名" />
-        </n-form-item>
-        <n-form-item label="手机号" path="phone">
-          <n-input v-model:value="formData.phone" placeholder="请输入手机号" />
-        </n-form-item>
-        <n-form-item label="推广渠道" path="channel">
-          <n-select v-model:value="formData.channel" :options="channelOptions" placeholder="请选择推广渠道" />
-        </n-form-item>
-        <n-form-item>
-          <n-button type="primary" block @click="handleSubmit">
-            提交申请
-          </n-button>
-        </n-form-item>
-      </n-form>
+      <form @submit.prevent="handleSubmit">
+        <div class="form-group">
+          <label>姓名</label>
+          <input v-model="formData.name" type="text" placeholder="请输入您的姓名" />
+        </div>
+        <div class="form-group">
+          <label>手机号</label>
+          <input v-model="formData.phone" type="tel" placeholder="请输入手机号" />
+        </div>
+        <div class="form-group">
+          <label>推广渠道</label>
+          <select v-model="formData.channel">
+            <option :value="null" disabled>请选择推广渠道</option>
+            <option v-for="opt in channelOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">提交申请</button>
+      </form>
     </section>
 
     <LegalLinks />
@@ -91,7 +94,6 @@ import LegalLinks from '../../components/LegalLinks.vue'
 import { haokaProxyLinks } from '../../templates/haoka-data.js'
 
 const toast = inject('toast')
-const formRef = ref(null)
 const currentStep = ref(1)
 
 const formData = ref({
@@ -100,17 +102,18 @@ const formData = ref({
   channel: null
 })
 
-const rules = {
-  name: { required: true, message: '请输入姓名', trigger: 'blur' },
-  phone: { required: true, message: '请输入手机号', trigger: 'blur' },
-  channel: { required: true, message: '请选择推广渠道', trigger: 'change' }
-}
-
 const channelOptions = [
   { label: '社交媒体', value: 'social' },
   { label: '电商平台', value: 'ecommerce' },
   { label: '线下推广', value: 'offline' },
   { label: '其他', value: 'other' }
+]
+
+const processSteps = [
+  { title: '注册账号', desc: '填写基本信息，完成注册' },
+  { title: '获取推广链接', desc: '系统自动生成专属推广链接' },
+  { title: '开始推广', desc: '分享链接，邀请用户办卡' },
+  { title: '获得佣金', desc: '用户成功办卡，佣金到账' }
 ]
 
 const advantages = ref([
@@ -120,14 +123,13 @@ const advantages = ref([
   { id: 4, icon: '🛡️', title: '持续售后', desc: '专业客服团队，解决用户问题' }
 ])
 
-async function handleSubmit() {
-  try {
-    await formRef.value?.validate()
-    message.success('申请提交成功，我们会尽快联系您！')
-    formData.value = { name: '', phone: '', channel: null }
-  } catch (errors) {
-    message.error('请填写完整信息')
+function handleSubmit() {
+  if (!formData.value.name || !formData.value.phone || !formData.value.channel) {
+    toast?.('请填写完整信息', 'error')
+    return
   }
+  toast?.('申请提交成功，我们会尽快联系您！', 'success')
+  formData.value = { name: '', phone: '', channel: null }
 }
 </script>
 
@@ -173,6 +175,34 @@ async function handleSubmit() {
   gap: 8px;
 }
 
+.card {
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.card.hoverable:hover {
+  border-color: var(--primary, #FF6B35);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-item {
+  min-width: 0;
+}
+
 .agent-advantages {
   max-width: 1100px;
   margin: 40px auto;
@@ -200,14 +230,146 @@ async function handleSubmit() {
   padding: 0 16px;
 }
 
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.step-indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--muted-bg, #f3f4f6);
+  color: var(--muted, #6b7280);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.step.active .step-indicator {
+  background: var(--primary, #FF6B35);
+  color: #fff;
+}
+
+.step.success .step-indicator {
+  background: var(--success, #16a34a);
+  color: #fff;
+}
+
+.step-content {
+  padding-top: 4px;
+}
+
+.step-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+}
+
 .agent-register {
   max-width: 1100px;
   margin: 40px auto;
   padding: 0 16px;
 }
 
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text, #1a1a2e);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card, #fff);
+  color: var(--text, #1a1a2e);
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary, #FF6B35);
+}
+
+.form-group input::placeholder {
+  color: var(--placeholder, #b0aaa0);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary, #FF6B35);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark, #e55a2b);
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
 [data-theme="dark"] .agent-section {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .card {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .step-indicator {
+  background: var(--muted-bg, #2d2d45);
+  color: var(--muted, #a0aec0);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
+  color: var(--text, #e5e2dd);
 }
 </style>

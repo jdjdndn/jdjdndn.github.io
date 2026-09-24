@@ -33,9 +33,9 @@
           <div class="group-name">{{ group.name }}</div>
           <div class="group-desc">{{ group.desc }}</div>
         </div>
-        <n-tag size="small" :type="group.disabled ? 'default' : 'success'">
+        <span :class="['tag', group.disabled ? 'tag-default' : 'tag-success']">
           {{ group.tag }}
-        </n-tag>
+        </span>
       </div>
     </div>
 
@@ -43,17 +43,20 @@
 
     <!-- 群聊说明（充实内容，避免长屏底部空白） -->
     <div class="q-faq">
-      <n-collapse :bordered="false">
-        <n-collapse-item title="群聊是免费加入的吗？" name="1">
-          是的，所有交流群均免费加入。入群后可以第一时间获取每日好价推送、优惠攻略答疑。
-        </n-collapse-item>
-        <n-collapse-item title="如何加入群聊？" name="2">
-          群聊正式开放后，点击对应群聊卡片即可扫码入群。目前各群正在筹备中，请耐心等待。
-        </n-collapse-item>
-        <n-collapse-item title="群聊里可以发广告吗？" name="3">
-          为维护群内体验，请勿在群内发布广告或刷屏。违规内容将被移出群聊，感谢理解。
-        </n-collapse-item>
-      </n-collapse>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-question">群聊是免费加入的吗？</summary>
+          <div class="faq-answer">是的，所有交流群均免费加入。入群后可以第一时间获取每日好价推送、优惠攻略答疑。</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">如何加入群聊？</summary>
+          <div class="faq-answer">群聊正式开放后，点击对应群聊卡片即可扫码入群。目前各群正在筹备中，请耐心等待。</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">群聊里可以发广告吗？</summary>
+          <div class="faq-answer">为维护群内体验，请勿在群内发布广告或刷屏。违规内容将被移出群聊，感谢理解。</div>
+        </details>
+      </div>
     </div>
 
     <LegalLinks />
@@ -231,19 +234,63 @@ const filteredGroups = computed(() => {
   margin: 0 auto 24px;
   padding: 0 16px;
 }
-.q-faq :deep(.n-collapse) {
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tag-success {
+  background: var(--success-bg, #e6f9ee);
+  color: var(--success, #16a34a);
+}
+
+.tag-info {
+  background: var(--info-bg, #e8f0fe);
+  color: var(--info, #2563eb);
+}
+
+.tag-default {
+  background: var(--muted-bg, #f3f4f6);
+  color: var(--muted, #6b7280);
+}
+
+.q-faq .faq-list {
   background: var(--card, #fff);
   border: 1px solid var(--border, #e5e2dd);
   border-radius: 12px;
   padding: 4px 16px;
 }
-.q-faq :deep(.n-collapse-item__header-main) {
+
+.q-faq .faq-item {
+  border-bottom: 1px solid var(--border, #e5e2dd);
+}
+
+.q-faq .faq-item:last-child {
+  border-bottom: none;
+}
+
+.q-faq .faq-question {
   font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
+  padding: 12px 0;
+  list-style: none;
 }
-.q-faq :deep(.n-collapse-item__content-inner) {
+
+.q-faq .faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.q-faq .faq-answer {
   font-size: 13px;
   color: var(--text-secondary, #6b7280);
+  padding-bottom: 12px;
 }
 
 [data-theme="dark"] .q-search-bar,
@@ -252,7 +299,22 @@ const filteredGroups = computed(() => {
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .q-faq :deep(.n-collapse) {
+[data-theme="dark"] .tag-success {
+  background: var(--success-bg, #0d3320);
+  color: var(--success, #4ade80);
+}
+
+[data-theme="dark"] .tag-info {
+  background: var(--info-bg, #0d1f3c);
+  color: var(--info, #60a5fa);
+}
+
+[data-theme="dark"] .tag-default {
+  background: var(--muted-bg, #2d2d45);
+  color: var(--muted, #a0aec0);
+}
+
+[data-theme="dark"] .q-faq .faq-list {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }

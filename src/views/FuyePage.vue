@@ -13,17 +13,15 @@
 
       <!-- 简介区 -->
       <div class="intro-section">
-        <n-card :bordered="false">
-          <template #header>
-            <span>💡 什么是{{ config.title }}？</span>
-          </template>
+        <div class="card">
+          <h3 class="card-title">💡 什么是{{ config.title }}？</h3>
           <p>{{ config.intro }}</p>
-        </n-card>
+        </div>
       </div>
 
       <!-- 横幅入口 -->
       <div v-if="config.banner" class="banner-section">
-        <n-card hoverable class="banner-card" @click="handleEntryClick(config.banner)">
+        <div class="card hoverable banner-card" @click="handleEntryClick(config.banner)">
           <div class="banner-item">
             <div class="banner-icon">{{ config.banner.icon }}</div>
             <div class="banner-text">
@@ -32,16 +30,15 @@
             </div>
             <div class="banner-arrow">→</div>
           </div>
-        </n-card>
+        </div>
       </div>
 
       <!-- 入口链接 -->
       <div class="entry-grid">
-        <n-card
+        <div
           v-for="entry in config.entries"
           :key="entry.id"
-          hoverable
-          class="entry-card"
+          class="card hoverable entry-card"
           @click="handleEntryClick(entry)"
         >
           <div class="entry-item">
@@ -51,12 +48,13 @@
               <div class="entry-desc">{{ entry.desc }}</div>
             </div>
           </div>
-        </n-card>
+        </div>
       </div>
 
       <!-- 详细指导 -->
       <div class="guide-section">
-        <n-card title="📖 详细指导 · 实操步骤" :bordered="false">
+        <h3 class="card-title">📖 详细指导 · 实操步骤</h3>
+        <div class="card">
           <div v-for="guide in config.guides" :key="guide.id" class="guide-item">
             <div class="guide-head">
               <div class="guide-no">{{ guide.id }}</div>
@@ -78,7 +76,7 @@
               查看完整实操指南 →
             </a>
           </div>
-        </n-card>
+        </div>
       </div>
 
       <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
@@ -122,16 +120,6 @@ function handleEntryClick(entry) {
 /* 简介区 */
 .intro-section {
   margin-bottom: 32px;
-}
-
-.intro-section :deep(.n-card) {
-  background: var(--card, #fff);
-  border-radius: 12px;
-}
-
-.intro-section :deep(.n-card__header) {
-  font-size: 18px;
-  font-weight: 700;
 }
 
 .intro-section p {
@@ -261,11 +249,6 @@ function handleEntryClick(entry) {
 /* 详细指导 */
 .guide-section {
   margin-bottom: 48px;
-}
-
-.guide-section :deep(.n-card__header) {
-  font-size: 18px;
-  font-weight: 700;
 }
 
 .guide-item {

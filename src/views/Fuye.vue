@@ -14,18 +14,18 @@
     </PageHero>
 
     <!-- 副业分类入口 -->
-    <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive class="entry-grid">
-      <n-gi v-for="(entry, idx) in entries" :key="entry.name" :span="idx === entries.length - 1 ? '3' : '3 m:1'" class="entry-grid-item">
+    <div class="entry-grid">
+      <div v-for="(entry, idx) in entries" :key="entry.name" :class="['entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']">
         <router-link :to="entry.url" class="entry-card">
           <div class="entry-icon">{{ entry.icon }}</div>
           <div class="entry-info">
             <div class="entry-name">{{ entry.name }}</div>
             <div class="entry-desc">{{ entry.desc }}</div>
           </div>
-          <n-tag size="small" :type="entry.tagType">{{ entry.tag }}</n-tag>
+          <span :class="['tag', 'tag-' + (entry.tagType || 'default')]">{{ entry.tag }}</span>
         </router-link>
-      </n-gi>
-    </n-grid>
+      </div>
+    </div>
 
     <p class="f-note">💡 选择副业方向，查看对应攻略 · 按需投入，量力而行</p>
 
@@ -101,13 +101,25 @@ const entries = [
 
 <style scoped>
 .entry-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 16px;
 }
+@media (min-width: 640px) {
+  .entry-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .entry-grid { grid-template-columns: repeat(3, 1fr); }
+}
 
 /* 最后一项（更多副业）整行通栏展示 */
-:deep(.entry-grid-item:last-child .entry-card) {
+.entry-grid-item.full-width {
+  grid-column: 1 / -1;
+}
+.entry-grid-item.full-width .entry-card {
   border-style: dashed;
   background: var(--card, #fff);
   justify-content: center;

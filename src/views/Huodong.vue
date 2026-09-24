@@ -7,65 +7,61 @@
         aria="优惠活动聚合"
       />
 
-      <n-card :bordered="false">
-        <template #header>
-          <div class="filter-header">
-            <span>活动筛选</span>
-            <n-space>
-              <n-input
-                v-model:value="searchQuery"
+      <div class="card">
+        <div class="filter-header">
+          <span>活动筛选</span>
+          <div class="space-h">
+            <div class="search-input-wrapper">
+              <span class="search-prefix">🔍</span>
+              <input
+                v-model="searchQuery"
+                type="text"
+                class="search-input"
                 placeholder="搜索活动..."
-                clearable
-                size="small"
-              >
-                <template #prefix>
-                  <span>🔍</span>
-                </template>
-              </n-input>
-              <n-select
-                v-model:value="selectedCategory"
-                :options="categoryOptions"
-                placeholder="全部分类"
-                size="small"
-                clearable
-                style="width: 120px"
               />
-            </n-space>
+              <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''">✕</button>
+            </div>
+            <select
+              v-model="selectedCategory"
+              class="select-input"
+            >
+              <option value="">全部分类</option>
+              <option v-for="opt in categoryOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
+            </select>
           </div>
-        </template>
+        </div>
 
-        <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-          <n-gi v-for="activity in filteredActivities" :key="activity.id" span="3 m:1">
-            <n-card hoverable>
-              <template #header>
+        <div class="grid-3">
+          <div v-for="activity in filteredActivities" :key="activity.id" class="grid-item">
+            <div class="card hoverable">
+              <div class="card-header">
                 <div class="activity-header">
                   <span class="activity-icon">{{ activity.icon }}</span>
                   <span>{{ activity.name }}</span>
                 </div>
-              </template>
-              <template #header-extra>
-                <n-tag :type="activity.tagType" size="small">
+                <span :class="['tag', 'tag-' + (activity.tagType || 'default')]">
                   {{ activity.tag }}
-                </n-tag>
-              </template>
+                </span>
+              </div>
               <p class="activity-desc">{{ activity.desc }}</p>
-              <n-space vertical :size="8">
-                <n-text depth="3" style="font-size: 12px">
+              <div class="space-v">
+                <span class="text-muted">
                   活动时间：{{ activity.time }}
-                </n-text>
-
-              </n-space>
-              <template #action>
-                <n-button type="primary" block @click="handleJoin(activity)">
+                </span>
+              </div>
+              <div class="card-action">
+                <button class="btn btn-primary btn-block" @click="handleJoin(activity)">
                   立即参与
-                </n-button>
-              </template>
-            </n-card>
-          </n-gi>
-        </n-grid>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <n-empty v-if="filteredActivities.length === 0" description="没有找到相关活动" />
-      </n-card>
+        <div v-if="filteredActivities.length === 0" class="empty-state">
+          <p>没有找到相关活动</p>
+        </div>
+      </div>
 
       <LegalLinks />
       <BackToTop />
@@ -118,6 +114,8 @@ function handleJoin(activity) {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .activity-header {
@@ -133,5 +131,200 @@ function handleJoin(activity) {
 .activity-desc {
   color: var(--text-secondary, #666);
   margin: 0 0 0.5rem 0;
+}
+
+.card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.card.hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.card.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-md, rgba(0, 0, 0, 0.1));
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.card-action {
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.space-h {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.space-v {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg, #f5f5f5);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.search-prefix {
+  margin-right: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--text-primary, #333);
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted, #999);
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--text-muted, #999);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.search-clear:hover {
+  color: var(--text-primary, #333);
+}
+
+.select-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  background: var(--input-bg, #f5f5f5);
+  font-size: 0.875rem;
+  color: var(--text-primary, #333);
+  outline: none;
+  cursor: pointer;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-item {
+  min-width: 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tag-default {
+  background: var(--tag-default-bg, #f0f0f0);
+  color: var(--tag-default-text, #666);
+}
+
+.tag-success {
+  background: var(--tag-success-bg, #e6f9e6);
+  color: var(--tag-success-text, #16a34a);
+}
+
+.tag-error {
+  background: var(--tag-error-bg, #fde8e8);
+  color: var(--tag-error-text, #dc2626);
+}
+
+.tag-info {
+  background: var(--tag-info-bg, #e8f4fd);
+  color: var(--tag-info-text, #2563eb);
+}
+
+.tag-warning {
+  background: var(--tag-warning-bg, #fef3cd);
+  color: var(--tag-warning-text, #d97706);
+}
+
+.text-muted {
+  font-size: 0.75rem;
+  color: var(--text-muted, #999);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: var(--primary-color, #2563eb);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover, #1d4ed8);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted, #999);
 }
 </style>

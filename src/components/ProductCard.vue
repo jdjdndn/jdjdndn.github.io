@@ -129,7 +129,4 @@ async function handleCopyCoupon() {
   gap: 4px;
 }
 
-:deep(.n-card__action) {
-  padding: 12px 16px;
-}
 </style>

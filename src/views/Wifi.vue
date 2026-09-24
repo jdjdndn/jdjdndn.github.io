@@ -15,85 +15,51 @@
       </div>
 
       <!-- 统计徽章条 -->
-      <n-card :bordered="false" class="stats-badge-bar">
-        <n-space justify="center" :size="24">
-          <n-text depth="3">
-            <strong>{{ wifiLinks.length }}</strong> 款设备
-          </n-text>
-          <n-text depth="3">
-            <strong>3</strong> 大运营商
-          </n-text>
-          <n-text depth="3">
-            <strong>7×24</strong> 在线服务
-          </n-text>
-        </n-space>
-      </n-card>
+      <div class="stats-badge-bar">
+        <div class="stats-badge-row">
+          <span class="stats-badge-text"><strong>{{ wifiLinks.length }}</strong> 款设备</span>
+          <span class="stats-badge-text"><strong>3</strong> 大运营商</span>
+          <span class="stats-badge-text"><strong>7×24</strong> 在线服务</span>
+        </div>
+      </div>
 
       <!-- WiFi 产品列表 -->
-      <n-card :bordered="false">
-        <template #header>
-          <div class="section-header">
-            <span>WiFi设备</span>
-            <n-text depth="3" style="font-size: 14px">
-              共 {{ wifiLinks.length }} 款设备
-            </n-text>
-          </div>
-        </template>
+      <div class="wifi-section">
+        <div class="section-header">
+          <span>WiFi设备</span>
+          <span class="section-sub">共 {{ wifiLinks.length }} 款设备</span>
+        </div>
 
-        <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-          <n-gi v-for="device in wifiLinks" :key="device.name" span="3 m:1">
-            <n-card hoverable class="product-card">
-              <template #header>
-                <div class="device-header">
-                  <span class="device-icon" v-html="getProductIcon(device.name)"></span>
-                  <span>{{ device.name }}</span>
-                </div>
-              </template>
-              <template #header-extra>
-                <n-tag v-if="device.badge" size="small" :type="device.badge === '热门' ? 'error' : 'success'">
-                  {{ device.badge }}
-                </n-tag>
-              </template>
-              <p class="device-desc">{{ device.description }}</p>
-              <div class="card-meta">
-                <n-tag v-for="tag in (device.tags || [])" :key="tag" size="small" type="info">
-                  {{ tag }}
-                </n-tag>
-                <n-tag v-if="getClickCount(device.name) > 0" size="small">
-                  已购买{{ formatCount(getClickCount(device.name)) }}次
-                </n-tag>
-                <n-tag v-if="isVisited(device.url)" size="small" type="success">
-                  ✓ 已访问
-                </n-tag>
+        <div class="wifi-grid">
+          <div v-for="device in wifiLinks" :key="device.name" class="product-card">
+            <div class="card-head">
+              <div class="device-header">
+                <span class="device-icon" v-html="getProductIcon(device.name)"></span>
+                <span class="device-name">{{ device.name }}</span>
               </div>
-              <n-space vertical :size="4" style="margin-top: 8px">
-                <n-text depth="3" style="font-size: 12px">
-                  价格：{{ device.priceRange }}
-                </n-text>
-              </n-space>
-              <template #action>
-                <div class="card-actions">
-                  <n-button type="primary" @click="handleVisit(device)">
-                    <template #icon>
-                      <span v-html="ICONS.external"></span>
-                    </template>
-                    访问
-                  </n-button>
-                  <n-button @click="handleQr(device)">
-                    <template #icon>
-                      <span v-html="ICONS.qr"></span>
-                    </template>
-                    二维码
-                  </n-button>
-                  <n-button @click="handleShare(device)">
-                    分享
-                  </n-button>
-                </div>
-              </template>
-            </n-card>
-          </n-gi>
-        </n-grid>
-      </n-card>
+              <span v-if="device.badge" :class="['product-tag', device.badge === '热门' ? 'tag-error' : 'tag-success']">
+                {{ device.badge }}
+              </span>
+            </div>
+            <p class="device-desc">{{ device.description }}</p>
+            <div class="card-meta">
+              <span v-for="tag in (device.tags || [])" :key="tag" class="meta-tag info">{{ tag }}</span>
+              <span v-if="getClickCount(device.name) > 0" class="meta-tag">已购买{{ formatCount(getClickCount(device.name)) }}次</span>
+              <span v-if="isVisited(device.url)" class="meta-tag success">✓ 已访问</span>
+            </div>
+            <div class="device-price">价格：{{ device.priceRange }}</div>
+            <div class="card-actions">
+              <button class="btn btn-primary" @click="handleVisit(device)">
+                <span v-html="ICONS.external"></span> 访问
+              </button>
+              <button class="btn" @click="handleQr(device)">
+                <span v-html="ICONS.qr"></span> 二维码
+              </button>
+              <button class="btn" @click="handleShare(device)">分享</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- 跨页面推荐 -->
       <div class="cross-link-banner">
@@ -102,7 +68,8 @@
       </div>
 
       <!-- 对比表格（SEO/GEO） -->
-      <n-card title="随身WiFi对比" :bordered="false" class="compare-section">
+      <div class="compare-section">
+        <h3 class="section-title">随身WiFi对比</h3>
         <div class="compare-table-wrap">
           <table class="compare-table">
             <thead>
@@ -125,10 +92,11 @@
             </tbody>
           </table>
         </div>
-      </n-card>
+      </div>
 
       <!-- 使用场景卡片 -->
-      <n-card title="使用场景" :bordered="false" class="scenario-section">
+      <div class="scenario-section">
+        <h3 class="section-title">使用场景</h3>
         <div class="scenario-cards">
           <div v-for="scenario in scenarios" :key="scenario.id" class="scenario-card">
             <div class="scenario-icon">
@@ -140,22 +108,26 @@
             </div>
           </div>
         </div>
-      </n-card>
+      </div>
 
       <!-- 常见问题 -->
-      <n-card title="常见问题" :bordered="false">
-        <n-collapse>
-          <n-collapse-item title="随身WiFi是什么？" name="1">
-            随身WiFi是一种便携式无线网络设备，可以将有线网络转换为WiFi信号，方便在户外使用。
-          </n-collapse-item>
-          <n-collapse-item title="如何选择合适的套餐？" name="2">
-            根据您的使用需求选择：轻度使用选10GB/月，中度使用选50GB/月，重度使用选100GB/月以上。
-          </n-collapse-item>
-          <n-collapse-item title="信号覆盖范围？" name="3">
-            室内覆盖约10-20米，室外空旷地带可达50米以上，具体取决于设备型号和环境。
-          </n-collapse-item>
-        </n-collapse>
-      </n-card>
+      <div class="faq-section">
+        <h3 class="section-title">常见问题</h3>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">随身WiFi是什么？</summary>
+            <div class="faq-answer">随身WiFi是一种便携式无线网络设备，可以将有线网络转换为WiFi信号，方便在户外使用。</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">如何选择合适的套餐？</summary>
+            <div class="faq-answer">根据您的使用需求选择：轻度使用选10GB/月，中度使用选50GB/月，重度使用选100GB/月以上。</div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">信号覆盖范围？</summary>
+            <div class="faq-answer">室内覆盖约10-20米，室外空旷地带可达50米以上，具体取决于设备型号和环境。</div>
+          </details>
+        </div>
+      </div>
 
       <LegalLinks />
     <BackToTop />
@@ -333,7 +305,6 @@ async function handleShare(device) {
   margin-bottom: 20px;
   padding: 12px 16px;
 }
-
 .trust-item {
   font-size: 13px;
   color: var(--success, #16a34a);
@@ -352,7 +323,6 @@ async function handleShare(device) {
   justify-content: space-between;
   font-size: 14px;
 }
-
 .cross-link-banner a {
   color: var(--accent, #004E89);
   font-weight: 600;
@@ -361,7 +331,24 @@ async function handleShare(device) {
 
 /* 统计徽章条 */
 .stats-badge-bar {
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: var(--radius, 12px);
+  padding: 14px 16px;
   margin-bottom: 1rem;
+}
+.stats-badge-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+.stats-badge-text {
+  font-size: 14px;
+  color: var(--text-secondary, #4a5568);
+}
+.stats-badge-text strong {
+  font-weight: 800;
+  color: var(--text, #1a1a2e);
 }
 
 /* 区域标题 */
@@ -369,73 +356,80 @@ async function handleShare(device) {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 14px;
+  color: var(--text-secondary, #4a5568);
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text, #1a1a2e);
+  margin-bottom: 16px;
+}
+
+/* WiFi 网格 */
+.wifi-section { margin-bottom: 24px; }
+.wifi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .wifi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .wifi-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* 产品卡片 */
 .product-card {
-  overflow: hidden;
-  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: var(--radius, 12px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
               box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
-
-/* 卡片操作按钮：三个按钮等宽一行，避免换行错位 */
-:deep(.product-card .n-card__action) {
-  padding: 12px 16px;
-}
-
-/* 让所有卡片等高，按钮对齐 */
-:deep(.n-grid .n-gi) {
-  display: flex !important;
-}
-:deep(.n-card.product-card) {
-  display: flex !important;
-  flex-direction: column !important;
-  width: 100% !important;
-}
-:deep(.n-card.product-card .n-card__content) {
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.card-actions {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 8px !important;
-  width: 100%;
-  margin-top: auto !important;
-}
-.card-actions .n-button {
-  width: 100% !important;
-  margin: 0 !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  padding: 0 8px !important;
-  font-size: 13px !important;
-}
-.card-actions .n-button .n-button__content {
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  width: 100% !important;
-  justify-content: center !important;
-  gap: 4px !important;
-}
-.card-actions .n-button .n-button__icon {
-  margin-right: 2px !important;
-  flex-shrink: 0 !important;
-}
-
 .product-card:hover {
-  border-color: var(--accent, #004E89);
-  box-shadow: 0 4px 16px rgba(0, 78, 137, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary, #FF6B35);
 }
-
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
 .device-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  min-width: 0;
 }
+.device-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text, #1a1a2e);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.tag-error { background: var(--danger-light, #FEF2F2); color: var(--danger, #DC2626); }
+.tag-success { background: var(--success-light, #f0fdf4); color: var(--success, #16a34a); }
+.info { background: var(--accent-light, #EBF5FF); color: var(--accent, #004E89); }
 
 .device-icon {
   width: 32px;
@@ -446,97 +440,124 @@ async function handleShare(device) {
   align-items: center;
   justify-content: center;
   color: var(--accent, #004E89);
+  flex-shrink: 0;
 }
-
-.device-icon svg {
-  width: 20px;
-  height: 20px;
-}
+.device-icon svg { width: 20px; height: 20px; }
 
 .device-desc {
-  color: var(--text-secondary, #666);
-  margin: 0 0 0.5rem 0;
+  color: var(--text-secondary, #4a5568);
+  margin: 0 0 8px 0;
   font-size: 13px;
   line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .card-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-top: 8px;
+  margin-bottom: 8px;
 }
+.meta-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--hover-bg, #f5f4f1);
+  color: var(--muted, #6b7280);
+}
+.meta-tag.info { background: var(--accent-light, #EBF5FF); color: var(--accent, #004E89); }
+.meta-tag.success { background: var(--success-light, #f0fdf4); color: var(--success, #16a34a); }
+
+.device-price {
+  font-size: 12px;
+  color: var(--text-secondary, #4a5568);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* 按钮组 */
+.card-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.btn {
+  padding: 8px 0;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--border, #e5e2dd);
+  background: var(--card, #fff);
+  color: var(--text, #1a1a2e);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.btn svg { flex-shrink: 0; }
+.btn:hover { background: var(--hover-bg, #f5f4f1); }
+.btn-primary {
+  background: var(--primary, #FF6B35);
+  color: #fff;
+  border-color: var(--primary, #FF6B35);
+}
+.btn-primary:hover { background: var(--primary-hover, #E55A2B); }
 
 /* 对比表格 */
-.compare-section {
-  margin-top: 40px;
-  padding: 0 4px;
-}
-
+.compare-section { margin-top: 40px; padding: 0 4px; }
 .compare-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--border, #e5e7eb);
-  border-radius: 12px;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: var(--radius, 12px);
   background: var(--card, #fff);
 }
-
 .compare-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
-
-.compare-table thead {
-  background: var(--hover-bg, #f9fafb);
-}
-
+.compare-table thead { background: var(--hover-bg, #f5f4f1); }
 .compare-table th {
   padding: 12px 14px;
   text-align: left;
   font-weight: 700;
-  color: var(--text, #1f2937);
+  color: var(--text, #1a1a2e);
   white-space: nowrap;
-  border-bottom: 2px solid var(--border, #e5e7eb);
+  border-bottom: 2px solid var(--border, #e5e2dd);
 }
-
 .compare-table td {
   padding: 10px 14px;
   color: var(--muted, #6b7280);
-  border-bottom: 1px solid var(--border, #e5e7eb);
+  border-bottom: 1px solid var(--border, #e5e2dd);
   line-height: 1.5;
 }
-
-.compare-table tr:last-child td {
-  border-bottom: none;
-}
-
-.compare-table tbody tr:hover {
-  background: var(--hover-bg, #f9fafb);
-}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tbody tr:hover { background: var(--hover-bg, #f5f4f1); }
 
 /* 使用场景 */
-.scenario-section {
-  margin-top: 40px;
-  padding: 0 4px;
-}
-
+.scenario-section { margin-top: 40px; padding: 0 4px; }
 .scenario-cards {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
 }
-
 .scenario-card {
   display: flex;
   gap: 14px;
   align-items: flex-start;
   padding: 16px;
   background: var(--card, #fff);
-  border: 1px solid var(--border, #e5e7eb);
-  border-radius: 12px;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: var(--radius, 12px);
 }
-
 .scenario-icon {
   display: inline-flex;
   align-items: center;
@@ -547,20 +568,13 @@ async function handleShare(device) {
   background: var(--accent-light, #EBF5FF);
   flex-shrink: 0;
 }
-
-.scenario-icon svg {
-  width: 20px;
-  height: 20px;
-  stroke: var(--accent, #004E89);
-}
-
+.scenario-icon svg { width: 20px; height: 20px; stroke: var(--accent, #004E89); }
 .scenario-content h3 {
   font-size: 14px;
   font-weight: 600;
-  color: var(--text, #1f2937);
+  color: var(--text, #1a1a2e);
   margin-bottom: 4px;
 }
-
 .scenario-content p {
   font-size: 13px;
   color: var(--muted, #6b7280);
@@ -568,54 +582,89 @@ async function handleShare(device) {
   margin: 0;
 }
 
-/* 代理招募 */
+/* FAQ */
+.faq-section { margin-top: 40px; }
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+.faq-item {
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: var(--radius, 12px);
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text, #1a1a2e);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  list-style: none;
+}
+.faq-question::-webkit-details-marker { display: none; }
+.faq-question::after {
+  content: '▸';
+  font-size: 12px;
+  color: var(--muted, #6b7280);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.faq-item[open] .faq-question::after { transform: rotate(90deg); }
+.faq-answer {
+  padding: 0 16px 14px;
+  font-size: 13px;
+  color: var(--muted, #6b7280);
+  line-height: 1.8;
+}
 
 /* 响应式 */
 @media (min-width: 640px) {
-  .scenario-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .scenario-cards { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 480px) {
-  .compare-section,
-  .scenario-section {
-    margin-top: 32px;
-  }
-
-  .compare-table {
-    font-size: 12px;
-  }
-
-  .compare-table th,
-  .compare-table td {
-    padding: 8px 10px;
-  }
+  .compare-section, .scenario-section { margin-top: 32px; }
+  .compare-table { font-size: 12px; }
+  .compare-table th, .compare-table td { padding: 8px 10px; }
 }
 
 /* 暗色模式 */
 [data-theme="dark"] .product-card:hover {
-  border-color: rgba(0, 78, 137, 0.5);
-  box-shadow: 0 4px 16px rgba(0, 78, 137, 0.2);
+  border-color: var(--primary, #FF6B35);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);
 }
-
 [data-theme="dark"] .scenario-card {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
 }
-
 [data-theme="dark"] .compare-table-wrap {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
 }
-
 [data-theme="dark"] .cross-link-banner {
   background: rgba(0, 78, 137, 0.15);
   border-color: rgba(0, 78, 137, 0.4);
 }
-
 [data-theme="dark"] .device-desc,
 [data-theme="dark"] .scenario-content {
-  color: var(--text-secondary, #a0aec0);
+  color: var(--text-secondary, #a0a0b8);
+}
+[data-theme="dark"] .stats-badge-bar {
+  background: rgba(31, 41, 55, 0.5);
+  border-color: rgba(75, 85, 99, 0.5);
+}
+[data-theme="dark"] .product-card {
+  background: rgba(31, 41, 55, 0.5);
+  border-color: rgba(75, 85, 99, 0.5);
+}
+[data-theme="dark"] .faq-item {
+  background: rgba(31, 41, 55, 0.5);
+  border-color: rgba(75, 85, 99, 0.5);
 }
 </style>

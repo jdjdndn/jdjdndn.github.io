@@ -14,19 +14,17 @@
         <span class="trust-item" role="listitem">✓ 持续更新</span>
       </div>
 
-      <n-card :bordered="false">
-        <template #header>
-          <div class="section-header">
-            <span>网盘资源</span>
-            <n-text depth="3" style="font-size: 14px">
-              共 {{ resources.length }} 个资源
-            </n-text>
-          </div>
-        </template>
+      <div class="card">
+        <div class="section-header">
+          <span>网盘资源</span>
+          <span class="text-muted">
+            共 {{ resources.length }} 个资源
+          </span>
+        </div>
 
-        <n-grid :cols="3" :x-gap="12" :y-gap="12" responsive="screen" item-responsive>
-          <n-gi v-for="resource in resources" :key="resource.id" span="3 m:1">
-            <n-card class="resource-card" hoverable>
+        <div class="grid-3">
+          <div v-for="resource in resources" :key="resource.id" class="grid-item">
+            <div class="resource-card card hoverable">
               <div class="card-top" :style="{ background: getResourceColor(resource.url) }"></div>
               <div class="card-body">
                 <div class="card-header">
@@ -36,36 +34,28 @@
                   <div class="resource-info">
                     <span class="resource-name">{{ resource.name }}</span>
                   </div>
-                  <n-tag size="small" :type="getPlatformType(resource.url)">
+                  <span :class="['tag', 'tag-' + getPlatformType(resource.url)]">
                     {{ getPlatformName(resource.url) }}
-                  </n-tag>
+                  </span>
                 </div>
                 <div class="card-actions">
-                  <n-button
-                    type="primary"
-                    size="small"
-                    tag="a"
+                  <a
+                    class="btn btn-primary btn-block"
                     :href="resource.url"
                     target="_blank"
                     rel="noopener"
                   >
-                    <template #icon>
-                      <span>↗</span>
-                    </template>
-                    前往访问
-                  </n-button>
-                  <n-button size="small" @click="showQR(resource)">
-                    <template #icon>
-                      <span>⊞</span>
-                    </template>
-                    扫码
-                  </n-button>
+                    ↗ 前往访问
+                  </a>
+                  <button class="btn btn-block" @click="showQR(resource)">
+                    ⊞ 扫码
+                  </button>
                 </div>
               </div>
-            </n-card>
-          </n-gi>
-        </n-grid>
-      </n-card>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <LegalLinks />
       <QrModal
@@ -141,6 +131,114 @@ function closeQrModal() {
 </script>
 
 <style scoped>
+/* --- 基础组件样式 --- */
+.card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.card.hoverable {
+  transition: transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.card.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-md, rgba(0, 0, 0, 0.1));
+}
+
+.text-muted {
+  font-size: 14px;
+  color: var(--text-color-3, #9ca3af);
+}
+
+/* --- 网格布局 --- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-item {
+  min-width: 0;
+}
+
+/* --- 标签 --- */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.tag-success {
+  color: var(--success-color, #16a34a);
+  background: var(--success-bg, rgba(22, 163, 74, 0.1));
+}
+
+.tag-info {
+  color: var(--info-color, #3b82f6);
+  background: var(--info-bg, rgba(59, 130, 246, 0.1));
+}
+
+.tag-default {
+  color: var(--text-color-3, #6b7280);
+  background: var(--default-bg, rgba(107, 114, 128, 0.1));
+}
+
+/* --- 按钮 --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--card-bg, #fff);
+  color: var(--text-color, #374151);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  border-color: var(--primary-color, #7c3aed);
+}
+
+.btn-primary {
+  background: var(--primary-color, #7c3aed);
+  color: #fff;
+  border-color: var(--primary-color, #7c3aed);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* --- 页面特定样式 --- */
 .trust-bar {
   display: flex;
   justify-content: center;
@@ -158,16 +256,15 @@ function closeQrModal() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .resource-card {
   overflow: hidden;
-  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .resource-card:hover {
-  border-color: #7C3AED;
+  border-color: var(--primary-color, #7C3AED);
   box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
 }
 
@@ -195,7 +292,7 @@ function closeQrModal() {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7C3AED;
+  color: var(--primary-color, #7C3AED);
 }
 
 .resource-info {
@@ -213,24 +310,8 @@ function closeQrModal() {
 }
 
 .card-actions {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 8px !important;
-  width: 100%;
-}
-.card-actions .n-button {
-  width: 100% !important;
-  margin: 0 !important;
-  min-width: 0 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-.card-actions .n-button .n-button__content {
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  width: 100% !important;
-  justify-content: center !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
 }
 </style>
