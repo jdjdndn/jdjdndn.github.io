@@ -382,14 +382,18 @@ function promoteShellPages() {
     if (fs.readdirSync(templatesDir).length === 0) fs.rmdirSync(templatesDir);
   }
 
-  // fuye/ 子目录壳页：从 src/templates/fuye/ 复制（未经 vite 处理，路径已正确）
+  // fuye/ 子目录壳页：从 src/templates/fuye/ 复制并改写路径
+  // 这些是 Vue 路由壳页，需要加载 Vue 应用
   const fuyeSrcDir = path.join(SRC, 'templates', 'fuye');
   if (fs.existsSync(fuyeSrcDir)) {
     const fuyeDestDir = path.join(DIST_DIR, 'fuye');
     fs.mkdirSync(fuyeDestDir, { recursive: true });
     for (const file of fs.readdirSync(fuyeSrcDir)) {
       if (!file.endsWith('.html')) continue;
-      fs.copyFileSync(path.join(fuyeSrcDir, file), path.join(fuyeDestDir, file));
+      let html = fs.readFileSync(path.join(fuyeSrcDir, file), 'utf8');
+      // 改写相对路径：从 ../../ 改为 ../（因为从 fuye/ 到根目录只需一层）
+      html = html.replace(/"\.\.\/\.\.\//g, '"../');
+      fs.writeFileSync(path.join(fuyeDestDir, file), html, 'utf8');
       moved++;
     }
   }
