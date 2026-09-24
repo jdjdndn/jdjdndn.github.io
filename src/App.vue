@@ -3,6 +3,10 @@
     <SiteNav position="side" />
     <router-view />
     <SiteNav position="footer" />
+    <!-- Toast 通知 -->
+    <div v-show="toast.visible.value" class="toast" :class="{ hidden: !toast.visible.value }">
+      {{ toast.message.value }}
+    </div>
   </div>
 </template>
 
@@ -10,6 +14,9 @@
 import { onMounted } from 'vue'
 import SiteNav from './components/SiteNav.vue'
 import { useAppStore } from './stores/app'
+import { useToast } from './composables'
+
+const toast = useToast()
 
 const appStore = useAppStore()
 
