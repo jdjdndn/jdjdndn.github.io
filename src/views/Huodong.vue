@@ -78,7 +78,7 @@ import BackToTop from '../components/BackToTop.vue'
 const toast = useToast()
 import { featuredActivities } from '../data.js'
 const searchQuery = ref('')
-const selectedCategory = ref(null)
+const selectedCategory = ref('')
 
 const categoryOptions = [
   { label: '外卖', value: 'food' },
@@ -221,7 +221,7 @@ function handleJoin(activity) {
 }
 
 .select-input {
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
   border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 8px;
   background: var(--input-bg, #f5f5f5);
@@ -229,6 +229,26 @@ function handleJoin(activity) {
   color: var(--text-primary, #333);
   outline: none;
   cursor: pointer;
+  appearance: none;
+  min-width: 140px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+}
+
+.select-input option {
+  padding: 0.5rem 0.75rem;
+  background: var(--card-bg, #fff);
+  color: var(--text-primary, #333);
+}
+
+.select-input:hover {
+  border-color: var(--border-hover, #ccc);
+}
+
+.select-input:focus {
+  border-color: var(--primary-color, #FF6B35);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .grid-3 {

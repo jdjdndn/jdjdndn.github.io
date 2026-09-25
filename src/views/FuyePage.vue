@@ -180,11 +180,11 @@ function handleEntryClick(entry) {
     openInfoModal(entry)
     return
   }
-  if (entry.url.startsWith('weixin://')) {
+  if (entry.url.startsWith('weixin://') || entry.url.startsWith('#小程序://')) {
     if (/MicroMessenger/i.test(navigator.userAgent)) {
       window.location.href = entry.url
     } else {
-      alert('请在微信中打开此链接')
+      openInfoModal({ name: entry.name, desc: '请复制下方口令，在微信中打开', copyText: entry.url, copyLabel: '小程序口令' })
     }
   } else if (entry.url.startsWith('http')) {
     window.open(entry.url, '_blank', 'noopener')

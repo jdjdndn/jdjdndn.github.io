@@ -6,8 +6,8 @@
       subtitle="项目机会梳理 · 多方向攻略"
       aria="项目专区"
     >
-      <span class="stat-badge"><strong>4+</strong> 项目方向</span>
-      <span class="stat-badge"><strong>10+</strong> 篇攻略</span>
+      <span class="stat-badge"><strong>{{ projectCount }}</strong> 项目方向</span>
+      <span class="stat-badge"><strong>{{ guideCount }}+</strong> 篇攻略</span>
       <span class="stat-badge"><strong>0</strong> 元成本起步</span>
     </PageHero>
 
@@ -33,68 +33,43 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
+import { fuyePages } from './fuye-data.js'
 
-const entries = [
-  {
-    name: '号卡业务',
-    desc: '号卡新规后现状 · 合规与防骗',
-    icon: '📱',
-    url: '/fuye/haoka.html',
-    tag: '指南',
-    tagType: 'info'
-  },
-  {
-    name: '会员分销',
-    desc: '影视 / 音乐会员推广赚佣金',
-    icon: '👑',
-    url: '/fuye/huiyuan.html',
-    tag: '分销',
-    tagType: 'info'
-  },
-  {
-    name: '上门回收',
-    desc: '回收旧衣服、旧手机、家电',
-    icon: '♻️',
-    url: '/fuye/huishou.html',
-    tag: '攻略',
-    tagType: 'info'
-  },
-  {
-    name: 'App拉新',
-    desc: '帮APP推广拉新用户赚佣金',
-    icon: '📢',
-    url: '/fuye/laxin.html',
-    tag: '攻略',
-    tagType: 'info'
-  },
-  {
-    name: '电商带货',
-    desc: '京东 / 淘宝 / 拼多多 / 携程 / 同程优惠推广',
-    icon: '🛒',
-    url: '/fuye/dianshang.html',
-    tag: '入口',
-    tagType: 'info'
-  },
-  {
-    name: '随身WiFi代理',
-    desc: '便携WiFi设备代理 · 收益以实际为准',
-    icon: '📶',
-    url: '/fuye/wifi-agent.html',
-    tag: '代理',
-    tagType: 'info'
-  },
-  {
+// 从 fuyePages 自动生成入口列表
+const entries = computed(() => {
+  const list = Object.entries(fuyePages)
+    .filter(([, page]) => !page.hidden) // 过滤 hidden: true 的子页面
+    .map(([slug, page]) => ({
+      name: page.title,
+      desc: page.subtitle,
+      icon: page.cardIcon || '📋',
+      url: `/fuye/${slug.replace('fuye/', '')}.html`,
+      tag: page.cardTag || '攻略',
+      tagType: 'info'
+    }))
+
+  // 添加"更多项目"占位
+  list.push({
     name: '更多项目',
     desc: '更多项目方向持续更新中',
     icon: '💡',
     url: '',
     tag: '更新中',
     tagType: 'default'
-  }
-]
+  })
+
+  return list
+})
+
+// 动态计算统计数字
+const projectCount = computed(() => Object.keys(fuyePages).length)
+const guideCount = computed(() =>
+  Object.values(fuyePages).reduce((sum, page) => sum + (page.guides?.length || 0), 0)
+)
 </script>
 
 <style scoped>

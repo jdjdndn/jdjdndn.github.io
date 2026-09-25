@@ -6,6 +6,8 @@ export const fuyePages = {
     icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>',
     title: '号卡代理',
     subtitle: '号卡业务现状 · 合规路径与防骗',
+    cardIcon: '📱',
+    cardTag: '指南',
     statNum: '5',
     statLabel: '篇指南',
     intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页梳理号卡业务现状、合规路径与防骗指南，帮你认清行业情况。',
@@ -31,6 +33,9 @@ export const fuyePages = {
     icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
     title: '号卡业务指南',
     subtitle: '现状梳理 · 合规路径 · 防骗指南',
+    cardIcon: '📋',
+    cardTag: '详情',
+    hidden: true, // 子页面，不在首页显示
     statNum: '新规',
     statLabel: '2026.8.1',
     intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页是号卡业务最真实的现状：正规办卡渠道、官方授权路径，以及必须避开的代理骗局。',
@@ -56,6 +61,8 @@ export const fuyePages = {
     icon: '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
     title: '电商带货',
     subtitle: '京东/淘宝/拼多多/携程优惠推广 · 赚取佣金',
+    cardIcon: '🛒',
+    cardTag: '入口',
     statNum: '5+',
     statLabel: '平台',
     intro: '通过推广京东、淘宝、拼多多、携程等平台的商品或优惠券，用户下单后你赚佣金。适合有微信群、朋友圈、社群等社交资源的人。',
@@ -95,6 +102,8 @@ export const fuyePages = {
     icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
     title: '上门回收',
     subtitle: '回收旧衣服、旧手机、家电 · 赚取差价或佣金',
+    cardIcon: '♻️',
+    cardTag: '攻略',
     statNum: '环保',
     statLabel: '项目',
     intro: '上门回收是指通过平台接单，上门回收用户的旧衣服、旧手机、旧家电等物品。平台提供回收渠道和定价，你负责上门取件，赚取差价或佣金。适合时间灵活、愿意跑动的人。',
@@ -117,6 +126,8 @@ export const fuyePages = {
     icon: '<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>',
     title: '会员分销',
     subtitle: '影视/音乐会员推广赚佣金 · 收益以实际为准',
+    cardIcon: '👑',
+    cardTag: '分销',
     statNum: '高',
     statLabel: '佣金比例',
     intro: '会员分销是指推广各大平台（爱奇艺、腾讯视频、网易云音乐等）的VIP会员，用户通过你的链接购买后你获得佣金。单价高、复购率高，适合有社交资源的人作为项目。',
@@ -141,6 +152,8 @@ export const fuyePages = {
     icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
     title: 'App拉新',
     subtitle: '帮APP推广拉新用户 · 赚取推广佣金',
+    cardIcon: '📢',
+    cardTag: '攻略',
     statNum: '多',
     statLabel: '平台可选',
     intro: '帮百度网盘、夸克、知乎等APP推广拉新用户，每成功邀请一人注册并完成指定任务，获得几元到几十元佣金。适合有社交资源的人。',
@@ -164,6 +177,8 @@ export const fuyePages = {
     icon: '<path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>',
     title: '随身WiFi代理',
     subtitle: '便携WiFi设备代理 · 收益以实际为准',
+    cardIcon: '📶',
+    cardTag: '代理',
     statNum: '3',
     statLabel: '大品牌',
     intro: '随身WiFi代理是指代理销售便携WiFi设备（如飞利猫、格行、超能犇等）。每成功推荐一台设备，可获得佣金，具体收益以平台代理政策为准。设备便携小巧，适合出差旅行、家庭备用、学生宿舍等场景。',
@@ -184,6 +199,33 @@ export const fuyePages = {
       title: '随身WiFi代理 — 便携WiFi设备代理 | 券宝',
       description: '随身WiFi代理：代理销售便携WiFi设备，收益以平台实际展示为准。',
       keywords: '随身WiFi代理,便携WiFi,代理推广,项目'
+    }
+  },
+
+  'fuye/kuaidi': {
+    icon: '<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+    title: '快递寄件代理',
+    subtitle: '快递寄件平台代理 · 多家快递比价',
+    cardIcon: '📦',
+    cardTag: '代理',
+    statNum: '快递',
+    statLabel: '代理项目',
+    intro: '快递寄件代理是指推广快递寄件平台，用户通过你的链接下单寄件，你获得佣金。支持顺丰、圆通、申通、韵达等多家快递公司，用户可比价下单。适合有寄件需求或社交资源的人。',
+    banner: { icon: '📦', name: '快递寄件代理', desc: '多家快递比价，用户下单你赚佣金', url: 'http://kd100.net/bsEuDc' },
+    entries: [
+      { id: 1, icon: '🚚', name: '上门取件', desc: '快递员上门取件，省时省力', url: '#小程序://上门取件/aqxMZxNUYlsW39I' },
+      { id: 2, icon: '💸', name: '特惠寄', desc: '特惠价格寄件，更划算', url: '#小程序://特惠寄/UO0SLmVqUciWK0a' },
+    ],
+    guides: [
+      { id: 1, title: '快递寄件代理入门', desc: '3步开启寄件代理', url: '/article/express-agent-guide.html', steps: ['注册代理账号，获取专属推广链接', '分享给有寄件需求的朋友', '对方下单你赚佣金'] },
+      { id: 2, title: '小程序下单操作', desc: '上门取件与特惠寄使用指南', url: '/article/express-miniapp-guide.html', steps: ['打开「上门取件」小程序，填写寄件人和收件人信息', '选择快递公司，系统自动比价', '确认下单，快递员上门取件'] },
+      { id: 3, title: '佣金结算说明', desc: '佣金到账与提现规则', url: '/article/express-commission.html', steps: ['用户完成寄件后佣金自动计入账户', '佣金比例平台实时显示', '满额可提现至微信/支付宝'] },
+      { id: 4, title: '推广方法与常见问题', desc: '怎么推广 + 用户高频问题', url: '/article/express-promote-faq.html', steps: ['朋友圈/社群分享寄件优惠信息', '小区业主群、微商群效果最好', '详见文章中的用户高频问题解答'] },
+    ],
+    meta: {
+      title: '快递寄件代理 — 项目入口 | 券宝',
+      description: '快递寄件代理：推广快递寄件平台，用户下单你赚佣金。',
+      keywords: '快递寄件,快递代理,寄件赚钱,项目'
     }
   }
 }

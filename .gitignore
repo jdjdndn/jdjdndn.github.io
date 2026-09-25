@@ -40,3 +40,7 @@ src/article/huiyuan-faq.html
 
 # 构建残留
 # public/69381b8dab7a3c1e281d0ff617324953.txt
+vite.config.js.timestamp-*.mjs
+
+# sync-friend-links.cjs 生成的友情链接 Web Component
+public/friend-links.js
