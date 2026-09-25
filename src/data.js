@@ -45,6 +45,7 @@ export const tabs = [
         items: [
           { name: '美团本地生活集合页', link: 'https://kurl07.cn/te2qe9', description: '美团外卖、团购、酒旅等本地生活优惠集合入口',deadline:"2026.12.31" },
           { name: '京东外卖集合页', link: 'https://1.yoourl.net/link/10009836aafbeff4e2171002ArLVtpn4', description: '京东外卖优惠入口，点外卖领红包更划算',deadline:"2026.12.31" },
+          { name: '本地生活集合页', link: 'http://h.fxzb.vip/2vnMAd0ISWs', description: '美团外卖、特惠洗车、京东家政等本地生活优惠集合入口'},
         ],
       },
     ],
