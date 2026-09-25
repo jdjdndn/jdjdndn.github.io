@@ -179,12 +179,11 @@ class FriendLinks extends HTMLElement {
               <div class="fl-title">\${section.title}</div>
               <div class="fl-list">
                 \${section.links.map(link => {
-                  const isMiniApp = link.url.startsWith('#小程序://');
-                  const isWxScheme = link.url.startsWith('weixin://');
-                  const onclick = (isMiniApp || isWxScheme)
+                  const isWxScheme = link.url.startsWith('weixin://') || link.url.startsWith('#小程序://');
+                  const onclick = isWxScheme
                     ? \` onclick="if(!/MicroMessenger/i.test(navigator.userAgent)){alert('请在微信中打开此链接');return false;}"\`
                     : '';
-                  const tag = isMiniApp ? '<span class="fl-miniapp-tag">仅微信</span>' : '';
+                  const tag = isWxScheme ? '<span class="fl-miniapp-tag">仅微信</span>' : '';
                   return \`
                   <a class="fl-link" href="\${link.url}" target="_blank" rel="noopener"\${onclick}>
                     <span class="fl-name">\${link.name}</span>

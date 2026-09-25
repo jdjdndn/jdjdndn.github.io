@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import SiteNav from './components/SiteNav.vue'
 import { useAppStore } from './stores/app'
 import { useToast } from './composables'
@@ -19,6 +19,12 @@ import { useToast } from './composables'
 const toast = useToast()
 
 const appStore = useAppStore()
+
+// 监听微信链接复制事件
+const handleWechatLinkCopied = (e) => {
+  const { name } = e.detail
+  toast.show(`小程序口令已复制，请打开微信粘贴给好友`)
+}
 
 onMounted(() => {
   // 初始化暗色模式
@@ -28,6 +34,13 @@ onMounted(() => {
     document.documentElement.setAttribute('data-theme', 'dark')
   }
   appStore.init()
+
+  // 监听微信链接复制事件
+  window.addEventListener('wechat-link-copied', handleWechatLinkCopied)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('wechat-link-copied', handleWechatLinkCopied)
 })
 </script>
 

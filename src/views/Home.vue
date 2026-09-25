@@ -162,8 +162,7 @@ import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import QrModal from '../components/QrModal.vue'
 import { tabs } from '../data.js'
-import { isExpired } from '../common/utils.js'
-import { useToast } from '../composables'
+import { isExpired, useToast } from '../composables'
 
 // 数据
 const activeTab = ref(0)

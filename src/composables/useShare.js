@@ -4,6 +4,7 @@
  */
 import { ref } from 'vue'
 import { useClipboard } from './useClipboard'
+import { isMobile } from '../utils/linkHandler'
 
 export function useShare() {
   const clipboard = useClipboard()
@@ -13,11 +14,6 @@ export function useShare() {
     url: '',
     text: ''
   })
-
-  /**
-   * 检测是否为移动端
-   */
-  const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
   /**
    * 分享到微信（复制内容）

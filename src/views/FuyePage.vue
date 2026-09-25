@@ -33,10 +33,15 @@
         </div>
       </div>
 
+      <!-- 搜索框 -->
+      <div v-if="config.searchable" class="search-box">
+        <input v-model="searchKeyword" type="text" :placeholder="'搜索' + config.title + '...'" />
+      </div>
+
       <!-- 入口链接 -->
       <div class="entry-grid">
         <div
-          v-for="entry in config.entries"
+          v-for="entry in pagedEntries"
           :key="entry.id"
           class="card hoverable entry-card"
           @click="handleEntryClick(entry)"
@@ -49,6 +54,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- 分页 -->
+      <div v-if="config.searchable && filteredEntries.length > pageSize" class="pagination">
+        <button :disabled="currentPage <= 1" @click="currentPage--">← 上一页</button>
+        <button v-for="p in totalPages" :key="p" :class="{ active: currentPage === p }" @click="currentPage = p">{{ p }}</button>
+        <button :disabled="currentPage >= totalPages" @click="currentPage++">下一页 →</button>
       </div>
 
       <!-- 详细指导 -->
@@ -111,11 +123,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import PageHero from '../components/PageHero.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
+import { isWechatLink, handleWechatLink, getLinkType } from '../utils/linkHandler'
 
 const props = defineProps({
   config: {
@@ -125,6 +138,25 @@ const props = defineProps({
 })
 
 const router = useRouter()
+
+// 搜索和分页
+const searchKeyword = ref('')
+const currentPage = ref(1)
+const pageSize = 6
+
+const filteredEntries = computed(() => {
+  if (!props.config.searchable || !searchKeyword.value) return props.config.entries || []
+  const kw = searchKeyword.value.toLowerCase()
+  return (props.config.entries || []).filter(e => (e.name || '').toLowerCase().includes(kw) || (e.desc || '').toLowerCase().includes(kw))
+})
+
+const totalPages = computed(() => Math.ceil(filteredEntries.value.length / pageSize))
+
+const pagedEntries = computed(() => {
+  if (!props.config.searchable) return props.config.entries || []
+  const start = (currentPage.value - 1) * pageSize
+  return filteredEntries.value.slice(start, start + pageSize)
+})
 
 // 信息弹窗状态
 const infoModal = reactive({
@@ -180,15 +212,24 @@ function handleEntryClick(entry) {
     openInfoModal(entry)
     return
   }
-  if (entry.url.startsWith('weixin://') || entry.url.startsWith('#小程序://')) {
-    if (/MicroMessenger/i.test(navigator.userAgent)) {
-      window.location.href = entry.url
-    } else {
-      openInfoModal({ name: entry.name, desc: '请复制下方口令，在微信中打开', copyText: entry.url, copyLabel: '小程序口令' })
-    }
-  } else if (entry.url.startsWith('http')) {
+
+  // 处理微信/小程序链接
+  if (isWechatLink(entry.url)) {
+    handleWechatLink(entry.url, {
+      name: entry.name,
+      onWeixin: (url) => { window.location.href = url },
+      onNonWeixin: () => {
+        openInfoModal({ name: entry.name, desc: '请复制下方口令，在微信中打开', copyText: entry.url, copyLabel: '小程序口令' })
+      }
+    })
+    return
+  }
+
+  // 处理普通 HTTP 链接
+  const linkType = getLinkType(entry.url)
+  if (linkType === 'http') {
     window.open(entry.url, '_blank', 'noopener')
-  } else if (entry.url.startsWith('/article/')) {
+  } else if (linkType === 'article') {
     window.location.href = entry.url
   } else {
     router.push(entry.url)
@@ -215,6 +256,64 @@ function handleEntryClick(entry) {
   line-height: 1.7;
   color: var(--text-secondary, #4a5568);
   margin: 0;
+}
+
+/* 搜索框 */
+.search-box {
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 10px;
+  font-size: 15px;
+  background: var(--card, #fff);
+  color: var(--text, #1a1a2e);
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+
+.search-box input:focus {
+  border-color: var(--primary, #FF6B35);
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px 0 32px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 8px;
+  background: var(--card, #fff);
+  color: var(--text, #1a1a2e);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .2s;
+}
+
+.pagination button:hover {
+  border-color: var(--primary, #FF6B35);
+  color: var(--primary, #FF6B35);
+}
+
+.pagination button.active {
+  background: var(--primary, #FF6B35);
+  color: #fff;
+  border-color: var(--primary, #FF6B35);
+}
+
+.pagination button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
 /* 入口网格 */
@@ -465,6 +564,16 @@ function handleEntryClick(entry) {
 }
 [data-theme="dark"] .guide-item {
   border-color: var(--border, #2d2d45);
+}
+[data-theme="dark"] .search-box input {
+  background: var(--card, #1a1a2e);
+  border-color: var(--border, #2d2d45);
+  color: var(--text, #e0e0e0);
+}
+[data-theme="dark"] .pagination button {
+  background: var(--card, #1a1a2e);
+  border-color: var(--border, #2d2d45);
+  color: var(--text, #e0e0e0);
 }
 
 /* 信息弹窗 */

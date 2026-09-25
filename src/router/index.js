@@ -28,6 +28,16 @@ const routes = [
     }
   },
   {
+    path: '/creditcard.html',
+    name: 'Creditcard',
+    component: () => import('../views/Creditcard.vue'),
+    meta: {
+      title: '信用卡申请专区 — 多家银行信用卡 · 申请入口汇总',
+      description: '信用卡申请专区：多家银行信用卡申请入口，代理推广佣金说明。',
+      keywords: '信用卡申请,银行信用卡,信用卡代理,办卡赚钱'
+    }
+  },
+  {
     path: '/haoka-hero.html',
     name: 'HaokaHero',
     component: () => import('../views/haoka/HaokaHero.vue'),

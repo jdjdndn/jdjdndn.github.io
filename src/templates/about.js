@@ -1,4 +1,5 @@
 import { friendLinks } from './data.js';
+import { isWechatLink, getWeixinOnclick } from '../utils/linkHandler.js';
 
 // 链接图标映射
 const LINK_ICONS = {
@@ -24,12 +25,8 @@ if (el) {
     const titleAttr = f.description
       ? ` title="${f.description.replace(/"/g, '&quot;')}"`
       : '';
-    const isMiniApp = href.startsWith('#小程序://');
-    const isWxScheme = href.startsWith('weixin://');
-    const onclick = (isMiniApp || isWxScheme)
-      ? ` onclick="if(!/MicroMessenger/i.test(navigator.userAgent)){alert('请在微信中打开此链接');return false;}"`
-      : '';
-    const tag = isMiniApp ? '<span style="display:inline-block;font-size:10px;padding:1px 4px;border-radius:3px;background:#07c160;color:white;margin-left:4px;">仅微信</span>' : '';
+    const onclick = getWeixinOnclick(href);
+    const tag = isWechatLink(href) ? '<span style="display:inline-block;font-size:10px;padding:1px 4px;border-radius:3px;background:#07c160;color:white;margin-left:4px;">仅微信</span>' : '';
     return `<a href="${href}" target="_blank" rel="noopener sponsored" class="friend-link"${titleAttr}${onclick}>
       <span class="friend-link-name">
         <span class="link-icon">${icon}</span>

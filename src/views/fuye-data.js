@@ -227,6 +227,35 @@ export const fuyePages = {
       description: '快递寄件代理：推广快递寄件平台，用户下单你赚佣金。',
       keywords: '快递寄件,快递代理,寄件赚钱,项目'
     }
+  },
+
+  'fuye/xinyongka': {
+    icon: '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+    title: '信用卡代理',
+    subtitle: '信用卡申请推广 · 高佣代理项目',
+    cardIcon: '💳',
+    cardTag: '代理',
+    statNum: '3',
+    statLabel: '家银行',
+    intro: '信用卡代理是推广各大银行信用卡申请链接，用户通过你的链接申请并激活信用卡，你获得佣金。支持多家银行，适合有社交资源的人。',
+    banner: { icon: '💳', name: '信用卡申请', desc: '多家银行信用卡 · 申请入口汇总', url: '/creditcard.html' },
+    // searchable: true,
+    entries: [
+      { id: 1, icon: '🏦', name: '卡盒', desc: '高额返佣 · 批核快', url: 'https://w1.kahe.cn/qrcodeActivity?cardcode=R8863SGK&invitation=JY8ZFYSR&is_help=2&proportion=10' },
+      { id: 2, icon: '🏦', name: '掌上推卡', desc: '申请门槛低 · 通过率高', url: 'https://i.ws101.cn/#/appRegistered?u=87949&r=100' },
+      { id: 3, icon: '🏦', name: '随手推卡', desc: '新户礼丰厚 · 推荐办卡', url: 'https://sstk.kakayuy.net/static/#/appRegistered?u=43209&r=100' },
+    ],
+    guides: [
+      { id: 1, title: '信用卡代理入门', desc: '3步开启信用卡推广', url: '/article/creditcard-agent-guide.html', steps: ['选择代理平台注册', '获取专属推广链接', '分享给有办卡需求的朋友'] },
+      { id: 2, title: '代理平台对比', desc: '卡盒/掌上推卡/随手推卡怎么选', url: '/article/creditcard-platforms.html', steps: ['卡盒：佣金高、批核快、主打广发', '掌上推卡：门槛低、通过率高、银行多', '随手推卡：新户礼丰厚、推荐奖励高'] },
+      { id: 3, title: '佣金结算说明', desc: '佣金到账与提现规则', url: '/article/creditcard-commission.html', steps: ['用户激活信用卡后佣金自动计入', '佣金比例以代理后台实时显示为准', '满额可提现至微信/支付宝'] },
+      { id: 4, title: '推广方法与常见问题', desc: '怎么推广 + 用户高频问题', url: '/article/creditcard-promote-faq.html', steps: ['朋友圈/社群分享办卡优惠信息', '信用卡交流群、家人群效果最好', '详见文章中的用户高频问题解答'] },
+    ],
+    meta: {
+      title: '信用卡代理 — 项目入口 | 券宝',
+      description: '信用卡代理：推广各大银行信用卡申请链接，用户申请你赚佣金。',
+      keywords: '信用卡代理,办卡赚钱,信用卡推广,银行信用卡'
+    }
   }
 }
 

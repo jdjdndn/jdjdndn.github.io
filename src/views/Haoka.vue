@@ -18,14 +18,14 @@
     </div>
 
     <!-- 充话费提示 -->
-    <div class="recharge-banner" role="alert">
+    <!-- <div class="recharge-banner" role="alert">
       <span class="recharge-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
       <div class="recharge-text">
         <strong>充话费 95 折</strong>
         <span>微信咨询 · 不到账全额退</span>
       </div>
       <button class="recharge-btn" @click="copyWechat">加微信</button>
-    </div>
+    </div> -->
 
      <!-- 跨页面推荐 -->
     <div class="cross-link-banner">
@@ -43,6 +43,40 @@
         </div>
       </div>
       <router-link to="/haoka-hero.html" class="hero-entry-link">查看详情 →</router-link>
+    </div>
+
+    <!-- 号卡代理横幅 -->
+    <div class="haoka-agent-banner" @click="showHaokaLinks = !showHaokaLinks">
+      <div class="haoka-agent-banner-text">
+        <span class="haoka-agent-banner-icon">📱</span>
+        <div>
+          <strong>号卡链接</strong>
+          <span>{{ showHaokaLinks ? '点击收起' : '点击查看全部号卡入口' }}</span>
+        </div>
+      </div>
+      <span class="haoka-agent-banner-arrow">{{ showHaokaLinks ? '▲' : '▼' }}</span>
+    </div>
+
+    <!-- 号卡代理链接列表 -->
+    <div v-if="showHaokaLinks" class="haoka-links-grid">
+      <a
+        v-for="link in haokaLinks"
+        :key="link.name"
+        :href="link.url"
+        target="_blank"
+        rel="noopener sponsored"
+        class="haoka-link-card"
+      >
+        <div class="haoka-link-header">
+          <span class="haoka-link-name">{{ link.name }}</span>
+          <span class="haoka-link-badge">{{ link.badge }}</span>
+        </div>
+        <div class="haoka-link-desc">{{ link.description }}</div>
+        <div class="haoka-link-meta">
+          <span class="haoka-link-price">{{ link.priceRange }}</span>
+          <span v-if="link.nationwide" class="haoka-link-tag">全国</span>
+        </div>
+      </a>
     </div>
 
     <!-- 号卡文章列表 -->
@@ -116,11 +150,14 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useToast } from '../composables'
+import { useToast, usePagination } from '../composables'
 import PageHero from '../components/PageHero.vue'
 import SearchBox from '../components/SearchBox.vue'
 import LegalLinks from '../components/LegalLinks.vue'
 import BackToTop from '../components/BackToTop.vue'
+import { haokaLinks } from '../templates/haoka-data.js'
+
+const showHaokaLinks = ref(true)
 
 const toast = useToast()
 
@@ -130,13 +167,12 @@ const tabs = [
   { label: '移动', value: '移动' },
   { label: '联通', value: '联通' },
   { label: '电信', value: '电信' },
-  { label: '广电', value: '广电' }
+  { label: '广电', value: '广电' },
+  // { label: '指南', value: '指南' }
 ]
 
 const currentTab = ref('all')
 const searchKeyword = ref('')
-const currentPage = ref(1)
-const pageSize = 9
 
 // 文章数据
 const articles = [
@@ -167,6 +203,10 @@ const articles = [
   { title: '中国联通上坎卡', desc: '39元190G+200分钟，重庆专属。', url: '/article/card/shangkan-card.html', tag: '39元190G', carrier: '联通' },
   { title: '中国联通洪崖卡', desc: '19元100G+200分钟，12个月优惠。', url: '/article/card/hongya-card.html', tag: '19元100G', carrier: '联通' },
   { title: '联通广绣卡', desc: '39元155G+100分钟，可发广东。', url: '/article/card/guangxiu-card.html', tag: '39元155G', carrier: '联通' },
+  { title: '中国联通灯影卡', desc: '首月免费，39元240G+50分钟，四川专属。', url: '/article/card/dengying-card.html', tag: '39元240G', carrier: '联通' },
+  { title: '中国联通飞翅卡', desc: '39元300G+100分钟，需搭配路由器设备。', url: '/article/card/feichi-card.html', tag: '39元300G', carrier: '联通' },
+  { title: '中国联通飞倾卡', desc: '39元300G+100分钟，468元包年。', url: '/article/card/feiqin-card.html', tag: '39元300G', carrier: '联通' },
+  { title: '中国联通飞塘卡', desc: '39元200G+300分钟，先激活后发货。', url: '/article/card/feitang-card.html', tag: '39元200G', carrier: '联通' },
   // 电信
   { title: '中国电信汉绣卡', desc: '39元130G+30G定向+200分钟，仅限湖北四城。', url: '/article/card/hanxiu-card.html', tag: '39元160G', carrier: '电信' },
   { title: '中国电信敬亭卡', desc: '39元150G+100分钟，48个月优惠期。', url: '/article/card/jingting-card.html', tag: '39元150G', carrier: '电信' },
@@ -184,7 +224,13 @@ const articles = [
   { title: '中国广电奔马卡', desc: '39元60G通用，可办副卡。', url: '/article/card/benma-card.html', tag: '39元60G', carrier: '广电' },
   { title: '中国广电长安卡', desc: '29元100G+100分钟，仅限陕西。', url: '/article/card/changan-card.html', tag: '29元100G', carrier: '广电' },
   { title: '中国广电秦风卡', desc: '38元190G+300分钟，只发陕西四城。', url: '/article/card/qinfeng-card.html', tag: '38元190G', carrier: '广电' },
-  { title: '中国广电闽南卡', desc: '39元180G+150分钟，仅发福建。', url: '/article/card/minnan-card.html', tag: '39元180G', carrier: '广电' }
+  { title: '中国广电闽南卡', desc: '39元180G+150分钟，仅发福建。', url: '/article/card/minnan-card.html', tag: '39元180G', carrier: '广电' },
+  { title: '中国广电飞狮卡2.0', desc: '29元192G通用，首月免费，最长60个月。', url: '/article/card/feishi-v2-card.html', tag: '29元192G', carrier: '广电' },
+  { title: '中国广电飞狮卡3.0', desc: '29元192G通用，首月免费，最长60个月。', url: '/article/card/feishi-v3-card.html', tag: '29元192G', carrier: '广电' },
+  { title: '中国广电飞狮卡4.0', desc: '29元192G通用，首月免费，最长60个月。', url: '/article/card/feishi-v4-card.html', tag: '29元192G', carrier: '广电' },
+  { title: '中国广电飞狮卡5.0', desc: '29元192G通用，首月免费，最长60个月。', url: '/article/card/feishi-v5-card.html', tag: '29元192G', carrier: '广电' },
+  // 指南
+  // { title: '流量卡怎么选不踩坑', desc: '四大运营商对比、选卡四步法、常见问题。', url: '/article/card/sim-card-guide.html', tag: '选卡指南', carrier: '指南' }
 ]
 
 // 筛选后的文章
@@ -199,53 +245,20 @@ const filteredArticles = computed(() => {
   })
 })
 
-// 总页数
-const totalPages = computed(() => Math.ceil(filteredArticles.value.length / pageSize))
+const { currentPage, totalPages, pagedList: pagedArticles, displayPages, goToPage: _goToPage, resetPage } = usePagination(filteredArticles, { maxVisible: 7 })
 
-// 当前页文章
-const pagedArticles = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredArticles.value.slice(start, start + pageSize)
-})
-
-// 分页显示
-const displayPages = computed(() => {
-  const total = totalPages.value
-  const current = currentPage.value
-  const pages = []
-
-  if (total <= 7) {
-    for (let i = 1; i <= total; i++) pages.push(i)
-  } else {
-    pages.push(1)
-    if (current > 3) pages.push('...')
-    for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) {
-      pages.push(i)
-    }
-    if (current < total - 2) pages.push('...')
-    pages.push(total)
-  }
-
-  return pages
-})
+const goToPage = (page) => {
+  _goToPage(page)
+}
 
 // 切换 Tab
 const switchTab = (tab) => {
   currentTab.value = tab
-  currentPage.value = 1
-}
-
-// 跳转页面
-const goToPage = (page) => {
-  if (page < 1 || page > totalPages.value) return
-  currentPage.value = page
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  resetPage()
 }
 
 // 搜索关键词变化时重置页码
-watch(searchKeyword, () => {
-  currentPage.value = 1
-})
+watch(searchKeyword, resetPage)
 
 function copyWechat() {
   navigator.clipboard.writeText('wcbblll').then(() => {
@@ -346,6 +359,96 @@ function copyWechat() {
 .cross-link-banner a:hover { background: rgba(0, 78, 137, 0.15); }
 .cross-link-banner a:active { transform: scale(0.97); }
 
+/* 号卡代理横幅 */
+.haoka-agent-banner {
+  max-width: 1100px;
+  margin: 16px auto;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #fff 100%);
+  border: 1px solid #4caf50;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all .2s;
+}
+.haoka-agent-banner:hover {
+  box-shadow: 0 4px 12px rgba(76, 175, 80, .15);
+  transform: translateY(-1px);
+}
+.haoka-agent-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.haoka-agent-banner-icon { font-size: 28px; }
+.haoka-agent-banner-text strong { display: block; font-size: 15px; color: #1a1a2e; }
+.haoka-agent-banner-text span { font-size: 12px; color: #6b7280; }
+.haoka-agent-banner-arrow { font-size: 14px; color: #4caf50; font-weight: 600; }
+
+/* 号卡代理链接列表 */
+.haoka-links-grid {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.haoka-link-card {
+  background: var(--card, #fff);
+  border: 1px solid var(--border, #e5e2dd);
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: var(--text, #1a1a2e);
+  transition: all .2s;
+}
+.haoka-link-card:hover {
+  border-color: #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, .1);
+  transform: translateY(-2px);
+}
+.haoka-link-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.haoka-link-name { font-size: 15px; font-weight: 600; }
+.haoka-link-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.haoka-link-desc {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.haoka-link-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.haoka-link-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4caf50;
+}
+.haoka-link-tag {
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
 /* 选卡指南入口 */
 .hero-entry-banner {
   max-width: 1100px;
@@ -438,6 +541,15 @@ function copyWechat() {
 
 /* 暗色模式 */
 [data-theme="dark"] .guide-card {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
+}
+
+[data-theme="dark"] .haoka-agent-banner {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.08));
+  border-color: rgba(76, 175, 80, 0.4);
+}
+[data-theme="dark"] .haoka-link-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }

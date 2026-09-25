@@ -48,6 +48,7 @@
 import { computed } from 'vue'
 import { useClipboard, useShare } from '../composables'
 import { isExpired, isExpiringSoon, isNewActivity, isHotActivity, formatCountdown, highlightText, getIconForName } from '../composables/useUtils'
+import { isWechatLink, handleWechatLink } from '../utils/linkHandler'
 
 const props = defineProps({
   item: {
@@ -74,15 +75,10 @@ const expired = computed(() => isExpired(props.item.deadline))
 const expiringSoon = computed(() => isExpiringSoon(props.item.deadline))
 const isNew = computed(() => isNewActivity(props.item))
 const isHot = computed(() => isHotActivity(props.item))
-const isMiniApp = computed(() => props.item.code && (props.item.code.startsWith('mp://') || props.item.code.startsWith('weixin://')))
-
-const isWeixinEnv = () => /MicroMessenger/i.test(navigator.userAgent)
+const isMiniApp = computed(() => props.item.code && isWechatLink(props.item.code))
 
 const handleLinkClick = (e) => {
-  if (props.item.link?.startsWith('weixin://') && !isWeixinEnv()) {
-    e.preventDefault()
-    alert('请在微信中打开此链接')
-  }
+  handleWechatLink(props.item.link, { name: props.item.name })
 }
 
 const icon = computed(() => getIconForName(props.item.name))
