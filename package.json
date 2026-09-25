@@ -14,7 +14,10 @@
     "check-expired": "node scripts/check-expired.cjs",
     "seo": "node scripts/seo-audit.cjs",
     "seo:fix": "node scripts/seo-audit.cjs --fix",
-    "sync:links": "node scripts/sync-friend-links.cjs"
+    "sync:links": "node scripts/sync-friend-links.cjs",
+    "cf:build": "npm run build",
+    "cf:deploy": "npx wrangler pages deploy dist",
+    "cf:preview": "npx wrangler pages dev dist"
   },
   "dependencies": {
     "pinia": "^4.0.3",
