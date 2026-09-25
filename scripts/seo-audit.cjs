@@ -122,7 +122,7 @@ function checkMetaTags(filePath, content) {
 
   // 检查 og:image:width/height（社交平台需要）
   if (!content.includes('og:image:width') && !isIndex) {
-    report(filePath, 'WARN', 'og', '缺少 og:image:width/height（影响社交分享预览）', true);
+    report(filePath, 'INFO', 'og', '缺少 og:image:width/height（影响社交分享预览）', true);
     if (AUTO_FIX) {
       const ogImageAlt = content.includes('og:image:alt')
         ? /(<meta property="og:image:alt"[^/]*\/>)/
@@ -237,7 +237,7 @@ function checkJsonLd(filePath, content) {
   // 非首页检查是否缺少 BreadcrumbList（index.html 是首页 Vue SPA 入口，豁免）
   const name = path.basename(filePath);
   if (name !== 'index.html' && !content.includes('"BreadcrumbList"')) {
-    report(filePath, 'WARN', 'jsonld', '缺少 BreadcrumbList 结构化数据', true);
+    report(filePath, 'INFO', 'jsonld', '缺少 BreadcrumbList 结构化数据', true);
   }
 }
 
