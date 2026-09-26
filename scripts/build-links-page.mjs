@@ -1,5 +1,5 @@
 // ============================================================
-// 生成非文章链接汇总页 links.html → E:\code\wcbblll_cc\
+// 生成导航页 index.html + links-data.json → E:\code\wcbblll_cc\
 // 数据源：src/data.js（tabs + friendLinks + FRIEND_LINKS_DATA）
 //         src/views/fuye-data.js（fuyePages[].entries）
 //         src/templates/wifi-data.js（wifiLinks + wifiProxyLinks）
@@ -14,16 +14,14 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-// 模式：node scripts/build-links-page.mjs [links|index|json]（默认 links）
-//   links: 生成 links.html（数据内联）
+// 模式：node scripts/build-links-page.mjs [index|json]（默认 index）
 //   index: 生成 index.html（fetch links-data.json）+ links-data.json
 //   json:  仅生成 links-data.json（供 npm run build 调用）
-const MODE = process.argv[2] || 'links';
+const MODE = process.argv[2] || 'index';
 // 输出目录：github.io 的兄弟目录 ../wcbblll_cc（相对脚本位置推导，可移植）
 const WCC_DIR = path.resolve(ROOT, '../wcbblll_cc');
-const OUT = MODE === 'index' ? path.join(WCC_DIR, 'index.html') : MODE === 'links' ? path.join(WCC_DIR, 'links.html') : null;
+const OUT = MODE === 'index' ? path.join(WCC_DIR, 'index.html') : null;
 const DATA_FILE = path.join(WCC_DIR, 'links-data.json');
-const IS_INLINE = MODE === 'links';
 
 // ---------- 分类体系（计划 1.3） ----------
 const CATS = {
@@ -177,7 +175,7 @@ for (const l of links) catCount[l.category] = (catCount[l.category] || 0) + 1;
 // ---------- 生成 HTML ----------
 // ---------- 数据 JSON（json / index 模式输出） ----------
 const updated = new Date().toISOString().slice(0, 10);
-const dataJson = JSON.stringify(links).replace(/</g, '\\u003c');
+
 if (MODE === 'json' || MODE === 'index') {
   if (!fs.existsSync(WCC_DIR)) {
     // CI / 无本地布局环境：兄弟目录 wcbblll_cc 不存在，跳过导航站数据生成，不使构建失败
@@ -191,21 +189,11 @@ if (MODE === 'json' || MODE === 'index') {
     if (MODE === 'json') process.exit(0);
   }
 }
-const schemaItems = links.slice(0, 5).map((l, i) => ({
-  '@type': 'ListItem',
-  position: i + 1,
-  item: { '@type': 'WebSite', name: l.name, url: l.url },
-}));
-const SITE_URL = MODE === 'index' ? 'https://wcbblll.cc/' : 'https://wcbblll.cc/links.html';
-const PAGE_TITLE = MODE === 'index'
-  ? '券宝 — 优惠链接导航 · 电商/出行/会员/生活优惠一站直达'
-  : '优惠链接导航 — 电商/出行/会员/生活优惠汇总 | 券宝';
-const BACK_LABEL = MODE === 'index' ? '← 券宝主站' : '← 首页';
-const BACK_HREF = MODE === 'index' ? 'https://jdjdndn.github.io/' : 'https://wcbblll.cc/';
-const LD_TYPE = MODE === 'index' ? 'WebSite' : 'CollectionPage';
-const LD_MAIN = MODE === 'index'
-  ? { '@type': 'WebSite', name: '券宝', alternateName: '优惠链接导航', url: 'https://wcbblll.cc/' }
-  : { '@type': 'ItemList', numberOfItems: links.length, itemListElement: schemaItems };
+
+const SITE_URL = 'https://wcbblll.cc/';
+const PAGE_TITLE = '券宝 — 优惠链接导航 · 电商/出行/会员/生活优惠一站直达';
+const LD_TYPE = 'WebSite';
+const LD_MAIN = { '@type': 'WebSite', name: '券宝', alternateName: '优惠链接导航', url: 'https://wcbblll.cc/' };
 
 const catTabs = Object.entries(CATS)
   .filter(([id]) => catCount[id])
@@ -268,12 +256,7 @@ header.site {
   backdrop-filter: blur(8px); padding: 12px 0;
 }
 .header-inner { display: flex; align-items: center; gap: 12px; }
-.back-btn {
-  display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px;
-  background: var(--card); border: 1px solid var(--border); font-size: 13px; color: var(--text);
-  white-space: nowrap; transition: all .2s;
-}
-.back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
 .header-inner h1 { font-size: 18px; font-weight: 700; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .header-stat { font-size: 12px; color: var(--text-2); white-space: nowrap; }
 .header-stat strong { color: var(--primary); }
@@ -303,6 +286,12 @@ header.site {
   scrollbar-width: none; position: sticky; top: 63px; z-index: 99; background: var(--bg);
 }
 .tabs::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .tabs { flex-wrap: wrap; overflow-x: visible; }
+}
+@media (min-width: 768px) {
+  .tabs { flex-wrap: wrap; overflow-x: visible; }
+}
 .tab {
   display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px;
   border: 1px solid var(--border); background: var(--card); font-size: 13px; color: var(--text);
@@ -402,7 +391,6 @@ footer.site p { margin-bottom: 4px; }
 <body>
 <header class="site">
   <div class="container header-inner">
-    <a class="back-btn" href="${BACK_HREF}" aria-label="${BACK_LABEL}">${BACK_LABEL}</a>
     <h1>优惠链接导航</h1>
     <span class="header-stat">已收录 <strong>${links.length}</strong> 个链接</span>
     <button class="theme-btn" id="themeBtn" aria-label="切换深浅色">🌙</button>
@@ -457,14 +445,10 @@ footer.site p { margin-bottom: 4px; }
 </div>
 <div class="toast" id="toast"></div>
 
-${IS_INLINE ? '<script id="link-data" type="application/json">${dataJson}</script>' : '<noscript><p style="text-align:center;padding:20px;color:#6b7280">本页面需要启用 JavaScript 才能加载优惠链接数据</p></noscript>'}
+<noscript><p style="text-align:center;padding:20px;color:#6b7280">本页面需要启用 JavaScript 才能加载优惠链接数据</p></noscript>
 <script>
 (function () {
   var LINKS = [];
-  var linkDataEl = document.getElementById('link-data');
-  if (linkDataEl) {
-    try { LINKS = JSON.parse(linkDataEl.textContent); } catch (e) { LINKS = []; }
-  }
 
   function boot() {
     render();
@@ -616,25 +600,21 @@ ${IS_INLINE ? '<script id="link-data" type="application/json">${dataJson}</scrip
     }
   } catch (e) {}
 
-  if (linkDataEl) {
-    boot();
-  } else {
-    fetch('links-data.json')
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (d) {
-        LINKS = d.links || [];
-        var statStrong = document.querySelector('.header-stat strong');
-        if (statStrong) statStrong.textContent = LINKS.length;
-        var allTab = document.querySelector('.tab[data-cat="all"] .tab-count');
-        if (allTab) allTab.textContent = LINKS.length;
-        boot();
-      })
-      .catch(function () {
-        statsBar.textContent = '数据加载失败，请刷新重试';
-        emptyState.classList.add('show');
-        emptyState.querySelector('p').textContent = '无法加载优惠链接数据，请稍后刷新页面';
-      });
-  }
+  fetch('links-data.json')
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (d) {
+      LINKS = d.links || [];
+      var statStrong = document.querySelector('.header-stat strong');
+      if (statStrong) statStrong.textContent = LINKS.length;
+      var allTab = document.querySelector('.tab[data-cat="all"] .tab-count');
+      if (allTab) allTab.textContent = LINKS.length;
+      boot();
+    })
+    .catch(function () {
+      statsBar.textContent = '数据加载失败，请刷新重试';
+      emptyState.classList.add('show');
+      emptyState.querySelector('p').textContent = '无法加载优惠链接数据，请稍后刷新页面';
+    });
 })();
 </script>
 </body>
