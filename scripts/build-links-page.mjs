@@ -19,8 +19,10 @@ const ROOT = path.resolve(__dirname, '..');
 //   index: 生成 index.html（fetch links-data.json）+ links-data.json
 //   json:  仅生成 links-data.json（供 npm run build 调用）
 const MODE = process.argv[2] || 'links';
-const OUT = MODE === 'index' ? 'E:/code/wcbblll_cc/index.html' : MODE === 'links' ? 'E:/code/wcbblll_cc/links.html' : null;
-const DATA_FILE = 'E:/code/wcbblll_cc/links-data.json';
+// 输出目录：github.io 的兄弟目录 ../wcbblll_cc（相对脚本位置推导，可移植）
+const WCC_DIR = path.resolve(ROOT, '../wcbblll_cc');
+const OUT = MODE === 'index' ? path.join(WCC_DIR, 'index.html') : MODE === 'links' ? path.join(WCC_DIR, 'links.html') : null;
+const DATA_FILE = path.join(WCC_DIR, 'links-data.json');
 const IS_INLINE = MODE === 'links';
 
 // ---------- 分类体系（计划 1.3） ----------
