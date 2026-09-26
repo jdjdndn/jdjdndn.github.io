@@ -179,10 +179,17 @@ for (const l of links) catCount[l.category] = (catCount[l.category] || 0) + 1;
 const updated = new Date().toISOString().slice(0, 10);
 const dataJson = JSON.stringify(links).replace(/</g, '\\u003c');
 if (MODE === 'json' || MODE === 'index') {
-  const payload = { updated, links };
-  fs.writeFileSync(DATA_FILE, JSON.stringify(payload), 'utf8');
-  console.log(`✅ 生成 ${DATA_FILE}（${links.length} 个链接）`);
-  if (MODE === 'json') process.exit(0);
+  if (!fs.existsSync(WCC_DIR)) {
+    // CI / 无本地布局环境：兄弟目录 wcbblll_cc 不存在，跳过导航站数据生成，不使构建失败
+    console.log(`⏭️ 跳过导航站数据生成：目录不存在（${WCC_DIR}）`);
+    if (MODE === 'json') process.exit(0);
+  } else {
+    const payload = { updated, links };
+    fs.mkdirSync(WCC_DIR, { recursive: true });
+    fs.writeFileSync(DATA_FILE, JSON.stringify(payload), 'utf8');
+    console.log(`✅ 生成 ${DATA_FILE}（${links.length} 个链接）`);
+    if (MODE === 'json') process.exit(0);
+  }
 }
 const schemaItems = links.slice(0, 5).map((l, i) => ({
   '@type': 'ListItem',
@@ -634,6 +641,7 @@ ${IS_INLINE ? '<script id="link-data" type="application/json">${dataJson}</scrip
 </html>
 `;
 
+fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, html, 'utf8');
 console.log(`✅ 生成 ${OUT}（模式: ${MODE}）`);
 console.log(`   链接总数: ${links.length}`);
