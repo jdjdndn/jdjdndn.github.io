@@ -2,9 +2,9 @@
   <main class="huodong-page">
       <PageHero
         icon='<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
-        title="优惠活动聚合"
+        title="券宝"
         subtitle="全网热门活动 · 天天领红包"
-        aria="优惠活动聚合"
+        aria="券宝"
       />
 
       <div class="card">

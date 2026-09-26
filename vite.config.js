@@ -11,7 +11,6 @@ import generateSitemap from './scripts/vite-plugins/generate-sitemap.js';
 import generateLlms from './scripts/vite-plugins/generate-llms.js';
 import swHash from './scripts/vite-plugins/sw-hash.js';
 import verifyAssets from './scripts/vite-plugins/verify-assets.js';
-import Components from 'unplugin-vue-components/vite';
 
 // ===== 递归扫描 src 目录下所有 HTML 页面 =====
 function discoverAllPages() {
@@ -90,9 +89,6 @@ export default defineConfig({
   server: { open: true },
   plugins: [
     vue(),
-    Components({
-      dts: false,
-    }),
     injectBuildDate(),
     seoPrerender(),
     cacheControlMeta(),

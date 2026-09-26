@@ -20,7 +20,7 @@
       <section class="privacy-card" id="p1">
         <h2 class="privacy-title"><span class="privacy-num">1</span>我们收集哪些信息</h2>
         <p class="privacy-highlight">
-          本站（优惠活动聚合，下称"本站"）是优惠信息导航平台，<strong>不要求注册、不要求登录，不收集您的姓名、手机号、邮箱、收货地址等任何可识别个人身份的信息</strong>。
+          本站（券宝，下称"本站"）是优惠信息导航平台，<strong>不要求注册、不要求登录，不收集您的姓名、手机号、邮箱、收货地址等任何可识别个人身份的信息</strong>。
         </p>
         <p>您访问本站时，以下信息可能会被收集：</p>
         <ul class="privacy-list">

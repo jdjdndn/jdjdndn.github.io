@@ -12,9 +12,9 @@ const routes = [
     name: 'Home',
     component: () => import('../views/Home.vue'),
     meta: {
-      title: '券宝 — 优惠券聚合平台',
-      description: '券宝优惠券聚合平台，汇聚全网热门优惠券，一站式省钱利器。',
-      keywords: '券宝,优惠券,优惠聚合,省钱'
+      title: '券宝 — 外卖红包·购物返利·出行优惠券每日更新',
+      description: '券宝聚合美团、京东、拼多多、滴滴、携程等平台优惠，外卖红包、购物返利、出行酒旅券每日更新，复制口令码一键领券省钱。',
+      keywords: '券宝,优惠券,外卖红包,购物返利,出行优惠,省钱'
     }
   },
   {
@@ -62,8 +62,8 @@ const routes = [
     name: 'Huodong',
     component: () => import('../views/Huodong.vue'),
     meta: {
-      title: '优惠活动聚合 — 全网热门优惠',
-      description: '优惠活动聚合，汇集全网热门优惠活动，省钱利器。',
+      title: '券宝 — 全网热门优惠',
+      description: '券宝汇集全网热门优惠活动，外卖、出行、购物、酒旅天天领红包，省钱利器。',
       keywords: '优惠活动,省钱,优惠券'
     }
   },

@@ -27,7 +27,7 @@
 
     <!-- 群卡片 -->
     <div class="group-grid">
-      <div v-for="group in filteredGroups" :key="group.name" class="group-card" :class="{ disabled: group.disabled }">
+      <div v-for="group in filteredGroups" :key="group.name" class="group-card" :class="{ disabled: group.disabled, 'has-qr': group.qr }">
         <div class="group-icon">{{ group.icon }}</div>
         <div class="group-info">
           <div class="group-name">{{ group.name }}</div>
@@ -36,10 +36,14 @@
         <span :class="['tag', group.disabled ? 'tag-default' : 'tag-success']">
           {{ group.tag }}
         </span>
+        <div v-if="group.qr" class="group-qr">
+          <img :src="group.qr" alt="网购优惠群微信二维码，扫码进群" />
+          <p class="qr-tip">微信扫码加入 · 二维码7天内有效，失效后重新进入页面会更新</p>
+        </div>
       </div>
     </div>
 
-    <p class="f-note">💡 输入关键词筛选群聊 · 群聊入口持续更新，敬请期待</p>
+    <p class="f-note">💡 输入关键词筛选群聊 · 网购优惠群已开放扫码，其余群聊持续更新中</p>
 
     <!-- 群聊说明（充实内容，避免长屏底部空白） -->
     <div class="q-faq">
@@ -50,7 +54,7 @@
         </details>
         <details class="faq-item">
           <summary class="faq-question">如何加入群聊？</summary>
-          <div class="faq-answer">群聊正式开放后，点击对应群聊卡片即可扫码入群。目前各群正在筹备中，请耐心等待。</div>
+          <div class="faq-answer">网购优惠群已开放：在页面上找到「网购优惠群」卡片，微信扫描卡片中的二维码即可入群。二维码7天内有效，过期后刷新页面会自动更新。其余群聊正在筹备中，开放后会同步在页面展示。</div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">群聊里可以发广告吗？</summary>
@@ -74,15 +78,15 @@ const searchQuery = ref('')
 
 const groups = [
   {
-    name: '官方交流群',
-    desc: '每日好价推送 · 攻略答疑 · 筹备中',
-    icon: '💬',
-    tag: '筹备中',
-    disabled: true
+    name: '网购好价',
+    desc: '每日好价推送 · 购物优惠分享',
+    icon: '🛒',
+    tag: '扫码加入',
+    qr: './qunliao-qr.jpg'
   },
   {
     name: '项目交流群',
-    desc: '号卡代理 · 推广经验交流 · 筹备中',
+    desc: '号卡业务 · 现状交流 · 筹备中',
     icon: '📈',
     tag: '筹备中',
     disabled: true
@@ -190,6 +194,56 @@ const filteredGroups = computed(() => {
   border: 1px solid var(--border, #e5e2dd);
   border-radius: 12px;
   transition: all 0.2s;
+}
+
+.group-card.has-qr {
+  flex-direction: column;
+  align-items: stretch;
+  grid-column: 1 / -1;
+}
+
+.group-card.has-qr .group-icon {
+  font-size: 32px;
+}
+
+.group-card.has-qr .group-info {
+  text-align: left;
+}
+
+.group-card.has-qr .tag {
+  align-self: flex-start;
+}
+
+.group-qr {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #fafaf8;
+  border: 1px dashed var(--border, #e5e2dd);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.group-qr img {
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.qr-tip {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  text-align: center;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .group-qr {
+  background: var(--card, #1e1e35);
+  border-color: var(--border, #2d2d45);
 }
 
 .group-card:not(.disabled):hover {

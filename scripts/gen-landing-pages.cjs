@@ -130,7 +130,7 @@ function generateHTML(page) {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="zh_CN" />
-    <meta property="og:site_name" content="优惠活动聚合" />
+    <meta property="og:site_name" content="券宝" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -151,7 +151,7 @@ function generateHTML(page) {
       "isPartOf": {
         "@type": "WebSite",
         "@id": "https://jdjdndn.github.io/#website",
-        "name": "优惠活动聚合"
+        "name": "券宝"
       },
       "speakable": {
         "@type": "SpeakableSpecification",
