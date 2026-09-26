@@ -289,9 +289,6 @@ header.site {
 @media (min-width: 768px) {
   .tabs { flex-wrap: wrap; overflow-x: visible; }
 }
-@media (min-width: 768px) {
-  .tabs { flex-wrap: wrap; overflow-x: visible; }
-}
 .tab {
   display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px;
   border: 1px solid var(--border); background: var(--card); font-size: 13px; color: var(--text);
