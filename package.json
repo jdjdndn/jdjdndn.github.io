@@ -16,8 +16,8 @@
     "seo:fix": "node scripts/seo-audit.cjs --fix",
     "sync:links": "node scripts/sync-friend-links.cjs",
     "cf:build": "npm run build",
-    "cf:deploy": "npx wrangler pages deploy dist",
-    "cf:preview": "npx wrangler pages dev dist"
+    "cf:deploy": "npx wrangler pages deploy dist --project-name=jdjdndn.github.io",
+    "cf:preview": "npx wrangler pages dev dist --project-name=jdjdndn.github.io"
   },
   "dependencies": {
     "pinia": "^4.0.3",
@@ -30,6 +30,7 @@
     "@vitejs/plugin-vue": "^6.0.9",
     "playwright": "^1.63.0",
     "sharp": "^0.35.4",
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "wrangler": "^4.141.0"
   }
 }
