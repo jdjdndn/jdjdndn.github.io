@@ -16,7 +16,7 @@
     "seo:fix": "node scripts/seo-audit.cjs --fix",
     "sync:links": "node scripts/sync-friend-links.cjs",
     "cf:build": "vite build",
-    "cf:deploy": "npx wrangler deploy",
+    "cf:deploy": "npx wrangler deploy --assets ./dist",
     "cf:preview": "npx wrangler preview"
   },
   "dependencies": {
