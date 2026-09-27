@@ -81,5 +81,5 @@ export const haokaProxyLinks = [
   {name: '咔咔通信代理', url: 'https://haoka.kakatx.com/register?inviteCode=KBOMJG1T'},
   {name: '蛋蛋号卡代理', url: 'https://ka.dandanhou.net/agent/reg.php?code=TA2O2ZZ4'},
   {name: '灵渠号卡代理', url: 'https://lingqu.87haoka.cn/r/06844666'},
-  {name: '青禾号卡代理', url: 'https://www.hemorn.cn/api/register?code=4XZ619ZX'},
+  {name: '青禾号卡代理', url: 'https://www.hemorn.cn/agent/reg.php?code=4XZ619ZX'},
 ]

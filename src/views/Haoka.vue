@@ -2,9 +2,9 @@
   <main class="haoka-page">
     <PageHero
       icon='<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>'
-      title="号卡业务专区"
+      title="号卡代理专区"
       subtitle="官方渠道办理 · 卡品信息仅供了解"
-      aria="号卡业务专区"
+      aria="号卡代理专区"
     >
       <span class="stat-badge"><strong>官方渠道</strong> · 号卡在线办理</span>
     </PageHero>

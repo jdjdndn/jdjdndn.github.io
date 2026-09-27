@@ -4,16 +4,17 @@ import { wifiProxyLinks } from '../templates/wifi-data.js'
 export const fuyePages = {
   'fuye/haoka': {
     icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>',
-    title: '号卡业务',
+    title: '号卡代理',
     subtitle: '现状梳理 · 合规路径与防骗',
     cardIcon: '📱',
     cardTag: '指南',
     statNum: '5',
     statLabel: '篇指南',
-    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页梳理号卡业务现状、合规路径与防骗指南，帮你认清行业情况。',
+    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页梳理号卡代理现状、合规路径与防骗指南，帮你认清行业情况。',
     banner: { icon: '📱', name: '号卡办理渠道', desc: '官方渠道办理 · 线下授权合规路径', url: '/haoka.html' },
     entries: [
-      { id: 1, icon: '📋', name: '号卡业务现状', desc: '新规后现状与合规路径指南', url: '/article/haoka-agent-guide.html' }
+      { id: 1, icon: '🤝', name: '号卡代理合伙人招募', desc: '高佣推广 · 零成本加入 · 一件代发', url: '/haoka-agent.html' },
+      // { id: 2, icon: '📋', name: '号卡代理现状', desc: '新规后现状与合规路径指南', url: '/article/haoka-agent-guide.html' }
     ],
     guides: [
       { id: 1, title: '号卡代理现状与合规路径', desc: '2026新规后还有哪些路', url: '/article/haoka-agent-guide.html', steps: ['号卡代理通过官方渠道推广，用户在官方渠道申请办理', '想办卡走运营商官方App/官网或线下营业厅', '想入行需了解官方授权渠道（需资质），谨防假代理骗局'] },
@@ -23,7 +24,7 @@ export const fuyePages = {
       { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡走运营商官方App/官网或线下营业厅', '警惕非官方渠道的代理招募，谨防骗局', '已办卡不受影响，实名制要求不变'] }
     ],
     meta: {
-      title: '号卡业务现状 — 项目入口 | 券宝',
+      title: '号卡代理现状 — 项目入口 | 券宝',
       description: '2026号卡新规后现状梳理：官方渠道办理、线下授权合规路径、假代理骗局识别。',
       keywords: '号卡,号卡新规,流量卡,办卡渠道,项目'
     }
@@ -31,16 +32,16 @@ export const fuyePages = {
 
   'fuye/haoka-agent': {
     icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    title: '号卡业务指南',
+    title: '号卡代理指南',
     subtitle: '现状梳理 · 合规路径 · 防骗指南',
     cardIcon: '📋',
     cardTag: '详情',
     hidden: true, // 子页面，不在首页显示
     statNum: '新规',
     statLabel: '2026.8.1',
-    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页是号卡业务最真实的现状：正规办卡渠道、官方授权路径，以及必须避开的代理骗局。',
+    intro: '号卡代理通过官方渠道推广号卡，用户最终在官方渠道申请。本页是号卡代理最真实的现状：正规办卡渠道、官方授权路径，以及必须避开的代理骗局。',
     entries: [
-      { id: 1, icon: '📋', name: '号卡业务现状', desc: '新规后现状与合规路径', url: '/article/haoka-agent-guide.html' },
+      { id: 1, icon: '📋', name: '号卡代理现状', desc: '新规后现状与合规路径', url: '/article/haoka-agent-guide.html' },
       { id: 2, icon: '🛡️', name: '防骗指南', desc: '识别假代理与提现骗局', url: '/article/haoka-faq.html' }
     ],
     guides: [
@@ -51,7 +52,7 @@ export const fuyePages = {
       { id: 5, title: '常见问题解答', desc: '办卡/代理/防骗高频问答', url: '/article/haoka-faq.html', steps: ['办卡走运营商官方App/官网或线下营业厅', '警惕非官方渠道的代理招募，谨防骗局', '已办卡不受影响，实名制要求不变'] }
     ],
     meta: {
-      title: '号卡业务指南 — 现状与合规 | 券宝',
+      title: '号卡代理指南 — 现状与合规 | 券宝',
       description: '2026号卡新规后现状梳理：官方渠道办理、线下授权合规路径、假代理骗局识别。',
       keywords: '号卡,号卡新规,流量卡,办卡渠道,项目'
     }

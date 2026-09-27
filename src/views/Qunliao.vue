@@ -86,7 +86,7 @@ const groups = [
   },
   {
     name: '项目交流群',
-    desc: '号卡业务 · 现状交流 · 筹备中',
+    desc: '号卡代理 · 现状交流 · 筹备中',
     icon: '📈',
     tag: '筹备中',
     disabled: true

@@ -2,8 +2,12 @@
 import { writeFileSync } from 'fs';
 import { resolve } from 'path';
 import {
-  SITE_URL, ROOT, discoverArticlePages, discoverSubPages,
-  readPageTitle, loadTabs, loadLandingSlugs,
+  ROOT,
+  SITE_URL,
+  discoverArticlePages, discoverSubPages,
+  loadLandingSlugs,
+  loadTabs,
+  readPageTitle,
 } from './shared.js';
 
 async function buildLlms() {
@@ -59,7 +63,7 @@ async function buildLlms() {
 
 ## 核心业务
 
-### 号卡业务专区（${SITE_URL}/haoka.html）
+### 号卡代理专区（${SITE_URL}/haoka.html）
 
 2026年8月1日起，三大运营商全面停止第三方互联网渠道号卡办理，线上号卡代理已终结。本站号卡专区提供现状梳理与合规指引：
 - 办理渠道：运营商官方App/官网、线下营业厅与授权门店

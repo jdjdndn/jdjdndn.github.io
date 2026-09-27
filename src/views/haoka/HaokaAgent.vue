@@ -58,7 +58,7 @@
     </section>
 
     <!-- 立即加入 -->
-    <section class="agent-register">
+    <!-- <section class="agent-register">
       <h2 class="seo-title">立即加入</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
@@ -78,7 +78,7 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">提交申请</button>
       </form>
-    </section>
+    </section> -->
 
     <LegalLinks />
   </main>
@@ -132,6 +132,9 @@ function handleSubmit() {
 </script>
 
 <style scoped>
+.haoka-agent-page{
+  width: 100%;
+}
 .agent-section {
   max-width: 1100px;
   margin: 40px auto;

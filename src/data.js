@@ -271,9 +271,9 @@ export const FRIEND_LINKS_DATA = [
     links: [
       { name: '电信星卡', url: 'https://ym.ksjhaoka.com/?s=loshqy1H719207', desc: '19-49元/月 四网可选' },
       { name: '172号卡', url: 'https://m.172.org.cn/ProductEn/Index/59bc0abc9a7d31f5', desc: '全国配送' },
-      { name: '好卡新耀', url: 'https://www.haokaxinyao.com/', desc: '四网套餐' },
-      { name: '咔咔通信', url: 'https://haoka.kakatx.com/', desc: '正规授权' },
-      { name: '蛋蛋号卡', url: 'https://ka.dandanhou.net/', desc: '新上线' },
+      { name: '好卡新耀', url: 'https://www.haokaxinyao.com/#/pages/sales_index/my_store?mall_id=A3uqdWKQRcA9Gpw0Ae2M5Q%3D%3D', desc: '四网套餐' },
+      { name: '咔咔通信', url: 'https://haoka.kakatx.com/web/#/pages/index/nationwide?token=MjY2NzIxfDE3ODk0NzE0OTcxMzdoYW9rYTY2Ng&viewRole=user', desc: '正规授权' },
+      { name: '蛋蛋号卡', url: 'https://h5.dandanhou.net/index?k=TFNMRkRsaWExZWs9', desc: '新上线' },
       { name: '灵渠号卡', url: 'https://lingqu.87haoka.cn/s/Cf3HUSBk', desc: '四网套餐' },
       { name: '青禾号卡', url: 'https://www.hemorn.cn/index?k=Vm5qREtSUUFyMTA9', desc: '四网套餐' },
     ],
