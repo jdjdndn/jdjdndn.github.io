@@ -28,8 +28,11 @@ jobs:
       - run: npm ci
 
       # ===== 构建步骤（拆分便于定位失败点）=====
-      - name: prebuild - 重建数据
-        run: node rebuild-all.cjs --prebuild github.io --root ..
+      - name: prebuild - 校验 wrangler 配置
+        run: |
+          echo "检查 wrangler.jsonc..."
+          cat wrangler.jsonc
+          grep -q '"404-page"' wrangler.jsonc && echo "✅ wrangler 已配 404-page" || { echo "❌ wrangler 缺少 404-page 配置"; exit 1; }
 
       - name: build - 同步友链
         run: node scripts/sync-friend-links.cjs
