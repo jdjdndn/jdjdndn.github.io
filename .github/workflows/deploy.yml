@@ -62,7 +62,9 @@ jobs:
         run: node scripts/build-links-page.mjs json
 
       - name: build - SPA 预渲染
-        run: node scripts/prerender-spa.cjs
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/prerender-spa.cjs
 
       # ===== 质量门禁 =====
 
