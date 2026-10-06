@@ -20,8 +20,11 @@ const ROOT = path.resolve(__dirname, '..');
 const MODE = process.argv[2] || 'index';
 // 输出目录：github.io 的兄弟目录 ../wcbblll_cc（相对脚本位置推导，可移植）
 const WCC_DIR = path.resolve(ROOT, '../wcbblll_cc');
+// 同步目录：article-site 也需要一份 links-data.json
+const ARTICLE_DIR = path.resolve(ROOT, '../article-site');
 const OUT = MODE === 'index' ? path.join(WCC_DIR, 'index.html') : null;
 const DATA_FILE = path.join(WCC_DIR, 'links-data.json');
+const ARTICLE_DATA_FILE = path.join(ARTICLE_DIR, 'links-data.json');
 
 // ---------- 分类体系（计划 1.3） ----------
 const CATS = {
@@ -172,7 +175,6 @@ const links = [...byUrl.values()].map(l => ({
 const catCount = {};
 for (const l of links) catCount[l.category] = (catCount[l.category] || 0) + 1;
 
-// ---------- 生成 HTML ----------
 // ---------- 数据 JSON（json / index 模式输出） ----------
 const updated = new Date().toISOString().slice(0, 10);
 
@@ -183,17 +185,53 @@ if (MODE === 'json' || MODE === 'index') {
     if (MODE === 'json') process.exit(0);
   } else {
     const payload = { updated, links };
+    const json = JSON.stringify(payload);
     fs.mkdirSync(WCC_DIR, { recursive: true });
-    fs.writeFileSync(DATA_FILE, JSON.stringify(payload), 'utf8');
+    fs.writeFileSync(DATA_FILE, json, 'utf8');
     console.log(`✅ 生成 ${DATA_FILE}（${links.length} 个链接）`);
+    // 同步一份给 article-site（目录存在才写，CI/无该仓库时跳过）
+    if (fs.existsSync(ARTICLE_DIR)) {
+      fs.writeFileSync(ARTICLE_DATA_FILE, json, 'utf8');
+      console.log(`✅ 同步 ${ARTICLE_DATA_FILE}`);
+    } else {
+      console.log(`⏭️ 跳过 article-site 同步：目录不存在（${ARTICLE_DIR}）`);
+    }
     if (MODE === 'json') process.exit(0);
   }
 }
 
+// ---------- 站点 SEO / 品牌常量（与 wcbblll_cc 线上优化版保持一致） ----------
 const SITE_URL = 'https://wcbblll.cc/';
-const PAGE_TITLE = '券宝 — 优惠链接导航 · 电商/出行/会员/生活优惠一站直达';
-const LD_TYPE = 'WebSite';
-const LD_MAIN = { '@type': 'WebSite', name: '券宝', alternateName: '优惠链接导航', url: 'https://wcbblll.cc/' };
+const BRAND_NAME = '券宝';
+const BRAND_ALT = '优惠链接导航';
+const PAGE_TITLE = `${BRAND_NAME} — ${BRAND_ALT} · 电商/出行/会员/生活优惠一站直达`;
+const PAGE_DESC = `${BRAND_NAME}${BRAND_ALT}：汇集京东、淘宝、拼多多、携程、美团等平台优惠，影视音乐会员、随身WiFi、号卡办理一站直达。实时更新，免费使用。`;
+const OG_DESC = PAGE_DESC;
+const FAVICON_URL = `${SITE_URL}favicon.svg`;
+// JSON-LD：Organization + WebSite（WebSite 不用 mainEntity）
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+      name: BRAND_NAME,
+      alternateName: BRAND_ALT,
+      url: SITE_URL,
+      logo: FAVICON_URL,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}#website`,
+      name: BRAND_NAME,
+      alternateName: BRAND_ALT,
+      description: PAGE_DESC,
+      url: SITE_URL,
+      inLanguage: 'zh-CN',
+      publisher: { '@id': `${SITE_URL}#organization` },
+    },
+  ],
+};
 
 const catTabs = Object.entries(CATS)
   .filter(([id]) => catCount[id])
@@ -206,7 +244,7 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${PAGE_TITLE}</title>
-<meta name="description" content="汇集京东、淘宝、拼多多、携程、美团等平台优惠链接，影视音乐会员、随身WiFi、号卡办理一站导航。实时更新，免费使用。">
+<meta name="description" content="${PAGE_DESC}">
 <meta name="keywords" content="优惠链接,电商优惠,会员优惠,随身WiFi,号卡办理,券宝,省钱,优惠券">
 <link rel="canonical" href="${SITE_URL}">
 <meta name="robots" content="index, follow">
@@ -215,21 +253,22 @@ const html = `<!DOCTYPE html>
 <meta name="geo.position" content="39.9042;116.4074">
 <meta name="ICBM" content="39.9042, 116.4074">
 <link rel="alternate" hreflang="zh-CN" href="${SITE_URL}">
-<meta property="og:title" content="优惠链接导航 — 一站汇总全网优惠">
-<meta property="og:description" content="电商/出行/会员/生活优惠链接汇总，省钱从这里开始">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#FF6B35">
+<meta name="application-name" content="${BRAND_NAME}">
+<meta property="og:title" content="${PAGE_TITLE}">
+<meta property="og:description" content="${OG_DESC}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${SITE_URL}">
-<meta property="og:site_name" content="券宝">
+<meta property="og:site_name" content="${BRAND_NAME}">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="${FAVICON_URL}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="${PAGE_TITLE}">
+<meta name="twitter:description" content="${OG_DESC}">
+<meta name="twitter:image" content="${FAVICON_URL}">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "${LD_TYPE}",
-  "name": "优惠链接导航",
-  "description": "汇集全网优惠链接的导航页面",
-  "url": "${SITE_URL}",
-  "mainEntity": ${JSON.stringify(LD_MAIN)}
-}
+${JSON.stringify(JSON_LD, null, 2)}
 </script>
 <style>
 :root {
@@ -388,7 +427,7 @@ footer.site p { margin-bottom: 4px; }
 <body>
 <header class="site">
   <div class="container header-inner">
-    <h1>优惠链接导航</h1>
+    <h1>${BRAND_NAME} · ${BRAND_ALT}</h1>
     <span class="header-stat">已收录 <strong>${links.length}</strong> 个链接</span>
     <button class="theme-btn" id="themeBtn" aria-label="切换深浅色">🌙</button>
   </div>

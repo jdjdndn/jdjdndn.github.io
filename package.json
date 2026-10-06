@@ -9,7 +9,7 @@
     "fetch-api:all": "node api-data/fetch-data.mjs && node api-data/update-jingxuan.mjs",
     "update-jingxuan": "node api-data/update-jingxuan.mjs",
     "update-jingxuan:login": "node api-data/update-jingxuan.mjs --login",
-    "build": "node scripts/sync-friend-links.cjs && node scripts/gen-vue-pages.cjs && node scripts/gen-fuye-guides.cjs && node scripts/gen-og-image.cjs && node scripts/gen-icons.cjs && vite build && node scripts/copy-shared.cjs&& node scripts/compress-images.cjs && node scripts/gen-landing-pages.cjs && node scripts/build-links-page.mjs json",
+    "build": "node scripts/sync-friend-links.cjs && node scripts/gen-vue-pages.cjs && node scripts/gen-fuye-guides.cjs && node scripts/gen-og-image.cjs && node scripts/gen-icons.cjs && vite build && node scripts/copy-shared.cjs&& node scripts/compress-images.cjs && node scripts/gen-landing-pages.cjs && node scripts/build-links-page.mjs json && node scripts/prerender-spa.cjs",
     "preview": "vite preview",
     "check-expired": "node scripts/check-expired.cjs",
     "seo": "node scripts/seo-audit.cjs",
@@ -17,7 +17,8 @@
     "sync:links": "node scripts/sync-friend-links.cjs",
     "cf:build": "vite build",
     "cf:deploy": "npx wrangler deploy --assets ./dist",
-    "cf:preview": "npx wrangler preview"
+    "cf:preview": "npx wrangler preview",
+    "prebuild": "node rebuild-all.cjs --prebuild github.io"
   },
   "dependencies": {
     "pinia": "^4.0.3",
