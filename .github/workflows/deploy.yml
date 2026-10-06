@@ -26,7 +26,45 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+
+      # ===== 构建步骤（拆分便于定位失败点）=====
+      - name: prebuild - 重建数据
+        run: node rebuild-all.cjs --prebuild github.io
+
+      - name: build - 同步友链
+        run: node scripts/sync-friend-links.cjs
+
+      - name: build - 生成 Vue 页面
+        run: node scripts/gen-vue-pages.cjs
+
+      - name: build - 生成副业指南
+        run: node scripts/gen-fuye-guides.cjs
+
+      - name: build - 生成 OG 图
+        run: node scripts/gen-og-image.cjs
+
+      - name: build - 生成图标
+        run: node scripts/gen-icons.cjs
+
+      - name: build - Vite 构建
+        run: vite build
+
+      - name: build - 复制共享资源
+        run: node scripts/copy-shared.cjs
+
+      - name: build - 压缩图片
+        run: node scripts/compress-images.cjs
+
+      - name: build - 生成着陆页
+        run: node scripts/gen-landing-pages.cjs
+
+      - name: build - 生成链接页数据
+        run: node scripts/build-links-page.mjs json
+
+      - name: build - SPA 预渲染
+        run: node scripts/prerender-spa.cjs
+
+      # ===== 质量门禁 =====
 
       # 质量门禁：SEO 审计 0 错误 0 警告（含 JSON-LD/llms 检查），失败则中止部署
       - name: SEO 审计门禁
