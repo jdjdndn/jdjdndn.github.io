@@ -47,7 +47,7 @@ jobs:
         run: node scripts/gen-icons.cjs
 
       - name: build - Vite 构建
-        run: vite build
+        run: npx vite build
 
       - name: build - 复制共享资源
         run: node scripts/copy-shared.cjs
