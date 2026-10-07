@@ -18,7 +18,7 @@
     "cf:build": "vite build",
     "cf:deploy": "npx wrangler deploy --assets ./dist",
     "cf:preview": "npx wrangler preview",
-    "prebuild": "node rebuild-all.cjs --prebuild github.io"
+    "prebuild": "node vendor/seo-optimizer/rebuild-all.cjs --prebuild github.io"
   },
   "dependencies": {
     "pinia": "^4.0.3",
