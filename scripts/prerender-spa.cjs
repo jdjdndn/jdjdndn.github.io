@@ -186,6 +186,14 @@ function regenerateSitemap() {
       args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] : [],
     })
     const page = await browser.newPage()
+    // 预渲染只需 Vue 渲染的 HTML；拦截 iframe 外部导航请求，避免 networkidle 永不达到
+    await page.route('**/*', (route) => {
+      const req = route.request()
+      if (req.isNavigationRequest() && req.frame() !== page.mainFrame()) {
+        return route.abort()
+      }
+      return route.continue()
+    })
 
     const fullIndexHtml = await buildFullIndexHtml()
 
