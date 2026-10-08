@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
 
   // 添加收藏
   function addFavorite(item) {
-    if (!favorites.value.find(f => f.id === item.id)) {
+    if (!favorites.value.find((f) => f.id === item.id)) {
       favorites.value.push(item)
       localStorage.setItem('favorites', JSON.stringify(favorites.value))
     }
@@ -32,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
 
   // 移除收藏
   function removeFavorite(id) {
-    favorites.value = favorites.value.filter(f => f.id !== id)
+    favorites.value = favorites.value.filter((f) => f.id !== id)
     localStorage.setItem('favorites', JSON.stringify(favorites.value))
   }
 
@@ -71,6 +71,6 @@ export const useUserStore = defineStore('user', () => {
     addFavorite,
     removeFavorite,
     addHistory,
-    init
+    init,
   }
 })

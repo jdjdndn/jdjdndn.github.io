@@ -8,8 +8,27 @@
       aria="券宝"
     >
       <div class="hero-stats">
-        <span class="stat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 精选 <strong>{{ totalCount }}</strong> 个优惠</span>
-        <span class="stat-badge">覆盖 <strong>{{ tabs.length }}</strong> 大平台</span>
+        <span class="stat-badge"
+          ><svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          精选 <strong>{{ totalCount }}</strong> 个优惠</span
+        >
+        <span class="stat-badge"
+          >覆盖 <strong>{{ tabs.length }}</strong> 大平台</span
+        >
         <span class="stat-badge freshness-badge"><span class="dot"></span> 每日更新</span>
       </div>
     </PageHero>
@@ -17,7 +36,20 @@
     <!-- 搜索栏 -->
     <div class="search-wrapper">
       <div class="search-bar" role="search">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <svg
+          class="search-icon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
         <input
           type="text"
           class="search-input"
@@ -28,14 +60,25 @@
         />
         <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''" aria-label="清除搜索">✕</button>
       </div>
-      <div v-if="searchQuery" class="search-count" aria-live="polite">
-        找到 {{ filteredItems.length }} 个结果
-      </div>
+      <div v-if="searchQuery" class="search-count" aria-live="polite">找到 {{ filteredItems.length }} 个结果</div>
     </div>
 
     <!-- 好物推荐入口 -->
     <a class="article-entry-banner" href="./article/haowu.html" aria-label="好物推荐省钱攻略文章">
-      <span class="article-entry-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+      <span class="article-entry-icon" aria-hidden="true"
+        ><svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg
+      ></span>
       <span class="article-entry-body">
         <span class="article-entry-title">好物推荐 · 省钱攻略</span>
         <span class="article-entry-sub">美食 / 数码 / 日用 · 亲测真实优惠</span>
@@ -80,11 +123,7 @@
 
         <!-- 卡片列表 -->
         <div class="card-grid">
-          <div
-            v-for="item in displayItems"
-            :key="item.name"
-            class="activity-card"
-          >
+          <div v-for="item in displayItems" :key="item.name" class="activity-card">
             <div class="card-header">
               <span class="card-name">{{ item.name }}</span>
               <span v-if="item.deadline" class="card-deadline" :class="{ expired: isExpired(item.deadline) }">
@@ -102,20 +141,8 @@
               >
                 复制口令
               </button>
-              <button
-                v-if="item.link"
-                class="btn btn-link"
-                @click="openLink(item.link)"
-              >
-                直接访问
-              </button>
-              <button
-                v-if="item.link"
-                class="btn btn-qr"
-                @click="showQr(item)"
-              >
-                二维码
-              </button>
+              <button v-if="item.link" class="btn btn-link" @click="openLink(item.link)">直接访问</button>
+              <button v-if="item.link" class="btn btn-qr" @click="showQr(item)">二维码</button>
             </div>
           </div>
         </div>
@@ -123,9 +150,7 @@
     </main>
 
     <!-- 数据更新时间 -->
-    <div class="last-updated">
-      数据更新于 {{ currentDate }}
-    </div>
+    <div class="last-updated">数据更新于 {{ currentDate }}</div>
 
     <!-- SEO 内链：省钱攻略汇总页 -->
     <a href="./article/index.html" class="seo-hidden-link" aria-hidden="true" tabindex="-1">省钱攻略大全</a>
@@ -134,23 +159,21 @@
     <LegalLinks />
 
     <!-- 二维码弹窗 -->
-    <QrModal
-      v-if="qrItem"
-      :visible="true"
-      :url="qrItem.link"
-      :title="qrItem.name"
-      @close="closeQr"
-    />
+    <QrModal v-if="qrItem" :visible="true" :url="qrItem.link" :title="qrItem.name" @close="closeQr" />
 
     <!-- 回到顶部按钮 -->
-    <button
-      v-show="showBackToTop"
-      class="back-to-top"
-      @click="scrollToTop"
-      aria-label="回到顶部"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
+    <button v-show="showBackToTop" class="back-to-top" @click="scrollToTop" aria-label="回到顶部">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="18 15 12 9 6 15" />
       </svg>
     </button>
   </main>
@@ -177,9 +200,12 @@ const currentTab = computed(() => tabs[activeTab.value])
 
 const totalCount = computed(() => {
   return tabs.reduce((count, tab) => {
-    return count + (tab.sections || []).reduce((sectionCount, section) => {
-      return sectionCount + (section.items || []).length
-    }, 0)
+    return (
+      count +
+      (tab.sections || []).reduce((sectionCount, section) => {
+        return sectionCount + (section.items || []).length
+      }, 0)
+    )
   }, 0)
 })
 
@@ -188,8 +214,8 @@ const displayItems = computed(() => {
 
   let items = []
   if (activeSubTab.value && currentTab.value.sections) {
-    const section = currentTab.value.sections.find(s => s.title === activeSubTab.value)
-    items = section ? (section.items || []) : []
+    const section = currentTab.value.sections.find((s) => s.title === activeSubTab.value)
+    items = section ? section.items || [] : []
   } else if (currentTab.value.sections && currentTab.value.sections.length > 0) {
     items = currentTab.value.sections[0].items || []
   }
@@ -197,9 +223,9 @@ const displayItems = computed(() => {
   // 搜索过滤
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
-    items = items.filter(item =>
-      item.name.toLowerCase().includes(query) ||
-      (item.description && item.description.toLowerCase().includes(query))
+    items = items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(query) || (item.description && item.description.toLowerCase().includes(query))
     )
   }
 
@@ -277,7 +303,7 @@ onMounted(() => {
   // 初始化 tab
   const savedTab = localStorage.getItem('activeTab')
   if (savedTab) {
-    const index = tabs.findIndex(t => t.id === savedTab)
+    const index = tabs.findIndex((t) => t.id === savedTab)
     if (index !== -1) {
       activeTab.value = index
     }
@@ -317,11 +343,13 @@ onUnmounted(() => {
   background: var(--card, #ffffff);
   border: 1px solid var(--border, #e5e2dd);
   border-radius: 999px;
-  transition: border-color 0.2s ease, box-shadow 0.3s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.3s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .search-bar:focus-within {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
 }
 
@@ -355,7 +383,9 @@ onUnmounted(() => {
   cursor: pointer;
   color: var(--muted, #6b7280);
   font-size: 12px;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .search-clear:hover {
@@ -380,13 +410,14 @@ onUnmounted(() => {
   border-radius: var(--radius, 12px);
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  transition:
+    border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .article-entry-banner:hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: var(--shadow-hover);
   transform: translateY(-1px);
 }
@@ -416,7 +447,7 @@ onUnmounted(() => {
   color: var(--muted, #6b7280);
 }
 
-.hero-stats{
+.hero-stats {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -453,7 +484,9 @@ onUnmounted(() => {
   font-weight: 600;
   color: var(--text-secondary, #4a5568);
   white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .tab-btn:hover:not(.active) {
@@ -461,7 +494,7 @@ onUnmounted(() => {
 }
 
 .tab-btn.active {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: #fff;
 }
 
@@ -505,7 +538,9 @@ onUnmounted(() => {
   font-weight: 500;
   color: var(--text-secondary, #4a5568);
   white-space: nowrap;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .sub-tab-btn:hover:not(.active) {
@@ -514,7 +549,7 @@ onUnmounted(() => {
 
 .sub-tab-btn.active {
   background: var(--card, #ffffff);
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   box-shadow: var(--shadow-xs);
 }
 
@@ -531,15 +566,16 @@ onUnmounted(() => {
   border: 1px solid var(--border, #e5e2dd);
   border-radius: var(--radius, 12px);
   padding: 18px;
-  transition: border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  transition:
+    border-color 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   display: flex;
   flex-direction: column;
 }
 
 .activity-card:hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
@@ -564,7 +600,7 @@ onUnmounted(() => {
 }
 
 .card-deadline.expired {
-  color: var(--danger, #DC2626);
+  color: var(--danger, #dc2626);
 }
 
 .card-desc {
@@ -595,7 +631,10 @@ onUnmounted(() => {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -611,12 +650,12 @@ onUnmounted(() => {
 }
 
 .btn-copy {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
 }
 
 .btn-copy:hover {
-  background: var(--primary-hover, #E55A2B);
+  background: var(--primary-hover, #e55a2b);
 }
 
 .btn-link {
@@ -654,7 +693,7 @@ onUnmounted(() => {
   height: 44px;
   border: none;
   border-radius: 50%;
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   cursor: pointer;
   display: flex;
@@ -662,7 +701,9 @@ onUnmounted(() => {
   justify-content: center;
   box-shadow: var(--shadow-md);
   z-index: 99;
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
 }
 
 .back-to-top:hover {
@@ -670,34 +711,34 @@ onUnmounted(() => {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .search-bar {
+[data-theme='dark'] .search-bar {
   background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .article-entry-banner {
+[data-theme='dark'] .article-entry-banner {
   background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .tab-nav {
+[data-theme='dark'] .tab-nav {
   background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .sub-tab-nav {
+[data-theme='dark'] .sub-tab-nav {
   background: var(--bg-elevated, #1a1a2e);
 }
 
-[data-theme="dark"] .sub-tab-btn:hover:not(.active) {
+[data-theme='dark'] .sub-tab-btn:hover:not(.active) {
   background: var(--card, #1a1f36);
 }
 
-[data-theme="dark"] .sub-tab-btn.active {
+[data-theme='dark'] .sub-tab-btn.active {
   background: var(--card, #1a1f36);
 }
 
-[data-theme="dark"] .activity-card {
+[data-theme='dark'] .activity-card {
   background: var(--card, #1a1f36);
   border-color: var(--border, #2d2d45);
 }

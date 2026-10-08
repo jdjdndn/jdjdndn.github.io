@@ -43,11 +43,7 @@
 
     <!-- 文章列表 -->
     <div class="container">
-      <SearchBox
-        v-model="searchKeyword"
-        placeholder="搜索信用卡文章..."
-        class="cc-search"
-      />
+      <SearchBox v-model="searchKeyword" placeholder="搜索信用卡文章..." class="cc-search" />
 
       <div class="tab-nav">
         <button
@@ -62,12 +58,7 @@
       </div>
 
       <div v-if="filteredArticles.length > 0" class="article-grid">
-        <a
-          v-for="item in pagedArticles"
-          :key="item.title"
-          :href="item.url"
-          class="article-card"
-        >
+        <a v-for="item in pagedArticles" :key="item.title" :href="item.url" class="article-card">
           <h3>{{ item.title }}</h3>
           <p>{{ item.desc }}</p>
           <span class="tag">{{ item.tag }}</span>
@@ -75,10 +66,19 @@
       </div>
 
       <div v-else class="empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          <line x1="8" y1="11" x2="14" y2="11"/>
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <line x1="8" y1="11" x2="14" y2="11" />
         </svg>
         <p>未找到相关文章</p>
       </div>
@@ -87,11 +87,7 @@
         <button :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">上一页</button>
         <template v-for="page in displayPages" :key="page">
           <span v-if="page === '...'" class="page-info">...</span>
-          <button
-            v-else
-            :class="{ active: page === currentPage }"
-            @click="goToPage(page)"
-          >
+          <button v-else :class="{ active: page === currentPage }" @click="goToPage(page)">
             {{ page }}
           </button>
         </template>
@@ -115,7 +111,7 @@ import { usePagination } from '../composables'
 
 const tabs = [
   { label: '全部', value: 'all' },
-  { label: '银行', value: '银行' }
+  { label: '银行', value: '银行' },
 ]
 
 const currentTab = ref('all')
@@ -123,32 +119,79 @@ const searchKeyword = ref('')
 
 // 信用卡文章列表
 const articles = [
-  { title: '中信银行信用卡 · 首刷版', desc: '新户首刷享好礼，多种卡面可选，快速审批', tag: '银行', url: '/article/creditcard-zhongxin.html' },
-  { title: '招商银行信用卡 · 双绑版', desc: '微信+支付宝双绑定享优惠，新户礼丰厚', tag: '银行', url: '/article/creditcard-zhaoshang.html' },
-  { title: '平安银行信用卡 · 首刷版', desc: '新户首刷享好礼，加油返现优惠', tag: '银行', url: '/article/creditcard-pingan.html' },
-  { title: '交通银行信用卡 · 首刷版', desc: '最红星期五优惠，新户首刷享好礼', tag: '银行', url: '/article/creditcard-jiaotong.html' },
+  {
+    title: '中信银行信用卡 · 首刷版',
+    desc: '新户首刷享好礼，多种卡面可选，快速审批',
+    tag: '银行',
+    url: '/article/creditcard-zhongxin.html',
+  },
+  {
+    title: '招商银行信用卡 · 双绑版',
+    desc: '微信+支付宝双绑定享优惠，新户礼丰厚',
+    tag: '银行',
+    url: '/article/creditcard-zhaoshang.html',
+  },
+  {
+    title: '平安银行信用卡 · 首刷版',
+    desc: '新户首刷享好礼，加油返现优惠',
+    tag: '银行',
+    url: '/article/creditcard-pingan.html',
+  },
+  {
+    title: '交通银行信用卡 · 首刷版',
+    desc: '最红星期五优惠，新户首刷享好礼',
+    tag: '银行',
+    url: '/article/creditcard-jiaotong.html',
+  },
   { title: '光大银行信用卡', desc: '阳光财富积分，多种卡面可选', tag: '银行', url: '/article/creditcard-guangda.html' },
   { title: '南京银行信用卡', desc: '本地优惠丰富，新户礼遇', tag: '银行', url: '/article/creditcard-nanjing.html' },
-  { title: '蒙商银行信用卡', desc: '内蒙古地区特色优惠，新户礼遇', tag: '银行', url: '/article/creditcard-mengshang.html' },
+  {
+    title: '蒙商银行信用卡',
+    desc: '内蒙古地区特色优惠，新户礼遇',
+    tag: '银行',
+    url: '/article/creditcard-mengshang.html',
+  },
   { title: '广发银行信用卡', desc: '积分兑换丰富，多种卡面可选', tag: '银行', url: '/article/creditcard-guangfa.html' },
-  { title: '中国农业银行信用卡', desc: '国有大行，网点覆盖广，权益实在', tag: '银行', url: '/article/creditcard-abc.html' },
-  { title: '交通银行信用卡 · 卡盒渠道', desc: '最红星期五优惠（卡盒渠道）', tag: '银行', url: '/article/creditcard-jiaotong-kahe.html' },
-  { title: '浦发银行运通卡金卡', desc: '美国运通权益，高端卡面', tag: '银行', url: '/article/creditcard-pufa-amex.html' },
+  {
+    title: '中国农业银行信用卡',
+    desc: '国有大行，网点覆盖广，权益实在',
+    tag: '银行',
+    url: '/article/creditcard-abc.html',
+  },
+  {
+    title: '交通银行信用卡 · 卡盒渠道',
+    desc: '最红星期五优惠（卡盒渠道）',
+    tag: '银行',
+    url: '/article/creditcard-jiaotong-kahe.html',
+  },
+  {
+    title: '浦发银行运通卡金卡',
+    desc: '美国运通权益，高端卡面',
+    tag: '银行',
+    url: '/article/creditcard-pufa-amex.html',
+  },
 ]
 
 const filteredArticles = computed(() => {
   let list = articles
   if (currentTab.value !== 'all') {
-    list = list.filter(a => a.tag === currentTab.value)
+    list = list.filter((a) => a.tag === currentTab.value)
   }
   if (searchKeyword.value) {
     const kw = searchKeyword.value.toLowerCase()
-    list = list.filter(a => a.title.toLowerCase().includes(kw) || a.desc.toLowerCase().includes(kw))
+    list = list.filter((a) => a.title.toLowerCase().includes(kw) || a.desc.toLowerCase().includes(kw))
   }
   return list
 })
 
-const { currentPage, totalPages, pagedList: pagedArticles, displayPages, goToPage, resetPage } = usePagination(filteredArticles)
+const {
+  currentPage,
+  totalPages,
+  pagedList: pagedArticles,
+  displayPages,
+  goToPage,
+  resetPage,
+} = usePagination(filteredArticles)
 
 function switchTab(value) {
   currentTab.value = value
@@ -159,7 +202,9 @@ watch(searchKeyword, resetPage)
 </script>
 
 <style scoped>
-.creditcard-page { width: 100%; }
+.creditcard-page {
+  width: 100%;
+}
 
 /* 代理入口横幅 */
 .agent-banner {
@@ -167,7 +212,7 @@ watch(searchKeyword, resetPage)
   margin: 24px auto;
   padding: 16px 20px;
   background: linear-gradient(135deg, var(--primary-light, #fff7ed) 0%, #fff 100%);
-  border: 1px solid var(--primary, #FF6B35);
+  border: 1px solid var(--primary, #ff6b35);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -179,17 +224,28 @@ watch(searchKeyword, resetPage)
   align-items: center;
   gap: 12px;
 }
-.agent-banner-icon { font-size: 28px; }
-.agent-banner-text strong { display: block; font-size: 15px; color: var(--text, #1a1a2e); }
-.agent-banner-text span { font-size: 12px; color: var(--text-secondary, #6b7280); }
+.agent-banner-icon {
+  font-size: 28px;
+}
+.agent-banner-text strong {
+  display: block;
+  font-size: 15px;
+  color: var(--text, #1a1a2e);
+}
+.agent-banner-text span {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
 .agent-banner-link {
   font-size: 14px;
   font-weight: 600;
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   text-decoration: none;
   white-space: nowrap;
 }
-.agent-banner-link:hover { text-decoration: underline; }
+.agent-banner-link:hover {
+  text-decoration: underline;
+}
 
 /* 三大平台卡片 */
 .platform-grid {
@@ -208,20 +264,36 @@ watch(searchKeyword, resetPage)
   text-align: center;
   text-decoration: none;
   color: var(--text, #1a1a2e);
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .platform-card:hover {
-  border-color: var(--primary, #FF6B35);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, .1);
+  border-color: var(--primary, #ff6b35);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
   transform: translateY(-2px);
 }
-.platform-icon { font-size: 28px; margin-bottom: 8px; }
-.platform-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-.platform-desc { font-size: 12px; color: var(--text-secondary, #6b7280); }
+.platform-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.platform-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.platform-desc {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
 
 /* 文章列表 */
-.container { max-width: 800px; margin: 0 auto; padding: 0 16px; }
-.cc-search { margin-bottom: 16px; }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.cc-search {
+  margin-bottom: 16px;
+}
 
 .tab-nav {
   display: flex;
@@ -239,12 +311,12 @@ watch(searchKeyword, resetPage)
   font-size: 13px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .tab-btn.active {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: #fff;
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
 }
 
 .article-grid {
@@ -260,25 +332,38 @@ watch(searchKeyword, resetPage)
   padding: 20px;
   text-decoration: none;
   color: var(--text, #1a1a2e);
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .article-card:hover {
-  border-color: var(--primary, #FF6B35);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, .1);
+  border-color: var(--primary, #ff6b35);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
   transform: translateY(-2px);
 }
-.article-card h3 { font-size: 15px; font-weight: 600; margin: 0 0 6px; }
-.article-card p { font-size: 13px; color: var(--text-secondary, #6b7280); margin: 0 0 10px; line-height: 1.5; }
+.article-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+.article-card p {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
 .article-card .tag {
   display: inline-block;
   padding: 3px 10px;
   border-radius: 12px;
   font-size: 12px;
-  background: var(--primary-light, #FFF4ED);
-  color: var(--primary, #FF6B35);
+  background: var(--primary-light, #fff4ed);
+  color: var(--primary, #ff6b35);
 }
 
-.empty-state { text-align: center; padding: 48px 0; color: var(--text-secondary, #6b7280); }
+.empty-state {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-secondary, #6b7280);
+}
 
 .pagination {
   display: flex;
@@ -296,16 +381,36 @@ watch(searchKeyword, resetPage)
   color: var(--text, #1a1a2e);
   cursor: pointer;
   font-size: 14px;
-  transition: all .2s;
+  transition: all 0.2s;
 }
-.pagination button:hover { border-color: var(--primary, #FF6B35); color: var(--primary, #FF6B35); }
-.pagination button.active { background: var(--primary, #FF6B35); color: #fff; border-color: var(--primary, #FF6B35); }
-.pagination button:disabled { opacity: .4; cursor: not-allowed; }
-.page-info { font-size: 13px; color: var(--text-secondary, #6b7280); }
+.pagination button:hover {
+  border-color: var(--primary, #ff6b35);
+  color: var(--primary, #ff6b35);
+}
+.pagination button.active {
+  background: var(--primary, #ff6b35);
+  color: #fff;
+  border-color: var(--primary, #ff6b35);
+}
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.page-info {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+}
 
 @media (max-width: 640px) {
-  .agent-banner { flex-direction: column; text-align: center; }
-  .platform-grid { grid-template-columns: 1fr; }
-  .article-grid { grid-template-columns: 1fr; }
+  .agent-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .platform-grid {
+    grid-template-columns: 1fr;
+  }
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

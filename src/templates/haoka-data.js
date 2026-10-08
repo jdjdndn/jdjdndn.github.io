@@ -69,6 +69,14 @@ export const haokaLinks = [
     nationwide: false,
     badge: '四网',
   },
+  {
+    name: '号易',
+    url: 'https://tui.haozhuan.vip/#/pages/micro_store/index?agent_id=9d60421234f3fede2210db56129c38e0',
+    description: '号卡办理平台，四网套餐可选，新上线高性价比渠道',
+    priceRange: '19-49元/月',
+    nationwide: false,
+    badge: '四网',
+  },
 ];
 
 // ========== 代理注册链接 ==========
@@ -82,4 +90,5 @@ export const haokaProxyLinks = [
   {name: '蛋蛋号卡代理', url: 'https://ka.dandanhou.net/agent/reg.php?code=TA2O2ZZ4'},
   {name: '灵渠号卡代理', url: 'https://lingqu.87haoka.cn/r/06844666'},
   {name: '青禾号卡代理', url: 'https://www.hemorn.cn/agent/reg.php?code=4XZ619ZX'},
+  {name: '号易代理', url: 'https://tui.haozhuan.vip/#/pages/public/register?code=10462016'},
 ]

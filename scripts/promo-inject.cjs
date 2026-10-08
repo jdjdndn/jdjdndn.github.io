@@ -1,7 +1,7 @@
 // 产品优化：900 篇文章批量注入「更多省钱入口」区块（真实联盟链接，按层级适配相对路径）
-const fs = require('fs');
-const path = require('path');
-const root = path.resolve('src/article');
+const fs = require('fs')
+const path = require('path')
+const root = path.resolve('src/article')
 const PROMO = (prefix) => `  <style>
   .promo-banner{background:linear-gradient(135deg,#fff5f0 0%,#fff 50%,#fff8f3 100%);border:1px solid rgba(255,107,53,.18);border-radius:14px;padding:18px 16px;margin:18px auto;max-width:760px;text-align:center}
   .promo-title{font-size:17px;font-weight:700;color:var(--primary,#FF6B35);margin-bottom:12px}
@@ -28,40 +28,44 @@ const PROMO = (prefix) => `  <style>
     </div>
     <a class="promo-home" href="${prefix}index.html" rel="nofollow">返回首页看全部 →</a>
   </section>
-`;
+`
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, out);
-    else if (e.name.endsWith('.html')) out.push(p);
+    const p = path.join(dir, e.name)
+    if (e.isDirectory()) walk(p, out)
+    else if (e.name.endsWith('.html')) out.push(p)
   }
-  return out;
+  return out
 }
-const OLD_PROMO_RE = /<section class="card promo-links"[\s\S]*?<\/section>\s*\n?/;
-const files = walk(root);
-let done = 0, skipped = 0;
+const OLD_PROMO_RE = /<section class="card promo-links"[\s\S]*?<\/section>\s*\n?/
+const files = walk(root)
+let done = 0,
+  skipped = 0
 for (const f of files) {
-  const rel = path.relative(root, f).replace(/\\/g, '/');
-  const depth = rel.includes('/') ? 1 : 0;
-  const prefix = depth === 0 ? '../' : '../../';
-  let c = fs.readFileSync(f, 'utf8');
+  const rel = path.relative(root, f).replace(/\\/g, '/')
+  const depth = rel.includes('/') ? 1 : 0
+  const prefix = depth === 0 ? '../' : '../../'
+  let c = fs.readFileSync(f, 'utf8')
   if (c.includes('promo-banner')) {
-    c = c.replace(/(?:<style>[\s\S]*?<\/style>\s*)?<section class="promo-banner"[\s\S]*?<\/section>/, PROMO(prefix));
-    fs.writeFileSync(f, c, 'utf8');
-    done++;
-    continue;
+    c = c.replace(/(?:<style>[\s\S]*?<\/style>\s*)?<section class="promo-banner"[\s\S]*?<\/section>/, PROMO(prefix))
+    fs.writeFileSync(f, c, 'utf8')
+    done++
+    continue
   }
   if (c.includes('promo-links')) {
-    c = c.replace(OLD_PROMO_RE, PROMO(prefix));
-    fs.writeFileSync(f, c, 'utf8');
-    done++;
-    continue;
+    c = c.replace(OLD_PROMO_RE, PROMO(prefix))
+    fs.writeFileSync(f, c, 'utf8')
+    done++
+    continue
   }
-  const anchor = '<footer';
-  const idx = c.indexOf(anchor);
-  if (idx === -1) { skipped++; continue; }
-  c = c.slice(0, idx) + PROMO(prefix) + c.slice(idx);
-  fs.writeFileSync(f, c, 'utf8');
-  done++;
+  const anchor = '<footer'
+  const idx = c.indexOf(anchor)
+  if (idx === -1) {
+    skipped++
+    continue
+  }
+  c = c.slice(0, idx) + PROMO(prefix) + c.slice(idx)
+  fs.writeFileSync(f, c, 'utf8')
+  done++
 }
-console.log(`注入完成: ${done} 篇（跳过 ${skipped} 篇：无 footer 或已有区块）`);
+console.log(`注入完成: ${done} 篇（跳过 ${skipped} 篇：无 footer 或已有区块）`)

@@ -70,6 +70,6 @@ export function useClipboard() {
     copy,
     copyLink,
     copyCode,
-    vibrate
+    vibrate,
   }
 }

@@ -1,12 +1,16 @@
 <template>
-  <button
-    v-if="isMobile"
-    class="dark-toggle-btn"
-    aria-label="切换暗色模式"
-    @click="toggleDarkMode"
-  >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+  <button v-if="isMobile" class="dark-toggle-btn" aria-label="切换暗色模式" @click="toggleDarkMode">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
     </svg>
     <span>{{ isDark ? '亮色' : '暗色' }}</span>
   </button>
@@ -73,7 +77,7 @@ onUnmounted(() => {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
-:global([data-theme="dark"]) .dark-toggle-btn {
+:global([data-theme='dark']) .dark-toggle-btn {
   background: rgba(26, 26, 46, 0.9);
   border-color: rgba(255, 255, 255, 0.12);
 }

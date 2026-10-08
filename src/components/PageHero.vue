@@ -21,20 +21,20 @@ import { ref, onMounted } from 'vue'
 const props = defineProps({
   icon: {
     type: String,
-    default: ''
+    default: '',
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   subtitle: {
     type: String,
-    default: ''
+    default: '',
   },
   aria: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 const isLoaded = ref(false)
@@ -54,7 +54,7 @@ onMounted(() => {
   margin-bottom: 2rem;
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(135deg, #FF6B35 0%, #E8552D 55%, #C2410C 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #e8552d 55%, #c2410c 100%);
   color: white;
   text-align: center;
 }
@@ -73,9 +73,11 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-  background-size: 50px 50px, 30px 30px;
+    radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size:
+    50px 50px,
+    30px 30px;
   animation: float 20s linear infinite;
 }
 

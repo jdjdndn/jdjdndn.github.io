@@ -24,21 +24,11 @@
     </div>
 
     <div class="product-actions">
-      <a
-        v-if="product.url"
-        :href="product.url"
-        target="_blank"
-        rel="noopener sponsored"
-        class="btn btn-primary"
-      >
+      <a v-if="product.url" :href="product.url" target="_blank" rel="noopener sponsored" class="btn btn-primary">
         立即购买
       </a>
-      <button v-if="product.coupon" class="btn" @click="handleCopyCoupon">
-        领券
-      </button>
-      <a v-if="product.detailUrl" :href="product.detailUrl" target="_blank" class="btn">
-        详情
-      </a>
+      <button v-if="product.coupon" class="btn" @click="handleCopyCoupon">领券</button>
+      <a v-if="product.detailUrl" :href="product.detailUrl" target="_blank" class="btn"> 详情 </a>
     </div>
   </div>
 </template>
@@ -49,8 +39,8 @@ import { useToast } from '../composables'
 const props = defineProps({
   product: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const toast = useToast()
@@ -128,5 +118,4 @@ async function handleCopyCoupon() {
   flex-wrap: wrap;
   gap: 4px;
 }
-
 </style>

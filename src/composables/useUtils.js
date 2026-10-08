@@ -73,20 +73,23 @@ export const normalizeSections = (sections) => {
   if (!sections || !Array.isArray(sections)) {
     return []
   }
-  return sections.filter(s => s != null).map((s) => {
-    if (typeof s === 'string') {
-      const lines = s.split('\n').map((l) => l.trim()).filter(Boolean)
-      const name = lines[0] || s.slice(0, 30)
-      const linkMatch = s.match(/【下单链接】(https?:\/\/\S+)/)
-      return {
-        title: name.slice(0, 20),
-        items: linkMatch
-          ? [{ name, link: linkMatch[1] }]
-          : [{ name, code: s }],
+  return sections
+    .filter((s) => s != null)
+    .map((s) => {
+      if (typeof s === 'string') {
+        const lines = s
+          .split('\n')
+          .map((l) => l.trim())
+          .filter(Boolean)
+        const name = lines[0] || s.slice(0, 30)
+        const linkMatch = s.match(/【下单链接】(https?:\/\/\S+)/)
+        return {
+          title: name.slice(0, 20),
+          items: linkMatch ? [{ name, link: linkMatch[1] }] : [{ name, code: s }],
+        }
       }
-    }
-    return s
-  })
+      return s
+    })
 }
 
 /**
@@ -138,6 +141,6 @@ export function useUtils() {
     highlightText,
     normalizeSections,
     countUp,
-    getIconForName
+    getIconForName,
   }
 }

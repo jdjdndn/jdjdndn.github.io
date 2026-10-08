@@ -18,16 +18,16 @@ const props = defineProps({
   type: {
     type: String,
     default: 'code',
-    validator: (v) => ['code', 'link', 'jingxuan'].includes(v)
+    validator: (v) => ['code', 'link', 'jingxuan'].includes(v),
   },
   lineClass: {
     type: String,
-    default: 'full'
+    default: 'full',
   },
   showSecondaryBtn: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 })
 </script>
 
@@ -40,15 +40,24 @@ const props = defineProps({
 }
 
 .skeleton {
-  background: linear-gradient(90deg, var(--skeleton-bg, #f0f0f0) 25%, var(--skeleton-shine, #e0e0e0) 50%, var(--skeleton-bg, #f0f0f0) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #f0f0f0) 25%,
+    var(--skeleton-shine, #e0e0e0) 50%,
+    var(--skeleton-bg, #f0f0f0) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
   border-radius: 6px;
 }
 
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .skeleton-line {
@@ -105,12 +114,17 @@ const props = defineProps({
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .skeleton {
-  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+[data-theme='dark'] .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
   background-size: 200% 100%;
 }
 
-[data-theme="dark"] .skeleton-card {
+[data-theme='dark'] .skeleton-card {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
 }

@@ -4,61 +4,60 @@
 //  在 vite build 后运行，绕过 Vite 直接输出（纯静态 HTML，无需打包）
 // ============================================================
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
-const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/templates/landing-pages.js');
-const SRC = path.resolve(__dirname, '../src');
-const DIST_DIR = path.resolve(__dirname, '../dist');
-const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const LANDING_PAGES_CONFIG = path.resolve(__dirname, '../src/templates/landing-pages.js')
+const SRC = path.resolve(__dirname, '../src')
+const DIST_DIR = path.resolve(__dirname, '../dist')
+const BUILD_DATE = new Date().toISOString().slice(0, 10)
 
 // 解析 landing-pages.js 中的配置（文本解析，避免 ES module 问题）
 function parseConfig(filePath) {
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const pages = [];
+  const content = fs.readFileSync(filePath, 'utf-8')
+  const pages = []
 
   // 先提取所有 slug 位置，用于界定每个页面的搜索范围
-  const slugPositions = [];
-  const slugPattern = /slug:\s*'([^']+)'/g;
-  let slugMatch;
+  const slugPositions = []
+  const slugPattern = /slug:\s*'([^']+)'/g
+  let slugMatch
   while ((slugMatch = slugPattern.exec(content)) !== null) {
-    slugPositions.push({ slug: slugMatch[1], pos: slugMatch.index });
+    slugPositions.push({ slug: slugMatch[1], pos: slugMatch.index })
   }
 
   // 匹配每个页面配置块
-  const pagePattern = /\{[^}]*slug:\s*'([^']+)'[^}]*\}/gs;
-  let match;
+  const pagePattern = /\{[^}]*slug:\s*'([^']+)'[^}]*\}/gs
+  let match
   while ((match = pagePattern.exec(content)) !== null) {
-    const block = match[0];
+    const block = match[0]
     const get = (key) => {
-      const m = block.match(new RegExp(`${key}:\\s*'([^']*)'`));
-      return m ? m[1] : '';
-    };
+      const m = block.match(new RegExp(`${key}:\\s*'([^']*)'`))
+      return m ? m[1] : ''
+    }
     const getList = (key) => {
-      const m = block.match(new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`));
-      if (!m) return [];
-      const items = [];
-      const itemPattern = /\{\s*label:\s*'([^']*)',\s*url:\s*'([^']*)'\s*\}/g;
-      let itemMatch;
+      const m = block.match(new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`))
+      if (!m) return []
+      const items = []
+      const itemPattern = /\{\s*label:\s*'([^']*)',\s*url:\s*'([^']*)'\s*\}/g
+      let itemMatch
       while ((itemMatch = itemPattern.exec(m[1])) !== null) {
-        items.push({ label: itemMatch[1], url: itemMatch[2] });
+        items.push({ label: itemMatch[1], url: itemMatch[2] })
       }
-      return items;
-    };
+      return items
+    }
 
     // 解析 faq 数组（从 slug 位置向后搜索到下一个页面的 slug 或数组末尾）
-    const faq = [];
-    const currentSlugIdx = slugPositions.findIndex(sp => sp.pos >= match.index);
-    const nextSlugPos = currentSlugIdx + 1 < slugPositions.length
-      ? slugPositions[currentSlugIdx + 1].pos
-      : content.length;
-    const searchRegion = content.slice(match.index, nextSlugPos);
-    const faqArrMatch = searchRegion.match(/faq:\s*\[([\s\S]*?)\]\s*,?\s*\n/);
+    const faq = []
+    const currentSlugIdx = slugPositions.findIndex((sp) => sp.pos >= match.index)
+    const nextSlugPos =
+      currentSlugIdx + 1 < slugPositions.length ? slugPositions[currentSlugIdx + 1].pos : content.length
+    const searchRegion = content.slice(match.index, nextSlugPos)
+    const faqArrMatch = searchRegion.match(/faq:\s*\[([\s\S]*?)\]\s*,?\s*\n/)
     if (faqArrMatch) {
-      const faqItemPattern = /\{\s*q:\s*'([^']*)',\s*a:\s*'([^']*)'\s*\}/g;
-      let faqMatch;
+      const faqItemPattern = /\{\s*q:\s*'([^']*)',\s*a:\s*'([^']*)'\s*\}/g
+      let faqMatch
       while ((faqMatch = faqItemPattern.exec(faqArrMatch[1])) !== null) {
-        faq.push({ q: faqMatch[1], a: faqMatch[2] });
+        faq.push({ q: faqMatch[1], a: faqMatch[2] })
       }
     }
 
@@ -73,31 +72,44 @@ function parseConfig(filePath) {
       sectionFilter: get('sectionFilter'),
       relatedPages: getList('relatedPages'),
       faq,
-    });
+    })
   }
-  return pages;
+  return pages
 }
 
 function generateHTML(page) {
   // 转义助手：JSON 字符串转义 / HTML 属性转义 / HTML 文本转义
-  const jsonStr = (v) => JSON.stringify(String(v == null ? '' : v));
-  const escAttr = (v) => String(v == null ? '' : v)
-    .replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-  const escHtml = (v) => String(v == null ? '' : v)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const jsonStr = (v) => JSON.stringify(String(v == null ? '' : v))
+  const escAttr = (v) =>
+    String(v == null ? '' : v)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+  const escHtml = (v) =>
+    String(v == null ? '' : v)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
 
   const relatedLinks = page.relatedPages
     .map((r) => `<a href="${escAttr(r.url)}" class="related-link">${escHtml(r.label)}</a>`)
-    .join('\n        ');
+    .join('\n        ')
 
   // FAQPage JSON-LD 数据（统一 JSON.stringify 转义）
   const faqItemsJson = page.faq.length
-    ? JSON.stringify(page.faq.map((item) => ({
-        '@type': 'Question',
-        name: item.q,
-        acceptedAnswer: { '@type': 'Answer', text: item.a },
-      })), null, 2).split('\n').map((l) => '        ' + l).join('\n')
-    : '';
+    ? JSON.stringify(
+        page.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+        null,
+        2
+      )
+        .split('\n')
+        .map((l) => '        ' + l)
+        .join('\n')
+    : ''
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -186,7 +198,9 @@ function generateHTML(page) {
       }
     }
     </script>
-${page.faq.length > 0 ? `
+${
+  page.faq.length > 0
+    ? `
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -200,7 +214,9 @@ ${faqItemsJson}
       ]
     }
     </script>
-` : ''}
+`
+    : ''
+}
     <style>
       :root {
         --bg: #f5f3f0; --card: #ffffff; --text: #1a1a2e; --muted: #6b7280;
@@ -322,15 +338,21 @@ ${faqItemsJson}
         <p>查看更多优惠活动</p>
         <a href="./index.html">浏览全部优惠 →</a>
       </div>
-${page.faq.length > 0 ? `
+${
+  page.faq.length > 0
+    ? `
       <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
         <h2>常见问题</h2>
-${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+${page.faq
+  .map(
+    (item, i) => `        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-question" aria-expanded="false" itemprop="name">${escHtml(item.q)}</button>
           <div class="faq-answer" itemscope itemprop="acceptedEntity" itemtype="https://schema.org/Answer">
             <p itemprop="text">${escHtml(item.a)}</p>
           </div>
-        </div>`).join('\n')}
+        </div>`
+  )
+  .join('\n')}
       </section>
 
       <script>
@@ -341,7 +363,9 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
           });
         });
       </script>
-` : ''}
+`
+    : ''
+}
       <div class="related-section">
         <h2>相关页面</h2>
         <div class="related-links">
@@ -355,7 +379,7 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
       </footer>
     </div>
   </body>
-</html>`;
+</html>`
 }
 
 // ============================================================
@@ -364,76 +388,76 @@ ${page.faq.map((item, i) => `        <div class="faq-item" itemscope itemprop="m
 //  但线上路由是 /x.html（GitHub Pages 无 SPA fallback），构建后需移动并改写 ../ 相对引用
 // ============================================================
 function promoteShellPages() {
-  const templatesDir = path.join(DIST_DIR, 'templates');
-  let moved = 0;
+  const templatesDir = path.join(DIST_DIR, 'templates')
+  let moved = 0
 
   // 顶层壳页：从 dist/templates/ 提升到 dist/（vite 已处理）
   if (fs.existsSync(templatesDir)) {
     for (const file of fs.readdirSync(templatesDir)) {
-      if (!file.endsWith('.html')) continue;
-      if (file === 'index.html') continue;
-      const src = path.join(templatesDir, file);
-      let html = fs.readFileSync(src, 'utf8');
-      html = html.replace(/(href|src)="\.\.\//g, '$1="./');
-      fs.writeFileSync(path.join(DIST_DIR, file), html, 'utf8');
-      fs.unlinkSync(src);
-      moved++;
+      if (!file.endsWith('.html')) continue
+      if (file === 'index.html') continue
+      const src = path.join(templatesDir, file)
+      let html = fs.readFileSync(src, 'utf8')
+      html = html.replace(/(href|src)="\.\.\//g, '$1="./')
+      fs.writeFileSync(path.join(DIST_DIR, file), html, 'utf8')
+      fs.unlinkSync(src)
+      moved++
     }
-    if (fs.readdirSync(templatesDir).length === 0) fs.rmdirSync(templatesDir);
+    if (fs.readdirSync(templatesDir).length === 0) fs.rmdirSync(templatesDir)
   }
 
   // fuye/ 子目录壳页：从 src/templates/fuye/ 复制并改写路径
   // 这些是 Vue 路由壳页，需要加载 Vue 应用
-  const fuyeSrcDir = path.join(SRC, 'templates', 'fuye');
+  const fuyeSrcDir = path.join(SRC, 'templates', 'fuye')
   if (fs.existsSync(fuyeSrcDir)) {
-    const fuyeDestDir = path.join(DIST_DIR, 'fuye');
-    fs.mkdirSync(fuyeDestDir, { recursive: true });
+    const fuyeDestDir = path.join(DIST_DIR, 'fuye')
+    fs.mkdirSync(fuyeDestDir, { recursive: true })
 
     // 从 dist/index.html 读取 Vite 构建后的实际文件名（带 hash）
     // fuye/ 在子目录，需要 ../assets/ 而不是 ./assets/
-    const indexHtmlPath = path.join(DIST_DIR, 'index.html');
-    let mainJsFile = '../main.js';
-    let mainCssFile = '../vue-app.css';
+    const indexHtmlPath = path.join(DIST_DIR, 'index.html')
+    let mainJsFile = '../main.js'
+    let mainCssFile = '../vue-app.css'
     if (fs.existsSync(indexHtmlPath)) {
-      const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
-      const jsMatch = indexHtml.match(/src="\.\/assets\/(main[^"]+\.js)"/);
-      const cssMatch = indexHtml.match(/href="\.\/assets\/(main[^"]+\.css)"/);
-      if (jsMatch) mainJsFile = `../assets/${jsMatch[1]}`;
-      if (cssMatch) mainCssFile = `../assets/${cssMatch[1]}`;
+      const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8')
+      const jsMatch = indexHtml.match(/src="\.\/assets\/(main[^"]+\.js)"/)
+      const cssMatch = indexHtml.match(/href="\.\/assets\/(main[^"]+\.css)"/)
+      if (jsMatch) mainJsFile = `../assets/${jsMatch[1]}`
+      if (cssMatch) mainCssFile = `../assets/${cssMatch[1]}`
     }
 
     for (const file of fs.readdirSync(fuyeSrcDir)) {
-      if (!file.endsWith('.html')) continue;
-      let html = fs.readFileSync(path.join(fuyeSrcDir, file), 'utf8');
+      if (!file.endsWith('.html')) continue
+      let html = fs.readFileSync(path.join(fuyeSrcDir, file), 'utf8')
       // 改写相对路径：从 ../../ 改为 ../（因为从 fuye/ 到根目录只需一层）
-      html = html.replace(/"\.\.\/\.\.\//g, '"../');
+      html = html.replace(/"\.\.\/\.\.\//g, '"../')
       // 替换 Vue 应用入口为 Vite 构建后的带 hash 文件
-      html = html.replace(/"\.\.\/main\.js"/, `"${mainJsFile}"`);
-      html = html.replace(/"\.\.\/vue-app\.css"/, `"${mainCssFile}"`);
-      fs.writeFileSync(path.join(fuyeDestDir, file), html, 'utf8');
-      moved++;
+      html = html.replace(/"\.\.\/main\.js"/, `"${mainJsFile}"`)
+      html = html.replace(/"\.\.\/vue-app\.css"/, `"${mainCssFile}"`)
+      fs.writeFileSync(path.join(fuyeDestDir, file), html, 'utf8')
+      moved++
     }
   }
 
-  if (moved) console.log(`已提升 ${moved} 个 Vue 路由壳页到 dist`);
+  if (moved) console.log(`已提升 ${moved} 个 Vue 路由壳页到 dist`)
 }
 
 function main() {
-  promoteShellPages();
-  const pages = parseConfig(LANDING_PAGES_CONFIG);
-  let generated = 0;
+  promoteShellPages()
+  const pages = parseConfig(LANDING_PAGES_CONFIG)
+  let generated = 0
 
   for (const page of pages) {
-    let html = generateHTML(page);
+    let html = generateHTML(page)
     // 注入构建日期
-    html = html.replace(/__BUILD_DATE__/g, BUILD_DATE);
-    const outPath = path.join(DIST_DIR, `${page.slug}.html`);
-    fs.writeFileSync(outPath, html, 'utf-8');
-    generated++;
-    console.log(`  ✓ ${page.slug}.html`);
+    html = html.replace(/__BUILD_DATE__/g, BUILD_DATE)
+    const outPath = path.join(DIST_DIR, `${page.slug}.html`)
+    fs.writeFileSync(outPath, html, 'utf-8')
+    generated++
+    console.log(`  ✓ ${page.slug}.html`)
   }
 
-  console.log(`\n生成 ${generated} 个着陆页（GitHub Pages 已自动 gzip，不再输出预压缩副本）`);
+  console.log(`\n生成 ${generated} 个着陆页（GitHub Pages 已自动 gzip，不再输出预压缩副本）`)
 }
 
-main();
+main()

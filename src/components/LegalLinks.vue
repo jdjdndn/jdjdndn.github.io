@@ -31,9 +31,7 @@
 
     <div class="legal-copyright">
       <p>&copy; {{ currentYear }} 券宝 — 优惠券聚合平台</p>
-      <p class="legal-disclaimer">
-        本站仅为优惠信息聚合平台，不提供任何商品销售或交易服务。
-      </p>
+      <p class="legal-disclaimer">本站仅为优惠信息聚合平台，不提供任何商品销售或交易服务。</p>
     </div>
   </footer>
 </template>
@@ -83,12 +81,14 @@ const currentYear = computed(() => new Date().getFullYear())
   color: var(--text-secondary, #666);
   text-decoration: none;
   font-size: 0.85rem;
-  transition: color 0.2s, transform 0.2s;
+  transition:
+    color 0.2s,
+    transform 0.2s;
   display: inline-block;
 }
 
 .legal-section a:hover {
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   transform: translateX(4px);
 }
 

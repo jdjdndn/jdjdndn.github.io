@@ -5,31 +5,31 @@
 //  - 用法: track('event_name', { key: value })
 // ============================================================
 
-const STORAGE_KEY = 'coupon_analytics';
-const MAX_EVENTS = 500; // localStorage 最多保留条数
+const STORAGE_KEY = 'coupon_analytics'
+const MAX_EVENTS = 500 // localStorage 最多保留条数
 
 /** 获取本地事件存储 */
 function getStoredEvents() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
   } catch {
-    return [];
+    return []
   }
 }
 
 /** 存储事件到 localStorage */
 function storeEvent(event, data) {
-  const events = getStoredEvents();
+  const events = getStoredEvents()
   events.push({
     event,
     data,
     ts: Date.now(),
-  });
+  })
   // 超过上限时裁剪旧数据
   if (events.length > MAX_EVENTS) {
-    events.splice(0, events.length - MAX_EVENTS);
+    events.splice(0, events.length - MAX_EVENTS)
   }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(events))
 }
 
 /**
@@ -41,12 +41,12 @@ export function track(event, data = {}) {
   // 1. 发送到 Umami（如果已接入）
   if (typeof window !== 'undefined' && window.umami) {
     try {
-      window.umami.track(event, data);
+      window.umami.track(event, data)
     } catch {}
   }
 
   // 2. 存储到 localStorage
-  storeEvent(event, data);
+  storeEvent(event, data)
 }
 
 /**
@@ -54,21 +54,21 @@ export function track(event, data = {}) {
  * 在浏览器控制台执行: couponAnalytics.summary()
  */
 export function getSummary() {
-  const events = getStoredEvents();
-  const summary = {};
+  const events = getStoredEvents()
+  const summary = {}
 
   events.forEach(({ event }) => {
-    summary[event] = (summary[event] || 0) + 1;
-  });
+    summary[event] = (summary[event] || 0) + 1
+  })
 
   return {
     totalEvents: events.length,
     events: summary,
     recent: events.slice(-20),
-  };
+  }
 }
 
 // 挂载到 window 供控制台调试
 if (typeof window !== 'undefined') {
-  window.couponAnalytics = { summary: getSummary, events: getStoredEvents };
+  window.couponAnalytics = { summary: getSummary, events: getStoredEvents }
 }

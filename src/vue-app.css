@@ -6,7 +6,9 @@ html {
 }
 
 /* 表单元素继承字体 */
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }

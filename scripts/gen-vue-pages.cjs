@@ -1,75 +1,75 @@
 // 生成 Vue 路由壳页：为每个 vue-router 路由生成独立 HTML（GitHub Pages 无 SPA fallback，每路由需真实文件）
 // 模板基于 src/index.html（Vue SPA 入口），SEO meta 取自 src/router/index.js 的 route.meta
 // 用法：node scripts/gen-vue-pages.cjs（build 前执行）
-const fs = require('fs');
-const path = require('path');
-const ROOT = path.resolve(__dirname, '..');
-const SRC = path.join(ROOT, 'src');
+const fs = require('fs')
+const path = require('path')
+const ROOT = path.resolve(__dirname, '..')
+const SRC = path.join(ROOT, 'src')
 
-const SITE = 'https://jdjdndn.github.io';
+const SITE = 'https://jdjdndn.github.io'
 
 // ========== 从 router/index.js 解析路由 meta（正则，避免执行 ES module） ==========
 function parseRouter() {
-  const code = fs.readFileSync(path.join(SRC, 'router/index.js'), 'utf8');
-  const routes = [];
+  const code = fs.readFileSync(path.join(SRC, 'router/index.js'), 'utf8')
+  const routes = []
   // 匹配 path + component + meta 块
-  const pathRe = /path:\s*'([^']+)'[\s\S]*?component:\s*\(\)\s*=>\s*import\([^)]+\)[\s\S]*?meta:\s*\{([\s\S]*?)\n\s*\}/g;
-  let m;
+  const pathRe = /path:\s*'([^']+)'[\s\S]*?component:\s*\(\)\s*=>\s*import\([^)]+\)[\s\S]*?meta:\s*\{([\s\S]*?)\n\s*\}/g
+  let m
   while ((m = pathRe.exec(code)) !== null) {
-    const p = m[1];
-    const metaBlock = m[2];
+    const p = m[1]
+    const metaBlock = m[2]
     const get = (key) => {
-      const km = metaBlock.match(new RegExp(`${key}:\\s*'([^']*)'`));
-      return km ? km[1] : '';
-    };
+      const km = metaBlock.match(new RegExp(`${key}:\\s*'([^']*)'`))
+      return km ? km[1] : ''
+    }
     // 跳过动态路由（如 /fuye/:slug.html，由下方 parseFuyePages 单独生成壳）
-    if (p.includes(':')) continue;
-    const file = p === '/' ? 'index.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html';
+    if (p.includes(':')) continue
+    const file = p === '/' ? 'index.html' : p.replace(/^\//, '').replace(/\.html$/, '') + '.html'
     // 跳过首页壳：由 src/index.html（Vue SPA 入口）提供。
     // 注意 '/index.html' 是 redirect 路由（无 component），正则会跨块借用下一路由的 meta，需一并拦截
-    if (file === 'index.html') continue;
+    if (file === 'index.html') continue
     routes.push({
       path: p,
       file,
       title: get('title'),
       description: get('description'),
       keywords: get('keywords'),
-    });
+    })
   }
-  return routes;
+  return routes
 }
 
 // ========== 解析项目动态路由 /fuye/:slug.html（meta 取自 src/views/fuye-data.js） ==========
 function parseFuyePages() {
-  const code = fs.readFileSync(path.join(SRC, 'views/fuye-data.js'), 'utf8');
-  const slugPositions = [];
-  const slugRe = /'(fuye\/[a-z0-9-]+)':\s*\{/g;
-  let m;
-  while ((m = slugRe.exec(code)) !== null) slugPositions.push({ slug: m[1], pos: m.index });
+  const code = fs.readFileSync(path.join(SRC, 'views/fuye-data.js'), 'utf8')
+  const slugPositions = []
+  const slugRe = /'(fuye\/[a-z0-9-]+)':\s*\{/g
+  let m
+  while ((m = slugRe.exec(code)) !== null) slugPositions.push({ slug: m[1], pos: m.index })
 
-  const pages = [];
+  const pages = []
   for (let i = 0; i < slugPositions.length; i++) {
-    const end = i + 1 < slugPositions.length ? slugPositions[i + 1].pos : code.length;
-    const meta = code.slice(slugPositions[i].pos, end).match(
-      /meta:\s*\{\s*title:\s*'([^']*)',\s*description:\s*'([^']*)',\s*keywords:\s*'([^']*)'/s,
-    );
-    if (!meta) continue;
+    const end = i + 1 < slugPositions.length ? slugPositions[i + 1].pos : code.length
+    const meta = code
+      .slice(slugPositions[i].pos, end)
+      .match(/meta:\s*\{\s*title:\s*'([^']*)',\s*description:\s*'([^']*)',\s*keywords:\s*'([^']*)'/s)
+    if (!meta) continue
     pages.push({
       path: `/${slugPositions[i].slug}.html`,
       file: `${slugPositions[i].slug}.html`,
       title: meta[1],
       description: meta[2],
       keywords: meta[3],
-    });
+    })
   }
-  return pages;
+  return pages
 }
 
 // ========== 生成单个壳页 ==========
 function buildPage(route, isHome, depth = 1) {
-  const prefix = '../'.repeat(depth);
-  const url = isHome ? `${SITE}/` : `${SITE}/${route.file}`;
-  const name = route.title.split('—')[0].trim() || route.title;
+  const prefix = '../'.repeat(depth)
+  const url = isHome ? `${SITE}/` : `${SITE}/${route.file}`
+  const name = route.title.split('—')[0].trim() || route.title
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -93,7 +93,7 @@ function buildPage(route, isHome, depth = 1) {
         'query-input': 'required name=search_term_string',
       },
     },
-  ];
+  ]
   if (!isHome) {
     jsonLd.push({
       '@context': 'https://schema.org',
@@ -102,21 +102,47 @@ function buildPage(route, isHome, depth = 1) {
         { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE}/` },
         { '@type': 'ListItem', position: 2, name, item: url },
       ],
-    });
+    })
   }
   if (isHome) {
     jsonLd.push({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: [
-        { '@type': 'Question', name: '券宝是什么？', acceptedAnswer: { '@type': 'Answer', text: '券宝是一个一站式优惠券导航站，收录全网热门优惠活动，覆盖美团外卖、淘宝闪购、京东、拼多多、携程/同程/飞猪酒店旅行、滴滴出行、连锁餐饮、电影票、快递寄件等场景。复制口令码或点击链接即可跳转领取，每天更新。' } },
-        { '@type': 'Question', name: '如何使用优惠口令码？', acceptedAnswer: { '@type': 'Answer', text: '两步即可领取：1) 在本站点击复制口令按钮复制口令码；2) 打开对应App（美团/淘宝/京东等），口令自动识别并跳转到领取页面。整个过程约10秒完成。' } },
-        { '@type': 'Question', name: '本站收录了哪些平台的优惠？', acceptedAnswer: { '@type': 'Answer', text: '本站收录了美团外卖、淘宝闪购、京东、拼多多、携程旅行、同程旅行、飞猪出行、滴滴出行等主流平台的优惠活动，以及肯德基、瑞幸咖啡、星巴克等连锁餐饮品牌的优惠券。' } },
+        {
+          '@type': 'Question',
+          name: '券宝是什么？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '券宝是一个一站式优惠券导航站，收录全网热门优惠活动，覆盖美团外卖、淘宝闪购、京东、拼多多、携程/同程/飞猪酒店旅行、滴滴出行、连锁餐饮、电影票、快递寄件等场景。复制口令码或点击链接即可跳转领取，每天更新。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: '如何使用优惠口令码？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '两步即可领取：1) 在本站点击复制口令按钮复制口令码；2) 打开对应App（美团/淘宝/京东等），口令自动识别并跳转到领取页面。整个过程约10秒完成。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: '本站收录了哪些平台的优惠？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '本站收录了美团外卖、淘宝闪购、京东、拼多多、携程旅行、同程旅行、飞猪出行、滴滴出行等主流平台的优惠活动，以及肯德基、瑞幸咖啡、星巴克等连锁餐饮品牌的优惠券。',
+          },
+        },
       ],
-    });
+    })
   }
 
-  const jsonLdHtml = jsonLd.map((d) => `    <script type="application/ld+json">\n${JSON.stringify(d, null, 2).replace(/\n/g, '\n    ')}\n    </script>`).join('\n\n');
+  const jsonLdHtml = jsonLd
+    .map(
+      (d) =>
+        `    <script type="application/ld+json">\n${JSON.stringify(d, null, 2).replace(/\n/g, '\n    ')}\n    </script>`
+    )
+    .join('\n\n')
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -189,33 +215,33 @@ ${jsonLdHtml}
     <script type="module" src="${prefix}main.js"></script>
   </body>
 </html>
-`;
+`
 }
 
 // ========== 主流程 ==========
 function main() {
-  const routes = parseRouter();
-  console.log(`解析到 ${routes.length} 条路由`);
-  let generated = 0;
+  const routes = parseRouter()
+  console.log(`解析到 ${routes.length} 条路由`)
+  let generated = 0
   for (const route of routes) {
     // 输出到 templates 目录
-    const out = path.join(SRC, 'templates', route.file);
-    const html = buildPage(route, false);
-    fs.writeFileSync(out, html, 'utf8');
-    generated++;
-    console.log(`  ✓ templates/${route.file} (${route.title})`);
+    const out = path.join(SRC, 'templates', route.file)
+    const html = buildPage(route, false)
+    fs.writeFileSync(out, html, 'utf8')
+    generated++
+    console.log(`  ✓ templates/${route.file} (${route.title})`)
   }
 
   // 项目动态路由：输出到 src/templates/fuye/<slug>.html（嵌套结构保持路由兼容）
-  const fuyeRoutes = parseFuyePages();
+  const fuyeRoutes = parseFuyePages()
   for (const route of fuyeRoutes) {
-    const out = path.join(SRC, 'templates', route.file);
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, buildPage(route, false, 2), 'utf8');
-    generated++;
-    console.log(`  ✓ templates/${route.file} (${route.title})`);
+    const out = path.join(SRC, 'templates', route.file)
+    fs.mkdirSync(path.dirname(out), { recursive: true })
+    fs.writeFileSync(out, buildPage(route, false, 2), 'utf8')
+    generated++
+    console.log(`  ✓ templates/${route.file} (${route.title})`)
   }
-  console.log(`\n生成 ${generated} 个 Vue 路由壳页到 src/templates/`);
+  console.log(`\n生成 ${generated} 个 Vue 路由壳页到 src/templates/`)
 }
 
-main();
+main()

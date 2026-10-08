@@ -5,7 +5,7 @@ import { getFuyePageConfig, getAllFuyePaths } from '../views/fuye-data'
 const routes = [
   {
     path: '/index.html',
-    redirect: '/'
+    redirect: '/',
   },
   {
     path: '/',
@@ -13,9 +13,10 @@ const routes = [
     component: () => import('../views/Home.vue'),
     meta: {
       title: '券宝 — 外卖红包·购物返利·出行优惠券每日更新',
-      description: '券宝聚合美团、京东、拼多多、滴滴、携程等平台优惠，外卖红包、购物返利、出行酒旅券每日更新，复制口令码一键领券省钱。',
-      keywords: '券宝,优惠券,外卖红包,购物返利,出行优惠,省钱'
-    }
+      description:
+        '券宝聚合美团、京东、拼多多、滴滴、携程等平台优惠，外卖红包、购物返利、出行酒旅券每日更新，复制口令码一键领券省钱。',
+      keywords: '券宝,优惠券,外卖红包,购物返利,出行优惠,省钱',
+    },
   },
   {
     path: '/haoka.html',
@@ -24,8 +25,8 @@ const routes = [
     meta: {
       title: '号卡办理专区 — 流量卡 · 正规运营商授权',
       description: '号卡办理专区，聚合多平台优惠号卡：四网套餐、大流量、低月租、正规运营商授权。',
-      keywords: '号卡办理,流量卡,大流量套餐,低月租,手机卡'
-    }
+      keywords: '号卡办理,流量卡,大流量套餐,低月租,手机卡',
+    },
   },
   {
     path: '/creditcard.html',
@@ -34,8 +35,8 @@ const routes = [
     meta: {
       title: '信用卡申请专区 — 多家银行信用卡 · 申请入口汇总',
       description: '信用卡申请专区：多家银行信用卡申请入口，代理推广佣金说明。',
-      keywords: '信用卡申请,银行信用卡,信用卡代理,办卡赚钱'
-    }
+      keywords: '信用卡申请,银行信用卡,信用卡代理,办卡赚钱',
+    },
   },
   {
     path: '/haoka-hero.html',
@@ -44,8 +45,8 @@ const routes = [
     meta: {
       title: '号卡选卡指南 — 选卡攻略 · 运营商对比 · FAQ',
       description: '号卡选卡指南：如何选对号卡、四大运营商对比、常见问题解答，帮你找到最合适的流量卡。',
-      keywords: '号卡选卡,流量卡指南,运营商对比,号卡FAQ'
-    }
+      keywords: '号卡选卡,流量卡指南,运营商对比,号卡FAQ',
+    },
   },
   {
     path: '/haoka-agent.html',
@@ -54,8 +55,8 @@ const routes = [
     meta: {
       title: '号卡代理合伙人招募 — 高佣推广 · 零成本加入',
       description: '号卡代理合伙人招募：高佣推广、一件代发、专业培训、持续售后。',
-      keywords: '号卡代理,流量卡代理,项目,高佣推广'
-    }
+      keywords: '号卡代理,流量卡代理,项目,高佣推广',
+    },
   },
   {
     path: '/huodong.html',
@@ -64,8 +65,8 @@ const routes = [
     meta: {
       title: '券宝 — 全网热门优惠',
       description: '券宝汇集全网热门优惠活动，外卖、出行、购物、酒旅天天领红包，省钱利器。',
-      keywords: '优惠活动,省钱,优惠券'
-    }
+      keywords: '优惠活动,省钱,优惠券',
+    },
   },
   {
     path: '/waimai.html',
@@ -74,8 +75,8 @@ const routes = [
     meta: {
       title: '外卖优惠 — 美团外卖红包',
       description: '美团外卖天天领红包，新客立减，吃喝玩乐福利。',
-      keywords: '外卖优惠,美团外卖,外卖红包'
-    }
+      keywords: '外卖优惠,美团外卖,外卖红包',
+    },
   },
   {
     path: '/huiyuan.html',
@@ -84,8 +85,8 @@ const routes = [
     meta: {
       title: '会员优惠专区 — VIP会员优惠',
       description: '会员优惠专区，汇集各大平台VIP会员优惠。',
-      keywords: '会员优惠,VIP,会员卡'
-    }
+      keywords: '会员优惠,VIP,会员卡',
+    },
   },
   {
     path: '/wangpan.html',
@@ -94,8 +95,8 @@ const routes = [
     meta: {
       title: '网盘资源 — 免费网盘推荐',
       description: '网盘资源聚合，免费网盘推荐，大容量存储。',
-      keywords: '网盘,云盘,免费网盘'
-    }
+      keywords: '网盘,云盘,免费网盘',
+    },
   },
   {
     path: '/wifi.html',
@@ -104,8 +105,8 @@ const routes = [
     meta: {
       title: '随身WiFi专区 — 便携WiFi设备',
       description: '随身WiFi专区，便携WiFi设备推荐，随时随地上网。',
-      keywords: '随身WiFi,便携WiFi,移动WiFi'
-    }
+      keywords: '随身WiFi,便携WiFi,移动WiFi',
+    },
   },
   {
     path: '/about.html',
@@ -114,8 +115,8 @@ const routes = [
     meta: {
       title: '关于我们 — 券宝平台介绍',
       description: '关于我们，券宝平台介绍，优惠券聚合平台。',
-      keywords: '关于我们,平台介绍,券宝'
-    }
+      keywords: '关于我们,平台介绍,券宝',
+    },
   },
   {
     path: '/fuye.html',
@@ -124,8 +125,8 @@ const routes = [
     meta: {
       title: '项目赚钱 — 网络项目项目',
       description: '项目赚钱，网络项目项目推荐，轻松赚取额外收入。',
-      keywords: '项目,赚钱,网络项目'
-    }
+      keywords: '项目,赚钱,网络项目',
+    },
   },
   {
     path: '/gouwu.html',
@@ -134,8 +135,8 @@ const routes = [
     meta: {
       title: '购物优惠 — 电商平台优惠',
       description: '购物优惠，电商平台优惠汇总，省钱购物。',
-      keywords: '购物优惠,电商优惠,省钱购物'
-    }
+      keywords: '购物优惠,电商优惠,省钱购物',
+    },
   },
   {
     path: '/privacy.html',
@@ -144,8 +145,8 @@ const routes = [
     meta: {
       title: '隐私政策 — 券宝隐私说明',
       description: '隐私政策，券宝隐私说明，保护用户隐私。',
-      keywords: '隐私政策,隐私说明,用户隐私'
-    }
+      keywords: '隐私政策,隐私说明,用户隐私',
+    },
   },
   {
     path: '/qunliao.html',
@@ -154,8 +155,8 @@ const routes = [
     meta: {
       title: '群聊优惠 — 社群优惠分享',
       description: '群聊优惠，社群优惠分享，优惠信息交流。',
-      keywords: '群聊优惠,社群优惠,优惠分享'
-    }
+      keywords: '群聊优惠,社群优惠,优惠分享',
+    },
   },
 
   // 项目二级页面
@@ -163,7 +164,7 @@ const routes = [
     path: '/fuye/:slug.html',
     name: 'FuyePage',
     component: () => import('../views/FuyePage.vue'),
-    props: route => {
+    props: (route) => {
       const slug = route.params.slug
       const config = getFuyePageConfig(`fuye/${slug}`)
       return { config }
@@ -178,10 +179,10 @@ const routes = [
       // 更新 meta 信息
       to.meta = {
         ...to.meta,
-        ...config.meta
+        ...config.meta,
       }
       next()
-    }
+    },
   },
 
   // 兜底路由：未知路径不匹配任何路由（由拦截器处理 404）
@@ -191,9 +192,9 @@ const routes = [
     meta: {
       title: '页面未找到 — 券宝',
       description: '您访问的页面不存在或已被移除。',
-      robots: 'noindex, follow'
-    }
-  }
+      robots: 'noindex, follow',
+    },
+  },
 ]
 
 const router = createRouter({
@@ -205,7 +206,7 @@ const router = createRouter({
     } else {
       return { top: 0 }
     }
-  }
+  },
 })
 
 // 通用路由拦截器

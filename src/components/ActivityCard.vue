@@ -1,10 +1,7 @@
 <template>
   <div
     class="activity-card"
-    :class="[
-      `card-${type}-style`,
-      { expired, 'expiring-soon': expiringSoon }
-    ]"
+    :class="[`card-${type}-style`, { expired, 'expiring-soon': expiringSoon }]"
     role="article"
     :aria-label="item.name"
     :style="cardStyle"
@@ -28,14 +25,28 @@
       {{ deadlineDisplay }}
     </div>
     <div v-if="type === 'code'" class="card-code" v-html="displayCode"></div>
-    <a v-if="type === 'link'" class="card-link" :href="item.link" target="_blank" rel="noopener" :title="item.link" @click="handleLinkClick($event)">
+    <a
+      v-if="type === 'link'"
+      class="card-link"
+      :href="item.link"
+      target="_blank"
+      rel="noopener"
+      :title="item.link"
+      @click="handleLinkClick($event)"
+    >
       {{ host || '前往活动' }}
     </a>
     <div class="card-actions">
-      <button v-if="type === 'code'" class="btn-copy" :disabled="expired" @click="handleCopy">
-        复制口令
-      </button>
-      <a v-if="type === 'link'" class="btn-go" :href="item.link" target="_blank" rel="noopener" :class="{ 'tabindex-disabled': expired }" @click="handleLinkClick($event)">
+      <button v-if="type === 'code'" class="btn-copy" :disabled="expired" @click="handleCopy">复制口令</button>
+      <a
+        v-if="type === 'link'"
+        class="btn-go"
+        :href="item.link"
+        target="_blank"
+        rel="noopener"
+        :class="{ 'tabindex-disabled': expired }"
+        @click="handleLinkClick($event)"
+      >
         前往活动
       </a>
       <button class="btn-qr" @click="handleQr">二维码</button>
@@ -47,23 +58,31 @@
 <script setup>
 import { computed } from 'vue'
 import { useClipboard, useShare } from '../composables'
-import { isExpired, isExpiringSoon, isNewActivity, isHotActivity, formatCountdown, highlightText, getIconForName } from '../composables/useUtils'
+import {
+  isExpired,
+  isExpiringSoon,
+  isNewActivity,
+  isHotActivity,
+  formatCountdown,
+  highlightText,
+  getIconForName,
+} from '../composables/useUtils'
 import { isWechatLink, handleWechatLink } from '../utils/linkHandler'
 
 const props = defineProps({
   item: {
     type: Object,
-    required: true
+    required: true,
   },
   type: {
     type: String,
     default: 'code',
-    validator: (v) => ['code', 'link'].includes(v)
+    validator: (v) => ['code', 'link'].includes(v),
   },
   query: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 const emit = defineEmits(['copy', 'qr', 'share'])
@@ -106,7 +125,7 @@ const deadlineDisplay = computed(() => {
 
 const cardStyle = computed(() => ({
   '--card-gradient': 'linear-gradient(135deg, #FFF4ED 0%, #FFE8DB 100%)',
-  '--card-accent': '#FF6B35'
+  '--card-accent': '#FF6B35',
 }))
 
 const handleCopy = async () => {
@@ -156,7 +175,7 @@ const handleShare = async () => {
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--card-accent, #FF6B35);
+  background: var(--card-accent, #ff6b35);
 }
 
 .card-head {
@@ -256,7 +275,7 @@ const handleShare = async () => {
 .card-link {
   display: block;
   font-size: 13px;
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   text-decoration: none;
   margin-bottom: 12px;
   word-break: break-all;
@@ -292,7 +311,7 @@ const handleShare = async () => {
 }
 
 .btn-copy {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   border: none;
 }
@@ -307,7 +326,7 @@ const handleShare = async () => {
 }
 
 .btn-go {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   border: none;
 }
@@ -331,31 +350,31 @@ const handleShare = async () => {
 .btn-qr:hover,
 .btn-share:hover {
   background: var(--hover-bg, #f3f4f6);
-  border-color: var(--primary, #FF6B35);
-  color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
+  color: var(--primary, #ff6b35);
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .activity-card {
+[data-theme='dark'] .activity-card {
   background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(55, 65, 81, 0.6));
   border-color: rgba(75, 85, 99, 0.5);
 }
 
-[data-theme="dark"] .card-code {
+[data-theme='dark'] .card-code {
   background: rgba(0, 0, 0, 0.2);
   border-color: rgba(75, 85, 99, 0.5);
 }
 
-[data-theme="dark"] .card-badge {
+[data-theme='dark'] .card-badge {
   background: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] .card-actions {
+[data-theme='dark'] .card-actions {
   border-top-color: rgba(75, 85, 99, 0.5);
 }
 
-[data-theme="dark"] .btn-qr,
-[data-theme="dark"] .btn-share {
+[data-theme='dark'] .btn-qr,
+[data-theme='dark'] .btn-share {
   background: rgba(31, 41, 55, 0.8);
   border-color: rgba(75, 85, 99, 0.5);
 }

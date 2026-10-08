@@ -48,7 +48,7 @@ export const useAppStore = defineStore('app', () => {
 
   // 移除通知
   function removeNotification(id) {
-    notifications.value = notifications.value.filter(n => n.id !== id)
+    notifications.value = notifications.value.filter((n) => n.id !== id)
   }
 
   // 初始化
@@ -76,6 +76,6 @@ export const useAppStore = defineStore('app', () => {
     setLoading,
     addNotification,
     removeNotification,
-    init
+    init,
   }
 })

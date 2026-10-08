@@ -64,16 +64,19 @@ export const handleWechatLink = (url, options = {}) => {
         onNonWeixin(url)
       } else {
         // 默认行为：复制到剪贴板并显示提示
-        navigator.clipboard.writeText(url).then(() => {
-          // 触发自定义事件，让父组件可以监听
-          const event = new CustomEvent('wechat-link-copied', {
-            detail: { url, name: name || url }
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            // 触发自定义事件，让父组件可以监听
+            const event = new CustomEvent('wechat-link-copied', {
+              detail: { url, name: name || url },
+            })
+            window.dispatchEvent(event)
           })
-          window.dispatchEvent(event)
-        }).catch(() => {
-          // 降级方案：使用 alert
-          alert('请在微信中打开此链接')
-        })
+          .catch(() => {
+            // 降级方案：使用 alert
+            alert('请在微信中打开此链接')
+          })
       }
     }
     return true

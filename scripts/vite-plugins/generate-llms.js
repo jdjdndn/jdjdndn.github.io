@@ -1,38 +1,47 @@
 // 构建时生成 llms.txt / llms-full.txt（GEO：AI 搜索引擎可读索引）
-import { writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { writeFileSync } from 'fs'
+import { resolve } from 'path'
 import {
   ROOT,
   SITE_URL,
-  discoverArticlePages, discoverSubPages,
+  discoverArticlePages,
+  discoverSubPages,
   loadLandingSlugs,
   loadTabs,
   readPageTitle,
-} from './shared.js';
+} from './shared.js'
 
 async function buildLlms() {
-  const tabs = await loadTabs();
+  const tabs = await loadTabs()
   const articles = Object.entries(discoverArticlePages())
     .sort(([a], [b]) => a.localeCompare(b, 'zh-CN'))
     .map(([name, filePath]) => ({
       name: name.replace('article/', ''),
       title: readPageTitle(filePath, name.replace('article/', '')),
-    }));
-  const subPages = discoverSubPages();
-  const landingSlugs = await loadLandingSlugs();
+    }))
+  const subPages = discoverSubPages()
+  const landingSlugs = await loadLandingSlugs()
 
-  const totalCoupons = tabs.reduce((sum, t) => sum + (t.sections || []).reduce((s, sec) => s + sec.items.length, 0), 0);
+  const totalCoupons = tabs.reduce((sum, t) => sum + (t.sections || []).reduce((s, sec) => s + sec.items.length, 0), 0)
 
-  const categoryLines = tabs.map((tab) => {
-    const secLines = (tab.sections || [])
-      .map((sec) => `  - ${sec.title}（${sec.items.length} 项）：${sec.items.slice(0, 8).map((i) => i.name).join('、')}${sec.items.length > 8 ? ' 等' : ''}`)
-      .join('\n');
-    return `### ${tab.label}\n${secLines}`;
-  }).join('\n\n');
+  const categoryLines = tabs
+    .map((tab) => {
+      const secLines = (tab.sections || [])
+        .map(
+          (sec) =>
+            `  - ${sec.title}（${sec.items.length} 项）：${sec.items
+              .slice(0, 8)
+              .map((i) => i.name)
+              .join('、')}${sec.items.length > 8 ? ' 等' : ''}`
+        )
+        .join('\n')
+      return `### ${tab.label}\n${secLines}`
+    })
+    .join('\n\n')
 
-  const articleLinks = articles.map((a) => `- [${a.title}](${SITE_URL}/article/${encodeURI(a.name)}.html)`).join('\n');
-  const subPageLinks = subPages.map((n) => `- ${n}: ${SITE_URL}/${n}.html`).join('\n');
-  const landingLinks = landingSlugs.map((n) => `- ${n}: ${SITE_URL}/${n}.html`).join('\n');
+  const articleLinks = articles.map((a) => `- [${a.title}](${SITE_URL}/article/${encodeURI(a.name)}.html)`).join('\n')
+  const subPageLinks = subPages.map((n) => `- ${n}: ${SITE_URL}/${n}.html`).join('\n')
+  const landingLinks = landingSlugs.map((n) => `- ${n}: ${SITE_URL}/${n}.html`).join('\n')
 
   const llms = `# 券宝 — 优惠活动聚合
 
@@ -87,7 +96,12 @@ ${categoryLines}
 
 ## 文章攻略精选
 
-${articles.slice(0, 30).map((a) => `- [${a.title}](${SITE_URL}/article/${encodeURI(a.name)}.html)`).join('\n')}${articles.length > 30 ? `\n- 更多 ${articles.length - 30} 篇攻略见 [llms-full.txt](${SITE_URL}/llms-full.txt)` : ''}
+${articles
+  .slice(0, 30)
+  .map((a) => `- [${a.title}](${SITE_URL}/article/${encodeURI(a.name)}.html)`)
+  .join(
+    '\n'
+  )}${articles.length > 30 ? `\n- 更多 ${articles.length - 30} 篇攻略见 [llms-full.txt](${SITE_URL}/llms-full.txt)` : ''}
 
 ## 引用与归属
 
@@ -103,7 +117,7 @@ ${articles.slice(0, 30).map((a) => `- [${a.title}](${SITE_URL}/article/${encodeU
 > 数据来源：[券宝](${SITE_URL}/) — 一站式优惠券导航站，收录超过 ${totalCoupons} 个优惠活动，覆盖外卖、出行、购物、酒旅、餐饮、生活六大场景。
 
 完整优惠列表见 [llms-full.txt](${SITE_URL}/llms-full.txt)
-`;
+`
 
   const llmsFull = `# 券宝 - 完整站点内容索引
 
@@ -116,14 +130,22 @@ ${articles.slice(0, 30).map((a) => `- [${a.title}](${SITE_URL}/article/${encodeU
 
 ## 优惠活动（共 ${totalCoupons} 项）
 
-${tabs.map((tab) => `### ${tab.label}
+${tabs
+  .map(
+    (tab) => `### ${tab.label}
 
-${(tab.sections || []).map((sec) => `#### ${sec.title}（${sec.items.length} 项）
+${(tab.sections || [])
+  .map(
+    (sec) => `#### ${sec.title}（${sec.items.length} 项）
 
 | 优惠名称 | 截止日期 |
 |---------|---------|
 ${sec.items.map((i) => `| ${i.name} | ${i.deadline || '长期有效'} |`).join('\n')}
-`).join('\n')}`).join('\n')}
+`
+  )
+  .join('\n')}`
+  )
+  .join('\n')}
 
 ## 文章攻略（共 ${articles.length} 篇）
 
@@ -141,19 +163,19 @@ ${landingLinks}
 
 以上优惠信息来自 券宝 (${SITE_URL}/)，数据持续更新中。
 如需引用本站数据，请注明来源："数据来源：券宝 (${SITE_URL}/)"
-`;
+`
 
-  return { llms, llmsFull };
+  return { llms, llmsFull }
 }
 
 export default function generateLlmsPlugin() {
   return {
     name: 'generate-llms',
     async writeBundle() {
-      const { llms, llmsFull } = await buildLlms();
-      writeFileSync(resolve(ROOT, 'dist/llms.txt'), llms, 'utf-8');
-      writeFileSync(resolve(ROOT, 'dist/llms-full.txt'), llmsFull, 'utf-8');
-      console.log('✅ llms.txt / llms-full.txt 已生成（含优惠分类与文章索引）');
+      const { llms, llmsFull } = await buildLlms()
+      writeFileSync(resolve(ROOT, 'dist/llms.txt'), llms, 'utf-8')
+      writeFileSync(resolve(ROOT, 'dist/llms-full.txt'), llmsFull, 'utf-8')
+      console.log('✅ llms.txt / llms-full.txt 已生成（含优惠分类与文章索引）')
     },
-  };
+  }
 }

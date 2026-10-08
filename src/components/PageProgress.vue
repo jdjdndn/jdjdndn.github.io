@@ -38,7 +38,9 @@ onMounted(() => {
   height: 3px;
   width: 0;
   z-index: 10001;
-  transition: width 0.3s ease, opacity 0.3s ease;
+  transition:
+    width 0.3s ease,
+    opacity 0.3s ease;
   pointer-events: none;
 }
 </style>

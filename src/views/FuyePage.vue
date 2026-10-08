@@ -1,100 +1,97 @@
 <template>
   <main class="fuye-page">
-      <PageHero
-        :icon="config.icon"
-        :title="config.title"
-        :subtitle="config.subtitle"
-        :aria="config.title"
+    <PageHero :icon="config.icon" :title="config.title" :subtitle="config.subtitle" :aria="config.title">
+      <span class="stat-badge">
+        <strong>{{ config.statNum }}</strong> {{ config.statLabel }}
+      </span>
+    </PageHero>
+
+    <!-- 简介区 -->
+    <div class="intro-section">
+      <div class="card card--no-border">
+        <div class="card-header">💡 什么是{{ config.title }}？</div>
+        <p>{{ config.intro }}</p>
+      </div>
+    </div>
+
+    <!-- 横幅入口 -->
+    <div v-if="config.banner" class="banner-section">
+      <div class="card hoverable banner-card" @click="handleEntryClick(config.banner)">
+        <div class="banner-item">
+          <div class="banner-icon">{{ config.banner.icon }}</div>
+          <div class="banner-text">
+            <div class="banner-name">{{ config.banner.name }}</div>
+            <div class="banner-desc">{{ config.banner.desc }}</div>
+          </div>
+          <div class="banner-arrow">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 搜索框 -->
+    <div v-if="config.searchable" class="search-box">
+      <input v-model="searchKeyword" type="text" :placeholder="'搜索' + config.title + '...'" />
+    </div>
+
+    <!-- 入口链接 -->
+    <div class="entry-grid">
+      <div
+        v-for="entry in pagedEntries"
+        :key="entry.id"
+        class="card hoverable entry-card"
+        @click="handleEntryClick(entry)"
       >
-        <span class="stat-badge">
-          <strong>{{ config.statNum }}</strong> {{ config.statLabel }}
-        </span>
-      </PageHero>
-
-      <!-- 简介区 -->
-      <div class="intro-section">
-        <div class="card card--no-border">
-          <div class="card-header">💡 什么是{{ config.title }}？</div>
-          <p>{{ config.intro }}</p>
-        </div>
-      </div>
-
-      <!-- 横幅入口 -->
-      <div v-if="config.banner" class="banner-section">
-        <div class="card hoverable banner-card" @click="handleEntryClick(config.banner)">
-          <div class="banner-item">
-            <div class="banner-icon">{{ config.banner.icon }}</div>
-            <div class="banner-text">
-              <div class="banner-name">{{ config.banner.name }}</div>
-              <div class="banner-desc">{{ config.banner.desc }}</div>
-            </div>
-            <div class="banner-arrow">→</div>
+        <div class="entry-item">
+          <div class="entry-icon">{{ entry.icon }}</div>
+          <div class="entry-text">
+            <div class="entry-name">{{ entry.name }}</div>
+            <div class="entry-desc">{{ entry.desc }}</div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- 搜索框 -->
-      <div v-if="config.searchable" class="search-box">
-        <input v-model="searchKeyword" type="text" :placeholder="'搜索' + config.title + '...'" />
-      </div>
+    <!-- 分页 -->
+    <div v-if="config.searchable && filteredEntries.length > pageSize" class="pagination">
+      <button :disabled="currentPage <= 1" @click="currentPage--">← 上一页</button>
+      <button v-for="p in totalPages" :key="p" :class="{ active: currentPage === p }" @click="currentPage = p">
+        {{ p }}
+      </button>
+      <button :disabled="currentPage >= totalPages" @click="currentPage++">下一页 →</button>
+    </div>
 
-      <!-- 入口链接 -->
-      <div class="entry-grid">
-        <div
-          v-for="entry in pagedEntries"
-          :key="entry.id"
-          class="card hoverable entry-card"
-          @click="handleEntryClick(entry)"
-        >
-          <div class="entry-item">
-            <div class="entry-icon">{{ entry.icon }}</div>
-            <div class="entry-text">
-              <div class="entry-name">{{ entry.name }}</div>
-              <div class="entry-desc">{{ entry.desc }}</div>
+    <!-- 详细指导 -->
+    <div class="guide-section">
+      <div class="card card--no-border">
+        <div class="card-header">📖 详细指导 · 实操步骤</div>
+        <div v-for="guide in config.guides" :key="guide.id" class="guide-item">
+          <div class="guide-head">
+            <div class="guide-no">{{ guide.id }}</div>
+            <div>
+              <div class="guide-title">{{ guide.title }}</div>
+              <div class="guide-desc">{{ guide.desc }}</div>
             </div>
           </div>
+          <ol v-if="guide.steps && guide.steps.length" class="guide-steps">
+            <li v-for="(step, i) in guide.steps" :key="i">{{ step }}</li>
+          </ol>
+          <a
+            v-if="guide.url"
+            :href="guide.url"
+            class="guide-link"
+            :target="guide.url.startsWith('http') ? '_blank' : '_self'"
+            :rel="guide.url.startsWith('http') ? 'noopener' : undefined"
+          >
+            查看完整实操指南 →
+          </a>
         </div>
       </div>
+    </div>
 
-      <!-- 分页 -->
-      <div v-if="config.searchable && filteredEntries.length > pageSize" class="pagination">
-        <button :disabled="currentPage <= 1" @click="currentPage--">← 上一页</button>
-        <button v-for="p in totalPages" :key="p" :class="{ active: currentPage === p }" @click="currentPage = p">{{ p }}</button>
-        <button :disabled="currentPage >= totalPages" @click="currentPage++">下一页 →</button>
-      </div>
+    <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
 
-      <!-- 详细指导 -->
-      <div class="guide-section">
-        <div class="card card--no-border">
-          <div class="card-header">📖 详细指导 · 实操步骤</div>
-          <div v-for="guide in config.guides" :key="guide.id" class="guide-item">
-            <div class="guide-head">
-              <div class="guide-no">{{ guide.id }}</div>
-              <div>
-                <div class="guide-title">{{ guide.title }}</div>
-                <div class="guide-desc">{{ guide.desc }}</div>
-              </div>
-            </div>
-            <ol v-if="guide.steps && guide.steps.length" class="guide-steps">
-              <li v-for="(step, i) in guide.steps" :key="i">{{ step }}</li>
-            </ol>
-            <a
-              v-if="guide.url"
-              :href="guide.url"
-              class="guide-link"
-              :target="guide.url.startsWith('http') ? '_blank' : '_self'"
-              :rel="guide.url.startsWith('http') ? 'noopener' : undefined"
-            >
-              查看完整实操指南 →
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <p class="f-note">💡 选择适合你的入口开始 · 零成本起步，多一份收入</p>
-
-      <LegalLinks />
-      <BackToTop />
+    <LegalLinks />
+    <BackToTop />
 
     <!-- 信息弹窗（用于无 url 的入口，展示操作指引） -->
     <Teleport to="body">
@@ -133,8 +130,8 @@ import { isWechatLink, handleWechatLink, getLinkType } from '../utils/linkHandle
 const props = defineProps({
   config: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const router = useRouter()
@@ -147,7 +144,9 @@ const pageSize = 6
 const filteredEntries = computed(() => {
   if (!props.config.searchable || !searchKeyword.value) return props.config.entries || []
   const kw = searchKeyword.value.toLowerCase()
-  return (props.config.entries || []).filter(e => (e.name || '').toLowerCase().includes(kw) || (e.desc || '').toLowerCase().includes(kw))
+  return (props.config.entries || []).filter(
+    (e) => (e.name || '').toLowerCase().includes(kw) || (e.desc || '').toLowerCase().includes(kw)
+  )
 })
 
 const totalPages = computed(() => Math.ceil(filteredEntries.value.length / pageSize))
@@ -164,7 +163,7 @@ const infoModal = reactive({
   title: '',
   desc: '',
   copyText: '',
-  copyLabel: ''
+  copyLabel: '',
 })
 const copied = ref(false)
 
@@ -190,7 +189,9 @@ async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text)
     copied.value = true
-    setTimeout(() => { copied.value = false }, 2000)
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
   } catch {
     // 降级方案
     const ta = document.createElement('textarea')
@@ -202,7 +203,9 @@ async function copyToClipboard(text) {
     document.execCommand('copy')
     document.body.removeChild(ta)
     copied.value = true
-    setTimeout(() => { copied.value = false }, 2000)
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
   }
 }
 
@@ -217,10 +220,17 @@ function handleEntryClick(entry) {
   if (isWechatLink(entry.url)) {
     handleWechatLink(entry.url, {
       name: entry.name,
-      onWeixin: (url) => { window.location.href = url },
+      onWeixin: (url) => {
+        window.location.href = url
+      },
       onNonWeixin: () => {
-        openInfoModal({ name: entry.name, desc: '请复制下方口令，在微信中打开', copyText: entry.url, copyLabel: '小程序口令' })
-      }
+        openInfoModal({
+          name: entry.name,
+          desc: '请复制下方口令，在微信中打开',
+          copyText: entry.url,
+          copyLabel: '小程序口令',
+        })
+      },
     })
     return
   }
@@ -273,12 +283,12 @@ function handleEntryClick(entry) {
   background: var(--card, #fff);
   color: var(--text, #1a1a2e);
   outline: none;
-  transition: border-color .2s;
+  transition: border-color 0.2s;
   box-sizing: border-box;
 }
 
 .search-box input:focus {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
 }
 
 /* 分页 */
@@ -297,22 +307,22 @@ function handleEntryClick(entry) {
   color: var(--text, #1a1a2e);
   cursor: pointer;
   font-size: 14px;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .pagination button:hover {
-  border-color: var(--primary, #FF6B35);
-  color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
+  color: var(--primary, #ff6b35);
 }
 
 .pagination button.active {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: #fff;
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
 }
 
 .pagination button:disabled {
-  opacity: .4;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -341,8 +351,14 @@ function handleEntryClick(entry) {
 
 /* 移动端增大点击区域 */
 @media (max-width: 640px) {
-  .entry-card { padding: 22px 16px; }
-  .entry-icon { width: 48px; height: 48px; font-size: 24px; }
+  .entry-card {
+    padding: 22px 16px;
+  }
+  .entry-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
 }
 
 .entry-item {
@@ -519,7 +535,9 @@ function handleEntryClick(entry) {
   text-decoration: none;
   background: var(--primary-light, #fff7ed);
   border-radius: 8px;
-  transition: background .2s, transform .1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .guide-link:hover {
@@ -530,7 +548,7 @@ function handleEntryClick(entry) {
   transform: scale(0.97);
 }
 
-[data-theme="dark"] .guide-item {
+[data-theme='dark'] .guide-item {
   border-color: var(--border, #2d2d45);
 }
 
@@ -543,34 +561,34 @@ function handleEntryClick(entry) {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .entry-card {
+[data-theme='dark'] .entry-card {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), var(--card, #1e1e35));
 }
-[data-theme="dark"] .entry-icon {
+[data-theme='dark'] .entry-icon {
   background: rgba(249, 115, 22, 0.15);
 }
-[data-theme="dark"] .banner-card {
+[data-theme='dark'] .banner-card {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.08));
   border-color: rgba(249, 115, 22, 0.4);
 }
-[data-theme="dark"] .guide-no {
+[data-theme='dark'] .guide-no {
   background: rgba(249, 115, 22, 0.15);
 }
-[data-theme="dark"] .guide-link {
+[data-theme='dark'] .guide-link {
   background: rgba(249, 115, 22, 0.15);
 }
-[data-theme="dark"] .guide-link:hover {
+[data-theme='dark'] .guide-link:hover {
   background: rgba(249, 115, 22, 0.25);
 }
-[data-theme="dark"] .guide-item {
+[data-theme='dark'] .guide-item {
   border-color: var(--border, #2d2d45);
 }
-[data-theme="dark"] .search-box input {
+[data-theme='dark'] .search-box input {
   background: var(--card, #1a1a2e);
   border-color: var(--border, #2d2d45);
   color: var(--text, #e0e0e0);
 }
-[data-theme="dark"] .pagination button {
+[data-theme='dark'] .pagination button {
   background: var(--card, #1a1a2e);
   border-color: var(--border, #2d2d45);
   color: var(--text, #e0e0e0);
@@ -662,7 +680,7 @@ function handleEntryClick(entry) {
 .info-modal-copy-value {
   font-size: 15px;
   font-weight: 600;
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -674,7 +692,7 @@ function handleEntryClick(entry) {
   padding: 6px 14px;
   border-radius: 8px;
   border: none;
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   font-size: 13px;
   font-weight: 600;
@@ -684,7 +702,7 @@ function handleEntryClick(entry) {
 }
 
 .info-modal-copy-btn:hover {
-  background: var(--primary-hover, #E55A2B);
+  background: var(--primary-hover, #e55a2b);
 }
 
 /* 弹窗过渡动画 */
@@ -706,16 +724,16 @@ function handleEntryClick(entry) {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .info-modal {
+[data-theme='dark'] .info-modal {
   background: var(--card, #1a1a2e);
 }
-[data-theme="dark"] .info-modal-header {
+[data-theme='dark'] .info-modal-header {
   border-color: var(--border, #2d2d45);
 }
-[data-theme="dark"] .info-modal-desc {
+[data-theme='dark'] .info-modal-desc {
   color: var(--text-secondary, #a0a0b8);
 }
-[data-theme="dark"] .info-modal-copy-section {
+[data-theme='dark'] .info-modal-copy-section {
   background: rgba(255, 107, 53, 0.08);
 }
 </style>

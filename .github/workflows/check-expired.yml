@@ -2,7 +2,7 @@ name: 检查过期活动
 
 on:
   schedule:
-    - cron: '0 9 * * 1'  # 每周一上午9点(UTC)
+    - cron: '0 9 * * 1' # 每周一上午9点(UTC)
   workflow_dispatch:
 
 permissions:

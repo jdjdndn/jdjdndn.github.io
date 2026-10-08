@@ -28,6 +28,6 @@ export function useToast() {
     visible,
     message,
     show,
-    hide
+    hide,
   }
 }

@@ -12,7 +12,7 @@ export function useShare() {
   const shareData = ref({
     name: '',
     url: '',
-    text: ''
+    text: '',
   })
 
   /**
@@ -96,9 +96,7 @@ export function useShare() {
    */
   const quickShare = async (name, url, text) => {
     if (navigator.share) {
-      const shareDataObj = text
-        ? { title: name, text }
-        : { title: name, url }
+      const shareDataObj = text ? { title: name, text } : { title: name, url }
       try {
         await navigator.share(shareDataObj)
         return
@@ -118,6 +116,6 @@ export function useShare() {
     openShare,
     closeShare,
     handleShare,
-    quickShare
+    quickShare,
   }
 }

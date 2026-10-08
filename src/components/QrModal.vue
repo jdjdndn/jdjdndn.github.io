@@ -24,16 +24,16 @@ import QRCode from 'qrcode'
 const props = defineProps({
   visible: {
     type: Boolean,
-    default: false
+    default: false,
   },
   url: {
     type: String,
-    default: ''
+    default: '',
   },
   title: {
     type: String,
-    default: '二维码'
-  }
+    default: '二维码',
+  },
 })
 
 const emit = defineEmits(['close'])
@@ -43,12 +43,15 @@ const closeBtnRef = ref(null)
 let triggerElement = null
 
 async function generateQr(url) {
-  if (!url) { qrDataUrl.value = ''; return }
+  if (!url) {
+    qrDataUrl.value = ''
+    return
+  }
   try {
     qrDataUrl.value = await QRCode.toDataURL(url, {
       width: 200,
       margin: 2,
-      color: { dark: '#000000', light: '#ffffff' }
+      color: { dark: '#000000', light: '#ffffff' },
     })
   } catch {
     qrDataUrl.value = ''
@@ -63,20 +66,27 @@ const close = () => {
   emit('close')
 }
 
-watch(() => props.url, (url) => generateQr(url), { immediate: true })
+watch(
+  () => props.url,
+  (url) => generateQr(url),
+  { immediate: true }
+)
 
-watch(() => props.visible, async (val) => {
-  if (val) {
-    triggerElement = document.activeElement
-    document.addEventListener('keydown', handleKeydown)
-    await nextTick()
-    closeBtnRef.value?.focus()
-  } else {
-    document.removeEventListener('keydown', handleKeydown)
-    triggerElement?.focus()
-    triggerElement = null
+watch(
+  () => props.visible,
+  async (val) => {
+    if (val) {
+      triggerElement = document.activeElement
+      document.addEventListener('keydown', handleKeydown)
+      await nextTick()
+      closeBtnRef.value?.focus()
+    } else {
+      document.removeEventListener('keydown', handleKeydown)
+      triggerElement?.focus()
+      triggerElement = null
+    }
   }
-})
+)
 </script>
 
 <style scoped>
@@ -185,11 +195,11 @@ watch(() => props.visible, async (val) => {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .qr-modal {
+[data-theme='dark'] .qr-modal {
   background: var(--card-dark, #1f2937);
 }
 
-[data-theme="dark"] .qr-code {
+[data-theme='dark'] .qr-code {
   background: white;
   border-color: rgba(255, 255, 255, 0.1);
 }

@@ -6,14 +6,22 @@
       subtitle="项目机会梳理 · 多方向攻略"
       aria="项目专区"
     >
-      <span class="stat-badge"><strong>{{ projectCount }}</strong> 项目方向</span>
-      <span class="stat-badge"><strong>{{ guideCount }}+</strong> 篇攻略</span>
+      <span class="stat-badge"
+        ><strong>{{ projectCount }}</strong> 项目方向</span
+      >
+      <span class="stat-badge"
+        ><strong>{{ guideCount }}+</strong> 篇攻略</span
+      >
       <span class="stat-badge"><strong>0</strong> 元成本起步</span>
     </PageHero>
 
     <!-- 项目分类入口 -->
     <div class="grid-3 entry-grid">
-      <div v-for="(entry, idx) in entries" :key="entry.name" :class="['grid-item', 'entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']">
+      <div
+        v-for="(entry, idx) in entries"
+        :key="entry.name"
+        :class="['grid-item', 'entry-grid-item', idx === entries.length - 1 ? 'full-width' : '']"
+      >
         <component :is="entry.url ? 'router-link' : 'div'" :to="entry.url || undefined" class="entry-card">
           <div class="entry-icon">{{ entry.icon }}</div>
           <div class="entry-info">
@@ -49,7 +57,7 @@ const entries = computed(() => {
       icon: page.cardIcon || '📋',
       url: `/fuye/${slug.replace('fuye/', '')}.html`,
       tag: page.cardTag || '攻略',
-      tagType: 'info'
+      tagType: 'info',
     }))
 
   // 添加"更多项目"占位
@@ -59,7 +67,7 @@ const entries = computed(() => {
     icon: '💡',
     url: '',
     tag: '更新中',
-    tagType: 'default'
+    tagType: 'default',
   })
 
   return list
@@ -67,13 +75,11 @@ const entries = computed(() => {
 
 // 动态计算统计数字
 const projectCount = computed(() => Object.keys(fuyePages).length)
-const guideCount = computed(() =>
-  Object.values(fuyePages).reduce((sum, page) => sum + (page.guides?.length || 0), 0)
-)
+const guideCount = computed(() => Object.values(fuyePages).reduce((sum, page) => sum + (page.guides?.length || 0), 0))
 </script>
 
 <style scoped>
-.fuye-page{
+.fuye-page {
   width: 100%;
 }
 .entry-grid {
@@ -107,7 +113,7 @@ const guideCount = computed(() =>
 }
 
 .entry-card:hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
   transform: translateY(-1px);
 }
@@ -119,7 +125,7 @@ const guideCount = computed(() =>
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--primary-light, #FFF4ED);
+  background: var(--primary-light, #fff4ed);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,7 +162,7 @@ const guideCount = computed(() =>
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .entry-card {
+[data-theme='dark'] .entry-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }

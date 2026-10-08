@@ -6,9 +6,7 @@
       subtitle="影视 / 音乐 / 流量会员 · 官方渠道优惠价"
       aria="会员优惠"
     >
-      <span class="stat-badge">
-        已收录 <strong>3</strong> 个平台
-      </span>
+      <span class="stat-badge"> 已收录 <strong>3</strong> 个平台 </span>
     </PageHero>
 
     <!-- 信任徽章 -->
@@ -54,20 +52,20 @@ const members = [
     name: '影视会员',
     desc: '各大平台影视VIP会员优惠办理',
     url: 'https://wcbblll.99kami.com',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>',
   },
   {
     name: '音乐会员',
     desc: '影视音乐VIP话费优惠',
     url: 'https://wcbblll.im01.cn',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
   },
   {
     name: '福来流量站',
     desc: '粉丝关注服务',
     url: 'http://35568.qcxmt.cn',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>'
-  }
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>',
+  },
 ]
 </script>
 
@@ -123,7 +121,7 @@ const members = [
 }
 
 .member-card:hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
   transform: translateY(-1px);
 }
@@ -132,7 +130,7 @@ const members = [
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: linear-gradient(135deg, var(--primary-light, #FFF4ED), var(--primary, #FF6B35));
+  background: linear-gradient(135deg, var(--primary-light, #fff4ed), var(--primary, #ff6b35));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,7 +161,7 @@ const members = [
   border-radius: 6px;
 }
 
-[data-theme="dark"] .member-card {
+[data-theme='dark'] .member-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }

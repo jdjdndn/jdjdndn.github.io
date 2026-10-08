@@ -1,70 +1,56 @@
 <template>
   <main class="wangpan-page">
-      <PageHero
-        icon='<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/>'
-        title="网盘资源"
-        subtitle="精选资源 · 百度 / 夸克网盘免费分享"
-        aria="网盘资源"
-      />
+    <PageHero
+      icon='<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/>'
+      title="网盘资源"
+      subtitle="精选资源 · 百度 / 夸克网盘免费分享"
+      aria="网盘资源"
+    />
 
-      <!-- 信任徽章 -->
-      <div class="trust-bar" role="list" aria-label="服务保障">
-        <span class="trust-item" role="listitem">✓ 正规渠道</span>
-        <span class="trust-item" role="listitem">✓ 安全可靠</span>
-        <span class="trust-item" role="listitem">✓ 持续更新</span>
+    <!-- 信任徽章 -->
+    <div class="trust-bar" role="list" aria-label="服务保障">
+      <span class="trust-item" role="listitem">✓ 正规渠道</span>
+      <span class="trust-item" role="listitem">✓ 安全可靠</span>
+      <span class="trust-item" role="listitem">✓ 持续更新</span>
+    </div>
+
+    <div class="card">
+      <div class="section-header">
+        <span>网盘资源</span>
+        <span class="text-muted"> 共 {{ resources.length }} 个资源 </span>
       </div>
 
-      <div class="card">
-        <div class="section-header">
-          <span>网盘资源</span>
-          <span class="text-muted">
-            共 {{ resources.length }} 个资源
-          </span>
-        </div>
-
-        <div class="grid-3">
-          <div v-for="resource in resources" :key="resource.id" class="grid-item">
-            <div class="resource-card card hoverable">
-              <div class="card-top" :style="{ background: getResourceColor(resource.url) }"></div>
-              <div class="card-body">
-                <div class="card-header">
-                  <div class="platform-icon">
-                    <span v-html="getResourceIcon(resource.url)"></span>
-                  </div>
-                  <div class="resource-info">
-                    <span class="resource-name">{{ resource.name }}</span>
-                  </div>
-                  <span :class="['tag', 'tag-' + getPlatformType(resource.url)]">
-                    {{ getPlatformName(resource.url) }}
-                  </span>
+      <div class="grid-3">
+        <div v-for="resource in resources" :key="resource.id" class="grid-item">
+          <div class="resource-card card hoverable">
+            <div class="card-top" :style="{ background: getResourceColor(resource.url) }"></div>
+            <div class="card-body">
+              <div class="card-header">
+                <div class="platform-icon">
+                  <span v-html="getResourceIcon(resource.url)"></span>
                 </div>
-                <div class="card-actions">
-                  <a
-                    class="btn btn-primary btn-block"
-                    :href="resource.url"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    ↗ 前往访问
-                  </a>
-                  <button class="btn btn-block" @click="showQR(resource)">
-                    ⊞ 扫码
-                  </button>
+                <div class="resource-info">
+                  <span class="resource-name">{{ resource.name }}</span>
                 </div>
+                <span :class="['tag', 'tag-' + getPlatformType(resource.url)]">
+                  {{ getPlatformName(resource.url) }}
+                </span>
+              </div>
+              <div class="card-actions">
+                <a class="btn btn-primary btn-block" :href="resource.url" target="_blank" rel="noopener">
+                  ↗ 前往访问
+                </a>
+                <button class="btn btn-block" @click="showQR(resource)">⊞ 扫码</button>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <LegalLinks />
-      <QrModal
-        :visible="showQr"
-        :url="qrResource?.url || ''"
-        :title="qrResource?.name || ''"
-        @close="closeQrModal"
-      />
-      <BackToTop />
+    <LegalLinks />
+    <QrModal :visible="showQr" :url="qrResource?.url || ''" :title="qrResource?.name || ''" @close="closeQrModal" />
+    <BackToTop />
   </main>
 </template>
 
@@ -140,8 +126,9 @@ function closeQrModal() {
 }
 
 .card.hoverable {
-  transition: transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  transition:
+    transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .card.hoverable:hover {
@@ -217,17 +204,20 @@ function closeQrModal() {
   white-space: nowrap;
   background: var(--card-bg, #fff);
   color: var(--text-color, #374151);
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
 }
 
 .btn:hover {
-  border-color: var(--primary-color, #FF6B35);
+  border-color: var(--primary-color, #ff6b35);
 }
 
 .btn-primary {
-  background: var(--primary-color, #FF6B35);
+  background: var(--primary-color, #ff6b35);
   color: #fff;
-  border-color: var(--primary-color, #FF6B35);
+  border-color: var(--primary-color, #ff6b35);
 }
 
 .btn-primary:hover {
@@ -264,7 +254,7 @@ function closeQrModal() {
 }
 
 .resource-card:hover {
-  border-color: var(--primary-color, #FF6B35);
+  border-color: var(--primary-color, #ff6b35);
   box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
 }
 
@@ -292,7 +282,7 @@ function closeQrModal() {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary-color, #FF6B35);
+  color: var(--primary-color, #ff6b35);
 }
 
 .resource-info {

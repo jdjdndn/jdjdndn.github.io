@@ -3,8 +3,8 @@ export default function cacheControlMetaPlugin() {
   return {
     name: 'cache-control-meta',
     transformIndexHtml(html) {
-      const meta = '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />';
-      return html.replace('<head>', `<head>\n    ${meta}`);
+      const meta = '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />'
+      return html.replace('<head>', `<head>\n    ${meta}`)
     },
-  };
+  }
 }

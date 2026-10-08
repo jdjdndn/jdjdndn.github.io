@@ -1,0 +1,12 @@
+dist/
+node_modules/
+vendor/
+src/article/
+src/templates/
+public/
+.playwright-mcp/
+api-data/
+api-docs/
+data/
+.codeartsdoer/
+package-lock.json

@@ -1,10 +1,6 @@
 <template>
   <div class="skeleton-grid">
-    <SkeletonCard
-      v-for="(_, index) in count"
-      :key="index"
-      :type="getCardType(index)"
-    />
+    <SkeletonCard v-for="(_, index) in count" :key="index" :type="getCardType(index)" />
   </div>
 </template>
 
@@ -14,13 +10,13 @@ import SkeletonCard from './SkeletonCard.vue'
 const props = defineProps({
   count: {
     type: Number,
-    default: 6
+    default: 6,
   },
   type: {
     type: String,
     default: 'mixed',
-    validator: (v) => ['mixed', 'code', 'link', 'jingxuan'].includes(v)
-  }
+    validator: (v) => ['mixed', 'code', 'link', 'jingxuan'].includes(v),
+  },
 })
 
 const getCardType = (index) => {

@@ -1,13 +1,17 @@
 <template>
   <Transition name="fade">
-    <button
-      v-show="visible"
-      class="back-to-top"
-      aria-label="回到顶部"
-      @click="scrollToTop"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
+    <button v-show="visible" class="back-to-top" aria-label="回到顶部" @click="scrollToTop">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="18 15 12 9 6 15" />
       </svg>
     </button>
   </Transition>
@@ -43,7 +47,7 @@ onUnmounted(() => {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   border: none;
   cursor: pointer;
@@ -63,7 +67,9 @@ onUnmounted(() => {
 /* 过渡动画 */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .fade-enter-from,
@@ -73,7 +79,7 @@ onUnmounted(() => {
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .back-to-top {
+[data-theme='dark'] .back-to-top {
   background: var(--primary-dark, #e55a2b);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }

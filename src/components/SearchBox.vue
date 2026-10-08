@@ -14,12 +14,7 @@
         @blur="handleBlur"
         @input="handleInput"
       />
-      <button
-        v-if="searchQuery"
-        class="search-clear"
-        aria-label="清除搜索"
-        @click="clearSearch"
-      >
+      <button v-if="searchQuery" class="search-clear" aria-label="清除搜索" @click="clearSearch">
         <SvgIcon name="close" :size="16" />
       </button>
     </div>
@@ -31,12 +26,7 @@
           <span>最近搜索</span>
           <button class="search-history-clear" @click="clearHistory">清除</button>
         </div>
-        <div
-          v-for="item in searchHistory"
-          :key="item"
-          class="search-history-item"
-          @click="selectHistory(item)"
-        >
+        <div v-for="item in searchHistory" :key="item" class="search-history-item" @click="selectHistory(item)">
           <SvgIcon name="stats_expired" :size="14" />
           {{ item }}
         </div>
@@ -44,9 +34,7 @@
     </Transition>
 
     <!-- 搜索结果统计 -->
-    <div v-if="searchQuery && resultCount >= 0" class="search-count">
-      找到 {{ resultCount }} 个匹配结果
-    </div>
+    <div v-if="searchQuery && resultCount >= 0" class="search-count">找到 {{ resultCount }} 个匹配结果</div>
   </div>
 </template>
 
@@ -58,16 +46,16 @@ import { debounce } from '../composables/useUtils'
 const props = defineProps({
   placeholder: {
     type: String,
-    default: '搜索优惠...'
+    default: '搜索优惠...',
   },
   modelValue: {
     type: String,
-    default: ''
+    default: '',
   },
   resultCount: {
     type: Number,
-    default: -1
-  }
+    default: -1,
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'search', 'clear'])
@@ -90,7 +78,7 @@ const loadHistory = () => {
 // 保存搜索历史
 const saveHistory = (query) => {
   if (!query.trim()) return
-  const history = searchHistory.value.filter(h => h !== query)
+  const history = searchHistory.value.filter((h) => h !== query)
   history.unshift(query)
   if (history.length > 5) history.length = 5
   localStorage.setItem('searchHistory', JSON.stringify(history))
@@ -149,14 +137,17 @@ const clearSearch = () => {
 }
 
 // 监听外部值变化
-watch(() => props.modelValue, (val) => {
-  searchQuery.value = val
-})
+watch(
+  () => props.modelValue,
+  (val) => {
+    searchQuery.value = val
+  }
+)
 
 // 暴露 focus 方法
 defineExpose({
   focus: () => inputRef.value?.focus(),
-  blur: () => inputRef.value?.blur()
+  blur: () => inputRef.value?.blur(),
 })
 </script>
 
@@ -193,7 +184,7 @@ defineExpose({
 
 .search-input:focus {
   outline: none;
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
@@ -246,7 +237,7 @@ defineExpose({
 .search-history-clear {
   border: none;
   background: transparent;
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   cursor: pointer;
   font-size: 12px;
 }
@@ -275,7 +266,9 @@ defineExpose({
 /* 下拉动画 */
 .dropdown-enter-active,
 .dropdown-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .dropdown-enter-from,
@@ -285,13 +278,13 @@ defineExpose({
 }
 
 /* 暗色模式 */
-[data-theme="dark"] .search-input {
+[data-theme='dark'] .search-input {
   background: rgba(31, 41, 55, 0.5);
   border-color: rgba(75, 85, 99, 0.5);
   color: #f3f4f6;
 }
 
-[data-theme="dark"] .search-history {
+[data-theme='dark'] .search-history {
   background: rgba(31, 41, 55, 0.95);
   border-color: rgba(75, 85, 99, 0.5);
 }

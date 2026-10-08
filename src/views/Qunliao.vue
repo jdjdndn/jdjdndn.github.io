@@ -27,7 +27,12 @@
 
     <!-- 群卡片 -->
     <div class="group-grid">
-      <div v-for="group in filteredGroups" :key="group.name" class="group-card" :class="{ disabled: group.disabled, 'has-qr': group.qr }">
+      <div
+        v-for="group in filteredGroups"
+        :key="group.name"
+        class="group-card"
+        :class="{ disabled: group.disabled, 'has-qr': group.qr }"
+      >
         <div class="group-icon">{{ group.icon }}</div>
         <div class="group-info">
           <div class="group-name">{{ group.name }}</div>
@@ -54,7 +59,9 @@
         </details>
         <details class="faq-item">
           <summary class="faq-question">如何加入群聊？</summary>
-          <div class="faq-answer">网购优惠群已开放：在页面上找到「网购优惠群」卡片，微信扫描卡片中的二维码即可入群。二维码7天内有效，过期后刷新页面会自动更新。其余群聊正在筹备中，开放后会同步在页面展示。</div>
+          <div class="faq-answer">
+            网购优惠群已开放：在页面上找到「网购优惠群」卡片，微信扫描卡片中的二维码即可入群。二维码7天内有效，过期后刷新页面会自动更新。其余群聊正在筹备中，开放后会同步在页面展示。
+          </div>
         </details>
         <details class="faq-item">
           <summary class="faq-question">群聊里可以发广告吗？</summary>
@@ -82,42 +89,40 @@ const groups = [
     desc: '每日好价推送 · 购物优惠分享',
     icon: '🛒',
     tag: '扫码加入',
-    qr: './qunliao-qr.jpg'
+    qr: './qunliao-qr.jpg',
   },
   {
     name: '项目交流群',
     desc: '号卡代理 · 现状交流 · 筹备中',
     icon: '📈',
     tag: '筹备中',
-    disabled: true
+    disabled: true,
   },
   {
     name: '好物分享群',
     desc: '每日好物推荐 · 亲测优惠 · 筹备中',
     icon: '📦',
     tag: '筹备中',
-    disabled: true
+    disabled: true,
   },
   {
     name: '会员福利交流群',
     desc: '影视/音乐会员优惠分享 · 筹备中',
     icon: '👑',
     tag: '筹备中',
-    disabled: true
-  }
+    disabled: true,
+  },
 ]
 
 const filteredGroups = computed(() => {
   if (!searchQuery.value) return groups
   const q = searchQuery.value.toLowerCase()
-  return groups.filter(g =>
-    g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q)
-  )
+  return groups.filter((g) => g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q))
 })
 </script>
 
 <style scoped>
-.qunliao-page{
+.qunliao-page {
   width: 100%;
 }
 .q-search-wrap {
@@ -138,7 +143,7 @@ const filteredGroups = computed(() => {
 }
 
 .q-search-bar:focus-within {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
 }
 
 .q-search-icon {
@@ -241,13 +246,13 @@ const filteredGroups = computed(() => {
   line-height: 1.5;
 }
 
-[data-theme="dark"] .group-qr {
+[data-theme='dark'] .group-qr {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
 
 .group-card:not(.disabled):hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
 }
 
@@ -344,13 +349,15 @@ const filteredGroups = computed(() => {
   justify-content: space-between;
   gap: 12px;
   color: var(--text, #1a1a2e);
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
   border-radius: 8px;
   margin: 2px 8px;
 }
 
 .q-faq .faq-question:hover {
-  color: var(--primary, #FF6B35);
+  color: var(--primary, #ff6b35);
   background: var(--hover-bg, #f5f4f1);
 }
 
@@ -377,45 +384,45 @@ const filteredGroups = computed(() => {
   line-height: 1.7;
 }
 
-[data-theme="dark"] .q-search-bar,
-[data-theme="dark"] .group-card {
+[data-theme='dark'] .q-search-bar,
+[data-theme='dark'] .group-card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .tag-success {
+[data-theme='dark'] .tag-success {
   background: var(--success-bg, #0d3320);
   color: var(--success, #4ade80);
 }
 
-[data-theme="dark"] .tag-info {
+[data-theme='dark'] .tag-info {
   background: var(--info-bg, #0d1f3c);
   color: var(--info, #60a5fa);
 }
 
-[data-theme="dark"] .tag-default {
+[data-theme='dark'] .tag-default {
   background: var(--muted-bg, #2d2d45);
   color: var(--muted, #a0aec0);
 }
 
-[data-theme="dark"] .q-faq .faq-list {
+[data-theme='dark'] .q-faq .faq-list {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .q-faq .faq-item {
+[data-theme='dark'] .q-faq .faq-item {
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .q-faq .faq-question:hover {
+[data-theme='dark'] .q-faq .faq-question:hover {
   background: rgba(255, 107, 53, 0.08);
 }
 
-[data-theme="dark"] .q-faq .faq-question::after {
+[data-theme='dark'] .q-faq .faq-question::after {
   color: var(--muted, #707088);
 }
 
-[data-theme="dark"] .f-note {
+[data-theme='dark'] .f-note {
   color: var(--text-secondary, #a0aec0);
 }
 </style>

@@ -13,11 +13,11 @@
  *   --dry-run  仅报告，不写入文件
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
-const SRC_DIR = path.resolve(__dirname, '../src');
-const DRY_RUN = process.argv.includes('--dry-run');
+const SRC_DIR = path.resolve(__dirname, '../src')
+const DRY_RUN = process.argv.includes('--dry-run')
 
 // ========== 子页面配置 ==========
 // 每个子页面的 speakable 内容和 FAQ 数据
@@ -86,19 +86,19 @@ const PAGE_CONFIG = {
     speakableSelectors: ['.about-hero h1', '.about-hero p'],
     faq: [],
   },
-};
+}
 
 // ========== 工具函数 ==========
 
 function read(filePath) {
-  return fs.readFileSync(filePath, 'utf-8');
+  return fs.readFileSync(filePath, 'utf-8')
 }
 
 function write(filePath, content) {
   if (DRY_RUN) {
-    console.log(`  [dry-run] 将写入 ${path.basename(filePath)}`);
+    console.log(`  [dry-run] 将写入 ${path.basename(filePath)}`)
   } else {
-    fs.writeFileSync(filePath, content, 'utf-8');
+    fs.writeFileSync(filePath, content, 'utf-8')
   }
 }
 
@@ -109,62 +109,58 @@ function write(filePath, content) {
  */
 function injectBeforeHeadClose(html, snippet, label) {
   if (html.includes(snippet)) {
-    console.log(`  ⏭  ${label} — 已存在，跳过`);
-    return html;
+    console.log(`  ⏭  ${label} — 已存在，跳过`)
+    return html
   }
-  console.log(`  ✅ ${label}`);
-  return html.replace('</head>', `\n    ${snippet}\n  </head>`);
+  console.log(`  ✅ ${label}`)
+  return html.replace('</head>', `\n    ${snippet}\n  </head>`)
 }
 
 /**
  * 在现有 JSON-LD 块之后注入新的 JSON-LD
  */
 function injectJsonLd(html, jsonData, label) {
-  const jsonStr = JSON.stringify(jsonData, null, 4);
-  const script = `\n    <script type="application/ld+json">\n    ${jsonStr}\n    </script>`;
+  const jsonStr = JSON.stringify(jsonData, null, 4)
+  const script = `\n    <script type="application/ld+json">\n    ${jsonStr}\n    </script>`
   if (html.includes(`"@type": "${jsonData['@type']}"`)) {
-    console.log(`  ⏭  ${label} — 已存在，跳过`);
-    return html;
+    console.log(`  ⏭  ${label} — 已存在，跳过`)
+    return html
   }
   // 在最后一个 </script> 之后插入
-  const lastScriptClose = html.lastIndexOf('</script>');
-  if (lastScriptClose === -1) return html;
-  const insertAt = html.indexOf('\n', lastScriptClose) + 1;
-  console.log(`  ✅ ${label}`);
-  return html.slice(0, insertAt) + script + html.slice(insertAt);
+  const lastScriptClose = html.lastIndexOf('</script>')
+  if (lastScriptClose === -1) return html
+  const insertAt = html.indexOf('\n', lastScriptClose) + 1
+  console.log(`  ✅ ${label}`)
+  return html.slice(0, insertAt) + script + html.slice(insertAt)
 }
 
 // ========== 主处理 ==========
 
 function processPage(fileName) {
-  const filePath = path.join(SRC_DIR, fileName);
+  const filePath = path.join(SRC_DIR, fileName)
   if (!fs.existsSync(filePath)) {
-    console.log(`  ⚠️  ${fileName} 不存在，跳过`);
-    return;
+    console.log(`  ⚠️  ${fileName} 不存在，跳过`)
+    return
   }
 
-  const config = PAGE_CONFIG[fileName];
+  const config = PAGE_CONFIG[fileName]
   if (!config) {
-    console.log(`  ⚠️  ${fileName} 无配置，跳过`);
-    return;
+    console.log(`  ⚠️  ${fileName} 无配置，跳过`)
+    return
   }
 
-  let html = read(filePath);
-  const slug = fileName.replace('.html', '');
-  const siteUrl = 'https://jdjdndn.github.io';
+  let html = read(filePath)
+  const slug = fileName.replace('.html', '')
+  const siteUrl = 'https://jdjdndn.github.io'
 
-  console.log(`\n── ${fileName} ──`);
+  console.log(`\n── ${fileName} ──`)
 
   // 1. 注入 notranslate meta
-  html = injectBeforeHeadClose(
-    html,
-    '<meta name="google" content="notranslate" />',
-    'notranslate meta',
-  );
+  html = injectBeforeHeadClose(html, '<meta name="google" content="notranslate" />', 'notranslate meta')
 
   // 2. 注入 llms.txt 链接
-  const llmsLink = `<link rel="alternate" type="text/plain" href="${siteUrl}/llms.txt" title="站点摘要（供 AI 阅读）" />`;
-  html = injectBeforeHeadClose(html, llmsLink, 'llms.txt link');
+  const llmsLink = `<link rel="alternate" type="text/plain" href="${siteUrl}/llms.txt" title="站点摘要（供 AI 阅读）" />`
+  html = injectBeforeHeadClose(html, llmsLink, 'llms.txt link')
 
   // 3. 注入 speakable JSON-LD
   if (config.speakableSelectors.length > 0) {
@@ -176,8 +172,8 @@ function processPage(fileName) {
         '@type': 'SpeakableSpecification',
         cssSelector: config.speakableSelectors,
       },
-    };
-    html = injectJsonLd(html, speakable, 'speakable JSON-LD');
+    }
+    html = injectJsonLd(html, speakable, 'speakable JSON-LD')
   }
 
   // 4. 注入 BreadcrumbList（如缺失）
@@ -195,14 +191,18 @@ function processPage(fileName) {
         {
           '@type': 'ListItem',
           position: 2,
-          name: config.faq.length > 0
-            ? html.match(/<title>([^<]+)<\/title>/)?.[1]?.split('—')[0]?.trim() || fileName
-            : fileName.replace('.html', ''),
+          name:
+            config.faq.length > 0
+              ? html
+                  .match(/<title>([^<]+)<\/title>/)?.[1]
+                  ?.split('—')[0]
+                  ?.trim() || fileName
+              : fileName.replace('.html', ''),
           item: `${siteUrl}/${fileName}`,
         },
       ],
-    };
-    html = injectJsonLd(html, breadcrumb, 'BreadcrumbList JSON-LD');
+    }
+    html = injectJsonLd(html, breadcrumb, 'BreadcrumbList JSON-LD')
   }
 
   // 5. 注入 FAQPage JSON-LD（如有 FAQ 数据）
@@ -218,25 +218,25 @@ function processPage(fileName) {
           text: item.a,
         },
       })),
-    };
-    html = injectJsonLd(html, faq, 'FAQPage JSON-LD');
+    }
+    html = injectJsonLd(html, faq, 'FAQPage JSON-LD')
   }
 
-  write(filePath, html);
+  write(filePath, html)
 }
 
 // ========== 主流程 ==========
 
 function main() {
-  console.log('🔧 SEO/GEO 增强脚本');
-  console.log(`   模式: ${DRY_RUN ? 'dry-run（仅报告）' : '写入'}`);
-  console.log('');
+  console.log('🔧 SEO/GEO 增强脚本')
+  console.log(`   模式: ${DRY_RUN ? 'dry-run（仅报告）' : '写入'}`)
+  console.log('')
 
   for (const fileName of Object.keys(PAGE_CONFIG)) {
-    processPage(fileName);
+    processPage(fileName)
   }
 
-  console.log('\n✅ 完成');
+  console.log('\n✅ 完成')
 }
 
-main();
+main()

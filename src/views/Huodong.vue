@@ -1,70 +1,58 @@
 <template>
   <main class="huodong-page">
-      <PageHero
-        icon='<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
-        title="券宝"
-        subtitle="全网热门活动 · 天天领红包"
-        aria="券宝"
-      />
+    <PageHero
+      icon='<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
+      title="券宝"
+      subtitle="全网热门活动 · 天天领红包"
+      aria="券宝"
+    />
 
-      <div class="card">
-        <div class="filter-header">
-          <span>活动筛选</span>
-          <div class="space-h">
-            <div class="search-input-wrapper">
-              <span class="search-prefix">🔍</span>
-              <input
-                v-model="searchQuery"
-                type="text"
-                class="search-input"
-                placeholder="搜索活动..."
-              />
-              <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''">✕</button>
-            </div>
-            <select
-              v-model="selectedCategory"
-              class="select-input"
-            >
-              <option value="">全部分类</option>
-              <option v-for="opt in categoryOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-            </select>
+    <div class="card">
+      <div class="filter-header">
+        <span>活动筛选</span>
+        <div class="space-h">
+          <div class="search-input-wrapper">
+            <span class="search-prefix">🔍</span>
+            <input v-model="searchQuery" type="text" class="search-input" placeholder="搜索活动..." />
+            <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''">✕</button>
           </div>
-        </div>
-
-        <div class="grid-3">
-          <div v-for="activity in filteredActivities" :key="activity.id" class="grid-item">
-            <div class="card hoverable">
-              <div class="card-header">
-                <div class="activity-header">
-                  <span class="activity-icon">{{ activity.icon }}</span>
-                  <span>{{ activity.name }}</span>
-                </div>
-                <span :class="['tag', 'tag-' + (activity.tagType || 'default')]">
-                  {{ activity.tag }}
-                </span>
-              </div>
-              <p class="activity-desc">{{ activity.desc }}</p>
-              <div class="space-v">
-                <span class="text-muted">
-                  活动时间：{{ activity.time }}
-                </span>
-              </div>
-              <div class="card-action">
-                <button class="btn btn-primary btn-block" @click="handleJoin(activity)">
-                  立即参与
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="filteredActivities.length === 0" class="empty-state">
-          <p>没有找到相关活动</p>
+          <select v-model="selectedCategory" class="select-input">
+            <option value="">全部分类</option>
+            <option v-for="opt in categoryOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
+          </select>
         </div>
       </div>
 
-      <LegalLinks />
-      <BackToTop />
+      <div class="grid-3">
+        <div v-for="activity in filteredActivities" :key="activity.id" class="grid-item">
+          <div class="card hoverable">
+            <div class="card-header">
+              <div class="activity-header">
+                <span class="activity-icon">{{ activity.icon }}</span>
+                <span>{{ activity.name }}</span>
+              </div>
+              <span :class="['tag', 'tag-' + (activity.tagType || 'default')]">
+                {{ activity.tag }}
+              </span>
+            </div>
+            <p class="activity-desc">{{ activity.desc }}</p>
+            <div class="space-v">
+              <span class="text-muted"> 活动时间：{{ activity.time }} </span>
+            </div>
+            <div class="card-action">
+              <button class="btn btn-primary btn-block" @click="handleJoin(activity)">立即参与</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="filteredActivities.length === 0" class="empty-state">
+        <p>没有找到相关活动</p>
+      </div>
+    </div>
+
+    <LegalLinks />
+    <BackToTop />
   </main>
 </template>
 
@@ -84,18 +72,16 @@ const categoryOptions = [
   { label: '外卖', value: 'food' },
   { label: '购物', value: 'shopping' },
   { label: '出行', value: 'travel' },
-  { label: '娱乐', value: 'entertainment' }
+  { label: '娱乐', value: 'entertainment' },
 ]
 
 const activities = ref(featuredActivities)
 
 const filteredActivities = computed(() => {
-  return activities.value.filter(activity => {
-    const matchSearch = !searchQuery.value ||
-      activity.name.includes(searchQuery.value) ||
-      activity.desc.includes(searchQuery.value)
-    const matchCategory = !selectedCategory.value ||
-      activity.category === selectedCategory.value
+  return activities.value.filter((activity) => {
+    const matchSearch =
+      !searchQuery.value || activity.name.includes(searchQuery.value) || activity.desc.includes(searchQuery.value)
+    const matchCategory = !selectedCategory.value || activity.category === selectedCategory.value
     return matchSearch && matchCategory
   })
 })
@@ -141,7 +127,9 @@ function handleJoin(activity) {
 }
 
 .card.hoverable {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -247,7 +235,7 @@ function handleJoin(activity) {
 }
 
 .select-input:focus {
-  border-color: var(--primary-color, #FF6B35);
+  border-color: var(--primary-color, #ff6b35);
   box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
@@ -322,7 +310,9 @@ function handleJoin(activity) {
   font-weight: 500;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease, opacity 0.2s ease;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .btn:hover {
@@ -330,12 +320,12 @@ function handleJoin(activity) {
 }
 
 .btn-primary {
-  background: var(--primary-color, #FF6B35);
+  background: var(--primary-color, #ff6b35);
   color: #fff;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover, #E55A2B);
+  background: var(--primary-hover, #e55a2b);
 }
 
 .btn-block {

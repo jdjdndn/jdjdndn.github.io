@@ -33,7 +33,7 @@ import BackToTop from './BackToTop.vue'
 const props = defineProps({
   iframeSrc: { type: String, required: true },
   title: { type: String, default: '优惠内容' },
-  showBackToTop: { type: Boolean, default: true }
+  showBackToTop: { type: Boolean, default: true },
 })
 
 const iframeRef = ref(null)
@@ -93,7 +93,11 @@ function retryLoad() {
   height: 100vh;
 }
 @media (max-width: 1023px) {
-  .iframe-container { height: calc(100vh - 50px); padding: 0; max-width: none; }
+  .iframe-container {
+    height: calc(100vh - 50px);
+    padding: 0;
+    max-width: none;
+  }
 }
 
 .iframe-content {
@@ -122,13 +126,15 @@ function retryLoad() {
   width: 32px;
   height: 32px;
   border: 3px solid var(--border, #e5e2dd);
-  border-top-color: var(--primary, #FF6B35);
+  border-top-color: var(--primary, #ff6b35);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .iframe-loading p,
@@ -139,7 +145,7 @@ function retryLoad() {
 
 .retry-btn {
   padding: 8px 20px;
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: white;
   border: none;
   border-radius: 8px;
@@ -149,15 +155,15 @@ function retryLoad() {
 }
 
 .retry-btn:hover {
-  background: var(--primary-hover, #E55A2B);
+  background: var(--primary-hover, #e55a2b);
 }
 
-[data-theme="dark"] .iframe-content {
+[data-theme='dark'] .iframe-content {
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .iframe-loading,
-[data-theme="dark"] .iframe-error {
+[data-theme='dark'] .iframe-loading,
+[data-theme='dark'] .iframe-error {
   background: var(--card, #1a1a2e);
 }
 </style>

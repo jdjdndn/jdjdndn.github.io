@@ -52,6 +52,6 @@ export function usePagination(listRef, options = {}) {
     pagedList,
     displayPages,
     goToPage,
-    resetPage
+    resetPage,
   }
 }

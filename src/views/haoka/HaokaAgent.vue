@@ -21,7 +21,14 @@
         <span class="agent-tag">推广素材</span>
       </div>
       <div class="agent-grid">
-        <a v-for="proxy in haokaProxyLinks" :key="proxy.name" class="btn btn-primary btn-block" :href="proxy.url" target="_blank" rel="noopener sponsored">
+        <a
+          v-for="proxy in haokaProxyLinks"
+          :key="proxy.name"
+          class="btn btn-primary btn-block"
+          :href="proxy.url"
+          target="_blank"
+          rel="noopener sponsored"
+        >
           {{ proxy.name }}
         </a>
       </div>
@@ -47,7 +54,12 @@
     <section class="agent-process">
       <h2 class="seo-title">代理流程</h2>
       <div class="steps">
-        <div v-for="(step, i) in processSteps" :key="i" class="step" :class="{ active: currentStep > i, success: currentStep === 4 }">
+        <div
+          v-for="(step, i) in processSteps"
+          :key="i"
+          class="step"
+          :class="{ active: currentStep > i, success: currentStep === 4 }"
+        >
           <div class="step-indicator">{{ currentStep > i ? '✓' : i + 1 }}</div>
           <div class="step-content">
             <div class="step-title">{{ step.title }}</div>
@@ -97,28 +109,28 @@ const currentStep = ref(1)
 const formData = ref({
   name: '',
   phone: '',
-  channel: null
+  channel: null,
 })
 
 const channelOptions = [
   { label: '社交媒体', value: 'social' },
   { label: '电商平台', value: 'ecommerce' },
   { label: '线下推广', value: 'offline' },
-  { label: '其他', value: 'other' }
+  { label: '其他', value: 'other' },
 ]
 
 const processSteps = [
   { title: '注册账号', desc: '填写基本信息，完成注册' },
   { title: '获取推广链接', desc: '系统自动生成专属推广链接' },
   { title: '开始推广', desc: '分享链接，邀请用户办卡' },
-  { title: '获得佣金', desc: '用户成功办卡，佣金到账' }
+  { title: '获得佣金', desc: '用户成功办卡，佣金到账' },
 ]
 
 const advantages = ref([
   { id: 1, icon: '💰', title: '高佣金', desc: '佣金比例高达50%+，月入过万不是梦' },
   { id: 2, icon: '📦', title: '一件代发', desc: '无需囤货，用户下单直接发货' },
   { id: 3, icon: '📚', title: '专业培训', desc: '提供完整的推广培训和素材' },
-  { id: 4, icon: '🛡️', title: '持续售后', desc: '专业客服团队，解决用户问题' }
+  { id: 4, icon: '🛡️', title: '持续售后', desc: '专业客服团队，解决用户问题' },
 ])
 
 function handleSubmit() {
@@ -132,7 +144,7 @@ function handleSubmit() {
 </script>
 
 <style scoped>
-.haoka-agent-page{
+.haoka-agent-page {
   width: 100%;
 }
 .agent-section {
@@ -151,7 +163,11 @@ function handleSubmit() {
   margin-bottom: 16px;
 }
 
-.agent-desc { font-size: 14px; color: var(--text-secondary, #6b7280); margin-bottom: 16px; }
+.agent-desc {
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 16px;
+}
 
 .agent-tags {
   display: flex;
@@ -163,8 +179,8 @@ function handleSubmit() {
 
 .agent-tag {
   padding: 6px 14px;
-  background: var(--primary-light, #FFF4ED);
-  color: var(--primary, #FF6B35);
+  background: var(--primary-light, #fff4ed);
+  color: var(--primary, #ff6b35);
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
@@ -184,7 +200,7 @@ function handleSubmit() {
 }
 
 .card.hoverable:hover {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.1);
 }
 
@@ -259,7 +275,7 @@ function handleSubmit() {
 }
 
 .step.active .step-indicator {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: #fff;
 }
 
@@ -317,7 +333,7 @@ function handleSubmit() {
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: var(--primary, #FF6B35);
+  border-color: var(--primary, #ff6b35);
 }
 
 .form-group input::placeholder {
@@ -339,7 +355,7 @@ function handleSubmit() {
 }
 
 .btn-primary {
-  background: var(--primary, #FF6B35);
+  background: var(--primary, #ff6b35);
   color: #fff;
 }
 
@@ -352,23 +368,23 @@ function handleSubmit() {
   width: 100%;
 }
 
-[data-theme="dark"] .agent-section {
+[data-theme='dark'] .agent-section {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .card {
+[data-theme='dark'] .card {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .step-indicator {
+[data-theme='dark'] .step-indicator {
   background: var(--muted-bg, #2d2d45);
   color: var(--muted, #a0aec0);
 }
 
-[data-theme="dark"] .form-group input,
-[data-theme="dark"] .form-group select {
+[data-theme='dark'] .form-group input,
+[data-theme='dark'] .form-group select {
   background: var(--card, #1e1e35);
   border-color: var(--border, #2d2d45);
   color: var(--text, #e5e2dd);

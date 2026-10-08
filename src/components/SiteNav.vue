@@ -1,10 +1,6 @@
 <template>
   <!-- 侧边栏导航（桌面端） -->
-  <nav
-    v-if="position === 'side'"
-    class="site-nav-side"
-    aria-label="页面导航"
-  >
+  <nav v-if="position === 'side'" class="site-nav-side" aria-label="页面导航">
     <ul class="nav-list">
       <li v-for="item in navItems" :key="item.path">
         <router-link
@@ -12,7 +8,15 @@
           :class="['nav-link', { active: isActive(item) }]"
           :aria-current="isActive(item) ? 'page' : undefined"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="item.icon"></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            v-html="item.icon"
+          ></svg>
           <span>{{ item.label }}</span>
         </router-link>
       </li>
@@ -20,11 +24,7 @@
   </nav>
 
   <!-- 底部导航（移动端） -->
-  <footer
-    v-if="position === 'footer'"
-    class="site-nav-footer"
-    aria-label="页面导航"
-  >
+  <footer v-if="position === 'footer'" class="site-nav-footer" aria-label="页面导航">
     <ul class="nav-list">
       <li v-for="item in navItems" :key="item.path">
         <router-link
@@ -32,7 +32,15 @@
           :class="['nav-link', { active: isActive(item) }]"
           :aria-current="isActive(item) ? 'page' : undefined"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="item.icon"></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            v-html="item.icon"
+          ></svg>
           <span>{{ item.label }}</span>
         </router-link>
       </li>
@@ -48,8 +56,8 @@ const props = defineProps({
   position: {
     type: String,
     default: 'side',
-    validator: (value) => ['side', 'footer'].includes(value)
-  }
+    validator: (value) => ['side', 'footer'].includes(value),
+  },
 })
 
 const route = useRoute()
@@ -59,43 +67,43 @@ const navItems = [
   {
     path: '/',
     label: '活动',
-    icon: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>'
+    icon: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
   },
   {
     path: '/waimai.html',
     label: '外卖',
-    icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'
+    icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
   },
   {
     path: '/haoka.html',
     label: '号卡',
-    icon: '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>'
+    icon: '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
   },
   {
     path: '/wifi.html',
     label: 'WiFi',
-    icon: '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>'
+    icon: '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>',
   },
   {
     path: '/huiyuan.html',
     label: '会员',
-    icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>'
+    icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>',
   },
   {
     path: '/fuye.html',
     label: '项目',
-    icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'
+    icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
   },
   {
     path: '/qunliao.html',
     label: '群聊',
-    icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
+    icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
   },
   {
     path: '/about.html',
     label: '关于',
-    icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
-  }
+    icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+  },
 ]
 
 // 判断是否为当前页面
@@ -131,8 +139,12 @@ function isActive(item) {
   }
 
   @keyframes navReveal {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
@@ -182,13 +194,13 @@ function isActive(item) {
 }
 
 .site-nav-footer .nav-link.active {
-  color: var(--nav-primary, #FF6B35);
+  color: var(--nav-primary, #ff6b35);
   font-weight: 600;
 }
 
 .site-nav-footer .nav-link.active :deep(svg) {
-  stroke: var(--nav-primary, #FF6B35);
-  fill: var(--nav-primary-light, #FFF4ED);
+  stroke: var(--nav-primary, #ff6b35);
+  fill: var(--nav-primary-light, #fff4ed);
 }
 
 .site-nav-footer .nav-link:hover:not(.active) {
@@ -202,8 +214,13 @@ function isActive(item) {
     border-top: 1px solid var(--nav-border, #e5e2dd);
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   }
-  .site-nav-footer .nav-link { font-size: 9px; }
-  .site-nav-footer .nav-link :deep(svg) { width: 20px; height: 20px; }
+  .site-nav-footer .nav-link {
+    font-size: 9px;
+  }
+  .site-nav-footer .nav-link :deep(svg) {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* 平板及以上隐藏底部导航，只显示侧边栏 */
@@ -237,7 +254,9 @@ function isActive(item) {
     padding: 10px 0;
     gap: 4px;
     scrollbar-width: none;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
   }
 }
 
@@ -259,10 +278,14 @@ function isActive(item) {
     padding: 12px 0;
     gap: 4px;
     scrollbar-width: none;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
   }
 
-  .site-nav-side::-webkit-scrollbar { display: none; }
+  .site-nav-side::-webkit-scrollbar {
+    display: none;
+  }
 
   .site-nav-side .nav-list {
     display: flex;
@@ -298,13 +321,13 @@ function isActive(item) {
   }
 
   .site-nav-side .nav-link.active {
-    color: var(--nav-primary, #FF6B35);
-    background: var(--nav-primary-light, #FFF4ED);
+    color: var(--nav-primary, #ff6b35);
+    background: var(--nav-primary-light, #fff4ed);
     font-weight: 600;
   }
 
   .site-nav-side .nav-link.active :deep(svg) {
-    stroke: var(--nav-primary, #FF6B35);
+    stroke: var(--nav-primary, #ff6b35);
   }
 
   .site-nav-side .nav-link:hover:not(.active) {
@@ -314,22 +337,22 @@ function isActive(item) {
 }
 
 /* ====== 暗色模式 ====== */
-[data-theme="dark"] .site-nav-footer {
+[data-theme='dark'] .site-nav-footer {
   background: var(--nav-bg-dark, #1a1a2e);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .site-nav-footer .nav-link.active :deep(svg) {
+[data-theme='dark'] .site-nav-footer .nav-link.active :deep(svg) {
   fill: rgba(255, 107, 53, 0.15);
 }
 
-[data-theme="dark"] .site-nav-side {
+[data-theme='dark'] .site-nav-side {
   background: var(--card, #1a1a2e);
   border-color: var(--border, #2d2d45);
 }
 
-[data-theme="dark"] .site-nav-side .nav-link.active {
+[data-theme='dark'] .site-nav-side .nav-link.active {
   background: rgba(255, 107, 53, 0.1);
-  color: var(--nav-primary, #FF6B35);
+  color: var(--nav-primary, #ff6b35);
 }
 </style>

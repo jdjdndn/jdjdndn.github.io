@@ -1,39 +1,39 @@
 // 同步友情链接数据：从 src/data.js 读取 FRIEND_LINKS_DATA，生成 public/friend-links.js
 // 用法：node scripts/sync-friend-links.cjs
-const fs = require('fs');
-const path = require('path');
-const ROOT = path.resolve(__dirname, '..');
+const fs = require('fs')
+const path = require('path')
+const ROOT = path.resolve(__dirname, '..')
 
 // ========== 从 src/data.js 提取 FRIEND_LINKS_DATA ==========
 function extractFriendLinksData() {
-  const code = fs.readFileSync(path.join(ROOT, 'src/data.js'), 'utf8');
+  const code = fs.readFileSync(path.join(ROOT, 'src/data.js'), 'utf8')
 
   // 找到 FRIEND_LINKS_DATA 的起始和结束位置
-  const startMarker = 'export const FRIEND_LINKS_DATA = [';
-  const startIdx = code.indexOf(startMarker);
+  const startMarker = 'export const FRIEND_LINKS_DATA = ['
+  const startIdx = code.indexOf(startMarker)
   if (startIdx === -1) {
-    throw new Error('在 src/data.js 中未找到 FRIEND_LINKS_DATA');
+    throw new Error('在 src/data.js 中未找到 FRIEND_LINKS_DATA')
   }
 
   // 从 [ 开始找到匹配的 ]
-  let bracketCount = 0;
-  let endIdx = startIdx + startMarker.length - 1; // 指向 [
+  let bracketCount = 0
+  let endIdx = startIdx + startMarker.length - 1 // 指向 [
   for (let i = endIdx; i < code.length; i++) {
-    if (code[i] === '[') bracketCount++;
-    if (code[i] === ']') bracketCount--;
+    if (code[i] === '[') bracketCount++
+    if (code[i] === ']') bracketCount--
     if (bracketCount === 0) {
-      endIdx = i + 1;
-      break;
+      endIdx = i + 1
+      break
     }
   }
 
-  const dataStr = code.slice(startIdx + 'export const '.length, endIdx);
+  const dataStr = code.slice(startIdx + 'export const '.length, endIdx)
   // 去掉 export const FRIEND_LINKS_DATA =
-  const arrayStr = dataStr.replace(/^FRIEND_LINKS_DATA\s*=\s*/, '');
+  const arrayStr = dataStr.replace(/^FRIEND_LINKS_DATA\s*=\s*/, '')
 
   // 用 Function 执行，返回数组
-  const fn = new Function('return ' + arrayStr);
-  return fn();
+  const fn = new Function('return ' + arrayStr)
+  return fn()
 }
 
 // ========== 生成 public/friend-links.js ==========
@@ -204,23 +204,23 @@ class FriendLinks extends HTMLElement {
 }
 
 customElements.define('friend-links', FriendLinks);
-`;
+`
 
-  return header;
+  return header
 }
 
 // ========== 主函数 ==========
 function main() {
   try {
-    const data = extractFriendLinksData();
-    const content = generateFriendLinks(data);
-    const outPath = path.join(ROOT, 'public/friend-links.js');
-    fs.writeFileSync(outPath, content, 'utf8');
-    console.log(`✅ 已生成 public/friend-links.js（${data.length} 个分类）`);
+    const data = extractFriendLinksData()
+    const content = generateFriendLinks(data)
+    const outPath = path.join(ROOT, 'public/friend-links.js')
+    fs.writeFileSync(outPath, content, 'utf8')
+    console.log(`✅ 已生成 public/friend-links.js（${data.length} 个分类）`)
   } catch (err) {
-    console.error('❌ 同步失败:', err.message);
-    process.exit(1);
+    console.error('❌ 同步失败:', err.message)
+    process.exit(1)
   }
 }
 
-main();
+main()

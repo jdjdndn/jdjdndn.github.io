@@ -16,19 +16,35 @@
 
 ## 技术栈
 
-- 前端：原生 HTML / CSS / JS（ES Modules）
-- 构建：Vite
+- 前端：Vue 3 + vue-router 4 + Pinia 4
+- 构建：Vite 5（含 8 个自定义插件，见 `scripts/vite-plugins/`）
 - 二维码：qrcode（本地生成）
+- 预渲染 / 冒烟测试：Playwright
+- 图片压缩：sharp
+- 部署：GitHub Pages / Cloudflare Pages（wrangler）
 
 ## 目录结构
 
 ```
 ├── src/                   # 前端源码
-│   ├── index.html         # 页面入口
-│   ├── app.js             # 交互逻辑
-│   ├── data.js            # 优惠数据（修改此文件更新内容）
-│   └── style.css          # 样式
-├── dist/                  # 构建产物（GitHub Pages 部署目录）
+│   ├── index.html         # SPA 入口
+│   ├── main.js            # 应用挂载（createApp + Pinia + router）
+│   ├── App.vue            # 根组件
+│   ├── router/            # vue-router 路由配置
+│   ├── stores/            # Pinia 状态（app / user）
+│   ├── views/             # 页面视图组件
+│   ├── components/        # 可复用 UI 组件
+│   ├── composables/       # 组合式函数（useToast / useClipboard / useShare …）
+│   ├── utils/             # 工具函数
+│   ├── templates/         # 构建时生成的页面模板
+│   ├── article/           # 静态文章 HTML
+│   ├── data.js            # 优惠数据
+│   └── shared.css         # 全局样式与 CSS 变量
+├── scripts/               # 构建脚本（页面生成 / SEO / 预渲染 …）
+│   └── vite-plugins/      # 自定义 Vite 插件
+├── vendor/seo-optimizer/  # 内嵌 SEO 优化工具
+├── public/                # 静态资源
+├── dist/                  # 构建产物（部署目录）
 ├── vite.config.js
 └── package.json
 ```
@@ -78,7 +94,7 @@ git push
 
 ## 数据说明
 
-所有优惠数据在 `src/data.js` 中管理，修改此文件即可更新页面内容，无需改动 `app.js`。
+所有优惠数据在 `src/data.js` 中管理，修改此文件即可更新页面内容，无需改动视图组件。
 
 ### 数据结构
 
@@ -91,9 +107,7 @@ git push
 //     可选字段：deadline（截止日期，格式 YYYY.MM.DD）
 
 // friendLinks: 友情链接数组
-export const friendLinks = [
-  { name: '站点名', url: 'https://...' },
-];
+export const friendLinks = [{ name: '站点名', url: 'https://...' }]
 ```
 
 ## License

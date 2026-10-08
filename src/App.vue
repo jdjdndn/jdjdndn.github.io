@@ -74,7 +74,8 @@ router-view {
     justify-content: center;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px calc(16px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom)) calc(16px + var(--safe-area-inset-left));
+    padding: 24px calc(16px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom))
+      calc(16px + var(--safe-area-inset-left));
     position: relative;
   }
 
@@ -92,7 +93,8 @@ router-view {
     justify-content: center;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px calc(16px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom)) calc(16px + var(--safe-area-inset-left));
+    padding: 24px calc(16px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom))
+      calc(16px + var(--safe-area-inset-left));
     position: relative;
   }
 
@@ -105,7 +107,8 @@ router-view {
 /* 手机端样式 */
 @media (max-width: 480px) {
   #app {
-    padding: 14px calc(12px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom)) calc(12px + var(--safe-area-inset-left));
+    padding: 14px calc(12px + var(--safe-area-inset-right)) calc(20px + var(--safe-area-inset-bottom))
+      calc(12px + var(--safe-area-inset-left));
   }
 }
 </style>
