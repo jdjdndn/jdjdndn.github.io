@@ -395,6 +395,13 @@ export const fuyePages = {
         desc: '内容类App拉新',
         url: 'https://tg.bd.cn/#/pages/login/register?invite_code=698182&qd=self_team_android',
       },
+      {
+        id: 3,
+        icon: '📖',
+        name: '应用拉新（3号入口）',
+        desc: '闲鱼、淘宝、美团、京东等平台App拉新',
+        url: 'https://m.ditui668.com/#/pages/login/register?invite_code=164309',
+      },
     ],
     guides: [
       {
@@ -636,6 +643,82 @@ export const fuyePages = {
       title: '信用卡代理 — 项目入口 | 券宝',
       description: '信用卡代理：推广各大银行信用卡申请链接，用户申请你赚佣金。',
       keywords: '信用卡代理,办卡赚钱,信用卡推广,银行信用卡',
+    },
+  },
+  'fuye/yanhe': {
+    icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+    title: '烟盒代理',
+    subtitle: '烟盒瓶盖回收代理 · 赚取佣金',
+    cardIcon: '📦',
+    cardTag: '代理',
+    statNum: '3',
+    statLabel: '个平台',
+    intro:
+      '烟盒代理是指推广烟盒、瓶盖回收平台，用户通过你的链接注册参与回收，你获得推广佣金。适合有社交资源或线下渠道的人作为副业项目。',
+    banner: { icon: '📦', name: '烟盒回收代理', desc: '多个平台 · 注册推广赚佣金', url: '' },
+    // searchable: true,
+    entries: [
+      {
+        id: 1,
+        icon: '📦',
+        name: '统盒',
+        desc: '烟盒回收代理平台',
+        url: 'http://0714.malaidui.cn/#/',
+      },
+      {
+        id: 2,
+        icon: '📦',
+        name: '盒聚变',
+        desc: '注册推广赚佣金',
+        url: 'https://hhh.qmy1.cn/h5/register.html?user_id=394208',
+      },
+      {
+        id: 3,
+        icon: '📦',
+        name: '楚盒',
+        desc: '烟盒瓶盖回收推广',
+        url: 'https://h5.chznhs.cn/#/pages/index/promotionLogin?code=1068490',
+      },
+    ],
+    guides: [
+      {
+        id: 1,
+        title: '烟盒代理入门',
+        desc: '了解烟盒回收代理模式和收益',
+        url: '/article/yanhe-guide.html',
+        steps: [
+          '了解收益来源：推广佣金 + 团队分成，具体以平台政策为准',
+          '确认适合你的推广资源：社群、线下烟酒店、回收点',
+          '按平台流程注册成为代理，获取专属推广链接',
+        ],
+      },
+      {
+        id: 2,
+        title: '推广方法与技巧',
+        desc: '高效推广烟盒回收的方法',
+        url: '/article/yanhe-promote.html',
+        steps: [
+          '朋友圈/社群分享回收入口，文案「烟盒别扔，回收换钱」',
+          '线下对接烟酒店、小卖部，批量收集空烟盒',
+          '老用户转介绍裂变，推荐朋友参与返佣',
+        ],
+      },
+      {
+        id: 3,
+        title: '常见问题解答',
+        desc: '代理常见问题汇总',
+        url: '/article/yanhe-faq.html',
+        steps: [
+          '收益类：推广佣金以平台实际展示为准',
+          '回收类：平台定价回收烟盒瓶盖，验收入账',
+          '结算类：佣金按平台周期结算，满额可提现',
+        ],
+      },
+    ],
+    meta: {
+      title: '烟盒代理 — 项目入口 | 券宝',
+      description: '烟盒代理项目：推广烟盒瓶盖回收平台，赚取佣金。',
+      keywords: '烟盒代理,烟盒回收,瓶盖回收,项目,赚钱',
     },
   },
 }

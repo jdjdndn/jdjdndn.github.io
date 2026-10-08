@@ -48,6 +48,7 @@ const ROUTES = [
   { url: '/fuye/laxin.html', file: 'fuye/laxin.html' },
   { url: '/fuye/wifi-agent.html', file: 'fuye/wifi-agent.html' },
   { url: '/fuye/xinyongka.html', file: 'fuye/xinyongka.html' },
+  { url: '/fuye/yanhe.html', file: 'fuye/yanhe.html' },
 ]
 
 function startServer() {
