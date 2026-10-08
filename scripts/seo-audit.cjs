@@ -101,8 +101,8 @@ function checkMetaTags(filePath, content) {
   // 检查必需的 meta 标签
   const requiredMeta = [
     { pattern: /<title>[^<]+<\/title>/, label: 'title' },
-    { pattern: /<meta name="description"/, label: 'description' },
-    { pattern: /<meta name="robots"/, label: 'robots' },
+    { pattern: /<meta\s+name="description"/, label: 'description' },
+    { pattern: /<meta\s+name="robots"/, label: 'robots' },
     { pattern: /rel="canonical"/, label: 'canonical' },
   ]
 
