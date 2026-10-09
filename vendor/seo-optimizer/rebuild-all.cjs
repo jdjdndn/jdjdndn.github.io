@@ -372,23 +372,9 @@ if (optSite || optPrebuild) {
   // standalone/CI 克隆：detectRoot 得到的 ROOT 下不存在 monorepo 路径（如 号卡/ksj），
   // 但脚本目录本身就是站点（含 wrangler.jsonc）时，回退用脚本目录，避免校验路径落空报 0/1
   const scriptDir = path.dirname(__filename);
-  // 从脚本目录向上搜索 wrangler.jsonc，定位站点根（CI 克隆目录名可能与站点名不同）
-  let siteRoot = null;
-  {
-    let dir = scriptDir;
-    for (;;) {
-      if (fs.existsSync(path.join(dir, 'wrangler.jsonc'))) {
-        siteRoot = dir;
-        break;
-      }
-      const parent = path.dirname(dir);
-      if (parent === dir) break;
-      dir = parent;
-    }
-  }
   for (const s of sites) {
-    if (!fs.existsSync(s.dir) && siteRoot) {
-      s.dir = siteRoot;
+    if (!fs.existsSync(s.dir) && fs.existsSync(path.join(scriptDir, 'wrangler.jsonc'))) {
+      s.dir = scriptDir;
     }
   }
 }
@@ -799,7 +785,8 @@ for (let si = 0; si < sites.length; si++) {
       const blocked = bots.filter((b) => new RegExp('User-agent:\\s*' + b + '[\\s\\S]*?Disallow:\\s*/\\s', 'i').test(robotsTxt + '\n'));
       ok = !blocked.length; detail = blocked.length ? `禁止 AI 爬虫 ${blocked.length} 个（${blocked.join(', ')}）` : `AI 爬虫可抓取（检查 ${bots.length} 个）`;
     }
-    checks.push({ desc: c.desc, type: c.type, ok, detail });
+    const _pages = (c.pattern && typeof c.pattern === 'object' && c.pattern.pages) || undefined;
+    checks.push({ desc: c.desc, type: c.type, file: c.file, pages: _pages, ok, detail });
   }
   results.push({ name: s.name, buildRes, note, checks });
 }
@@ -815,7 +802,7 @@ if (asJson) {
       name: r.name,
       build: r.buildRes ? (r.buildRes.ok ? 'success' : 'failed') : (r.note ? 'skipped' : null),
       note: r.note || null,
-      checks: r.checks.map((c) => ({ desc: c.desc, ok: c.ok, detail: c.detail })),
+      checks: r.checks.map((c) => ({ desc: c.desc, type: c.type, file: c.file, pages: c.pages, ok: c.ok, detail: c.detail })),
       ok: (!r.buildRes || r.buildRes.ok) && r.checks.every((c) => c.ok),
     })),
     allOk: results.every((r) => (!r.buildRes || r.buildRes.ok) && r.checks.every((c) => c.ok)),

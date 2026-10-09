@@ -169,7 +169,10 @@ function isActive(item) {
   margin: 0;
   list-style: none;
   background: var(--nav-bg, #ffffff);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.site-nav-footer .nav-list::-webkit-scrollbar { display: none; }
 
 .site-nav-footer .nav-link {
   display: flex;
@@ -220,6 +223,21 @@ function isActive(item) {
   .site-nav-footer .nav-link :deep(svg) {
     width: 20px;
     height: 20px;
+  }
+}
+
+/* 极窄屏幕：仅显示图标，横向可滚动 */
+@media (max-width: 360px) {
+  .site-nav-footer .nav-link span {
+    display: none;
+  }
+  .site-nav-footer .nav-link {
+    font-size: 0;
+    padding: 8px 10px;
+  }
+  .site-nav-footer .nav-link :deep(svg) {
+    width: 22px;
+    height: 22px;
   }
 }
 
