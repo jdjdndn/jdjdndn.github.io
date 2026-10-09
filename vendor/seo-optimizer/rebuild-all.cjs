@@ -244,7 +244,7 @@ function defaultSites() {
   });
 
   // 4. 号卡/dlhaoka —— 纯静态站（内容直接改 public/index.html，无需构建）
-  site('号卡/dlhaoka', P('号卡', 'dlhaoka'), {
+  site('号卡/dlhaoka', P('dlhaoka'), {
     rebuild: false,
     build: null,
     verify: [
@@ -252,7 +252,7 @@ function defaultSites() {
       chk('404页存在', 'exists', 'public/404.html'),
       chk('wrangler已配404(404-page)', 'contains', 'wrangler.jsonc', '"404-page"'),
     ],
-    deploy: [`cd ${P('号卡', 'dlhaoka')} && npx wrangler deploy`],
+    deploy: [`cd ${P('dlhaoka')} && npx wrangler deploy`],
   });
 
   // 5. article-site —— Nuxt4 SSR（内容在 D1，改内容无需本地重建）
@@ -268,18 +268,18 @@ function defaultSites() {
 
   // 6. 号卡 Nuxt SSR 站
   ['172', 'gc', 'hk'].forEach((s) => {
-    site('号卡/' + s, P('号卡', s), {
+    site('号卡/' + s, P(s), {
       rebuild: false, ssr: true,
       build: ['npm', ['run', 'build']],
       verify: [
         chk('wrangler已配404(none)', 'contains', 'wrangler.jsonc', '"none"'),
         chk('robots声明Sitemap', 'contains', 'public/robots.txt', 'Sitemap:'),
       ],
-      deploy: [`cd ${P('号卡', s)} && npm run build && npx wrangler deploy`],
+      deploy: [`cd ${P(s)} && npm run build && npx wrangler deploy`],
     });
   });
   ['hm', 'kd', 'ksj', 'yk'].forEach((s) => {
-    site('号卡/' + s, P('号卡', s), {
+    site('号卡/' + s, P(s), {
       rebuild: false, ssr: true,
       build: ['npx', ['nuxt', 'build']],
       verify: [
@@ -287,37 +287,37 @@ function defaultSites() {
         chk('robots声明Sitemap', 'contains', 'public/robots.txt', 'Sitemap:'),
         chk('文章404逻辑已修复', 'contains', path.join('app', 'pages', 'article', '[id].vue'), 'statusCode: 404'),
       ],
-      deploy: [`cd ${P('号卡', s)} && npm run build && npx wrangler deploy`],
+      deploy: [`cd ${P(s)} && npm run build && npx wrangler deploy`],
     });
   });
 
   // 7. 随身wifi —— Nuxt4 SSR
   ['chaoneng-wifi', 'feilimao-wifi', 'gexing-wifi', 'liantong-wifi'].forEach((s) => {
-    site('随身wifi/' + s, P('随身wifi', s), {
+    site('随身wifi/' + s, P(s), {
       rebuild: false, ssr: true,
       build: ['npx', ['nuxt', 'build']],
       verify: [
         chk('wrangler已配404(404-page)', 'contains', 'wrangler.jsonc', '"404-page"'),
       ],
-      deploy: [`cd ${P('随身wifi', s)} && npm run build && npx wrangler deploy`],
+      deploy: [`cd ${P(s)} && npm run build && npx wrangler deploy`],
     });
   });
 
   // 8. 信用卡 —— Nuxt4 SSR
   ['kahe', 'suishou', 'zhangshang'].forEach((s) => {
-    site('信用卡/' + s, P('信用卡', s), {
+    site('信用卡/' + s, P(s), {
       rebuild: false, ssr: true,
       build: ['npm', ['run', 'build']],
       verify: [
         chk('wrangler已配404(none)', 'contains', 'wrangler.jsonc', '"none"'),
         chk('sitemap路由已新增', 'exists', path.join('server', 'routes', 'sitemap.xml.get.ts')),
       ],
-      deploy: [`cd ${P('信用卡', s)} && npm run build && npm run deploy`],
+      deploy: [`cd ${P(s)} && npm run build && npm run deploy`],
     });
   });
 
   // 9. GitHub自动文章 —— 生成器（非站点，校验 P0 修复是否落地）
-  site('GitHub自动文章', P('GitHub自动文章'), {
+  site('GitHub自动文章', P('github-auto-article'), {
     rebuild: false,
     build: null,
     verify: [
@@ -369,7 +369,7 @@ if (optSite || optPrebuild) {
     console.error(`[error] 未找到站点：${names.join(', ')}。可用站点见 --list。`);
     process.exit(2);
   }
-  // standalone/CI 克隆：detectRoot 得到的 ROOT 下不存在 monorepo 路径（如 号卡/ksj），
+  // standalone/CI 克隆：detectRoot 得到的 ROOT 下不存在 monorepo 路径（如 ksj），
   // 但脚本目录本身就是站点（含 wrangler.jsonc）时，回退用脚本目录，避免校验路径落空报 0/1
   const scriptDir = path.dirname(__filename);
   for (const s of sites) {

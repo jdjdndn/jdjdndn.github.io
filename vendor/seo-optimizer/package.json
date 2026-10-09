@@ -6,7 +6,7 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "sync": "node sync-lib.cjs",
+    "sync": "node sync-submodules.cjs",
     "sync:dry": "node sync-lib.cjs --dry-run",
     "verify": "node rebuild-all.cjs --verify-only",
     "list": "node rebuild-all.cjs --list",

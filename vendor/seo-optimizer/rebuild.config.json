@@ -781,13 +781,13 @@
     },
     {
       "name": "GitHub自动文章",
-      "dir": "E:\\code\\aaa-sites\\GitHub自动文章",
+      "dir": "E:\\code\\aaa-sites\\github-auto-article",
       "build": null,
       "verify": [
         {
           "desc": "P0修复已落地(key兜底反查)",
           "type": "contains",
-          "file": "template\\src\\index.js",
+          "file": "src\\index.js",
           "pattern": "item.date"
         }
       ],
@@ -795,7 +795,187 @@
         "（文章系统修复后：git push 触发 CI 部署，见该项目 README）"
       ],
       "rebuild": false,
-      "onlineBase": null
+      "onlineBase": "https://article.dlhaoka.com"
+    },
+    {
+      "name": "烟盒/yanhe-chuhe",
+      "dir": "E:\\code\\aaa-sites\\yanhe-chuhe",
+      "build": [
+        "npx",
+        [
+          "nuxt",
+          "build"
+        ]
+      ],
+      "verify": [
+        {
+          "desc": "wrangler已配404(none)",
+          "type": "contains",
+          "file": "wrangler.jsonc",
+          "pattern": "\"none\""
+        },
+        {
+          "desc": "robots声明Sitemap",
+          "type": "contains",
+          "file": "public/robots.txt",
+          "pattern": "Sitemap:"
+        },
+        {
+          "desc": "sitemap.xml存在",
+          "type": "exists",
+          "file": "public/sitemap.xml"
+        }
+      ],
+      "deploy": [
+        "cd E:\\code\\aaa-sites\\yanhe-chuhe && npm run build && npx wrangler deploy"
+      ],
+      "rebuild": false,
+      "ssr": true,
+      "onlineBase": "https://chuhe.yanhe.site"
+    },
+    {
+      "name": "烟盒/yanhe-hejubian",
+      "dir": "E:\\code\\aaa-sites\\yanhe-hejubian",
+      "build": [
+        "npx",
+        [
+          "nuxt",
+          "build"
+        ]
+      ],
+      "verify": [
+        {
+          "desc": "wrangler已配404(none)",
+          "type": "contains",
+          "file": "wrangler.jsonc",
+          "pattern": "\"none\""
+        },
+        {
+          "desc": "robots声明Sitemap",
+          "type": "contains",
+          "file": "public/robots.txt",
+          "pattern": "Sitemap:"
+        },
+        {
+          "desc": "sitemap.xml存在",
+          "type": "exists",
+          "file": "public/sitemap.xml"
+        }
+      ],
+      "deploy": [
+        "cd E:\\code\\aaa-sites\\yanhe-hejubian && npm run build && npx wrangler deploy"
+      ],
+      "rebuild": false,
+      "ssr": true,
+      "onlineBase": "https://hejubian.yanhe.site"
+    },
+    {
+      "name": "烟盒/yanhe-hetianxia",
+      "dir": "E:\\code\\aaa-sites\\yanhe-hetianxia",
+      "build": [
+        "npx",
+        [
+          "nuxt",
+          "build"
+        ]
+      ],
+      "verify": [
+        {
+          "desc": "wrangler已配404(none)",
+          "type": "contains",
+          "file": "wrangler.jsonc",
+          "pattern": "\"none\""
+        },
+        {
+          "desc": "robots声明Sitemap",
+          "type": "contains",
+          "file": "public/robots.txt",
+          "pattern": "Sitemap:"
+        },
+        {
+          "desc": "sitemap.xml存在",
+          "type": "exists",
+          "file": "public/sitemap.xml"
+        }
+      ],
+      "deploy": [
+        "cd E:\\code\\aaa-sites\\yanhe-hetianxia && npm run build && npx wrangler deploy"
+      ],
+      "rebuild": false,
+      "ssr": true,
+      "onlineBase": "https://hetianxia.yanhe.site"
+    },
+    {
+      "name": "烟盒/yanhe-tonghe",
+      "dir": "E:\\code\\aaa-sites\\yanhe-tonghe",
+      "build": [
+        "npx",
+        [
+          "nuxt",
+          "build"
+        ]
+      ],
+      "verify": [
+        {
+          "desc": "wrangler已配404(none)",
+          "type": "contains",
+          "file": "wrangler.jsonc",
+          "pattern": "\"none\""
+        },
+        {
+          "desc": "robots声明Sitemap",
+          "type": "contains",
+          "file": "public/robots.txt",
+          "pattern": "Sitemap:"
+        },
+        {
+          "desc": "sitemap.xml存在",
+          "type": "exists",
+          "file": "public/sitemap.xml"
+        }
+      ],
+      "deploy": [
+        "cd E:\\code\\aaa-sites\\yanhe-tonghe && npm run build && npx wrangler deploy"
+      ],
+      "rebuild": false,
+      "ssr": true,
+      "onlineBase": "https://tonghe.yanhe.site"
+    },
+    {
+      "name": "烟盒/yanhe-xiaohe",
+      "dir": "E:\\code\\aaa-sites\\yanhe-xiaohe",
+      "build": [
+        "npx",
+        [
+          "nuxt",
+          "build"
+        ]
+      ],
+      "verify": [
+        {
+          "desc": "wrangler已配404(none)",
+          "type": "contains",
+          "file": "wrangler.jsonc",
+          "pattern": "\"none\""
+        },
+        {
+          "desc": "robots声明Sitemap",
+          "type": "contains",
+          "file": "public/robots.txt",
+          "pattern": "Sitemap:"
+        },
+        {
+          "desc": "sitemap.xml存在",
+          "type": "exists",
+          "file": "public/sitemap.xml"
+        }
+      ],
+      "deploy": [
+        "cd E:\\code\\aaa-sites\\yanhe-xiaohe && npm run build && npx wrangler deploy"
+      ],
+      "rebuild": false,
+      "ssr": true,
+      "onlineBase": "https://xiaohe.yanhe.site"
     }
   ]
 }
