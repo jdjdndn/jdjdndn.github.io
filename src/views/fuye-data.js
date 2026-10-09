@@ -676,8 +676,22 @@ export const fuyePages = {
         id: 3,
         icon: '📦',
         name: '楚盒',
-        desc: '烟盒瓶盖回收推广',
+        desc: '烟盒瓶盖回收',
         url: 'https://h5.chznhs.cn/#/pages/index/promotionLogin?code=1068490',
+      },
+      {
+        id: 4,
+        icon: '📦',
+        name: '盒天下',
+        desc: '烟盒瓶盖回收',
+        url: 'https://www.wdjwh.com/invite.html?code=y4WRg1',
+      },
+      {
+        id: 5,
+        icon: '📦',
+        name: '小盒码',
+        desc: '烟盒瓶盖回收',
+        url: 'http://1001.smallbox.com.cn/pages/authorize/index?tenantId=1001&inviteCode=r5cj9b&key=MTc5MTUzOTIwMzI1Mw',
       },
     ],
     guides: [
