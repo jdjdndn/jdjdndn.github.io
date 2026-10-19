@@ -1,0 +1,13 @@
+# github.io 静态站安全响应头（Workers assets 原生支持 _headers）
+# 与 packages/shared-utils/server-middleware/security-headers.ts 保持同集
+# （CSP 策略与 Nuxt 版一致：script/style 'unsafe-inline' 为 Vue SPA 内联引导所需）
+#
+# HSTS 无条件注入：本站全程 HTTPS（Workers 强制），无 dev 场景
+
+/*
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; worker-src 'self'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

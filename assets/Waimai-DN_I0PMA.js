@@ -1,0 +1,1 @@
+import{I as r}from"./IframePage-C6EQGGrD.js";import{b as t,i as a}from"./main-RJvsBs5C.js";import"./LegalLinks-CANMROuF.js";import"./BackToTop-CJ214rPx.js";const _={__name:"Waimai",setup(e){return(o,m)=>(t(),a(r,{"iframe-src":"https://kzurl18.cn/tHj1ww",title:"外卖优惠"}))}};export{_ as default};

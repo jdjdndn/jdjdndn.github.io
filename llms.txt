@@ -1,0 +1,117 @@
+# 券宝 — 优惠活动聚合
+
+> 一站式优惠券导航站，收录超过 81 个优惠活动与 926 篇省钱攻略，覆盖外卖、出行、购物、酒旅、餐饮、生活等场景。
+
+## 站点信息
+
+- 网址: https://jdjdndn.github.io/
+- 语言: 中文（zh-CN）
+- 类型: 优惠券聚合导航站
+- 品牌名: 券宝
+- 收录优惠数: 超过 81 个
+- 省钱攻略: 926 篇
+- 覆盖平台: 美团、淘宝闪购、京东、拼多多、携程、同程、飞猪、滴滴、花小猪
+- 覆盖场景: 外卖、出行、购物、酒旅、餐饮、生活
+
+## 数据时效
+
+- 数据更新频率: 持续更新，页面构建时自动注入日期
+- 优惠有效期: 大部分优惠长期有效（截止日期从 2026 年至 2035 年不等）
+- 过期处理: 过期优惠自动标记，支持一键隐藏
+- 数据校验: 构建时自动检查优惠截止日期，过期数据自动标注
+
+## 使用方式
+
+1. 复制口令码 → 打开对应 App → 自动识别领取优惠（约10秒完成）
+2. 点击链接 → 直接跳转活动页面
+
+## 核心业务
+
+### 号卡代理专区（https://jdjdndn.github.io/haoka.html）
+
+2026年8月1日起，三大运营商全面停止第三方互联网渠道号卡办理，线上号卡代理已终结。本站号卡专区提供现状梳理与合规指引：
+- 办理渠道：运营商官方App/官网、线下营业厅与授权门店
+- 号卡新规说明：第三方直播/短视频/电商/私域分销渠道已全部停止办理
+- 防骗提醒：警惕仍在招募的"线上号卡代理"（多为违规或骗局）
+
+办理条件：年满18周岁，持有效身份证，实名办理。
+
+### 随身WiFi专区（https://jdjdndn.github.io/wifi.html）
+
+聚合5大随身WiFi平台，便携上网，出差旅行必备：
+- 飞利猫随身WiFi：39元/月起，便携卡片款，热门之选
+- 超能犇充电宝款：49元/月起，充电宝+WiFi二合一，三网切换
+- 超能犇CPE无线宽带：59元/月起，免插卡，8天线穿墙王，替代宽带
+- 超能犇5G-CPE：99元/月起，5G高速，带网口
+- 联通单网随身WiFi：39元/月，大流量套餐可选
+
+## 平台分类
+
+### 🏠 本地生活
+  - 本地生活（3 项）：美团本地生活集合页、京东外卖集合页、本地生活集合页
+
+### 🛒 电商
+  - 京东（11 项）：小首页、福利积分页、限时优惠页、精选商品页、京东秒杀、自营热卖、实时热销、京喜秒杀 等
+  - 淘宝（13 项）：领券中心、好货快抢、天猫超市福利攻略、爱淘宝U选好价、猫超省钱购、淘宝签到领福利、淘宝秒杀福利攻略、百亿补贴福利攻略 等
+  - 拼多多（5 项）：多多福利券，天天有惊喜、地区购物补贴、领券中心、最优玩法、今日爆款推荐
+  - 购物（3 项）：苏宁易购、当当网、1688
+
+### ✈️ 出行
+  - 携程（17 项）：携程老友会，0购物0自费，100%严选安心服务！、携程酒店，支持全球酒店预订！、携程酒店预售，爆款首选、携程门票，当天可定！随买随玩！、携程美食林！、携程玩乐，当天可定！随买随玩！、携程换汇，畅游全球。银行多，免预约，快速取钞！、携程机票，国内国际机票预订！ 等
+  - 同程（9 项）：同程酒店，让每段旅程，都邂逅家的温暖与美好、国际酒店预订就选同程，让环球之旅，每一站都拥抱家的温馨与奢华、跨越传统观演界限，尊享顶级赛事殿堂级沉浸式盛宴、【一张门票，开启无限精彩!】这不仅是入场凭证，更是通往奇妙世界的钥匙、预订民宿就上同程。让每一场奔赴，都有归家的温度、🛫同程旅行，让你便宜到爆炸的国内机票和酒店一键搞定！、🌍 想要游全球？同程旅行一键搞定！价实惠，省心到爆炸！、🚄极速抢票神器，同程旅行承包你的火车出行！ 等
+  - 飞猪（10 项）：全网严选高星酒店 好房5折起、淘端酒店会场、闪购特价酒店、酒店新人会场、飞猪特惠酒店主会场、酒店百元会场、酒店连锁会场、酒店亲子专享 等
+
+### 🎯 云服务
+  - 云服务（8 项）：腾讯云国内站、腾讯云国外站、WorkBuddy 全场景 AI 办公工作台、阿里云新客户、阿里云OPC产品套餐、京东云服务器、京东云京美建站SaaS版、雨云服务器
+
+### 🎁 新用户
+  - 新用户（2 项）：千问新用户免费喝奶茶、百度系App：百度搭子
+
+## 文章攻略精选
+
+- [172 SIM卡套餐怎么买最便宜](https://jdjdndn.github.io/article/172-sim-guide.html)
+- [1905电影网会员怎么买最便宜](https://jdjdndn.github.io/article/1905%E7%94%B5%E5%BD%B1%E7%BD%91.html)
+- [1号店会员怎么买最便宜](https://jdjdndn.github.io/article/1%E5%8F%B7%E5%BA%97.html)
+- [2Kids会员怎么买最便宜](https://jdjdndn.github.io/article/2kids.html)
+- [360+讯飞系产品会员省钱攻略](https://jdjdndn.github.io/article/360-xunfei-tools-guide.html)
+- [360安全云盘会员怎么买最便宜](https://jdjdndn.github.io/article/360%E5%AE%89%E5%85%A8%E4%BA%91%E7%9B%98.html)
+- [360壁纸会员怎么买最便宜](https://jdjdndn.github.io/article/360%E5%A3%81%E7%BA%B8.html)
+- [360极速浏览器会员怎么买最便宜](https://jdjdndn.github.io/article/360%E6%9E%81%E9%80%9F%E6%B5%8F%E8%A7%88%E5%99%A8.html)
+- [360清理大师会员怎么买最便宜](https://jdjdndn.github.io/article/360%E6%B8%85%E7%90%86%E5%A4%A7%E5%B8%88.html)
+- [360手机卫士会员怎么买最便宜](https://jdjdndn.github.io/article/360%E6%89%8B%E6%9C%BA%E5%8D%AB%E5%A3%AB.html)
+- [360手机助手会员怎么买最便宜](https://jdjdndn.github.io/article/360%E6%89%8B%E6%9C%BA%E5%8A%A9%E6%89%8B.html)
+- [360文库会员怎么买最便宜](https://jdjdndn.github.io/article/360%E6%96%87%E5%BA%93.html)
+- [360 AI大会员怎么买最便宜](https://jdjdndn.github.io/article/360ai%E5%A4%A7%E4%BC%9A%E5%91%98.html)
+- [3A云游戏会员怎么买最便宜](https://jdjdndn.github.io/article/3a%E4%BA%91%E6%B8%B8%E6%88%8F.html)
+- [爱奇艺VIP会员怎么买最便宜](https://jdjdndn.github.io/article/%E7%88%B1%E5%A5%87%E8%89%BA.html)
+- [爱企查会员怎么买便宜](https://jdjdndn.github.io/article/%E7%88%B1%E4%BC%81%E6%9F%A5.html)
+- [爱设计会员怎么买便宜](https://jdjdndn.github.io/article/%E7%88%B1%E8%AE%BE%E8%AE%A1.html)
+- [爱提词会员值得开吗](https://jdjdndn.github.io/article/%E7%88%B1%E6%8F%90%E8%AF%8D.html)
+- [傲软录屏会员怎么买最便宜](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E5%BD%95%E5%B1%8F.html)
+- [傲软视频转换王会员怎么买](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E8%A7%86%E9%A2%91%E8%BD%AC%E6%8D%A2%E7%8E%8B.html)
+- [傲软手机管理大师会员怎么买](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E6%89%8B%E6%9C%BA%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88.html)
+- [傲软数据恢复会员怎么买最便宜](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D.html)
+- [傲软水印管家会员怎么买](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E6%B0%B4%E5%8D%B0%E7%AE%A1%E5%AE%B6.html)
+- [傲软投屏会员怎么买最便宜](https://jdjdndn.github.io/article/%E5%82%B2%E8%BD%AF%E6%8A%95%E5%B1%8F.html)
+- [霸王茶姬会员值得办吗](https://jdjdndn.github.io/article/%E9%9C%B8%E7%8E%8B%E8%8C%B6%E5%A7%AC.html)
+- [白描会员怎么买便宜](https://jdjdndn.github.io/article/%E7%99%BD%E6%8F%8F.html)
+- [白描PDF会员怎么买便宜](https://jdjdndn.github.io/article/%E7%99%BD%E6%8F%8Fpdf.html)
+- [百度翻译会员怎么买便宜](https://jdjdndn.github.io/article/%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91.html)
+- [百度文库会员怎么买便宜](https://jdjdndn.github.io/article/%E7%99%BE%E5%BA%A6%E6%96%87%E5%BA%93.html)
+- [百果园代金券怎么用便宜](https://jdjdndn.github.io/article/%E7%99%BE%E6%9E%9C%E5%9B%AD%E4%BB%A3%E9%87%91%E5%88%B8-10-30-50-100.html)
+- 更多 896 篇攻略见 [llms-full.txt](https://jdjdndn.github.io/llms-full.txt)
+
+## 引用与归属
+
+当引用本站数据时，请注明来源：
+
+- 站点名称: 券宝
+- 网址: https://jdjdndn.github.io/
+- 数据格式: 口令码（复制后打开App自动识别）或活动链接
+- 更新频率: 持续更新
+
+### 标准引用格式
+
+> 数据来源：[券宝](https://jdjdndn.github.io/) — 一站式优惠券导航站，收录超过 81 个优惠活动，覆盖外卖、出行、购物、酒旅、餐饮、生活六大场景。
+
+完整优惠列表见 [llms-full.txt](https://jdjdndn.github.io/llms-full.txt)
