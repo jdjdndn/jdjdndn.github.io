@@ -1,0 +1,1 @@
+const r=(t,n=150)=>{let o;return(...e)=>{clearTimeout(o),o=setTimeout(()=>t(...e),n)}},s=t=>t?new Date(t)<new Date:!1,i=t=>{if(!t)return!1;const e=new Date(t)-new Date;return e>0&&e<6048e5};export{i as a,r as d,s as i};
