@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coupon-vmvrcmuzz';
+const CACHE_NAME = 'coupon-vmw3i6rkt';
 const PRECACHE = ['./', './index.html'];
 
 // 安装：预缓存核心文件

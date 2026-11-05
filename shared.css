@@ -86,6 +86,9 @@
   --primary-hover: var(--qb-brick-600);
   --primary-light: var(--qb-brick-50);
   --primary-light-hover: var(--qb-brick-100);
+  /* 主色浅底表面（@aaa/nuxt-ui NoticeBookmark 等共享组件消费）：命名对齐共享组件约定，
+   * 值与 --primary-light 同源 brick-50；只作背景不承载文本，文本用 --primary/--primary-strong */
+  --primary-weak: var(--qb-brick-50);
   /* 品牌渐变深端（hero 精装页头），组件消费此别名而非 primitive */
   --primary-deep: var(--qb-brick-700);
   /* 文本用主色（对 --card ≥9.6:1）；暗色在 [data-theme='dark'] 翻转为 400 档 */
@@ -369,6 +372,8 @@ button:disabled {
   /* 品牌与交互 */
   --primary-light: rgba(217, 162, 150, 0.14);
   --primary-light-hover: rgba(217, 162, 150, 0.22);
+  /* 主色浅底表面暗色：与 --primary-light 同源 brick-300 半透（同上，暗底不用实色 brick-500） */
+  --primary-weak: rgba(217, 162, 150, 0.14);
   /* 文本用主色暗色翻转：brick-400 对 --bg/--card ≥5.0:1 */
   --primary-strong: var(--qb-brick-400);
   --accent: #7cb3e8;

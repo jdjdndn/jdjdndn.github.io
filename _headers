@@ -1,6 +1,9 @@
 # github.io 静态站安全响应头（Workers assets 原生支持 _headers）
 # 与 packages/shared-utils/server-middleware/security-headers.ts 保持同集
 # （CSP 策略与 Nuxt 版一致：script/style 'unsafe-inline' 为 Vue SPA 内联引导所需）
+# 例外：号卡栏目接入跨站问答挂件（外部问答服务 ask.wcbblll.cc），script-src 与 frame-src 放行该源。
+#      这两条必须同时放行——缺 frame-src 时它回落到 default-src 'self'，iframe 会被静默拦成白屏。
+#      挂件只挂在 /haoka.html 系路由（src/router/index.js 的 meta.qaWidget），不影响其它频道。
 #
 # HSTS 无条件注入：本站全程 HTTPS（Workers 强制），无 dev 场景
 
@@ -9,5 +12,5 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; worker-src 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://ask.wcbblll.cc; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://ask.wcbblll.cc; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; worker-src 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
