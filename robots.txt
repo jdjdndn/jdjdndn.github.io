@@ -1,9 +1,11 @@
 # 券宝 - robots.txt
 User-agent: *
+# Disallow 必须排在 Allow: / 之前：百度按文件顺序取第一条命中，Google 按最长匹配。
+# 原来 Allow: / 在前，/sw.js 在百度侧被放行、在 Google 侧被屏蔽（cn-robots-order 判红）。
+Disallow: /sw.js
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
-Disallow: /sw.js
 
 # AI 爬虫（GEO 优化）
 # OpenAI
