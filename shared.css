@@ -86,7 +86,7 @@
   --primary-hover: var(--qb-brick-600);
   --primary-light: var(--qb-brick-50);
   --primary-light-hover: var(--qb-brick-100);
-  /* 主色浅底表面（@aaa/nuxt-ui NoticeBookmark 等共享组件消费）：命名对齐共享组件约定，
+  /* 主色浅底表面（@aaa/nuxt-ui CardNoticeBar 等共享组件消费）：命名对齐共享组件约定，
    * 值与 --primary-light 同源 brick-50；只作背景不承载文本，文本用 --primary/--primary-strong */
   --primary-weak: var(--qb-brick-50);
   /* 品牌渐变深端（hero 精装页头），组件消费此别名而非 primitive */
@@ -1097,6 +1097,19 @@ a.btn-secondary:active,
 @media (max-width: 767px) {
   .toast {
     bottom: calc(var(--bottom-nav-height) + 24px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* 小屏：AI 问答挂件按钮/面板抬出固定底栏。embed.js 的 bottom 走 --simqa-* 变量（默认 24/88px 即旧值），
+   这里用 html[data-qa-widget] 标记（router/index.js upsertQaWidget 设置）注入覆盖值；
+   按钮抬升后与回顶/toast 同带撞位，两者同步上移，与 PC 端 html[data-qa-widget] 避让同一层级关系。 */
+@media (max-width: 767px) {
+  html[data-qa-widget] {
+    --simqa-fab-bottom: calc(var(--bottom-nav-height) + 16px + env(safe-area-inset-bottom, 0px));
+    --simqa-panel-bottom: calc(var(--bottom-nav-height) + 16px + env(safe-area-inset-bottom, 0px));
+  }
+  html[data-qa-widget] .toast {
+    bottom: calc(var(--bottom-nav-height) + 72px + env(safe-area-inset-bottom, 0px));
   }
 }
 
